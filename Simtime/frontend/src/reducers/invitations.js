@@ -1,4 +1,4 @@
-import { GET_INVITATIONS } from "../actions/types";
+import { GET_INVITATIONS, ADD_INVITATION } from "../actions/types";
 
 const initialState = {
   invitations: [],
@@ -11,6 +11,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         invitations: action.payload
+      };
+    case ADD_INVITATION:
+      return {
+        ...state,
+        invitations: [...state.invitations, action.payload]
       };
     default:
       return state;

@@ -13,7 +13,7 @@ class App extends Component {
       <Provider store={store}>
         <Fragment>
           <Header />
-          <div className="containder">
+          <div className="container">
             <Dashboard />
           </div>
         </Fragment>
