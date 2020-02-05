@@ -39,7 +39,7 @@ export class Form extends Component {
       event_time: "",
       status: "",
       message: "",
-      guests: [],
+      guests: ["ara", "aaa", "guest1", "guest2", "guest3", "guest4"],
       created_at: ""
     });
     // ,guests,    created_at}

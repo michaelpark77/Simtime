@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_INVITATIONS } from "./types";
+import { GET_INVITATIONS, ADD_INVITATIONS } from "./types";
 
 export const getInvitations = () => dispatch => {
   axios
