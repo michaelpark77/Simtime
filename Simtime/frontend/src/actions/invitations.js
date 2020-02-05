@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_INVITATIONS, ADD_INVITATIONS } from "./types";
+import { GET_INVITATIONS, ADD_INVITATION, DELETE_INVITATION } from "./types";
 
 export const getInvitations = () => dispatch => {
   axios
@@ -18,8 +18,20 @@ export const addInvitation = invitation => dispatch => {
     .post("/api/invitations/", invitation)
     .then(res => {
       dispatch({
-        type: ADD_INVITATIONS,
+        type: ADD_INVITATION,
         payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+export const deleteInvitation = id => dispatch => {
+  axios
+    .delete(`/api/invitations/${id}`)
+    .then(res => {
+      dispatch({
+        type: DELETE_INVITATION,
+        payload: id
       });
     })
     .catch(err => console.log(err));

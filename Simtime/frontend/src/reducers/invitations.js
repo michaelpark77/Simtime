@@ -1,4 +1,8 @@
-import { GET_INVITATIONS, ADD_INVITATION } from "../actions/types";
+import {
+  GET_INVITATIONS,
+  ADD_INVITATION,
+  DELETE_INVITATION
+} from "../actions/types";
 
 const initialState = {
   invitations: [],
@@ -16,6 +20,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         invitations: [...state.invitations, action.payload]
+      };
+    case DELETE_INVITATION:
+      return {
+        ...state,
+        invitations: state.invitations.filter(
+          invitation => invitation.id != action.payload
+        )
       };
     default:
       return state;

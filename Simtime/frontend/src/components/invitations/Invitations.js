@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import { getInvitations } from "../../actions/invitations";
+import { getInvitations, deleteInvitation } from "../../actions/invitations";
 import { connect } from "react-redux";
 
 export class Invitations extends Component {
   static propTypes = {
-    invitations: PropTypes.array.isRequired
+    invitations: PropTypes.array.isRequired,
+    getInvitations: PropTypes.func.isRequired,
+    deleteInvitation: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -37,7 +39,15 @@ export class Invitations extends Component {
                 <td> {invitation.message}</td>
                 <td>
                   <button className="btn  btn-success btn-sm">Join</button>
-                  <button className="btn  btn-danger btn-sm">Delete</button>
+                  <button
+                    className="btn  btn-danger btn-sm"
+                    onClick={this.props.deleteInvitation.bind(
+                      this,
+                      invitation.id
+                    )}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
@@ -52,4 +62,6 @@ const mapStateToProps = state => ({
   invitations: state.invitations.invitations
 });
 
-export default connect(mapStateToProps, { getInvitations })(Invitations);
+export default connect(mapStateToProps, { getInvitations, deleteInvitation })(
+  Invitations
+);
