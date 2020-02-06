@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addInvitation } from "../../actions/invitations";
+import PropTypes from "prop-types";
 
 export class Form extends Component {
   state = {
@@ -11,6 +12,10 @@ export class Form extends Component {
     message: "",
     guests: ["ara", "aaa", "guest1", "guest2", "guest3", "guest4"],
     created_at: ""
+  };
+
+  static propTypes = {
+    addInvitation: PropTypes.func.isRequired
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });

@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_INVITATIONS, ADD_INVITATION, DELETE_INVITATION } from "./types";
+import {
+  GET_INVITATIONS,
+  ADD_INVITATION,
+  DELETE_INVITATION,
+  GET_ERRORS
+} from "./types";
 
 export const getInvitations = () => dispatch => {
   axios
@@ -22,7 +27,21 @@ export const addInvitation = invitation => dispatch => {
         payload: res.data
       });
     })
-    .catch(err => console.log(err));
+    // .catch(err => console.log(err));
+    // .catch(err => console.log(err.response.data));
+    .catch(err => {
+      const errors = {
+        msg: err.reponse.data,
+        status: err.reponse.status
+      };
+
+      console.log("catch - errors? ", errors);
+
+      dispatch({
+        type: GET_ERRORS,
+        payload: errors
+      });
+    });
 };
 
 export const deleteInvitation = id => dispatch => {

@@ -31,7 +31,7 @@ class EventStatus(models.TextChoices):
 
 class Invitation(CustomizedModel):
     objects = models.Manager()
-    host = models.CharField(max_length=50)
+    host = models.CharField(max_length=50, unique=False, blank=False)
     status = models.CharField(max_length=50,
                               choices=EventStatus.choices,
                               default=EventStatus.OPEN,
