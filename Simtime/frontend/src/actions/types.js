@@ -3,3 +3,6 @@ export const ADD_INVITATION = "ADD_INVITATION";
 export const DELETE_INVITATION = "DELETE_INVITATION";
 
 export const GET_ERRORS = "GET_ERRORS";
+
+export const CREATE_MESSAGE = "CREAGE_MESSAGE";
+export const GET_MESSAGES = "GET_MESSAGES";

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 export class Form extends Component {
   state = {
-    host: "araa",
+    host: "",
     event_date: "",
     event_time: "",
     status: "",
@@ -29,6 +29,7 @@ export class Form extends Component {
       message,
       guests
     } = this.state;
+
     const invitation = {
       host,
       event_date,
@@ -37,7 +38,9 @@ export class Form extends Component {
       message,
       guests
     };
+
     this.props.addInvitation(invitation);
+
     this.setState({
       host: "araa",
       event_date: "",

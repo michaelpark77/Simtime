@@ -1,9 +1,11 @@
 import axios from "axios";
+import { createMessage } from "./messages";
 import {
   GET_INVITATIONS,
   ADD_INVITATION,
   DELETE_INVITATION,
-  GET_ERRORS
+  GET_ERRORS,
+  CREATE_MESSAGE
 } from "./types";
 
 export const getInvitations = () => dispatch => {
@@ -26,13 +28,15 @@ export const addInvitation = invitation => dispatch => {
         type: ADD_INVITATION,
         payload: res.data
       });
+
+      dispatch(createMessage({ addInvitation: "Invitation Added" }));
     })
     // .catch(err => console.log(err));
     // .catch(err => console.log(err.response.data));
     .catch(err => {
       const errors = {
-        msg: err.reponse.data,
-        status: err.reponse.status
+        msg: err.response.data,
+        status: err.response.status
       };
 
       console.log("catch - errors? ", errors);
@@ -48,6 +52,7 @@ export const deleteInvitation = id => dispatch => {
   axios
     .delete(`/api/invitations/${id}`)
     .then(res => {
+      dispatch(createMessage({ deleteInvitation: "Invitation Deleted" }));
       dispatch({
         type: DELETE_INVITATION,
         payload: id
