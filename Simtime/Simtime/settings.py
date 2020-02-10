@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'frontend',
     'invitations',
+    'knox',
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,6 +58,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES':
+    ('knox.auth.TokenAuthentication', )
+    # Tuple에서 ,를 제외하면 string으로 인식한다.
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -7,9 +7,22 @@ from .serializers import InvitationSerializer
 
 
 class InvitationsViewSet(viewsets.ModelViewSet):
+    # queryset = Invitation.objects.all()
+    # permission_classes = [
+    #     permissions.AllowAny
+    # ]
+
     queryset = Invitation.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
 
     serializer_class = InvitationSerializer
+
+    def get_queryset(self):
+        # 해당 유저의 invitations만 return
+        return self.request.user.invitations.all()  # related_name으로 invitations지정
+
+    def perform_create(self, serializer):
+        # invitation을 만들 떄 host를 저장하도록 한다.
+        serializer.save(host=self.request.user)

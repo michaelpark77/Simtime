@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createMessage } from "./messages";
+import { createMessage, returnErrors } from "./messages";
 import {
   GET_INVITATIONS,
   ADD_INVITATION,
@@ -17,7 +17,9 @@ export const getInvitations = () => dispatch => {
         payload: res.data
       });
     })
-    .catch(err => console.log(err));
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
 
 export const addInvitation = invitation => dispatch => {
@@ -34,17 +36,7 @@ export const addInvitation = invitation => dispatch => {
     // .catch(err => console.log(err));
     // .catch(err => console.log(err.response.data));
     .catch(err => {
-      const errors = {
-        msg: err.response.data,
-        status: err.response.status
-      };
-
-      console.log("catch - errors? ", errors);
-
-      dispatch({
-        type: GET_ERRORS,
-        payload: errors
-      });
+      dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
 
