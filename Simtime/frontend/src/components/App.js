@@ -15,12 +15,7 @@ import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
 
-import {
-  HashRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
 const alertOptions = {
   timeout: 3000,
@@ -36,19 +31,19 @@ class App extends Component {
     return (
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
-          <Router>
+          <HashRouter>
             <Fragment>
               <Header />
               <Alerts />
               <div className="container">
                 <Switch>
                   <PrivateRoute exact path="/" component={Dashboard} />
-                  <Router exact path="/register" component={Register} />
-                  <Router exact path="/login" component={Login} />
+                  <Route exact path="/register" component={Register} />
+                  <Route exact path="/login" component={Login} />
                 </Switch>
               </div>
             </Fragment>
-          </Router>
+          </HashRouter>
         </AlertProvider>
       </Provider>
     );
