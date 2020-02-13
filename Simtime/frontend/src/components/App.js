@@ -5,14 +5,15 @@ import AlertTemplate from "react-alert-template-basic";
 
 import Header from "./layout/Header";
 import Alerts from "./layout/Alerts";
-import Dashboard from "./invitations/Dashboard";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
+import Dashboard from "./invitations/Dashboard";
 import PrivateRoute from "./common/privateRoute";
 
 //redux
 import { Provider } from "react-redux";
 import store from "../store";
+import { loadUser } from "../actions/auth";
 
 import {
   HashRouter as Router,
@@ -27,6 +28,10 @@ const alertOptions = {
 };
 
 class App extends Component {
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
+
   render() {
     return (
       <Provider store={store}>
