@@ -4,7 +4,7 @@ export const DELETE_INVITATION = "DELETE_INVITATION";
 
 export const GET_ERRORS = "GET_ERRORS";
 
-export const CREATE_MESSAGE = "CREAGE_MESSAGE";
+export const CREATE_MESSAGE = "CREATE_MESSAGE";
 export const GET_MESSAGES = "GET_MESSAGES";
 
 export const USER_LOADING = "USER_LOADING";
@@ -13,3 +13,7 @@ export const AUTH_ERROR = "AUTH_ERROR";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
+export const LOGOUT = "LOGOUT";
+
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAIL = "REGISTER_FAIL";
