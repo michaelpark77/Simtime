@@ -89,10 +89,10 @@ export class Register extends Component {
                 Register
               </button>
             </div>
-            <p>
-              Already have an account? <Link to="/login">Login</Link>
-            </p>
           </form>
+          <p>
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
         </div>
       </div>
     );

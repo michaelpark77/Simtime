@@ -50,6 +50,7 @@ export default function(state = initialState, action) {
         isLoading: false
       };
 
+    case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT:
