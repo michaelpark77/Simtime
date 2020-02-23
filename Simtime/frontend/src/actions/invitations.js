@@ -1,5 +1,7 @@
 import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
+import { tokenConfig } from "./auth";
+
 import {
   GET_INVITATIONS,
   ADD_INVITATION,
@@ -8,9 +10,9 @@ import {
   CREATE_MESSAGE
 } from "./types";
 
-export const getInvitations = () => dispatch => {
+export const getInvitations = () => (dispatch, getState) => {
   axios
-    .get("/api/invitations/")
+    .get("/api/invitations/", tokenConfig(getState))
     .then(res => {
       dispatch({
         type: GET_INVITATIONS,
@@ -24,7 +26,7 @@ export const getInvitations = () => dispatch => {
 
 export const addInvitation = invitation => dispatch => {
   axios
-    .post("/api/invitations/", invitation)
+    .post("/api/invitations/", invitation, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: ADD_INVITATION,
@@ -40,9 +42,9 @@ export const addInvitation = invitation => dispatch => {
     });
 };
 
-export const deleteInvitation = id => dispatch => {
+export const deleteInvitation = id => (dispatch, getState) => {
   axios
-    .delete(`/api/invitations/${id}`)
+    .delete(`/api/invitations/${id}`, tokenConfig(getState))
     .then(res => {
       dispatch(createMessage({ deleteInvitation: "Invitation Deleted" }));
       dispatch({
