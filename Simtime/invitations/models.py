@@ -31,6 +31,11 @@ class EventStatus(models.TextChoices):
     OPEN = 'OPEN'
     PENDING = 'PENDING'
 
+class Attendance(models.TextChoices):
+    Yes = 'Yes'
+    No = 'No'
+    Unknown = "Waiting for a response"
+
 
 # class Invitation(CustomizedModel):
 #     objects = models.Manager()
@@ -49,22 +54,26 @@ class EventStatus(models.TextChoices):
 
 
 class Event(CustomizedModel):
+    # 추후에 EvnetType 테이블 정의, ForeignKey
     objects = models.Manager()
-    # related_name: User가 가지고 있는 invitations들을 조회, user.invitations.all()이 가능해짐
+    # related_name: User가 가지고 있는 invitations들을 조회, user.event.all()이 가능해짐
+    host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='event')
+    event_name = models.CharField(max_length=200, blank=False)
     event_at = models.DateTimeField(blank=False)
-    status = models.CharField(max_length=50,
+    status = models.CharField(max_length=10,
                               choices=EventStatus.choices,
                               default=EventStatus.OPEN)
-    message = models.CharField(max_length=1000, blank=True, null=True)
+
+    message = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     guests = models.ManyToManyField(User,
                                     through='Invitation',
-                                    through_fields=('Event', 'guest_user',))
+                                    through_fields=('event', 'guest',))
 
 
 # Create your models here.
 class Invitation(CustomizedModel):
     objects = models.Manager()
-    host = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    guest_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    guest = models.ForeignKey(User, on_delete=models.CASCADE)
+    attendance = models.CharField(max_length=15, choices=Attendance.choices, default=Attendance.Unknown)
