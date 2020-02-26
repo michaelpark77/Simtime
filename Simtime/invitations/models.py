@@ -36,28 +36,11 @@ class Attendance(models.TextChoices):
     No = 'No'
     Unknown = "Waiting for a response"
 
-
-# class Invitation(CustomizedModel):
-#     objects = models.Manager()
-#     host = models.ForeignKey(
-#         User, related_name="invitations", max_length=50,  on_delete=models.CASCADE, null=True)
-#     status = models.CharField(max_length=50,
-#                               choices=EventStatus.choices,
-#                               default=EventStatus.OPEN,
-#                               blank=True,
-#                               null=True)
-
-#     event_at = models.DateTimeField(blank=True, null=True)
-#     guests = ArrayField(models.CharField(max_length=50))
-#     message = models.CharField(max_length=500, blank=True, null=True)
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-
 class Event(CustomizedModel):
     # 추후에 EvnetType 테이블 정의, ForeignKey
     objects = models.Manager()
-    # related_name: User가 가지고 있는 invitations들을 조회, user.event.all()이 가능해짐
-    host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='event')
+    # related_name: User가 가지고 있는 invitations들을 조회, user.events.all()이 가능해짐
+    host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='events')
     event_name = models.CharField(max_length=200, blank=False)
     event_at = models.DateTimeField(blank=False)
     status = models.CharField(max_length=10,
@@ -76,4 +59,21 @@ class Invitation(CustomizedModel):
     objects = models.Manager()
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     guest = models.ForeignKey(User, on_delete=models.CASCADE)
-    attendance = models.CharField(max_length=15, choices=Attendance.choices, default=Attendance.Unknown)
+    attendance = models.CharField(max_length=30, choices=Attendance.choices, default=Attendance.Unknown)
+
+
+
+# class Invitation(CustomizedModel):
+#     objects = models.Manager()
+#     host = models.ForeignKey(
+#         User, related_name="invitations", max_length=50,  on_delete=models.CASCADE, null=True)
+#     status = models.CharField(max_length=50,
+#                               choices=EventStatus.choices,
+#                               default=EventStatus.OPEN,
+#                               blank=True,
+#                               null=True)
+
+#     event_at = models.DateTimeField(blank=True, null=True)
+#     guests = ArrayField(models.CharField(max_length=50))
+#     message = models.CharField(max_length=500, blank=True, null=True)
+#     created_at = models.DateTimeField(auto_now_add=True)

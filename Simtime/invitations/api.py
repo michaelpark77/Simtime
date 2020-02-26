@@ -1,17 +1,29 @@
 
-from .models import Invitation
+from .models import Invitation, Event
 from rest_framework import viewsets, permissions
-from .serializers import InvitationSerializer
+from .serializers import InvitationSerializer, EventSerializer
 
-# Lead Viewset
+
+
+class EventsViewSet(viewsets.ModelViewSet):
+    print('EvnetViewSet')
+    queryset = Event.objects.all()
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    serializer_class = EventSerializer
+
+    def get_queryset(self):
+        # 해당 유저의 invitations만 return
+        return self.request.user.events.all()  # related_name으로 invitations지정
+
+    def perform_create(self, serializer):
+        # invitation을 만들 떄 host를 저장하도록 한다.
+        serializer.save(host=self.request.user)
 
 
 class InvitationsViewSet(viewsets.ModelViewSet):
-    # queryset = Invitation.objects.all()
-    # permission_classes = [
-    #     permissions.AllowAny
-    # ]
-
     queryset = Invitation.objects.all()
     permission_classes = [
         permissions.IsAuthenticated
@@ -26,3 +38,4 @@ class InvitationsViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         # invitation을 만들 떄 host를 저장하도록 한다.
         serializer.save(host=self.request.user)
+

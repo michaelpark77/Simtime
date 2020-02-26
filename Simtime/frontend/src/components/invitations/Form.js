@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addInvitation } from "../../actions/invitations";
+import { addEvent } from "../../actions/events";
 import PropTypes from "prop-types";
 
 export class Form extends Component {
@@ -9,63 +9,47 @@ export class Form extends Component {
     event_date: "",
     event_time: "",
     status: "",
-    message: "",
-    guests: ["ara", "aaa", "guest1", "guest2", "guest3", "guest4"],
-    created_at: ""
+    message: ""
   };
 
   static propTypes = {
-    addInvitation: PropTypes.func.isRequired
+    addEvent: PropTypes.func.isRequired
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
   onSubmit = e => {
     e.preventDefault();
-    const {
-      host,
-      event_date,
-      event_time,
-      status,
-      message,
-      guests
-    } = this.state;
+    const { host, event_date, event_time, status, message } = this.state;
 
-    const invitation = {
+    const event = {
       host,
       event_date,
       event_time,
       status,
-      message,
-      guests
+      message
     };
 
-    this.props.addInvitation(invitation);
+    this.props.addEvent(event);
 
-    this.setState({
-      host: "araa",
-      event_date: "",
-      event_time: "",
-      status: "",
-      message: "",
-      guests: ["ara", "aaa", "guest1", "guest2", "guest3", "guest4"],
-      created_at: ""
-    });
-    // ,guests,    created_at}
-    console.log("submit");
+    // this.setState({
+    //   host: "araa",
+    //   event_date: "",
+    //   event_time: "",
+    //   status: "",
+    //   message: "",
+    //   guests: ["ara", "aaa", "guest1", "guest2", "guest3", "guest4"],
+    //   created_at: ""
+    // });
+
+    console.log("submit Event");
   };
 
   render() {
-    const {
-      host,
-      event_date,
-      event_time,
-      status,
-      message,
-      guests
-    } = this.state;
+    const { host, event_date, event_time, status, message } = this.state;
+
     return (
       <div className="card card-body mt-4 mb-4">
-        <h2>ADD Invitation</h2>
+        <h2>ADD Event</h2>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Host : </label>
@@ -92,6 +76,7 @@ export class Form extends Component {
             />
           </div>
 
+          {/* status - 전역에서 공통으로 사용하도록 설정하기 (db화?)*/}
           <div className="form-group">
             <label>Status</label>
             <input
@@ -129,14 +114,14 @@ export class Form extends Component {
             />
           </div>
 
-          <div className="form-group">
+          {/* <div className="form-group">
             <label>Select Friends</label>
             <select multiple className="form-control" name="guests">
               {guests.map(guest => (
                 <option key={guest}>{guest}</option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           <div className="form-group">
             <button type="submit" className="btn btn-primary">
@@ -150,4 +135,4 @@ export class Form extends Component {
 }
 
 //후에 친구 목록 getFriends 만들어야함!
-export default connect(null, { addInvitation })(Form);
+export default connect(null, { addEvent })(Form);
