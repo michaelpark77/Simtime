@@ -10,12 +10,13 @@ export class Form extends Component {
     event_time: "",
     status: "",
     message: "",
-    guests: ["ara", "aaa", "guest1", "guest2", "guest3", "guest4"],
+    guests: ["ara", "ara2", "ara11", "guest2", "guest3", "guest4"],
     created_at: ""
   };
 
   static propTypes = {
-    addInvitation: PropTypes.func.isRequired
+    addInvitation: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -42,12 +43,12 @@ export class Form extends Component {
     this.props.addInvitation(invitation);
 
     this.setState({
-      host: "araa",
+      host: "unknown",
       event_date: "",
       event_time: "",
       status: "",
       message: "",
-      guests: ["ara", "aaa", "guest1", "guest2", "guest3", "guest4"],
+      guests: ["ara", "ara2", "ara11", "guest2", "guest3", "guest4"],
       created_at: ""
     });
     // ,guests,    created_at}
@@ -63,27 +64,23 @@ export class Form extends Component {
       message,
       guests
     } = this.state;
+
+    const { isAuthenticated, user } = this.props.auth;
+
     return (
       <div className="card card-body mt-4 mb-4">
         <h2>ADD Invitation</h2>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label>Host : </label>
-            <input
-              type="text"
-              name="host"
-              onChange={this.onChange}
-              value={host}
-            />
-            <br />
-            <label>Date : </label>
+            <p>Host : {user.username} </p>
+            <label>Date :</label>
             <input
               type="date"
               name="event_date"
               onChange={this.onChange}
               value={event_date}
             />
-            <label>Time : </label>
+            <label> Time :</label>
             <input
               type="time"
               name="event_time"
@@ -93,7 +90,7 @@ export class Form extends Component {
           </div>
 
           <div className="form-group">
-            <label>Status</label>
+            <label>Status :</label>
             <input
               type="radio"
               name="status"
@@ -148,6 +145,8 @@ export class Form extends Component {
     );
   }
 }
-
+const mapStateToProps = state => ({
+  auth: state.auth
+});
 //후에 친구 목록 getFriends 만들어야함!
-export default connect(null, { addInvitation })(Form);
+export default connect(mapStateToProps, { addInvitation })(Form);
