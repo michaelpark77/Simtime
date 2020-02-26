@@ -24,7 +24,7 @@ export const getInvitations = () => (dispatch, getState) => {
     );
 };
 
-export const addInvitation = invitation => dispatch => {
+export const addInvitation = invitation => (dispatch, getState) => {
   axios
     .post("/api/invitations/", invitation, tokenConfig(getState))
     .then(res => {
