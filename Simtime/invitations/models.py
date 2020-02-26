@@ -36,10 +36,7 @@ class Attendance(models.TextChoices):
     No = 'No'
     Unknown = "Waiting for a response"
 
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/master
 class Event(CustomizedModel):
     # 추후에 EvnetType 테이블 정의, ForeignKey
     objects = models.Manager()
@@ -61,7 +58,4 @@ class Invitation(CustomizedModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name = 'invitations')
     guest = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'invitations')
     attendance = models.CharField(max_length=25, choices=Attendance.choices, default=Attendance.Unknown)
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/master
