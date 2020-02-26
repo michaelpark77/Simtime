@@ -66,14 +66,11 @@ class Event(CustomizedModel):
 
     message = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    guests = models.ManyToManyField(User,
-                                    through='Invitation',
-                                    through_fields=('event', 'guest',))
 
 
 # Create your models here.
 class Invitation(CustomizedModel):
     objects = models.Manager()
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name = 'invitation')
     guest = models.ForeignKey(User, on_delete=models.CASCADE)
-    attendance = models.CharField(max_length=15, choices=Attendance.choices, default=Attendance.Unknown)
+    attendance = models.CharField(max_length=25, choices=Attendance.choices, default=Attendance.Unknown)
