@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import { getEvents, deleteEvent } from "../../actions/events";
+import { getEvents, deleteEvent, editEvent } from "../../actions/events";
 import { connect } from "react-redux";
 
 export class Events extends Component {

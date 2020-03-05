@@ -55,7 +55,7 @@ export class EventForm extends Component {
           <div className="form-group">
             <label>Host </label>
             <input
-              type="hidden"
+              type="text"
               name="host"
               onChange={this.onChange}
               value={user.username}

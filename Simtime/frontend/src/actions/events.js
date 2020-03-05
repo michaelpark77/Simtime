@@ -6,6 +6,7 @@ import {
   GET_EVENTS,
   ADD_EVENT,
   DELETE_EVENT,
+  EDIT_EVENT,
   GET_ERRORS,
   CREATE_MESSAGE
 } from "./types";
@@ -47,6 +48,18 @@ export const deleteEvent = id => (dispatch, getState) => {
       dispatch(createMessage({ deleteEvent: "Event Deleted" }));
       dispatch({
         type: DELETE_EVENT,
+        payload: id
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+export const editEvent = id => (dispatch, getState) => {
+  axios
+    .put(`/api/events/${id}`, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: EDIT_EVENT,
         payload: id
       });
     })
