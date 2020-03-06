@@ -9,13 +9,14 @@ import Login from "./accounts/Login";
 import Register from "./accounts/Register";
 import Dashboard from "./invitations/Dashboard";
 import PrivateRoute from "./common/privateRoute";
-
+import Form from "./Input";
 //redux
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
 
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+import Interaction from "./Interaction";
 
 const alertOptions = {
   timeout: 3000,
@@ -34,6 +35,7 @@ class App extends Component {
           <HashRouter>
             <Fragment>
               <Header />
+              <Form />
               <Alerts />
               <div className="container">
                 <Switch>
@@ -43,6 +45,7 @@ class App extends Component {
                 </Switch>
               </div>
             </Fragment>
+            {/* <Interaction /> */}
           </HashRouter>
         </AlertProvider>
       </Provider>
