@@ -1,10 +1,16 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import { getEvents, deleteEvent, editEvent } from "../../actions/events";
+import {
+  getEvents,
+  getEvent,
+  deleteEvent,
+  editEvent
+} from "../../actions/events";
 import { connect } from "react-redux";
 
 import ModalPortal from "../ModalPortal";
 import Modal from "../layout/Modal";
+import { EventForm } from "./EventForm";
 
 export class Events extends Component {
   static propTypes = {
@@ -17,6 +23,7 @@ export class Events extends Component {
   state = {
     modal: false
   };
+
   handleOpenModal = () => {
     this.setState({
       modal: true
@@ -76,7 +83,7 @@ export class Events extends Component {
         </table>
         {this.state.modal && (
           <ModalPortal>
-            <Modal onClose={this.handleCloseModal} />
+            <Modal contents={<EventForm />} onClose={this.handleCloseModal} />
           </ModalPortal>
         )}
       </Fragment>

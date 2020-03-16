@@ -13,21 +13,22 @@ const MyModal = styled.div`
   justify-content: center;
 `;
 
-const Contents = styled.div`
+const ContentWrap = styled.div`
   background: white;
   padding: 1rem;
   width: 400px;
   height: auto;
 `;
 
-const Modal = ({ onClose }) => {
+const Modal = ({ contents, onClose }) => {
   return (
     <MyModal>
-      <Contents>
+      <ContentWrap>
         <h3>모달달달</h3>
         <p>모달입니다. 반갑습니다.</p>
+        {contents}
         <button onClick={onClose}>닫기</button>
-      </Contents>
+      </ContentWrap>
     </MyModal>
   );
 };

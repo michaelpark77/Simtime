@@ -25,6 +25,20 @@ export const getEvents = () => (dispatch, getState) => {
     );
 };
 
+export const getEvent = id => (dispatch, getState) => {
+  axios
+    .get(`/api/events/${id}`, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: GET_EVENTS,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
 export const addEvent = event => (dispatch, getState) => {
   axios
     .post("/api/events/", event, tokenConfig(getState))

@@ -4,19 +4,45 @@ import { addEvent } from "../../actions/events";
 import PropTypes from "prop-types";
 
 export class EventForm extends Component {
-  state = {
-    host: null,
-    event_name: "",
-    event_at: "",
-    status: "CLOSED",
-    message: ""
-  };
+  // static propTypes = {
+  //   addEvent: PropTypes.func.isRequired,
+  //   auth: PropTypes.object.isRequired,
+  //   event: PropTypes.shape({
+  //     host: PropTypes.string,
+  //     event_name: PropTypes.string,
+  //     event_at: PropTypes.string,
+  //     status: PropTypes.string,
+  //     message: PropTypes.string
+  //   })
+  // };
 
   static propTypes = {
-    addEvent: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
+    addEvent: PropTypes.func,
+    auth: PropTypes.object,
+    event: PropTypes.shape({
+      host: PropTypes.string,
+      event_name: PropTypes.string,
+      event_at: PropTypes.string,
+      status: PropTypes.string,
+      message: PropTypes.string
+    })
   };
 
+  static defaultProps = {
+    addEvent: addEvent,
+    auth: { user: { id: "", username: "" } },
+    event: {
+      host: null,
+      event_name: "",
+      event_at: "",
+      status: "CLOSED",
+      message: ""
+    }
+  };
+
+  state = this.props.event;
+
+  //functions
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   handleSubmit = (host, status) => {
@@ -142,5 +168,6 @@ export class EventForm extends Component {
 const mapStateToProps = state => ({
   auth: state.auth
 });
+
 //후에 친구 목록 getFriends 만들어야함!
 export default connect(mapStateToProps, { addEvent })(EventForm);
