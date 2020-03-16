@@ -1,21 +1,35 @@
-// Modal
-const modalRoot = document.getElementById("modal-root");
+import React from "react";
+import styled from "styled-components";
 
-class Modal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.el = document.createElement("div");
-  }
+const MyModal = styled.div`
+  background: rgba(0, 0, 0, 0.25);
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
-  componentDidMount() {
-    modalRoot.appendChild(this.el);
-  }
+const Contents = styled.div`
+  background: white;
+  padding: 1rem;
+  width: 400px;
+  height: auto;
+`;
 
-  componentWillUnmount() {
-    modalRoot.removeChild(this.el);
-  }
+const Modal = ({ onClose }) => {
+  return (
+    <MyModal>
+      <Contents>
+        <h3>모달달달</h3>
+        <p>모달입니다. 반갑습니다.</p>
+        <button onClick={onClose}>닫기</button>
+      </Contents>
+    </MyModal>
+  );
+};
 
-  render() {
-    return ReactDOM.createPortal(this.props.children, this.el);
-  }
-}
+export default Modal;

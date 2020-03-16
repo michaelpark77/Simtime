@@ -3,11 +3,29 @@ import PropTypes from "prop-types";
 import { getEvents, deleteEvent, editEvent } from "../../actions/events";
 import { connect } from "react-redux";
 
+import ModalPortal from "../ModalPortal";
+import Modal from "../layout/Modal";
+
 export class Events extends Component {
   static propTypes = {
     events: PropTypes.array.isRequired,
     getEvents: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired
+  };
+
+  //Modal
+  state = {
+    modal: false
+  };
+  handleOpenModal = () => {
+    this.setState({
+      modal: true
+    });
+  };
+  handleCloseModal = () => {
+    this.setState({
+      modal: false
+    });
   };
 
   componentDidMount() {
@@ -48,12 +66,19 @@ export class Events extends Component {
                   >
                     Delete
                   </button>
-                  <button className="btn btn-sm">edit</button>
+                  <button className="btn btn-sm" onClick={this.handleOpenModal}>
+                    edit
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {this.state.modal && (
+          <ModalPortal>
+            <Modal onClose={this.handleCloseModal} />
+          </ModalPortal>
+        )}
       </Fragment>
     );
   }
