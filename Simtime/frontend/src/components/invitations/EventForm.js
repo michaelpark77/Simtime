@@ -1,82 +1,48 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addEvent } from "../../actions/events";
+import { getEvent, addEvent } from "../../actions/events";
 import PropTypes from "prop-types";
 
+import produce from "immer";
+
 export class EventForm extends Component {
-  // static propTypes = {
-  //   addEvent: PropTypes.func.isRequired,
-  //   auth: PropTypes.object.isRequired,
-  //   event: PropTypes.shape({
-  //     host: PropTypes.string,
-  //     event_name: PropTypes.string,
-  //     event_at: PropTypes.string,
-  //     status: PropTypes.string,
-  //     message: PropTypes.string
-  //   })
-  // };
-
-  static propTypes = {
-    addEvent: PropTypes.func,
-    auth: PropTypes.object,
-    event: PropTypes.shape({
-      host: PropTypes.string,
-      event_name: PropTypes.string,
-      event_at: PropTypes.string,
-      status: PropTypes.string,
-      message: PropTypes.string
-    })
+  initialEvent = {
+    host: null,
+    event_name: "",
+    event_at: "",
+    status: "CLOSED",
+    message: ""
   };
 
-  static defaultProps = {
-    addEvent: addEvent,
-    auth: { user: { id: "", username: "" } },
-    event: {
-      host: null,
-      event_name: "",
-      event_at: "",
-      status: "CLOSED",
-      message: ""
-    }
-  };
-
-  state = this.props.event;
+  state = this.initialEvent;
 
   //functions
   onChange = e => this.setState({ [e.target.name]: e.target.value });
-
   handleSubmit = (host, status) => {
     return e => {
       e.preventDefault();
       const { event_name, event_at, status, message } = this.state;
-
-      const event = {
-        host,
-        event_name,
-        event_at,
-        status,
-        message
-      };
-
+      const event = { host, event_name, event_at, status, message };
       this.props.addEvent(event);
 
-      this.setState({
-        event_name: "",
-        event_at: "",
-        status: "CLOSED",
-        message: ""
-      });
-
+      //초기화
+      this.setState(this.initialEvent);
       console.log("submit Event");
     };
   };
+
+  componentDidMount() {
+    if (this.props.isEdit) {
+      console.log("componentDidMount ", this.props);
+      this.props.getEvent(this.props.eventId);
+    }
+  }
 
   render() {
     const { event_name, event_at, message } = this.state;
     const { user } = this.props.auth;
     return (
       <div className="card card-body mt-4 mb-4">
-        <h2>ADD Event</h2>
         <form onSubmit={this.handleSubmit(user.id, status)}>
           <div className="form-group">
             <label>Host </label>
@@ -163,11 +129,36 @@ export class EventForm extends Component {
       </div>
     );
   }
+
+  static propTypes = {
+    getEvent: PropTypes.func,
+    addEvents: PropTypes.func,
+    auth: PropTypes.object,
+    isEdit: PropTypes.bool,
+    eventId: PropTypes.number
+
+    // event: PropTypes.shape({
+    //   host: PropTypes.string,
+    //   event_name: PropTypes.string,
+    //   event_at: PropTypes.string,
+    //   status: PropTypes.string,
+    //   message: PropTypes.string
+    // })
+  };
+
+  static defaultProps = {
+    addEvent: addEvent,
+    getEvent: getEvent,
+    auth: { user: { id: "", username: "" } },
+    isEdit: false,
+    eventId: null
+  };
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  event: state.events.selectedEvent
 });
 
 //후에 친구 목록 getFriends 만들어야함!
-export default connect(mapStateToProps, { addEvent })(EventForm);
+export default connect(mapStateToProps, { getEvent, addEvent })(EventForm);

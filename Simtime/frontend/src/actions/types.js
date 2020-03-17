@@ -3,9 +3,10 @@ export const ADD_INVITATION = "ADD_INVITATION";
 export const DELETE_INVITATION = "DELETE_INVITATION";
 
 export const GET_EVENTS = "GET_EVENTS";
+export const GET_EVENT = "GET_EVENT";
 export const ADD_EVENT = "ADD_EVENT";
 export const DELETE_EVENT = "DELETE_EVENT";
-export const EDIT_EVENT = "EDIT_EVENT";
+export const UPDATE_EVENT = "UPDATE_EVENT";
 
 export const GET_ERRORS = "GET_ERRORS";
 

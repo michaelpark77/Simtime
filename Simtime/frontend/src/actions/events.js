@@ -4,9 +4,10 @@ import { tokenConfig } from "./auth";
 
 import {
   GET_EVENTS,
+  GET_EVENT,
   ADD_EVENT,
   DELETE_EVENT,
-  EDIT_EVENT,
+  UPDATE_EVENT,
   GET_ERRORS,
   CREATE_MESSAGE
 } from "./types";
@@ -26,11 +27,13 @@ export const getEvents = () => (dispatch, getState) => {
 };
 
 export const getEvent = id => (dispatch, getState) => {
+  console.log("getEvent ", getState);
+
   axios
     .get(`/api/events/${id}`, tokenConfig(getState))
     .then(res => {
       dispatch({
-        type: GET_EVENTS,
+        type: GET_EVENT,
         payload: res.data
       });
     })
@@ -68,12 +71,12 @@ export const deleteEvent = id => (dispatch, getState) => {
     .catch(err => console.log(err));
 };
 
-export const editEvent = id => (dispatch, getState) => {
+export const updateEvent = id => (dispatch, getState) => {
   axios
     .put(`/api/events/${id}`, tokenConfig(getState))
     .then(res => {
       dispatch({
-        type: EDIT_EVENT,
+        type: UPDATE_EVENT,
         payload: id
       });
     })

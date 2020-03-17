@@ -1,11 +1,6 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import {
-  getEvents,
-  getEvent,
-  deleteEvent,
-  editEvent
-} from "../../actions/events";
+import { getEvents, deleteEvent } from "../../actions/events";
 import { connect } from "react-redux";
 
 import ModalPortal from "../ModalPortal";
@@ -21,17 +16,20 @@ export class Events extends Component {
 
   //Modal
   state = {
-    modal: false
+    modal: false,
+    event: null
   };
 
-  handleOpenModal = () => {
+  handleOpenModal = id => {
     this.setState({
-      modal: true
+      modal: true,
+      eventId: id
     });
   };
   handleCloseModal = () => {
     this.setState({
-      modal: false
+      modal: false,
+      event: null
     });
   };
 
@@ -73,7 +71,10 @@ export class Events extends Component {
                   >
                     Delete
                   </button>
-                  <button className="btn btn-sm" onClick={this.handleOpenModal}>
+                  <button
+                    className="btn btn-sm"
+                    onClick={this.handleOpenModal.bind(this, event.id)}
+                  >
                     edit
                   </button>
                 </td>
@@ -81,9 +82,15 @@ export class Events extends Component {
             ))}
           </tbody>
         </table>
+
         {this.state.modal && (
           <ModalPortal>
-            <Modal contents={<EventForm />} onClose={this.handleCloseModal} />
+            <Modal
+              contents={
+                <EventForm isEdit={true} eventId={this.state.eventId} />
+              }
+              onClose={this.handleCloseModal}
+            />
           </ModalPortal>
         )}
       </Fragment>

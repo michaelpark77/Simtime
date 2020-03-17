@@ -20,14 +20,18 @@ const ContentWrap = styled.div`
   height: auto;
 `;
 
+const CloseBtn = styled.button`
+  background: white;
+`;
+
 const Modal = ({ contents, onClose }) => {
   return (
     <MyModal>
       <ContentWrap>
+        <CloseBtn onClick={onClose}>X</CloseBtn>
         <h3>모달달달</h3>
         <p>모달입니다. 반갑습니다.</p>
         {contents}
-        <button onClick={onClose}>닫기</button>
       </ContentWrap>
     </MyModal>
   );
