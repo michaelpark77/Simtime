@@ -197,3 +197,4 @@ sketch
 .history
 
 # End of https://www.gitignore.io/api/react,django,python,visualstudiocode
+Simtime/frontend/static/frontend/main.js
