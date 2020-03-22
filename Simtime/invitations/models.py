@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
-from django.contrib.auth.models import User
-
+from django.conf import settings
+# from django.contrib.auth.models import User as User
 
 # Model의 관계
 # https://nachwon.github.io/django-relationship/
@@ -41,7 +41,7 @@ class Event(CustomizedModel):
     # 추후에 EvnetType 테이블 정의, ForeignKey
     objects = models.Manager()
     # related_name: User가 가지고 있는 invitations들을 조회, user.event.all()이 가능해짐
-    host = models.ForeignKey(User, on_delete=models.CASCADE, related_name='events')
+    host = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='events')
     event_name = models.CharField(max_length=200, blank=False)
     event_at = models.DateTimeField(blank=False)
     status = models.CharField(max_length=10,
@@ -56,6 +56,6 @@ class Event(CustomizedModel):
 class Invitation(CustomizedModel):
     objects = models.Manager()
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name = 'invitations')
-    guest = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'invitations')
+    guest = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name = 'invitations')
     attendance = models.CharField(max_length=25, choices=Attendance.choices, default=Attendance.Unknown)
 

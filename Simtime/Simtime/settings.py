@@ -16,6 +16,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 secret_file = os.path.join(BASE_DIR, 'secrets.json')
 
 with open(secret_file) as f:
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+  
 ]
 
 REST_FRAMEWORK = {
@@ -64,6 +66,8 @@ REST_FRAMEWORK = {
     ('knox.auth.TokenAuthentication', )
     # Tuple에서 ,를 제외하면 string으로 인식한다.
 }
+
+AUTH_USER_MODEL = "accounts.Account"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
