@@ -8,5 +8,5 @@ class Gender(models.TextChoices):
 
 # Create your models here.
 class Account(AbstractUser):
-        date_of_birth = models.DateField()
+        date_of_birth = models.DateField(null=True)
         gender = models.CharField(max_length=6, choices=Gender.choices, default=Gender.Custom)

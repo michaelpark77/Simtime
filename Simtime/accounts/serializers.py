@@ -1,17 +1,16 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from .models import Account
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = Account
         fields = ('id', 'username', 'email')
-
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = Account
         fields = ('id', 'username', 'email', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
@@ -22,12 +21,12 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "This field may not be blank.")
 
-        if User.objects.filter(email=norm_email).exists():
+        if Account.objects.filter(email=norm_email).exists():
             raise serializers.ValidationError("Not unique email")
         return norm_email
 
     def create(self, validate_data):
-        user = User.objects.create_user(
+        user = Account.objects.create_user(
             validate_data['username'], validate_data['email'], validate_data['password']
         )
         return user
