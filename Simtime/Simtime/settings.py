@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'frontend',
     'invitations',
-    'knox',
+    # 'knox',
     'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -178,3 +178,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+# STATICFILES_DIRS=[
+#     os.path.join(BASE_DIR, 'Simtime', 'assets')
+# ]
+
+# MEDIA_URL='/media/'
+# MEDIA_ROOT=os.path.join(BASE_DIR, 'media/')

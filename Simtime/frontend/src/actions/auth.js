@@ -1,4 +1,6 @@
 import axios from "axios";
+import { setCookie, getCookie } from "./cookie"
+import { axiosInstance } from "./axiosApi"
 import { returnErrors } from "./messages";
 import {
   USER_LOADED,
@@ -11,10 +13,10 @@ import {
   REGISTER_FAIL
 } from "./types";
 
-//Setup config with token
 export const tokenConfig = getState => {
-  const token = getState().auth.token;
-  console.log(token);
+  console.log(getState());
+  const token = getCookie("tk_access");
+
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -23,7 +25,7 @@ export const tokenConfig = getState => {
 
   // If token, add to headers config
   if (token) {
-    config.headers["Authorization"] = `Token ${token}`;
+    config.headers["Authorization"] = `JWT ${token}`;
   }
 
   return config;
@@ -36,7 +38,7 @@ export const loadUser = () => (dispatch, getState) => {
 
   //
   axios
-    .get("/api/auth/user", tokenConfig(getState))
+    .get("/api/auth/user/", tokenConfig(getState))
     .then(res => {
       dispatch({
         type: USER_LOADED,
@@ -53,29 +55,30 @@ export const loadUser = () => (dispatch, getState) => {
 
 // LOGIN USER
 export const login = (username, password) => dispatch => {
-  const config = {
-    // Haders
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-  // Request Body
-  const body = JSON.stringify({ username, password });
-  axios
-    .post("/api/auth/login", body, config)
-    .then(res => {
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data
-      });
-    })
-    .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({
-        type: LOGIN_FAIL
-      });
-    });
+    // Request Body
+    const body = JSON.stringify({ username, password });
+    axiosInstance
+      .post('api/token/obtain/', body)
+      .then(res => {
+        console.log(res.data);
+        setCookie('tk_access', res.data.access, 10 );
+        setCookie('tk_refresh', res.data.refresh, 10 );
+        // setCookie('user', res.data.refresh, 10 );
+        dispatch({
+          type: LOGIN_SUCCESS
+        });
+      })
+      .then("")
+      
+      
+      .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+              type: LOGIN_FAIL
+            });
+          });
 };
+
 
 // Logout
 export const logout = () => (dispatch, getState) => {

@@ -6,7 +6,7 @@ import Events from "./Events";
 export default function Dashboard() {
   return (
     <Fragment>
-      <EventForm />
+      {/* <EventForm /> */}
       <Events />
     </Fragment>
   );
