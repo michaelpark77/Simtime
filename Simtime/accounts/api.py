@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+# from knox.models import AuthToken
+from .serializers import UserSerializer, LoginSerializer
 
 
 # class RegisterAPI(generics.GenericAPIView):
@@ -39,12 +39,13 @@ from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
 #         })
 
 
-# class UserAPI(generics.RetrieveAPIView):
-#     permission_classes = [
-#         permissions.IsAuthenticated
-#     ]
-
+# class UserAPI(generics.GenericAPIView):
+#     permission_classes = (permissions.IsAuthenticated,)
 #     serializer_class = UserSerializer
 
 #     def get_object(self):
-#         return self.request.user
+#                 try:
+#             return Account.objects.get(pk=pk)
+#         except Account.DoesNotExist:
+#             return Response(status=status.HTTP_404_NOT_FOUND)
+    

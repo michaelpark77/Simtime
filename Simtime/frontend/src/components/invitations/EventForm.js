@@ -4,18 +4,6 @@ import { addEvent } from "../../actions/events";
 import PropTypes from "prop-types";
 
 export class EventForm extends Component {
-  // static propTypes = {
-  //   addEvent: PropTypes.func.isRequired,
-  //   auth: PropTypes.object.isRequired,
-  //   event: PropTypes.shape({
-  //     host: PropTypes.string,
-  //     event_name: PropTypes.string,
-  //     event_at: PropTypes.string,
-  //     status: PropTypes.string,
-  //     message: PropTypes.string
-  //   })
-  // };
-
   static propTypes = {
     addEvent: PropTypes.func,
     auth: PropTypes.object,
@@ -30,7 +18,7 @@ export class EventForm extends Component {
 
   static defaultProps = {
     addEvent: addEvent,
-    auth: { user: { id: "", username: "" } },
+    auth: { user: { id: null, username: null, email: null } },
     event: {
       host: null,
       event_name: "",
@@ -49,7 +37,6 @@ export class EventForm extends Component {
     return e => {
       e.preventDefault();
       const { event_name, event_at, status, message } = this.state;
-
       const event = {
         host,
         event_name,
@@ -71,13 +58,14 @@ export class EventForm extends Component {
     };
   };
 
+
   render() {
     const { event_name, event_at, message } = this.state;
     const { user } = this.props.auth;
     return (
       <div className="card card-body mt-4 mb-4">
         <h2>ADD Event</h2>
-        <form onSubmit={this.handleSubmit(user.id, status)}>
+        <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label>Host </label>
             <input

@@ -6,10 +6,7 @@ from .serializers import InvitationSerializer, EventSerializer
 
 class EventsViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
-
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = EventSerializer
 
     def get_queryset(self):
