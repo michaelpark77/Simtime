@@ -22,7 +22,7 @@ export class EventForm extends Component {
     addEvent: addEvent,
     auth: { user: { id: null, username: null, email: null } },
     event: {
-      host: null,
+      host: "unknown",
       event_name: "",
       event_at: "",
       status: "CLOSED",
@@ -59,7 +59,8 @@ export class EventForm extends Component {
 
   render() {
     const { event_name, event_at, message } = this.state;
-    const { user } = this.props.auth;
+    const { user } = this.props.auth;    
+
     return (
       <div className="card card-body mt-4 mb-4">
         <h2>{this.props.eventId ? "ADD" : "Edit"} Event</h2>
@@ -70,7 +71,7 @@ export class EventForm extends Component {
             <input
               type="text"
               name="host"
-              value={user.username}
+              value={ user.usernam ? this.props.auth.user.username : "unknown"}
               readOnly
             />
           </div>
