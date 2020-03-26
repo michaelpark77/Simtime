@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { Provider } from "react-redux";
+import store from "../../store";
 
 const MyModal = styled.div`
   background: rgba(0, 0, 0, 0.25);
@@ -22,14 +24,15 @@ const ContentWrap = styled.div`
 
 const Modal = ({ contents, onClose }) => {
   return (
+  <Provider store={store}>
     <MyModal>
       <ContentWrap>
-        <h3>모달달달</h3>
-        <p>모달입니다. 반갑습니다.</p>
         {contents}
         <button onClick={onClose}>닫기</button>
       </ContentWrap>
     </MyModal>
+    </Provider>
+
   );
 };
 

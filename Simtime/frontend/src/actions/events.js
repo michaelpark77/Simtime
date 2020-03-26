@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
-import { tokenConfig } from "./auth";
+import { axiosInstance } from "./axiosApi";
 
 import {
   GET_EVENTS,
@@ -11,9 +11,9 @@ import {
   CREATE_MESSAGE
 } from "./types";
 
-export const getEvents = () => (dispatch, getState) => {
-  axios
-    .get("/api/events/", tokenConfig(getState))
+export const getEvents = () => (dispatch) => {
+  axiosInstance
+    .get("/api/events/" )
     .then(res => {
       dispatch({
         type: GET_EVENTS,
@@ -25,9 +25,9 @@ export const getEvents = () => (dispatch, getState) => {
     );
 };
 
-export const getEvent = id => (dispatch, getState) => {
-  axios
-    .get(`/api/events/${id}`, tokenConfig(getState))
+export const getEvent = id => (dispatch) => {
+  axiosInstance
+    .get(`/api/events/${id}`)
     .then(res => {
       dispatch({
         type: GET_EVENTS,
@@ -39,9 +39,9 @@ export const getEvent = id => (dispatch, getState) => {
     );
 };
 
-export const addEvent = event => (dispatch, getState) => {
-  axios
-    .post("/api/events/", event, tokenConfig(getState))
+export const addEvent = event => (dispatch) => {
+  axiosInstance
+  .post("/api/events/create", event)
     .then(res => {
       dispatch({
         type: ADD_EVENT,
@@ -55,9 +55,9 @@ export const addEvent = event => (dispatch, getState) => {
     });
 };
 
-export const deleteEvent = id => (dispatch, getState) => {
-  axios
-    .delete(`/api/events/${id}`, tokenConfig(getState))
+export const deleteEvent = id => (dispatch) => {
+  axiosInstance
+    .delete(`/api/events/${id}`)
     .then(res => {
       dispatch(createMessage({ deleteEvent: "Event Deleted" }));
       dispatch({
@@ -68,9 +68,9 @@ export const deleteEvent = id => (dispatch, getState) => {
     .catch(err => console.log(err));
 };
 
-export const editEvent = id => (dispatch, getState) => {
-  axios
-    .put(`/api/events/${id}`, tokenConfig(getState))
+export const editEvent = id => (dispatch) => {
+  axiosInstance
+    .put(`/api/events/${id}`)
     .then(res => {
       dispatch({
         type: EDIT_EVENT,

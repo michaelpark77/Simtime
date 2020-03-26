@@ -83,7 +83,7 @@ export class Events extends Component {
         </table>
         {this.state.modal && (
           <ModalPortal>
-            <Modal contents={<EventForm />} onClose={this.handleCloseModal} />
+            <Modal contents={<EventForm eventId={event.id}/>} onClose={this.handleCloseModal} />
           </ModalPortal>
         )}
       </Fragment>

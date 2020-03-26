@@ -1,5 +1,7 @@
 import axios from "axios";
+import { axiosInstance } from "./axiosApi"
 import { returnErrors } from "./messages";
+import { setCookie, getCookie } from "./cookie"
 import {
   USER_LOADED,
   USER_LOADING,
@@ -11,33 +13,14 @@ import {
   REGISTER_FAIL
 } from "./types";
 
-//Setup config with token
-export const tokenConfig = getState => {
-  const token = getState().auth.token;
-  console.log(token);
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-
-  // If token, add to headers config
-  if (token) {
-    config.headers["Authorization"] = `Token ${token}`;
-  }
-
-  return config;
-};
-
 // CHECK THE TOKEN & LOAD USER
-export const loadUser = () => (dispatch, getState) => {
+export const loadUser = () => (dispatch) => {
   // User Loading
   dispatch({ type: USER_LOADING });
-
-  //
-  axios
-    .get("/api/auth/user", tokenConfig(getState))
+  axiosInstance
+    .get("/api/auth/account/")
     .then(res => {
+      console.log(res.data)
       dispatch({
         type: USER_LOADED,
         payload: res.data
@@ -53,34 +36,35 @@ export const loadUser = () => (dispatch, getState) => {
 
 // LOGIN USER
 export const login = (username, password) => dispatch => {
-  const config = {
-    // Haders
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-  // Request Body
-  const body = JSON.stringify({ username, password });
-  axios
-    .post("/api/auth/login", body, config)
-    .then(res => {
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data
-      });
-    })
-    .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({
-        type: LOGIN_FAIL
-      });
-    });
+    // Request Body
+    const body = JSON.stringify({ username, password });
+    axiosInstance
+      .post('api/token/obtain/', body)
+      .then(res => {
+        //쿠키 저장
+        setCookie('access', res.data.access, 10 );
+        setCookie('refresh', res.data.refresh, 10 );
+        //instance header 설정
+        axiosInstance.defaults.headers['Authorization'] = "JWT " + getCookie('access');
+        //dispatch
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: res.data.user
+        });
+      })
+      .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
+            dispatch({
+              type: LOGIN_FAIL
+            });
+          });
 };
 
+
 // Logout
-export const logout = () => (dispatch, getState) => {
-  axios
-    .post("/api/auth/logout", null, tokenConfig(getState))
+export const logout = () => (dispatch) => {
+  axiosInstance
+    .post("/api/auth/logout", null)
     .then(res => {
       dispatch({
         type: LOGOUT

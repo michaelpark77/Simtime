@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link,Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -39,6 +39,9 @@ export class Register extends Component {
 
   render() {
     const { username, email, password, password2 } = this.state;
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">

@@ -1,7 +1,9 @@
-from rest_framework import routers
-from .api import InvitationsViewSet,EventsViewSet
+from django.urls import path, include
+from .api import EventAPI, EventDetailAPI
 
-router = routers.DefaultRouter()
-router.register('api/invitations', InvitationsViewSet, 'invitations')
-router.register('api/events', EventsViewSet, 'events')
-urlpatterns = router.urls
+urlpatterns = [
+    path('api/events/', EventAPI.as_view(), name='events'),
+    path('api/events/<int:pk>', EventDetailAPI.as_view(), name='events'),  
+    path('api/events/create', EventAPI.as_view(), name='events_create'),  
+
+]
