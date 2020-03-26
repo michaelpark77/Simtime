@@ -1,6 +1,14 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenVerifySerializer
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import UntypedToken
+from jwt import decode as jwt_decode
+
 from rest_framework.response import Response
 from rest_framework import exceptions, serializers
+
+
+from django.conf import settings
+
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     #@classmethod 정적메소드(첫번째 인자에 cls를 넣는다.)
@@ -26,14 +34,12 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['user'] = userInfo
         return data
 
-
+#https://github.com/SimpleJWT/django-rest-framework-simplejwt/issues/118
 class MyTokenVerifySerializer(TokenVerifySerializer):
     token = serializers.CharField()
 
-    def validate(self, token):
-        data = super().validate(token)
-
-        # Add extra responses here
-        user_token_info = jwt.decode(data['token'], SECRET_KEY, algorithm = 'HS256')
-        data['id'] = user_token_info['user_id']
+    def validate(self, attrs):
+        # UntypedToken(attrs['token'])
+        data = jwt_decode(attrs['token'], settings.SECRET_KEY, algorithms=['HS256'])
+        data = {'id': data['user_id']}
         return data

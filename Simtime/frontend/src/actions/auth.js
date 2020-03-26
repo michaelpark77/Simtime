@@ -18,7 +18,7 @@ export const loadUser = () => (dispatch) => {
   // User Loading
   dispatch({ type: USER_LOADING });
   axiosInstance
-    .get("api/token/verify/")
+    .get("/api/auth/account/")
     .then(res => {
       console.log(res.data)
       dispatch({

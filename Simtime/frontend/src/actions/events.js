@@ -41,7 +41,7 @@ export const getEvent = id => (dispatch) => {
 
 export const addEvent = event => (dispatch) => {
   axiosInstance
-    .post("/api/events/", event)
+  .post("/api/events/create", event)
     .then(res => {
       dispatch({
         type: ADD_EVENT,

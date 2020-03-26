@@ -1,5 +1,5 @@
 from rest_framework.renderers import JSONRenderer
-from rest_framework import permissions, status,generics
+from rest_framework import permissions, status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -14,14 +14,6 @@ from .models import Account
 #tokens
 class ObtainTokenPair(TokenObtainPairView):
     permission_classes = (permissions.AllowAny,)
-    serializer_class = MyTokenObtainPairSerializer
-
-# class TokenVerify(TokenVerifyView):
-#     permission_classes = (permissions.AllowAny,)
-#     serializer_class = MyTokenVerifySerializer
-
-class getUser(TokenUser):
-    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = MyTokenObtainPairSerializer
 
 # Create
@@ -68,14 +60,29 @@ class AccountDetailAPI(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class UserAPI(generics.RetrieveAPIView):
+class AccountLoadAPI(generics.RetrieveAPIView):
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = AccountSerializer
+    serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
 
     def get_queryset(self):
         account = self.get_object()
-        serializer = AccountSerializer(account)
+        serializer = UserSerializer(account)
+        print(serializer.data)
+        return Response(serializer.data)
+
+
+class TokenVerify(TokenVerifyView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = MyTokenVerifySerializer
+
+    def get_object(self):
+        return self.request.user
+
+    def get_queryset(self):
+        account = self.get_object()
+        serializer = UserSerializer(account)
+        print(serializer.data)
         return Response(serializer.data)
