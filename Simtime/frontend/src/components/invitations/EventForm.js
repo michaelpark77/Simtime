@@ -71,7 +71,7 @@ export class EventForm extends Component {
             <input
               type="text"
               name="host"
-              value={ user.usernam ? this.props.auth.user.username : "unknown"}
+              value={ user.username ? this.props.auth.user.username : "unknown"}
               readOnly
             />
           </div>
