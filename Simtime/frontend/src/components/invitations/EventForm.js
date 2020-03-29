@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 export class EventForm extends Component {
   static propTypes = {
     eventId: PropTypes.number,
+    getEvent: PropTypes.func,
     addEvent: PropTypes.func,
     auth: PropTypes.object,
     event: PropTypes.shape({
@@ -20,6 +21,7 @@ export class EventForm extends Component {
   static defaultProps = {
     eventId: null,
     addEvent: addEvent,
+    getEvent: getEvent,
     auth: { user: { id: null, username: null, email: null } },
     event: {
       host: "unknown",
@@ -30,7 +32,9 @@ export class EventForm extends Component {
     }
   };
 
-  state = this.props.event;
+  state = {
+    event: event
+  }
 
   //functions
   onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -51,6 +55,7 @@ export class EventForm extends Component {
   };
 
   componentDidMount(){
+    console.log("Form : " , this.props.eventId)
     if (this.props.eventId){
       this.props.getEvent(eventId)
     }
@@ -153,8 +158,9 @@ export class EventForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  event: state.event
 });
 
 //후에 친구 목록 getFriends 만들어야함!
-export default connect(mapStateToProps, { addEvent })(EventForm);
+export default connect(mapStateToProps, { addEvent, getEvent })(EventForm);

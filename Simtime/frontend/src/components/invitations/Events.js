@@ -8,7 +8,6 @@ import {
 } from "../../actions/events";
 import { connect } from "react-redux";
 
-import ModalPortal from "../ModalPortal";
 import Modal from "../layout/Modal";
 import { EventForm } from "./EventForm";
 
@@ -21,22 +20,27 @@ export class Events extends Component {
 
   //Modal
   state = {
-    modal: false
+    modal: false,
+    eventId: 10
   };
 
-  handleOpenModal = () => {
+  handleOpenModal = (id) => {
     this.setState({
-      modal: true
+      modal: true,
+      eventId: id
     });
+
   };
   handleCloseModal = () => {
     this.setState({
-      modal: false
+      modal: false,
+      eventId: null
     });
   };
 
   componentDidMount() {
     this.props.getEvents();
+    console.log( "Mount : ", this.state)
   }
 
   render() {
@@ -73,7 +77,7 @@ export class Events extends Component {
                   >
                     Delete
                   </button>
-                  <button className="btn btn-sm" onClick={this.handleOpenModal}>
+                  <button className="btn btn-sm" onClick={() => {this.handleOpenModal(event.id)}}>
                     edit
                   </button>
                 </td>
@@ -81,11 +85,8 @@ export class Events extends Component {
             ))}
           </tbody>
         </table>
-        {this.state.modal && (
-          <ModalPortal>
-            <Modal contents={<EventForm eventId={event.id}/>} onClose={this.handleCloseModal} />
-          </ModalPortal>
-        )}
+        {this.state.modal && ( <Modal contents={<EventForm eventId={this.state.eventId}/>} onClose={this.handleCloseModal} /> )} 
+
       </Fragment>
     );
   }
