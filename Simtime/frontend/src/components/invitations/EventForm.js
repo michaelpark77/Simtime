@@ -4,36 +4,13 @@ import { addEvent, getEvent } from "../../actions/events";
 import PropTypes from "prop-types";
 
 export class EventForm extends Component {
-  static propTypes = {
-    eventId: PropTypes.number,
-    getEvent: PropTypes.func,
-    addEvent: PropTypes.func,
-    auth: PropTypes.object,
-    event: PropTypes.shape({
-      host: PropTypes.string,
-      event_name: PropTypes.string,
-      event_at: PropTypes.string,
-      status: PropTypes.string,
-      message: PropTypes.string
-    })
-  };
-
-  static defaultProps = {
-    eventId: null,
-    addEvent: addEvent,
-    getEvent: getEvent,
-    auth: { user: { id: null, username: null, email: null } },
-    event: {
-      host: "unknown",
-      event_name: "",
-      event_at: "",
-      status: "CLOSED",
-      message: ""
-    }
-  };
-
   state = {
-    event: event
+    id: null,
+    event_name: "",
+    event_at: "",
+    status: "CLOSED",
+    message: "",
+    host_id: this.props.user.id
   };
 
   //functions
@@ -42,35 +19,34 @@ export class EventForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { event_name, event_at, status, message } = this.state;
-    const host = this.props.auth.user.id;
-    const event = { host, event_name, event_at, status, message };
+    const host_id = this.props.user.id;
+    const event = { host_id, event_name, event_at, status, message };
     this.props.addEvent(event);
 
     //초기화
     this.setState({
+      id: null,
       event_name: "",
       event_at: "",
       status: "CLOSED",
-      message: ""
+      message: "",
+      host_id: this.props.user.id
     });
   };
 
   componentDidMount() {
-    console.log("If : ", this.props);
-    if (this.props.eventId) {
-      console.log("If : ", this.props);
-      const selectedId = this.props.eventId;
-      getEvent(selectedId);
+    if (this.props.event.id) {
+      console.log("componentDidMount props: ", this.props);
     }
   }
 
   render() {
-    const { event_name, event_at, message } = this.state;
-    const { user } = this.props.auth;
+    const { user, event } = this.props;
+    const { event_name, event_at, status, message } = this.state;
 
     return (
       <div className="card card-body mt-4 mb-4">
-        <h2>{this.props.eventId ? "ADD" : "Edit"} Event</h2>
+        <h2>{this.props.event ? "Edit" : "Add"} Event</h2>
         <br />
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
@@ -78,7 +54,7 @@ export class EventForm extends Component {
             <input
               type="text"
               name="host"
-              value={user.username ? this.props.auth.user.username : "unknown"}
+              value={user.username ? user.username : "unknown"}
               readOnly
             />{" "}
           </div>
@@ -97,7 +73,7 @@ export class EventForm extends Component {
               type="datetime-local"
               name="event_at"
               onChange={this.onChange}
-              value={event_at}
+              value={event.event_at}
             />
           </div>
 
@@ -135,7 +111,7 @@ export class EventForm extends Component {
               type="text"
               name="message"
               onChange={this.onChange}
-              value={message}
+              value={event.message}
             />
           </div>
 
@@ -157,12 +133,37 @@ export class EventForm extends Component {
       </div>
     );
   }
+
+  static propTypes = {
+    user: PropTypes.object,
+    event: PropTypes.shape({
+      host_id: PropTypes.number,
+      event_name: PropTypes.string,
+      event_at: PropTypes.string,
+      status: PropTypes.string,
+      message: PropTypes.string
+    })
+  };
+
+  static defaultProps = {
+    user: { id: null, username: null, email: null },
+    event: {
+      host_id: null,
+      event_name: "",
+      event_at: "",
+      status: "CLOSED",
+      message: ""
+    }
+  };
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  events: state.events
+  event: state.events.selectedEvent[0],
+  modal: state.modal,
+  user: state.auth.user
 });
 
-//후에 친구 목록 getFriends 만들어야함!
-export default connect(mapStateToProps, { addEvent, getEvent })(EventForm);
+export default connect(mapStateToProps, {
+  addEvent,
+  getEvent
+})(EventForm);

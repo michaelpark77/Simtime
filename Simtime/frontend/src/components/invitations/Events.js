@@ -1,11 +1,14 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import { getEvents, deleteEvent } from "../../actions/events";
+import { getEvents, deleteEvent, getEvent } from "../../actions/events";
 import { connect } from "react-redux";
+// import { openModal, closeModal } from "../../actions/modal";
+import ModalPortal from "../layout//ModalPortal";
+import { EventForm } from "./EventForm";
 
 import Modal from "../layout/Modal";
-import { EventForm } from "./EventForm";
-import { ModalTest } from "./ModalTest";
+
+const EventModal = Modal;
 
 export class Events extends Component {
   static propTypes = {
@@ -21,21 +24,21 @@ export class Events extends Component {
   };
 
   handleOpenModal = id => {
+    this.props.getEvent(id);
     this.setState({
-      modal: true,
-      eventId: id
+      modal: true
     });
   };
+
   handleCloseModal = () => {
     this.setState({
-      modal: false,
-      eventId: null
+      modal: false
     });
   };
 
   componentDidMount() {
+    console.log("getEvents Mount props : ", this.props);
     this.props.getEvents();
-    console.log("Mount : ", this.state);
   }
 
   render() {
@@ -85,12 +88,11 @@ export class Events extends Component {
             ))}
           </tbody>
         </table>
+
         {this.state.modal && (
-          <Modal
-            contents={<EventForm eventId={this.state.eventId} />}
-            // contents={<ModalTest />}
-            onClose={this.handleCloseModal}
-          />
+          <ModalPortal
+            children={<EventModal onClose={this.handleCloseModal}></EventModal>}
+          ></ModalPortal>
         )}
       </Fragment>
     );
@@ -98,7 +100,14 @@ export class Events extends Component {
 }
 
 const mapStateToProps = state => ({
-  events: state.events.events
+  events: state.events.events,
+  modal: state.modal
 });
 
-export default connect(mapStateToProps, { getEvents, deleteEvent })(Events);
+export default connect(mapStateToProps, {
+  getEvents,
+  deleteEvent,
+  // openModal,
+  // closeModal,
+  getEvent
+})(Events);

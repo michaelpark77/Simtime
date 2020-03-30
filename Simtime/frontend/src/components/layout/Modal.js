@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
-import { addEvent, getEvent } from "../../actions/events";
 import { connect } from "react-redux";
+import { getEvent } from "../../actions/events";
+import { EventForm } from "../invitations/EventForm";
 
 const MyModal = styled.div`
   background: rgba(0, 0, 0, 0.25);
@@ -22,21 +23,21 @@ const ContentWrap = styled.div`
   height: auto;
 `;
 
-const Modal = ({ contents, onClose }) => {
+const Modal = props => {
   return (
     <MyModal>
       <ContentWrap>
-        {contents}
-        <button onClick={onClose}>닫기</button>
+        {console.log("modal: ", props)}
+        <EventForm {...props} />
+        <button onClick={props.onClose}>닫기</button>
       </ContentWrap>
     </MyModal>
   );
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  events: state.events
+  event: state.events.selectedEvent[0],
+  user: state.auth.user
 });
 
-//후에 친구 목록 getFriends 만들어야함!
-export default connect(mapStateToProps, { addEvent, getEvent })(Modal);
+export default connect(mapStateToProps, { getEvent })(Modal);
