@@ -1,8 +1,13 @@
-import { GET_EVENTS, ADD_EVENT, DELETE_EVENT } from "../actions/types";
+import {
+  GET_EVENTS,
+  ADD_EVENT,
+  DELETE_EVENT,
+  GET_EVENT
+} from "../actions/types";
 
 const initialState = {
   events: [],
-  somthing: "text"
+  selectedEvent: {}
 };
 
 export default function(state = initialState, action) {
@@ -11,6 +16,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         events: action.payload
+      };
+    case GET_EVENT:
+      return {
+        ...state,
+        selectedEvent: state.events.filter(event => event.id == action.payload)
       };
     case ADD_EVENT:
       return {

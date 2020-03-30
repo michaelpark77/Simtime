@@ -1,15 +1,11 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import {
-  getEvents,
-  getEvent,
-  deleteEvent,
-  editEvent
-} from "../../actions/events";
+import { getEvents, deleteEvent } from "../../actions/events";
 import { connect } from "react-redux";
 
 import Modal from "../layout/Modal";
 import { EventForm } from "./EventForm";
+import { ModalTest } from "./ModalTest";
 
 export class Events extends Component {
   static propTypes = {
@@ -21,15 +17,14 @@ export class Events extends Component {
   //Modal
   state = {
     modal: false,
-    eventId: 10
+    eventId: null
   };
 
-  handleOpenModal = (id) => {
+  handleOpenModal = id => {
     this.setState({
       modal: true,
       eventId: id
     });
-
   };
   handleCloseModal = () => {
     this.setState({
@@ -40,7 +35,7 @@ export class Events extends Component {
 
   componentDidMount() {
     this.props.getEvents();
-    console.log( "Mount : ", this.state)
+    console.log("Mount : ", this.state);
   }
 
   render() {
@@ -77,7 +72,12 @@ export class Events extends Component {
                   >
                     Delete
                   </button>
-                  <button className="btn btn-sm" onClick={() => {this.handleOpenModal(event.id)}}>
+                  <button
+                    className="btn btn-sm"
+                    onClick={() => {
+                      this.handleOpenModal(event.id);
+                    }}
+                  >
                     edit
                   </button>
                 </td>
@@ -85,8 +85,13 @@ export class Events extends Component {
             ))}
           </tbody>
         </table>
-        {this.state.modal && ( <Modal contents={<EventForm eventId={this.state.eventId}/>} onClose={this.handleCloseModal} /> )} 
-
+        {this.state.modal && (
+          <Modal
+            contents={<EventForm eventId={this.state.eventId} />}
+            // contents={<ModalTest />}
+            onClose={this.handleCloseModal}
+          />
+        )}
       </Fragment>
     );
   }

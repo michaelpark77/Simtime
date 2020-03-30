@@ -1,9 +1,9 @@
-import axios from "axios";
 import { createMessage, returnErrors } from "./messages";
 import { axiosInstance } from "./axiosApi";
 
 import {
   GET_EVENTS,
+  GET_EVENT,
   ADD_EVENT,
   DELETE_EVENT,
   EDIT_EVENT,
@@ -11,9 +11,9 @@ import {
   CREATE_MESSAGE
 } from "./types";
 
-export const getEvents = () => (dispatch) => {
+export const getEvents = () => dispatch => {
   axiosInstance
-    .get("/api/events/" )
+    .get("/api/events/")
     .then(res => {
       dispatch({
         type: GET_EVENTS,
@@ -25,23 +25,17 @@ export const getEvents = () => (dispatch) => {
     );
 };
 
-export const getEvent = id => (dispatch) => {
-  axiosInstance
-    .get(`/api/events/${id}`)
-    .then(res => {
-      dispatch({
-        type: GET_EVENTS,
-        payload: res.data
-      });
-    })
-    .catch(err =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
+export const getEvent = id => dispatch => {
+  console.log("hello");
+  dispatch({
+    type: GET_EVENT,
+    payload: id
+  });
 };
 
-export const addEvent = event => (dispatch) => {
+export const addEvent = event => dispatch => {
   axiosInstance
-  .post("/api/events/create", event)
+    .post("/api/events/create", event)
     .then(res => {
       dispatch({
         type: ADD_EVENT,
@@ -55,7 +49,7 @@ export const addEvent = event => (dispatch) => {
     });
 };
 
-export const deleteEvent = id => (dispatch) => {
+export const deleteEvent = id => dispatch => {
   axiosInstance
     .delete(`/api/events/${id}`)
     .then(res => {
@@ -68,7 +62,7 @@ export const deleteEvent = id => (dispatch) => {
     .catch(err => console.log(err));
 };
 
-export const editEvent = id => (dispatch) => {
+export const editEvent = id => dispatch => {
   axiosInstance
     .put(`/api/events/${id}`)
     .then(res => {

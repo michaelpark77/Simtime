@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { addEvent, getEvent } from "../../actions/events";
+import { connect } from "react-redux";
 
 const MyModal = styled.div`
   background: rgba(0, 0, 0, 0.25);
@@ -28,8 +30,13 @@ const Modal = ({ contents, onClose }) => {
         <button onClick={onClose}>닫기</button>
       </ContentWrap>
     </MyModal>
-
   );
 };
 
-export default Modal;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  events: state.events
+});
+
+//후에 친구 목록 getFriends 만들어야함!
+export default connect(mapStateToProps, { addEvent, getEvent })(Modal);

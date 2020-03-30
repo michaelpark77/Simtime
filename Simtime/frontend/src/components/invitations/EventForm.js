@@ -15,7 +15,7 @@ export class EventForm extends Component {
       event_at: PropTypes.string,
       status: PropTypes.string,
       message: PropTypes.string
-    }),
+    })
   };
 
   static defaultProps = {
@@ -34,7 +34,7 @@ export class EventForm extends Component {
 
   state = {
     event: event
-  }
+  };
 
   //functions
   onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -42,9 +42,10 @@ export class EventForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { event_name, event_at, status, message } = this.state;
-    const host = this.props.auth.user.id
+    const host = this.props.auth.user.id;
     const event = { host, event_name, event_at, status, message };
     this.props.addEvent(event);
+
     //초기화
     this.setState({
       event_name: "",
@@ -54,31 +55,32 @@ export class EventForm extends Component {
     });
   };
 
-  componentDidMount(){
-    console.log("Form : " , this.props.eventId)
-    if (this.props.eventId){
-      this.props.getEvent(eventId)
+  componentDidMount() {
+    console.log("If : ", this.props);
+    if (this.props.eventId) {
+      console.log("If : ", this.props);
+      const selectedId = this.props.eventId;
+      getEvent(selectedId);
     }
   }
 
-
   render() {
     const { event_name, event_at, message } = this.state;
-    const { user } = this.props.auth;    
+    const { user } = this.props.auth;
 
     return (
       <div className="card card-body mt-4 mb-4">
         <h2>{this.props.eventId ? "ADD" : "Edit"} Event</h2>
-        <br/>
+        <br />
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label>Host </label>
             <input
               type="text"
               name="host"
-              value={ user.username ? this.props.auth.user.username : "unknown"}
+              value={user.username ? this.props.auth.user.username : "unknown"}
               readOnly
-            />
+            />{" "}
           </div>
           <div className="form-group">
             <label>Event Name </label>
@@ -159,7 +161,7 @@ export class EventForm extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  event: state.event
+  events: state.events
 });
 
 //후에 친구 목록 getFriends 만들어야함!
