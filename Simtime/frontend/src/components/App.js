@@ -3,6 +3,7 @@ import ReactDom from "react-dom";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
+// import Modal from "react-redux-modal-flex";
 import Header from "./layout/Header";
 import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
@@ -35,11 +36,13 @@ class App extends Component {
             <Fragment>
               <Header />
               <Alerts />
+              <div id="app-contents">
                 <Switch>
                   <PrivateRoute exact path="/" component={Dashboard} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                 </Switch>
+              </div>
             </Fragment>
           </HashRouter>
         </AlertProvider>
