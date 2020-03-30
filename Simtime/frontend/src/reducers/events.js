@@ -2,6 +2,7 @@ import {
   GET_EVENTS,
   ADD_EVENT,
   DELETE_EVENT,
+  EDIT_EVENT,
   GET_EVENT
 } from "../actions/types";
 
@@ -31,6 +32,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         events: state.events.filter(event => event.id != action.payload)
+      };
+    case EDIT_EVENT:
+      return {
+        ...state,
+        events: state.events.map(event =>
+          event.id == action.payload.id ? action.payload : event
+        )
       };
     default:
       return state;

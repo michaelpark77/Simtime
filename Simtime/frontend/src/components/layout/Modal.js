@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { getEvent } from "../../actions/events";
+import { addEvent, getEvent, editEvent } from "../../actions/events";
 import { EventForm } from "../invitations/EventForm";
 
 const MyModal = styled.div`
@@ -27,9 +27,7 @@ const Modal = props => {
   return (
     <MyModal>
       <ContentWrap>
-        {console.log("modal: ", props)}
         <EventForm {...props} />
-        <button onClick={props.onClose}>닫기</button>
       </ContentWrap>
     </MyModal>
   );
@@ -40,4 +38,6 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, { getEvent })(Modal);
+export default connect(mapStateToProps, { getEvent, editEvent, addEvent })(
+  Modal
+);

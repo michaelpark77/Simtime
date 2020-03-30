@@ -10,9 +10,4 @@ const ModalPotal = props => {
   return ReactDOM.createPortal(props.children, el);
 };
 
-const mapStateToProps = state => ({
-  event: state.events.selectedEvent,
-  user: state.auth.user
-});
-
-export default connect(mapStateToProps, { getEvent, addEvent })(ModalPotal);
+export default ModalPotal;

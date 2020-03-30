@@ -62,13 +62,13 @@ export const deleteEvent = id => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const editEvent = id => dispatch => {
+export const editEvent = event => dispatch => {
   axiosInstance
-    .put(`/api/events/${id}`)
+    .put(`/api/events/${event.id}`, event)
     .then(res => {
       dispatch({
         type: EDIT_EVENT,
-        payload: id
+        payload: res.data
       });
     })
     .catch(err => console.log(err));

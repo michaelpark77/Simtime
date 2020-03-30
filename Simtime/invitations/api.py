@@ -7,33 +7,31 @@ from rest_framework.views import APIView
 
 class EventAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
-        
+
     def get(self, request):
         events = self.request.user.events.all()
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
         # return self.request.user.events.all()  # related_name으로 invitations지정
 
-    
     def post(self, request):
-        serializer = EventSerializer(data = request.data)
+        serializer = EventSerializer(data=request.data)
         if(serializer.is_valid()):
             serializer.save(host=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class EventDetailAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
-        
+
     def get_object(self, pk):
         return self.request.user.events.get(pk=pk)
-
 
     def get(self, request, pk):
         event = self.get_object(pk=pk)
         serializer = EventSerializer(event)
-        return Response(serializer.data) 
+        return Response(serializer.data)
 
     def delete(self, request, pk):
         event = self.get_object(pk)
@@ -49,13 +47,11 @@ class EventDetailAPI(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
-        serializer = EventSerializer(data = request.data)
+        serializer = EventSerializer(data=request.data)
         if(serializer.is_valid()):
             serializer.save(host=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 # class EventsViewSet(viewsets.ModelViewSet):

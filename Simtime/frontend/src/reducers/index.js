@@ -4,7 +4,7 @@ import events from "./events";
 import errors from "./errors";
 import messages from "./messages";
 import auth from "./auth";
-import modal from "./modal";
+
 // import { reducer as modal } from "react-redux-modal-flex";
 
 export default combineReducers({
@@ -12,6 +12,5 @@ export default combineReducers({
   invitations,
   errors,
   messages,
-  auth,
-  modal
+  auth
 });

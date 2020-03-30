@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addEvent, getEvent } from "../../actions/events";
+import { addEvent, getEvent, editEvent } from "../../actions/events";
 import PropTypes from "prop-types";
 
 export class EventForm extends Component {
@@ -18,35 +18,32 @@ export class EventForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { event_name, event_at, status, message } = this.state;
-    const host_id = this.props.user.id;
-    const event = { host_id, event_name, event_at, status, message };
-    this.props.addEvent(event);
+    const { id, event_name, event_at, status, message } = this.state;
+    const host = this.props.user.id;
 
-    //초기화
-    this.setState({
-      id: null,
-      event_name: "",
-      event_at: "",
-      status: "CLOSED",
-      message: "",
-      host_id: this.props.user.id
-    });
+    if (this.props.event.id) {
+      this.props.editEvent({ id, host, event_name, event_at, status, message });
+    } else {
+      this.props.addEvent({ host, event_name, event_at, status, message });
+    }
+
+    this.props.onClose();
   };
 
   componentDidMount() {
     if (this.props.event.id) {
-      console.log("componentDidMount props: ", this.props);
+      // console.log(this.props);
+      this.setState(this.props.event);
     }
   }
 
   render() {
-    const { user, event } = this.props;
+    const { user } = this.props;
     const { event_name, event_at, status, message } = this.state;
 
     return (
       <div className="card card-body mt-4 mb-4">
-        <h2>{this.props.event ? "Edit" : "Add"} Event</h2>
+        <h2>{this.props.event.id ? "Edit" : "Add"} Event</h2>
         <br />
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
@@ -73,7 +70,7 @@ export class EventForm extends Component {
               type="datetime-local"
               name="event_at"
               onChange={this.onChange}
-              value={event.event_at}
+              value={event_at}
             />
           </div>
 
@@ -111,7 +108,7 @@ export class EventForm extends Component {
               type="text"
               name="message"
               onChange={this.onChange}
-              value={event.message}
+              value={message}
             />
           </div>
 
@@ -126,7 +123,7 @@ export class EventForm extends Component {
 
           <div className="form-group">
             <button type="submit" className="btn btn-primary">
-              Submit
+              {this.props.event.id ? "Edit" : "Submit"}
             </button>
           </div>
         </form>
@@ -165,5 +162,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   addEvent,
-  getEvent
+  getEvent,
+  editEvent
 })(EventForm);

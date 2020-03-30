@@ -24,7 +24,10 @@ export class Events extends Component {
   };
 
   handleOpenModal = id => {
-    this.props.getEvent(id);
+    if (id) {
+      this.props.getEvent(id);
+    }
+
     this.setState({
       modal: true
     });
@@ -45,6 +48,14 @@ export class Events extends Component {
     return (
       <Fragment>
         <h2> My Events </h2>
+        <button
+          className="btn btn-sm"
+          onClick={() => {
+            this.handleOpenModal(null);
+          }}
+        >
+          Create
+        </button>
         <table className="table table-striped">
           <thead>
             <tr>
@@ -107,7 +118,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   getEvents,
   deleteEvent,
-  // openModal,
-  // closeModal,
   getEvent
 })(Events);
