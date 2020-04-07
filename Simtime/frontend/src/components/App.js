@@ -18,36 +18,56 @@ import { loadUser } from "../actions/auth";
 
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
+import Paragraph from "../AtomicComponents/A-Atomics/text/Paragraph";
+import H from "../AtomicComponents/A-Atomics/text/Header";
+import LOGO from "../AtomicComponents/A-Atomics/Logo";
+import MenuActive from "../AtomicComponents/A-Atomics/MenuActive";
+
 const alertOptions = {
   timeout: 3000,
-  position: "top center"
+  position: "top center",
 };
 
 class App extends Component {
-  componentDidMount() {
-    store.dispatch(loadUser());
-  }
+  // componentDidMount() {
+  //   store.dispatch(loadUser());
+  // }
 
   render() {
     return (
-      <Provider store={store}>
-        <AlertProvider template={AlertTemplate} {...alertOptions}>
-          <HashRouter>
-            <Fragment>
-              <Header />
-              <Alerts />
-              <div id="app-contents">
-                <Switch>
-                  <PrivateRoute exact path="/" component={Dashboard} />
-                  <Route exact path="/register" component={Register} />
-                  <Route exact path="/login" component={Login} />
-                </Switch>
-              </div>
-            </Fragment>
-          </HashRouter>
-        </AlertProvider>
-      </Provider>
+      <Fragment>
+        <LOGO />
+        <MenuActive>Active</MenuActive>
+        <br />
+        <br />
+        <Paragraph color="ST_YELLOW" fontSize="100px">
+          hello
+        </Paragraph>
+        <H type="h1" color="ST_YELLOW" fontSize="11px">
+          SimTime
+        </H>
+        hello?
+      </Fragment>
     );
+    // return (
+    //   <Provider store={store}>
+    //     <AlertProvider template={AlertTemplate} {...alertOptions}>
+    //       <HashRouter>
+    //         <Fragment>
+    //           <Header />
+    //           <Alerts />
+    //           <div id="app-contents">
+    //             <Switch>
+    //               <PrivateRoute exact path="/" component={Dashboard} />
+    //               <Route exact path="/register" component={Register} />
+    //               <Route exact path="/login" component={Login} />
+    //             </Switch>
+    //           </div>
+    //         </Fragment>
+    //       </HashRouter>
+    //     </AlertProvider>
+    //   </Provider>
+    //);
   }
 }
 
