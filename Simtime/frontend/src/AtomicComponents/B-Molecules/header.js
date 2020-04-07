@@ -1,4 +1,4 @@
-import { ST_YELLOW, ST_BLUE, TEXT_ACTIVE, TEXT_INACTIVE } from "../Colors";
+import * as Colors from "../Colors";
 
 import React from "react";
 import styled, { css } from "styled-components";
