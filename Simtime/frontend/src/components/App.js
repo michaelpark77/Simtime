@@ -15,18 +15,29 @@ import PrivateRoute from "./common/privateRoute";
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../actions/auth";
-
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import Paragraph from "../AtomicComponents/A-Atomics/text/Paragraph";
 import H from "../AtomicComponents/A-Atomics/text/Header";
 import LOGO from "../AtomicComponents/A-Atomics/Logo";
 import MenuActive from "../AtomicComponents/A-Atomics/MenuActive";
+import MenuInActive from "../AtomicComponents/A-Atomics/MenuInActive";
+
+//Style
+import { createGlobalStyle } from "styled-components";
 
 const alertOptions = {
   timeout: 3000,
   position: "top center",
 };
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: white;
+    width : 1440px;
+    border : solid 1px red
+  }
+`;
 
 class App extends Component {
   // componentDidMount() {
@@ -36,8 +47,11 @@ class App extends Component {
   render() {
     return (
       <Fragment>
+        <GlobalStyle />
         <LOGO />
-        <MenuActive>Active</MenuActive>
+        <MenuActive>Calendar</MenuActive>
+        <MenuInActive>My Simtime</MenuInActive>
+        <MenuInActive>Friends</MenuInActive>
         <br />
         <br />
         <Paragraph color="ST_YELLOW" fontSize="100px">

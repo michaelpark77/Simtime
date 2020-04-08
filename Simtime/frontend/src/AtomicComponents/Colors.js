@@ -30,14 +30,15 @@ export const TEXT_VISITED = ST_VIOLET;
 export const TEXT_ACTIVE = ST_BLACK;
 export const TEXT_INACTIVE = ST_GRAY;
 
-//BACKGROUNE
-export const BG_GRAY_LIGHT = ST_GRAY_LIGHT;
-export const BG_GRAY = ST_GRAY_DARK;
-
-export const BG_YELLOW_LIGHT = ST_YELLOW_LIGHT;
-export const BG_YELLOW = ST_YELLOW;
-
+//BACKGROUND
 export const BG_WHITE = ST_WHITE;
+export const BG_INACTIVE_LIGHT = ST_GRAY_LIGHT;
+export const BG_INACTIVE = ST_GRAY_DARK;
+export const BG_ACTIVE_LIGHT = ST_YELLOW_LIGHT;
+export const BG_ACTIVE = ST_YELLOW;
+
+//MAIN
+export const MAIN_COLOR = ST_YELLOW;
 
 //ETC
 export const CHECK_GREEN = ST_GREEN_NEON;

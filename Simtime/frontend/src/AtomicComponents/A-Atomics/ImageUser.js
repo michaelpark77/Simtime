@@ -6,7 +6,7 @@ import { ST_WHITE, TEXT_ACTIVE, TEXT_INACTIVE } from "../Colors";
 import StyledText from "./text/Header";
 
 const Wrap = styled.div`
-  // border: solid 1px red;
+  border: solid 1px red;
   display: inline-block;
 `;
 

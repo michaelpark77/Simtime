@@ -1,29 +1,42 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { ST_BLUE, TEXT_ACTIVE } from "../Colors";
 import StyledText from "./text/Header";
 
 const Wrap = styled.div`
-  border: solid 1px red;
+  // border: solid 1px red;
   display: inline-block;
 `;
+
+const ContentWrap = styled.div`
+  width: ${(props) => (props.width ? props.width : "120px")};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Bottom = styled.div`
   background-color: ${ST_BLUE};
-  height: 3px;
+  border-radius: 80px 80px 20px 20px;
+  height: 5px;
   width: 64px;
 `;
 const StyledContent = styled(StyledText)`
-  border: solid 1px blue;
-  font-weight: 1000;
+  font-weight: 600;
 `;
 
-function MenuActive() {
+function MenuActive(props) {
   return (
     <Wrap>
-      <StyledContent type="h3">Clendar</StyledContent>
-      <Bottom />
+      <ContentWrap>
+        <StyledContent type="h3" color={TEXT_ACTIVE}>
+          {props.children}
+        </StyledContent>
+        <Bottom />
+      </ContentWrap>
     </Wrap>
   );
 }

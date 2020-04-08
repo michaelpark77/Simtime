@@ -14,7 +14,7 @@ const StyledContent = (props) => {
     case "h1":
       return styled.span`
         ${commonStyle}
-        font-size: ${props.fontsize ? props.fontSize : "30px"};
+        font-size: ${props.fontsize ? props.fontSize : "36px"};
       `;
 
     case "h2":
@@ -26,12 +26,12 @@ const StyledContent = (props) => {
     case "h3":
       return styled.span`
         ${commonStyle}
-        font-size: ${props.fontSize ? props.fontSize : "15px"};
+        font-size: ${props.fontSize ? props.fontSize : "18px"};
       `;
     default:
       return styled.span`
         ${commonStyle}
-        font-size: ${props.fontSize ? props.fontSize : "13px"};
+        font-size: ${props.fontSize ? props.fontSize : "15px"};
       `;
   }
 };
