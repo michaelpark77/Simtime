@@ -2,16 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 
-import { ST_WHITE, TEXT_ACTIVE, TEXT_INACTIVE } from "../Colors";
+import { ST_BLUE, ST_WHITE, TEXT_ACTIVE, TEXT_INACTIVE } from "../Colors";
 import StyledText from "./text/Header";
 
 const Wrap = styled.div`
   // border: solid 1px red;
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ContentWrap = styled.div`
-  width: ${(props) => (props.width ? props.width : "120px")};
+  ${(props) => (props.width ? `width : ${props.width}px` : "")};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,6 +27,7 @@ const Bottom = styled.div`
   height: 5px;
   width: 64px;
 `;
+
 const StyledContent = styled(StyledText)`
   color: ${TEXT_INACTIVE};
   font-weight: bold;

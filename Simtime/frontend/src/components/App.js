@@ -4,7 +4,7 @@ import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
 // import Modal from "react-redux-modal-flex";
-import Header from "./layout/Header";
+// import Header from "./layout/Header";
 import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
@@ -17,28 +17,27 @@ import store from "../store";
 import { loadUser } from "../actions/auth";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
+import GlobalStyle from "../AtomicComponents/GlobalStyle";
 import Paragraph from "../AtomicComponents/A-Atomics/text/Paragraph";
-import H from "../AtomicComponents/A-Atomics/text/Header";
-import LOGO from "../AtomicComponents/A-Atomics/Logo";
-import MenuActive from "../AtomicComponents/A-Atomics/MenuActive";
-import MenuInActive from "../AtomicComponents/A-Atomics/MenuInActive";
+import Header from "../AtomicComponents/B-Molecules/Header";
 
-//Style
-import { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 
 const alertOptions = {
   timeout: 3000,
   position: "top center",
 };
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    background: white;
-    width : 1440px;
-    border : solid 1px red
+const AppContents = styled.div`
+  float: left;
+  width: 80%;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  border: solid 1px green;
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
   }
 `;
-
 class App extends Component {
   // componentDidMount() {
   //   store.dispatch(loadUser());
@@ -48,19 +47,14 @@ class App extends Component {
     return (
       <Fragment>
         <GlobalStyle />
-        <LOGO />
-        <MenuActive>Calendar</MenuActive>
-        <MenuInActive>My Simtime</MenuInActive>
-        <MenuInActive>Friends</MenuInActive>
-        <br />
-        <br />
-        <Paragraph color="ST_YELLOW" fontSize="100px">
-          hello
-        </Paragraph>
-        <H type="h1" color="ST_YELLOW" fontSize="11px">
-          SimTime
-        </H>
-        hello?
+        <AppContents>
+          <Header />
+          <br />
+          <br />
+          <Paragraph color="ST_YELLOW" fontSize="100px">
+            hello
+          </Paragraph>
+        </AppContents>
       </Fragment>
     );
     // return (

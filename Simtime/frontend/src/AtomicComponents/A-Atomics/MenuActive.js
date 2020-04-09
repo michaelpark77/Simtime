@@ -11,7 +11,7 @@ const Wrap = styled.div`
 `;
 
 const ContentWrap = styled.div`
-  width: ${(props) => (props.width ? props.width : "120px")};
+  ${(props) => (props.width ? `width : ${props.width}px` : "")};
   display: flex;
   flex-direction: column;
   justify-content: center;
