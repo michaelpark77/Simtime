@@ -4,18 +4,20 @@ import styled from "styled-components";
 import Paragraph from "../text/Paragraph";
 import * as Colors from "../../Colors";
 
+// height: ${(props) =>
+// toString(parseInt(props.height.replace(/[^0-9]/g, "")) / 7) + "px"};
+
 const Wrap = styled.div`
-  height: ${(props) => props.height};
+  height: ${(props) => props.contentHeight}px
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   ${(props) => (props.isConfirmed ? `background-color: ${props.color}` : "")};
   border : solid 1px ${(props) => props.color}}
-`;
+ `;
 
 const TextWrap = styled.div`
-  height: inherit;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -26,12 +28,13 @@ const TextWrap = styled.div`
 const Text = styled(Paragraph)`
   font-weight: bold;
   font-size: 13px;
-  line-height: ${(props) => props.height};
   vertical-align: center;
   color: ${(props) => (props.isConfirmed ? Colors.ST_WHITE : props.color)};
+  line-height: ${(props) => props.contentHeight}px;
 `;
 
 function CalContent(props) {
+  console.log("content : " + props.contentHeight);
   return (
     <div>
       <Wrap {...props}>
@@ -54,7 +57,7 @@ CalContent.propTypes = {
 };
 
 CalContent.defaultProps = {
-  height: "16px",
+  height: "120px",
   color: Colors.ST_PINK,
   isConfirmed: false,
   isHost: false,

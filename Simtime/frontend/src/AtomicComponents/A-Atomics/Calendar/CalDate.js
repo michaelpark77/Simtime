@@ -5,16 +5,15 @@ import styled from "styled-components";
 import Paragraph from "../text/Paragraph";
 
 const Wrap = styled.div`
-  height: ${(props) => props.height};
+  height: ${(props) => props.contentHeight}px
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  //   background-color: white;
+  border: solid 1px blue;
 `;
 
 const TextWrap = styled.div`
-  height: inherit;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -25,16 +24,16 @@ const TextWrap = styled.div`
 const Text = styled(Paragraph)`
   font-weight: bold;
   font-size: 12px;
-  line-height: ${(props) => props.height};
+  line-height: ${(props) => props.contentHeight}px
   vertical-align: center;
 `;
 
 function CalDate(props) {
   return (
     <div>
-      <Wrap {...props}>
+      <Wrap>
         <TextWrap>
-          <Text {...props}>{props.children}</Text>
+          <Text>{props.children}</Text>
         </TextWrap>
       </Wrap>
     </div>
@@ -48,5 +47,5 @@ CalDate.propTypes = {
 };
 
 CalDate.defaultProps = {
-  height: "16px",
+  height: "120px",
 };

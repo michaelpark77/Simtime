@@ -22,11 +22,8 @@ import Paragraph from "../AtomicComponents/A-Atomics/text/Paragraph";
 import Header from "../AtomicComponents/B-Molecules/Header";
 
 import styled from "styled-components";
-import CalDay from "../AtomicComponents/A-Atomics/Calendar/CalDay";
+import Week from "../AtomicComponents/C-Organisms/Calendar/Week/Week";
 import CalWrap from "../AtomicComponents/A-Atomics/Calendar/CalWrap";
-import CalDate from "../AtomicComponents/A-Atomics/Calendar/CalDate";
-import Day from "../AtomicComponents/B-Molecules/Calendar/Day";
-
 const alertOptions = {
   timeout: 3000,
   position: "top center",
@@ -34,7 +31,7 @@ const alertOptions = {
 
 const AppContents = styled.div`
   float: left;
-  width: 80%;
+  width: 920px;
   padding: 0 0.5rem 0.5rem 0.5rem;
   border: solid 1px green;
 
@@ -55,75 +52,13 @@ class App extends Component {
           <Header />
           <br />
           <br />
-
           <CalWrap>
-            <Day date="30" numOfDay={0}>
-              30
-            </Day>
-            <CalDay numOfDay={1} isActive={false}>
-              <CalDate>31</CalDate>
-            </CalDay>
-            <CalDay numOfDay={2} isActive={false}></CalDay>
-            <CalDay numOfDay={3} isActive={false}></CalDay>
-            <CalDay numOfDay={4} isActive={true}></CalDay>
-            <CalDay numOfDay={5} isActive={true}></CalDay>
-            <CalDay numOfDay={6} isActive={true}></CalDay>
-            <CalDay numOfDay={0} isActive={true}></CalDay>
-            <CalDay numOfDay={1} isActive={true}></CalDay>
-            <CalDay numOfDay={2} isActive={true}></CalDay>
-            <CalDay numOfDay={3} isActive={true}></CalDay>
-            <CalDay numOfDay={4} isActive={true}></CalDay>
-            <CalDay numOfDay={5} isActive={true}></CalDay>
-            <CalDay numOfDay={6} isActive={true}></CalDay>
-            <CalDay numOfDay={0} isActive={true}></CalDay>
-            <CalDay numOfDay={1} isActive={true}></CalDay>
-            <CalDay numOfDay={2} isActive={true}></CalDay>
-            <CalDay numOfDay={3} isActive={true}></CalDay>
-            <CalDay numOfDay={4} isActive={true}></CalDay>
-            <CalDay numOfDay={5} isActive={true}></CalDay>
-            <CalDay numOfDay={6} isActive={true}></CalDay>
-            <CalDay numOfDay={0} isActive={true}></CalDay>
-            <CalDay numOfDay={1} isActive={true}></CalDay>
-            <CalDay numOfDay={2} isActive={true}></CalDay>
-            <CalDay numOfDay={3} isActive={true}></CalDay>
-            <CalDay numOfDay={4} isActive={false}></CalDay>
-            <CalDay numOfDay={5} isActive={false}></CalDay>
-            <CalDay numOfDay={6} isActive={false}></CalDay>
-            <CalDay numOfDay={0} isActive={false}></CalDay>
-            <CalDay numOfDay={1} isActive={false}></CalDay>
-            <CalDay numOfDay={2} isActive={false}></CalDay>
-            <CalDay numOfDay={3} isActive={false}></CalDay>
-            <CalDay numOfDay={4} isActive={false}></CalDay>
-            <CalDay numOfDay={5} isActive={false}></CalDay>
-            <CalDay numOfDay={6} isActive={false}></CalDay>
-            <CalDay numOfDay={0} isActive={false}></CalDay>
-            <CalDay numOfDay={1} isActive={false}></CalDay>
-            <CalDay numOfDay={2} isActive={false}></CalDay>
-            <CalDay numOfDay={3} isActive={false}></CalDay>
-            <CalDay numOfDay={4} isActive={false}></CalDay>
-            <CalDay numOfDay={5} isActive={false}></CalDay>
-            <CalDay numOfDay={6} isActive={false}></CalDay>
-            <CalDay numOfDay={0} isActive={false}></CalDay>
-            <CalDay numOfDay={1} isActive={false}></CalDay>
-            <CalDay numOfDay={2} isActive={false}></CalDay>
-            <CalDay numOfDay={3} isActive={false}></CalDay>
-            <CalDay numOfDay={4} isActive={false}></CalDay>
-            <CalDay numOfDay={5} isActive={false}></CalDay>
-            <CalDay numOfDay={6} isActive={false}></CalDay>
-            <CalDay numOfDay={0} isActive={false}></CalDay>
-            <CalDay numOfDay={1} isActive={false}></CalDay>
-            <CalDay numOfDay={2} isActive={false}></CalDay>
-            <CalDay numOfDay={3} isActive={false}></CalDay>
-            <CalDay numOfDay={4} isActive={false}></CalDay>
-            <CalDay numOfDay={5} isActive={false}></CalDay>
-            <CalDay numOfDay={6} isActive={false}></CalDay>
-            <CalDay numOfDay={0} isActive={false}></CalDay>
-            <CalDay numOfDay={1} isActive={false}></CalDay>
-            <CalDay numOfDay={2} isActive={false}></CalDay>
-            <CalDay numOfDay={3} isActive={false}></CalDay>
-            <CalDay numOfDay={4} isActive={false}></CalDay>
-            <CalDay numOfDay={5} isActive={false}></CalDay>
-            <CalDay numOfDay={6} isActive={false}></CalDay>
+            <Week></Week>
+            <Week></Week>
+            <Week></Week>
+            <Week></Week>
+            <Week></Week>
+            <Week></Week>
           </CalWrap>
 
           <Paragraph color="ST_YELLOW" fontSize="100px">

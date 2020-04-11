@@ -25,10 +25,18 @@ const ContentWrap = styled.div`
   justify-content: space-between;
 
   border: solid 1px red;
+
+  @media only screen and (max-width: 680px) {
+    justify-content: space-around;
+  }
+
+  @media only screen and (max-width: 560px) {
+    justify-content: center;
+  }
 `;
 
 const LogoWrap = styled.div`
-  @media only screen and (max-width: 560) {
+  @media only screen and (max-width: 680px) {
     display: none;
   }
 `;
@@ -47,6 +55,10 @@ const Account = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 200px;
+  @media only screen and (max-width: 560px) {
+    display: none;
+  }
 `;
 
 function Header() {
@@ -63,7 +75,7 @@ function Header() {
           <MenuInActive>Friends</MenuInActive>
         </MenuList>
 
-        <MenuList></MenuList>
+        <Account></Account>
       </ContentWrap>
     </Wrap>
   );

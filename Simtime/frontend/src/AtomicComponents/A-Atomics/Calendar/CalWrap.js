@@ -8,12 +8,15 @@ const Wrap = styled.div`
   background-color: ${BG_INACTIVE_LIGHT};
   width: 620px;
   height: 668px;
+
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
   overflow: hidden;
+
+  @media only screen and (max-width: 920px) {
+    width: 100%;
+  }
 `;
 function CalWrap(props) {
   return <Wrap {...props} />;
