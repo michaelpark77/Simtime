@@ -8,26 +8,24 @@ import * as Colors from "../../Colors";
 // toString(parseInt(props.height.replace(/[^0-9]/g, "")) / 7) + "px"};
 
 const Wrap = styled.div`
-  height: ${(props) => props.contentHeight}px
+  height: ${(props) => props.contentHeight}px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   ${(props) => (props.isConfirmed ? `background-color: ${props.color}` : "")};
-  border : solid 1px ${(props) => props.color}}
+  border : solid 0px ${(props) => props.color}}
  `;
 
 const TextWrap = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   margin-right: 4px;
 `;
 
 const Text = styled(Paragraph)`
-  font-weight: bold;
-  font-size: 13px;
   vertical-align: center;
   color: ${(props) => (props.isConfirmed ? Colors.ST_WHITE : props.color)};
   line-height: ${(props) => props.contentHeight}px;
@@ -58,7 +56,7 @@ CalContent.propTypes = {
 
 CalContent.defaultProps = {
   height: "120px",
-  color: Colors.ST_PINK,
+  // color: Colors.ST_PINK,
   isConfirmed: false,
   isHost: false,
   isParticipated: false,

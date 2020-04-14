@@ -24,6 +24,7 @@ function Day(props) {
   const contentHeight = (
     parseInt(props.height.replace(/[^0-9]/g, "")) / 7
   ).toFixed(2);
+
   return (
     <Wrap {...props}>
       <CalDate contentHeight={contentHeight} {...props}>

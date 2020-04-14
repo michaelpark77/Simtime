@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import Day from "../../../B-Molecules/Calendar/Day";
 
-const height = "112px";
+const height = "116px";
 
 const Wrap = styled.div`
   display: flex;
   flex-direction: row;
   height: ${height};
+  margin-bottom: 4px;
 `;
 
 function Week(props) {

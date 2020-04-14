@@ -17,6 +17,7 @@ from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(BASE_DIR)
 
 secret_file = os.path.join(BASE_DIR, 'secrets.json')
 
@@ -59,15 +60,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-  
+
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES':
-    ('rest_framework.permissions.IsAuthenticated', )
-    , 'DEFAULT_AUTHENTICATION_CLASSES':
+    ('rest_framework.permissions.IsAuthenticated', ), 'DEFAULT_AUTHENTICATION_CLASSES':
     ('rest_framework_simplejwt.authentication.JWTAuthentication', )
-  
+
 }
 
 SIMPLE_JWT = {
@@ -171,7 +171,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = False
- 
 
 
 # Static files (CSS, JavaScript, Images)

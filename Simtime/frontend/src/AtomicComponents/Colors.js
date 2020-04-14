@@ -5,7 +5,7 @@ export const ST_FONT_FAMILY = "Roboto";
 
 // MAIN COLORS PALETTE
 export const ST_YELLOW_LIGHT = "#FFF8E7";
-export const ST_YELLOW = "#FFCA17"; //main (Deep) yellow
+export const ST_YELLOW = "#FFCA17"; //main (Deep) yellow (242,201,76)
 
 export const ST_PINK = "#E7156E";
 export const ST_BLUE = "#0081C2";
