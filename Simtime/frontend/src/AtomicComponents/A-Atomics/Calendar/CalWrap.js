@@ -11,8 +11,13 @@ import Paragraph from "../text/Paragraph";
 
 const Wrap = styled.div`
   background-color: ${BG_INACTIVE_LIGHT};
+  background-size: 610px;
+  background-image: url("static/img/months/122.png");
+  background-position: center center;
   width: 620px;
   height: 668px;
+  z-index: 99
+
 
   display: flex;
   flex-direction: column;
@@ -20,26 +25,14 @@ const Wrap = styled.div`
   overflow: hidden;
   border: solid 1px blue;
 
+
   @media only screen and (max-width: 920px) {
     width: 100%;
   }
 `;
 
-const Month = styled.div`
-  color: rgba(242, 201, 76, 0.09);
-  border: solid 1px red;
-  font-size: 590px;
-  height: 590px;
-  line-height: 500px;
-`;
-
 function CalWrap(props) {
-  return (
-    <div>
-      <Wrap {...props}></Wrap>
-      <Month>4</Month>
-    </div>
-  );
+  return <Wrap {...props}></Wrap>;
 }
 
 export default CalWrap;

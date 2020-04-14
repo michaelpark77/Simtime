@@ -12,7 +12,7 @@ const Wrap = styled.div`
   margin-right: 4px;
   margin-bottom: 4px;
   ${(props) => (props.numOfDay % 7 == 0 ? "margin-left: 4px;" : "")};
-  background-color: ${(props) => (props.isActive ? BG_WHITE : BG_INACTIVE)};
+  background-color: ${(props) => (props.isActive ? BG_WHITE : BG_INACTIVE)}95;
   overflow: auto;
 
   @media only screen and (max-width: 920px) {
@@ -24,7 +24,6 @@ function Day(props) {
   const contentHeight = (
     parseInt(props.height.replace(/[^0-9]/g, "")) / 7
   ).toFixed(2);
-
   return (
     <Wrap {...props}>
       <CalDate contentHeight={contentHeight} {...props}>

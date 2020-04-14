@@ -17,7 +17,7 @@ function Week(props) {
     <Wrap {...props}>
       <Day height={height} date="30" isActive={false} />
       <Day height={height} date="31" isActive={false} />
-      <Day height={height} date="1" isActive={true} />
+      <Day height={height} date="1" isActive={false} />
       <Day height={height} date="2" isActive={true} />
       <Day height={height} date="3" isActive={true} />
       <Day height={height} date="4" isActive={true} />

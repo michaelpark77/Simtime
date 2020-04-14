@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Paragraph from "../text/Paragraph";
+import { ST_BLUE, ST_RE } from "../../Colors";
 
 const Wrap = styled.div`
   height: ${(props) => props.contentHeight}px;
@@ -18,7 +19,6 @@ const Text = styled(Paragraph)`
 `;
 
 function CalDate(props) {
-  console.log("calDate: " + props.contentHeight);
   return (
     <div>
       <Wrap contentHeight={props.contentHeight}>
