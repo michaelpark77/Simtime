@@ -12,7 +12,7 @@ import Paragraph from "../text/Paragraph";
 const Wrap = styled.div`
   background-color: ${BG_INACTIVE_LIGHT};
   background-size: 610px;
-  background-image: url("static/img/months/122.png");
+  background-image: url("static/img/months/4.png");
   background-position: center center;
   width: 620px;
   height: 668px;

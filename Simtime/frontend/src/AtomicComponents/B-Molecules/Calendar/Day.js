@@ -11,22 +11,30 @@ const Wrap = styled.div`
   height: 100%;
   margin-right: 4px;
   margin-bottom: 4px;
-  ${(props) => (props.numOfDay % 7 == 0 ? "margin-left: 4px;" : "")};
+  ${(props) => (props.numOfColumn % 7 == 0 ? "margin-left: 4px;" : "")};
   background-color: ${(props) => (props.isActive ? BG_WHITE : BG_INACTIVE)}95;
   overflow: auto;
 
   @media only screen and (max-width: 920px) {
     width: 14.8%;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    ${(props) => (props.numOfColumn % 7 == 0 ? "margin-left: 2px;" : "")};
   }
 `;
 
 function Day(props) {
+  const numOfColumn = parseInt(props.date % 6);
   const contentHeight = (
     parseInt(props.height.replace(/[^0-9]/g, "")) / 7
   ).toFixed(2);
   return (
     <Wrap {...props}>
-      <CalDate contentHeight={contentHeight} {...props}>
+      <CalDate
+        numOfColumn={numOfColumn}
+        contentHeight={contentHeight}
+        {...props}
+      >
         {props.date}
       </CalDate>
       <CalContent contentHeight={contentHeight} {...props}>

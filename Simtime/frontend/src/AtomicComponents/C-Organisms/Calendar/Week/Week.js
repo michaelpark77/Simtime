@@ -15,13 +15,13 @@ const Wrap = styled.div`
 function Week(props) {
   return (
     <Wrap {...props}>
-      <Day height={height} date="30" isActive={false} />
-      <Day height={height} date="31" isActive={false} />
-      <Day height={height} date="1" isActive={false} />
-      <Day height={height} date="2" isActive={true} />
-      <Day height={height} date="3" isActive={true} />
-      <Day height={height} date="4" isActive={true} />
-      <Day height={height} date="5" isActive={true} />
+      <Day height={height} day={0} date="29" isActive={false} />
+      <Day height={height} day={1} date="30" isActive={false} />
+      <Day height={height} day={2} date="31" isActive={false} />
+      <Day height={height} day={3} date="2" isActive={true} />
+      <Day height={height} day={4} date="3" isActive={true} />
+      <Day height={height} day={5} date="4" isActive={true} />
+      <Day height={height} day={6} date="5" isActive={true} />
     </Wrap>
   );
 }

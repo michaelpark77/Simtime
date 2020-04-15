@@ -32,7 +32,6 @@ const Text = styled(Paragraph)`
 `;
 
 function CalContent(props) {
-  console.log("content : " + props.contentHeight);
   return (
     <div>
       <Wrap {...props}>
