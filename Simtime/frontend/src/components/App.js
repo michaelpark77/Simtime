@@ -24,6 +24,8 @@ import Header from "../AtomicComponents/B-Molecules/Header";
 import styled from "styled-components";
 import Week from "../AtomicComponents/C-Organisms/Calendar/Week/Week";
 import CalWrap from "../AtomicComponents/A-Atomics/Calendar/CalWrap";
+import Calendar from "../AtomicComponents/D-Templates/Calendar/Calendar";
+
 const alertOptions = {
   timeout: 3000,
   position: "top center",
@@ -52,7 +54,7 @@ class App extends Component {
         <AppContents>
           <Header />
           <br />
-          <br />
+          <Calendar />
           <CalWrap>
             <Week></Week>
             <Week></Week>
