@@ -4,55 +4,56 @@ import styled from "styled-components";
 
 import CalContent from "../../A-Atomics/Calendar/CalContent";
 import CalDate from "../../A-Atomics/Calendar/CalDate";
-import { BG_INACTIVE, BG_WHITE } from "../../Colors";
+import { MAIN_COLOR, BG_INACTIVE, BG_WHITE } from "../../Colors";
 
 const Wrap = styled.div`
   width: 84px;
   height: 100%;
   margin-right: 4px;
   margin-bottom: 4px;
-  ${(props) => (props.numOfColumn % 7 == 0 ? "margin-left: 4px;" : "")};
+  ${(props) => (props.day== 0 ? "margin-left: 4px;" : "")};
   background-color: ${(props) => (props.isActive ? BG_WHITE : BG_INACTIVE)}95;
+  ${(props) => (props.isToday ? `background-color: ${MAIN_COLOR}95` : "" )};
   overflow: auto;
 
   @media only screen and (max-width: 920px) {
     width: 14.8%;
     margin-right: 2px;
     margin-bottom: 2px;
-    ${(props) => (props.numOfColumn % 7 == 0 ? "margin-left: 2px;" : "")};
+    ${(props) => (props.day == 0 ? "margin-left: 2px;" : "")};
   }
 `;
 
+
 function Day(props) {
-  const numOfColumn = parseInt(props.date % 6);
+
+  const {day, date, strDate} = props
   const contentHeight = (
     parseInt(props.height.replace(/[^0-9]/g, "")) / 7
   ).toFixed(2);
+
   return (
     <Wrap {...props}>
-      <CalDate
-        numOfColumn={numOfColumn}
-        contentHeight={contentHeight}
-        {...props}
-      >
-        {props.date}
+      <CalDate date={date} day={day} contentHeight={contentHeight}>
+        {date=="1"? `${(strDate.split("-")[1])}/1` : date }
       </CalDate>
-      <CalContent contentHeight={contentHeight} {...props}>
+
+      <CalContent contentHeight={contentHeight} >
         1
       </CalContent>
-      <CalContent contentHeight={contentHeight} {...props}>
+      <CalContent contentHeight={contentHeight} >
         2
       </CalContent>
-      <CalContent contentHeight={contentHeight} {...props}>
+      <CalContent contentHeight={contentHeight} >
         3
       </CalContent>
-      <CalContent contentHeight={contentHeight} {...props}>
+      <CalContent contentHeight={contentHeight}>
         4
       </CalContent>
-      <CalContent contentHeight={contentHeight} {...props}>
+      <CalContent contentHeight={contentHeight} >
         5
       </CalContent>
-      <CalContent contentHeight={contentHeight} {...props}>
+      <CalContent contentHeight={contentHeight} >
         6
       </CalContent>
     </Wrap>
@@ -66,6 +67,7 @@ Day.propTypes = {
   date: PropTypes.string.isRequired,
   numOfDay: PropTypes.number,
   isActive: PropTypes.bool,
+  isToday:  PropTypes.bool,
 };
 
 Day.defaultProps = {

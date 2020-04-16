@@ -22,7 +22,7 @@ import Paragraph from "../AtomicComponents/A-Atomics/text/Paragraph";
 import Header from "../AtomicComponents/B-Molecules/Header";
 
 import styled from "styled-components";
-import Week from "../AtomicComponents/C-Organisms/Calendar/Week/Week";
+import Week from "../AtomicComponents/C-Organisms/Calendar/Week";
 import CalWrap from "../AtomicComponents/A-Atomics/Calendar/CalWrap";
 import Calendar from "../AtomicComponents/D-Templates/Calendar/Calendar";
 
