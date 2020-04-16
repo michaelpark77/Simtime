@@ -54,14 +54,15 @@ class App extends Component {
         <AppContents>
           <Header />
           <br />
-          <Calendar />
+          {/* <Calendar /> */}
           <CalWrap>
+            {/* <Week></Week>
             <Week></Week>
             <Week></Week>
             <Week></Week>
             <Week></Week>
-            <Week></Week>
-            <Week></Week>
+            <Week></Week> */}
+            <Calendar />
           </CalWrap>
 
           <Paragraph color="ST_YELLOW" fontSize="100px">

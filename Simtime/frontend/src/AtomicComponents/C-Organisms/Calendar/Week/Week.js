@@ -11,8 +11,24 @@ const Wrap = styled.div`
   height: ${height};
   margin-bottom: 4px;
 `;
-
 function Week(props) {
+  const { weekDates } = props;
+
+  // const rederDays = () => {
+  //   return weekDates.map((date, index) => {
+  //     console.log("render: ", date, index);
+  //     return (
+  //       <Day
+  //         key={date[0]}
+  //         day={date[1]}
+  //         isActive={date[2]}
+  //         date={date[3]}
+  //         height={height}
+  //       ></Day>
+  //     );
+  //   });
+  // };
+
   return (
     <Wrap {...props}>
       <Day height={height} day={0} date="29" isActive={false} />
