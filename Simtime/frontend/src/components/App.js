@@ -20,11 +20,10 @@ import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import GlobalStyle from "../AtomicComponents/GlobalStyle";
 import Paragraph from "../AtomicComponents/A-Atomics/text/Paragraph";
 import Header from "../AtomicComponents/B-Molecules/Header";
+import Calendar from "../AtomicComponents/E-Pages/Dashboard";
 
 import styled from "styled-components";
-import Week from "../AtomicComponents/C-Organisms/Calendar/Week";
-import CalWrap from "../AtomicComponents/A-Atomics/Calendar/CalWrap";
-import Calendar from "../AtomicComponents/D-Templates/Calendar/Calendar";
+
 
 const alertOptions = {
   timeout: 3000,
@@ -54,17 +53,7 @@ class App extends Component {
         <AppContents>
           <Header />
           <br />
-          {/* <Calendar /> */}
-          <CalWrap>
-            {/* <Week></Week>
-            <Week></Week>
-            <Week></Week>
-            <Week></Week>
-            <Week></Week>
-            <Week></Week> */}
-            <Calendar />
-          </CalWrap>
-
+          <Calendar />
           <Paragraph color="ST_YELLOW" fontSize="100px">
             hello
           </Paragraph>
