@@ -9,6 +9,8 @@ import UserCard from '../B-Molecules/User/UserCard'
 import Image from "../A-Atomics/Image"
 
 const Wrap = styled.div`
+    position: relative;
+
     border-bottom : solid 1px ${MAIN_COLOR};
     width: ${props=> props.width};
     height: ${props=> props.height};
@@ -17,9 +19,7 @@ const Wrap = styled.div`
     flex-direction : column;
     justify-content: start;
     align-items: start;
-
     padding: 8px 4px 8px 8px;
-
     @media only screen and (max-width: 920px) {
         width: 100%;
     }
@@ -30,24 +30,38 @@ const UpsideWrap = styled.div`
     flex-direction : row;
     justify-contens: flex-start;
     margin-bottom : 8px;
-    border: solid 1px red;
+    width: 100%;
+
 `
 
-const DownsideWrap = styled.div`
-    display : flex;
-    flex-direction : row;
-    justify-contens: flex-start;
+const TitleTextWrap = styled.div`
+    width: 80%;
+`
+const TitleImageWrap = styled.div`
+    width: 20%;
+
+    ${props => props.imgType=="label" ? 
+            `position: absolute;
+            top: 0px;
+            right: 0px;
+            display : flex;
+            justify-content: center;
+            `
+        : `
+            display : flex;
+            justify-content: center;
+            align-items: center;
+        `
+    }
+
     
-    border: solid 1px green;
 `
-
 const TitleWrap = styled.div`
     padding-bottom : 4px;
     display : flex;
     flex-direction : row;
     justify-contens: flex-start;
 `
-
 const Title = styled(Header)``
 
 const TagsWrap = styled.div`
@@ -55,48 +69,53 @@ const TagsWrap = styled.div`
     padding-left: 10px;
 
 `
-const Tags = styled(Paragraph)`
+const Tag = styled(Paragraph)`
     padding-right: 3px;
 
 `
+const TitleImage = styled(Image)``
 
-const TitleImageWrap = styled.div`
-    border: solid 1px red;
-    height: 100%
+
+const DownsideWrap = styled.div`
+    display : flex;
+    flex-direction : row;
+    justify-contens: flex-start;
 `
-const TitleImage = styled(Image)`
-    
-
-`
-
-const UserCardWrap = styled.div`
-
-`
-
+const UserCardWrap = styled.div``
 
 function DetailTitle(props) {
+
+    // const renderTags = () => {
+    //     return tags.map((tag, index) => {
+    //       return (
+    //       <Tag key={tag.id} type="tag">{tag.value}</Tag>
+    //       );
+    //     });
+    //   };
+
     return (
         <Wrap {...props}>
             <UpsideWrap>
-                <div>
+                <TitleTextWrap>
                     <TitleWrap>
                         <Title type="h3" color="MAIN_COLOR">Tremblant in Canada</Title>
                     </TitleWrap>
                     <TagsWrap>
-                        <Tags type="tag">#치맥</Tags>
-                        <Tags type="tag">#한강</Tags>
-                        <Tags type="tag">#나들이</Tags>
-                        <Tags type="tag">#봄맞이</Tags>
-                        <Tags type="tag">#치맥</Tags>
-                        <Tags type="tag">#한강</Tags>
-                        <Tags type="tag">#나들이</Tags>
-                        <Tags type="tag">#봄맞이</Tags>
+                        <Tag type="tag">#치맥</Tag>
+                        <Tag type="tag">#한강</Tag>
+                        <Tag type="tag">#나들이</Tag>
+                        <Tag type="tag">#봄맞이</Tag>
+                        <Tag type="tag">#치맥</Tag>
+                        <Tag type="tag">#한강</Tag>
+                        <Tag type="tag">#나들이</Tag>
+                        <Tag type="tag">#봄맞이</Tag>
                     </TagsWrap>
-                </div>
+                </TitleTextWrap>
 
                 <TitleImageWrap>
                     <TitleImage width="40px" height="40px"/>
                 </TitleImageWrap>
+
             </UpsideWrap>
             <DownsideWrap>
                 <UserCardWrap>
