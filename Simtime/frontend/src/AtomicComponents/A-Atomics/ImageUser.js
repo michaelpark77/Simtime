@@ -2,47 +2,41 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 
-import { ST_WHITE, TEXT_ACTIVE, TEXT_INACTIVE } from "../Colors";
-import StyledText from "./text/Header";
-
 const Wrap = styled.div`
-  border: solid 1px red;
-  display: inline-block;
-`;
+  width: ${props=>props.width};
+  height: ${props=>props.height};
+`
 
-const ContentWrap = styled.div`
-  width: ${(props) => (props.width ? props.width : "120px")};
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+const Image = styled.div`
+    background-size: cover;
+    background-image: url("${props=>props.src}");
+    background-position: center center;
+    width: ${props=>props.width};
+    height: ${props=>props.height};
 
-const Bottom = styled.div`
-  background-color: ${ST_WHITE};
-  border-radius: 80px 80px 20px 20px;
-  height: 5px;
-  width: 64px;
-`;
-const StyledContent = styled(StyledText)`
-  color: ${TEXT_INACTIVE};
-  font-weight: bold;
-  &:hover {
-    color: ${TEXT_ACTIVE};
-  }
-`;
+    border-radius: 20px 20px 20px 20px;
+`
 
-function MenuInActive(props) {
+
+
+function ImageUser(props) {
   return (
     <Wrap>
-      <ContentWrap>
-        <StyledContent type="h3" color={TEXT_INACTIVE}>
-          {props.children}
-        </StyledContent>
-        <Bottom />
-      </ContentWrap>
+      <Image {...props}/>
     </Wrap>
   );
 }
 
-export default MenuInActive;
+export default ImageUser;
+
+ImageUser.propTypes = {
+  src: PropTypes.string,
+  width: PropTypes.string,
+  height: PropTypes.string
+};
+
+ImageUser.defaultProps = {
+  src: "static/img/icons/user-basic.png",
+  width: "40px",
+  height:"40px"
+};

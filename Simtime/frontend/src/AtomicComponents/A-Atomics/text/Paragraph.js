@@ -9,7 +9,7 @@ const StyledContent = (props) => {
     color: ${Colors[props.color]};
     font-size: ${props.fontSize};
   `;
-
+  
   switch (props.type) {
     case "a":
       return styled.a`
@@ -31,9 +31,17 @@ const StyledContent = (props) => {
         ${commonStyle}
       `;
 
+    case "tag":
+      return styled.span`
+      font-family: ${Colors.ST_FONT_FAMILY};
+      color: ${Colors.ST_GRAY};
+      font-size: 12px;
+      text-decoration: underline;
+      `;
+
     default:
       return styled.span`
-        ${commonStyle}
+      ${commonStyle}
       `;
   }
 };
@@ -57,7 +65,7 @@ const StyledText = (props) => {
 export default StyledText;
 
 StyledText.propTypes = {
-  type: PropTypes.oneOf(["a", "span"]),
+  type: PropTypes.oneOf(["a", "span","tag"]),
   src: PropTypes.string,
   color: PropTypes.string,
   fontSize: PropTypes.string,

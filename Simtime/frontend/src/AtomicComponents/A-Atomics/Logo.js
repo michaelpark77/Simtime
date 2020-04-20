@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-
-import { MAIN_COLOR } from "../Colors";
 import H from "./text/Header";
 
 const Wrap = styled.div`
@@ -18,7 +16,7 @@ const Content = styled(H)`
 function LOGO() {
   return (
     <Wrap>
-      <Content type="h1" color={MAIN_COLOR}>
+      <Content type="h1" color="MAIN_COLOR">
         SimTime
       </Content>
     </Wrap>
