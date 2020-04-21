@@ -25,7 +25,7 @@ const Name = styled(Paragraph)`
 function UserCard(props) {
     return (
         <Wrap {...props}>
-            <Image />
+            <Image width={props.imageSize} height={props.imageSize}/>
             <Name fontSize="14px">{props.username}</Name>
         </Wrap>
     )
@@ -41,9 +41,12 @@ export default UserCard
 
 UserCard.propTypes = {
     username: PropTypes.string, 
+    imageSize: PropTypes.string, 
   };
 
 UserCard.defaultProps = {
-    username: "unknown"
+    username: "unknown",
+    imageSize: "40px"
+
 };
 

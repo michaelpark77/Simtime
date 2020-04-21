@@ -66,8 +66,9 @@ const Title = styled(Header)`
 `
 
 const TagsWrap = styled.div`
-    height: 40px;
+    height: 38px;
     padding-left: 10px;
+    overflow: hidden;
 
 `
 const Tag = styled(Paragraph)`
@@ -81,7 +82,8 @@ const DownsideWrap = styled.div`
     flex-direction : row;
     justify-contens: flex-start;
 `
-const UserCardWrap = styled.div``
+const UserCardWrap = styled.div`
+`
 
 function DetailTitle(props) {
 
@@ -104,6 +106,15 @@ function DetailTitle(props) {
                         <Tag type="tag">#치맥</Tag>
                         <Tag type="tag">#한강</Tag>
                         <Tag type="tag">#나들이</Tag>
+                        <Tag type="tag">#치맥</Tag>
+                        <Tag type="tag">#한강</Tag>
+                        <Tag type="tag">#나들이</Tag>
+                        <Tag type="tag">#치맥</Tag>
+                        <Tag type="tag">#한강</Tag>
+                        <Tag type="tag">#나들이</Tag>
+                        <Tag type="tag">#치맥</Tag>
+                        <Tag type="tag">#한강</Tag>
+                        <Tag type="tag">#나들이</Tag>
                     </TagsWrap>
                 </TitleTextWrap>
 
@@ -114,7 +125,7 @@ function DetailTitle(props) {
             </UpsideWrap>
             <DownsideWrap>
                 <UserCardWrap>
-                    <UserCard />
+                    <UserCard imageSize="35px"/>
                 </UserCardWrap>
             </DownsideWrap>
         </Wrap>
@@ -129,7 +140,7 @@ DetailTitle.propTypes = {
   };
 
 DetailTitle.defaultProps = {
-    height: "22%",
+    height: "21%",
     width: "100%",
 };
 

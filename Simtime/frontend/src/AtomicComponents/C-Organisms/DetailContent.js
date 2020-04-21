@@ -24,8 +24,8 @@ const Wrap = styled.div`
 `
 
 const TitleWrap = styled.div`
-    line-height: 40px;
-    height: 40px;
+    line-height: 30px;
+    height: 30px;
     width: 100%;
 `
 
@@ -87,7 +87,7 @@ function DetailContent(props) {
                 <Attendee />
                 </AttendanceList>
 
-                <StyledMap width="100%" height="200px" />
+                {/* <StyledMap width="100%" height="200px" /> */}
 
 
             </DetailWrap>
