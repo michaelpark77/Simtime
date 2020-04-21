@@ -17,8 +17,8 @@ const Wrap = styled.div`
 
     display : flex;
     flex-direction : column;
-    justify-content: start;
-    align-items: start;
+    justify-content: flex-start;
+    align-items: flex-start;
     padding: 8px 4px 8px 8px;
     @media only screen and (max-width: 920px) {
         width: 100%;
@@ -104,11 +104,6 @@ function DetailTitle(props) {
                         <Tag type="tag">#치맥</Tag>
                         <Tag type="tag">#한강</Tag>
                         <Tag type="tag">#나들이</Tag>
-                        <Tag type="tag">#봄맞이</Tag>
-                        <Tag type="tag">#치맥</Tag>
-                        <Tag type="tag">#한강</Tag>
-                        <Tag type="tag">#나들이</Tag>
-                        <Tag type="tag">#봄맞이</Tag>
                     </TagsWrap>
                 </TitleTextWrap>
 
@@ -134,7 +129,7 @@ DetailTitle.propTypes = {
   };
 
 DetailTitle.defaultProps = {
-    height: "23%",
+    height: "22%",
     width: "100%",
 };
 

@@ -4,15 +4,13 @@ import PropTypes from 'prop-types'
 
 import {MAIN_COLOR} from '../Colors'
 import DetailTitle from '../C-Organisms/DetatilTitle'
-
-
+import DetailContent from '../C-Organisms/DetailContent'
 
 const Wrap = styled.div`
     border : solid 1px ${MAIN_COLOR};
     width: ${props=> props.width};
     height: ${props=> props.height};
     background-color: 
-
     display : flex;
     flex-direction : column;
     justify-content: center;
@@ -27,7 +25,7 @@ function Detail(props) {
     return (
         <Wrap {...props}>
             <DetailTitle />
-            
+            <DetailContent/>
         </Wrap>
     )
 }
