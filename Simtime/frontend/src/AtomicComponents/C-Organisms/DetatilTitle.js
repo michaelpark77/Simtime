@@ -62,7 +62,8 @@ const TitleWrap = styled.div`
     flex-direction : row;
     justify-contens: flex-start;
 `
-const Title = styled(Header)``
+const Title = styled(Header)`
+`
 
 const TagsWrap = styled.div`
     height: 40px;
@@ -71,7 +72,6 @@ const TagsWrap = styled.div`
 `
 const Tag = styled(Paragraph)`
     padding-right: 3px;
-
 `
 const TitleImage = styled(Image)``
 

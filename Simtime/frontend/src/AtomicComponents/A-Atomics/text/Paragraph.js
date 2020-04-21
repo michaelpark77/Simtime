@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 
 const StyledContent = (props) => {
   const commonStyle = `
-    font-family: ${Colors.ST_FONT_FAMILY};
     color: ${Colors[props.color]};
     font-size: ${props.fontSize};
   `;
@@ -33,9 +32,8 @@ const StyledContent = (props) => {
 
     case "tag":
       return styled.span`
-      font-family: ${Colors.ST_FONT_FAMILY};
       color: ${Colors.ST_GRAY};
-      font-size: 12px;
+      font-size : ${props=> props.fontSize ? props.fontSize : "12px" };
       text-decoration: underline;
       `;
 
@@ -74,6 +72,6 @@ StyledText.propTypes = {
 StyledText.defaultProps = {
   type: "span",
   src: "http://localhost:8080/",
-  color: Colors.TEXT,
+  color: "TEXT",
   fontSize: "13px",
 };

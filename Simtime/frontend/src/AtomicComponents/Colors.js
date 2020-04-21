@@ -1,8 +1,3 @@
-export const ST_FONT_FAMILY = "Roboto";
-
-// background : (_LIGHT), NONE , (_DARK)
-// text : active, inactive, link, Visited
-
 // MAIN COLORS PALETTE
 export const ST_YELLOW_LIGHT = "#FFF8E7";
 export const ST_YELLOW = "#FFCA17"; //main (Deep) yellow (242,201,76)

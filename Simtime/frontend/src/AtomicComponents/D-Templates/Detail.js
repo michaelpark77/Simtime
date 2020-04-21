@@ -37,7 +37,7 @@ Detail.propTypes = {
     width: PropTypes.string,
   };
 
-  Detail.defaultProps = {
+Detail.defaultProps = {
     height: "618px",
     width: "284px",
 };

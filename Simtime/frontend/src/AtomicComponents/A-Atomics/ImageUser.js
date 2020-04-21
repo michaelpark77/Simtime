@@ -17,8 +17,6 @@ const Image = styled.div`
     border-radius: 20px 20px 20px 20px;
 `
 
-
-
 function ImageUser(props) {
   return (
     <Wrap>

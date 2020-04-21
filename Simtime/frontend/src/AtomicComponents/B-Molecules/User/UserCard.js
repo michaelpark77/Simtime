@@ -22,8 +22,6 @@ const Name = styled(Paragraph)`
     font-weight: 600;
 `
 
-
-
 function UserCard(props) {
     return (
         <Wrap {...props}>
