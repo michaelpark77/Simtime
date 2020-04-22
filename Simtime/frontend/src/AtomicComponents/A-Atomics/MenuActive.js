@@ -6,7 +6,6 @@ import { ST_BLUE, TEXT_ACTIVE } from "../Colors";
 import StyledText from "./text/Header";
 
 const Wrap = styled.div`
-  // border: solid 1px red;
   display: inline-block;
 `;
 
@@ -32,7 +31,7 @@ function MenuActive(props) {
   return (
     <Wrap>
       <ContentWrap>
-        <StyledContent type="h3" color={TEXT_ACTIVE}>
+        <StyledContent type="h4" color={TEXT_ACTIVE}>
           {props.children}
         </StyledContent>
         <Bottom />

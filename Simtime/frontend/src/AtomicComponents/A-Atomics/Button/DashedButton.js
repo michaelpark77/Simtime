@@ -10,7 +10,6 @@ const Wrap = styled.div`
     border : solid 1px ${MAIN_COLOR};
     width: ${props=> props.width};
     height: ${props=> props.height};
-    background-color: 
 
     @media only screen and (max-width: 920px) {
         width: 100%;
@@ -23,6 +22,7 @@ const Wrap = styled.div`
 
 const Content = styled(Paragraph)`
     text-decoration: underline;
+    font-weight: 500;
     font-size: 18px;
 `
 
@@ -36,7 +36,7 @@ const Icon = styled.div`
 `
 
 
-function Button(props) {
+function DashedButton(props) {
     return (
         <Wrap {...props}>
             <Icon />
@@ -47,14 +47,14 @@ function Button(props) {
     )
 }
 
-export default Button
+export default DashedButton
 
-Button.propTypes = {
+DashedButton.propTypes = {
     height: PropTypes.string,
     width: PropTypes.string,
   };
 
-Button.defaultProps = {
+  DashedButton.defaultProps = {
     height: "46px",
     width: "284px",
 };

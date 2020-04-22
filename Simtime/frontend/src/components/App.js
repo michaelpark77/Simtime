@@ -17,9 +17,11 @@ import store from "../store";
 import { loadUser } from "../actions/auth";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
+
+import * as Colors from "../AtomicComponents/Colors";
 import GlobalStyle from "../AtomicComponents/GlobalStyle";
 import Paragraph from "../AtomicComponents/A-Atomics/text/Paragraph";
-import Header from "../AtomicComponents/B-Molecules/Header";
+import Header from "../AtomicComponents/D-Templates/Header";
 import Calendar from "../AtomicComponents/E-Pages/Dashboard";
 
 import styled from "styled-components";
@@ -34,7 +36,8 @@ const AppContents = styled.div`
   float: left;
   width: 920px;
   padding: 0 0.5rem 0.5rem 0.5rem;
-  border: solid 1px green;
+  // border: solid 1px green;
+  border-top: solid 8px ${Colors["MAIN_COLOR"]};
 
   @media only screen and (max-width: 768px) {
     width: 100%;
@@ -54,9 +57,6 @@ class App extends Component {
           <Header />
           <br />
           <Calendar />
-          <Paragraph color="ST_YELLOW" fontSize="100px">
-            hello
-          </Paragraph>
         </AppContents>
       </Fragment>
     );

@@ -6,37 +6,29 @@ import Paragraph from "../text/Paragraph";
 
 const Wrap = styled.div`
   background-color: ${BG_INACTIVE_LIGHT};
-  background-size: 610px;
-  background-image: url("static/img/months/4.png");
-  background-position: center center;
 
   width: ${props=> props.width};
   height: ${props=> props.height};
-  z-index: 99;
-  padding-top: 4px;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
   overflow: hidden;
 
-  @media only screen and (max-width: 920px) {
-    width: 100%;
-  }
 `;
 
-function CalWrap(props) {
+function FilWrap(props) {
   return <Wrap {...props}></Wrap>;
 }
 
-export default CalWrap;
+export default FilWrap;
 
-CalWrap.propTypes = {
+FilWrap.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
 };
 
-CalWrap.defaultProps = {
-  height: "618px",
-  width: "620px",
+FilWrap.defaultProps = {
+  height: "46px",
+  width: "100%",
 };

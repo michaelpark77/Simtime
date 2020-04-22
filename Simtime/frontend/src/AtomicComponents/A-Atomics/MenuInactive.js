@@ -40,7 +40,7 @@ function MenuInActive(props) {
   return (
     <Wrap>
       <ContentWrap>
-        <StyledContent type="h3" color={TEXT_INACTIVE}>
+        <StyledContent type="h4" color={TEXT_INACTIVE}>
           {props.children}
         </StyledContent>
         <Bottom />

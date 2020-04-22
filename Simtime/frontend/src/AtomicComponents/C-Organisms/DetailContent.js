@@ -9,6 +9,7 @@ import UserCard from '../B-Molecules/User/UserCard'
 import Image from "../A-Atomics/Image"
 import ImageUser from "../A-Atomics/ImageUser"
 import Map from "../A-Atomics/Map"
+import ColoredButton from "../A-Atomics/Button/ColoredButton"
 
 const Wrap = styled.div`
     width: ${props=> props.width};
@@ -55,9 +56,7 @@ const AttendanceList = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-
 `
-
 const Attendee = styled(ImageUser)`
     margin-right: 6px;
     width: 30px;
@@ -67,6 +66,21 @@ const Attendee = styled(ImageUser)`
 const StyledMap = styled(Map)`
     margin-top: 6px;
     border: solid 1px red;
+`
+
+const StyledComment = styled.div`
+    margin-top: 6px;
+    height: 96px;
+    width: 100%;
+    overflow: auto;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+`
+
+const Button = styled(ColoredButton)`
+    margin-top: 12px;
 `
 
 function DetailContent(props) {
@@ -81,13 +95,17 @@ function DetailContent(props) {
                 <Content> <StyledParagraph>6 / 10 PAX</StyledParagraph></Content>
 
                 <AttendanceList>
-                <Attendee />
-                <Attendee />
-                <Attendee />
-                <Attendee />
+                    <Attendee />
+                    <Attendee />
+                    <Attendee />
+                    <Attendee />
                 </AttendanceList>
 
-                {/* <StyledMap width="100%" height="200px" /> */}
+                <StyledMap width="100%" height="200px" />
+                <StyledComment>
+                    <Paragraph>Whether its a driving tour, a cruise or a bus, leaf viewing is a great way to spend a fall vacation.</Paragraph>
+                </StyledComment>
+                <Button>JOIN</Button>
 
 
             </DetailWrap>

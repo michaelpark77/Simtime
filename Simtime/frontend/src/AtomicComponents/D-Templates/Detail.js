@@ -10,13 +10,13 @@ const Wrap = styled.div`
     border : solid 1px ${MAIN_COLOR};
     width: ${props=> props.width};
     height: ${props=> props.height};
-    background-color: 
+    
     display : flex;
     flex-direction : column;
     justify-content: center;
     align-items: center;
 
-        @media only screen and (max-width: 920px) {
+    @media only screen and (max-width: 920px) {
         width: 100%;
     }
 `

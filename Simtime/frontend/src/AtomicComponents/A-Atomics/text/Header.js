@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 
 const StyledContent = (props) => {
+
   const commonStyle = `
     color: ${Colors[props.color]};
     font-size: ${props.fontSize ? props.fontSize : ""};
@@ -28,6 +29,13 @@ const StyledContent = (props) => {
         ${commonStyle}
         font-size: ${props.fontSize ? props.fontSize : "18px"};
       `;
+
+    case "h4":
+      return styled.span`
+        ${commonStyle}
+        font-size: ${props.fontSize ? props.fontSize : "18px"};
+      `;
+
     default:
       return styled.span`
         ${commonStyle}
@@ -55,7 +63,7 @@ const StyledText = (props) => {
 export default StyledText;
 
 StyledText.propTypes = {
-  type: PropTypes.oneOf(["h1", "h2", "h3"]),
+  type: PropTypes.oneOf(["h1", "h2", "h3", "h4"]),
   src: PropTypes.string,
   color: PropTypes.string,
   fontSize: PropTypes.string,
