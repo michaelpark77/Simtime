@@ -8,7 +8,7 @@ const StyledContent = (props) => {
   const commonStyle = `
     color: ${Colors[props.color]};
     font-size: ${props.fontSize ? props.fontSize : ""};
-    font-weight: 500;
+    font-weight: 700;
   `;
 
   switch (props.type) {
@@ -33,7 +33,7 @@ const StyledContent = (props) => {
     case "h4":
       return styled.span`
         ${commonStyle}
-        font-size: ${props.fontSize ? props.fontSize : "18px"};
+        font-size: ${props.fontSize ? props.fontSize : "15px"};
       `;
 
     default:

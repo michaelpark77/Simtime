@@ -1,19 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import FilWrap from "../../AtomicComponents/A-Atomics/Filter/FilWrap";
-
 import CalWrap from "../../AtomicComponents/A-Atomics/Calendar/CalWrap";
 import Calendar from "../../AtomicComponents/D-Templates/Calendar/Calendar";
 
 import DashedButton from "../A-Atomics/Button/DashedButton";
 import Detail from "../../AtomicComponents/D-Templates/Detail";
 
+import Filter from "../C-Organisms/Filter"
+
 const Wrap = styled.div`
     display : flex;
     flex-direction : row;
     justify-content: space-between;
-
+    height: 680px;
     @media only screen and (max-width: 920px) {
         width: 100%;
         flex-direction : column;
@@ -21,30 +21,31 @@ const Wrap = styled.div`
 `
 
 const LeftWrap = styled.div`
+    height: 100%;
     display : flex;
     flex-direction : column;
-    justify-content: space-between;
+    justify-content: space-around;
 `
 const RightWrap = styled.div`
+    height: 100%;
     display : flex;
     flex-direction : column;
-    justify-content: space-between;
+    justify-content: space-around;
 `
 
 const StyledCalWrap = styled(CalWrap)`
-    margin-top: 6px;
+
 `
 
 const StyledDetail = styled(Detail)`
-    margin-top: 6px;
+
 `
 
 function Dashboard() {
     return (
         <Wrap>
             <LeftWrap>
-                <FilWrap></FilWrap>
-
+                <Filter></Filter>
                 <StyledCalWrap>
                     <Calendar />
                 </StyledCalWrap>

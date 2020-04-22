@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import {MAIN_COLOR} from '../../Colors'
-import Paragraph from '../text/Paragraph'
+import Paragraph from '../Font/Paragraph'
 
 
 const Wrap = styled.div`

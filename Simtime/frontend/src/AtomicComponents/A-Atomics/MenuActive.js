@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 
 import { ST_BLUE, TEXT_ACTIVE } from "../Colors";
-import StyledText from "./text/Header";
+import StyledText from "./Font/Header";
 
 const Wrap = styled.div`
   display: inline-block;

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 
 import { ST_BLUE, ST_WHITE, TEXT_ACTIVE, TEXT_INACTIVE } from "../Colors";
-import StyledText from "./text/Header";
+import StyledText from "./Font/Header";
 
 const Wrap = styled.div`
   // border: solid 1px red;

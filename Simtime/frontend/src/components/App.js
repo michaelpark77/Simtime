@@ -20,7 +20,6 @@ import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import * as Colors from "../AtomicComponents/Colors";
 import GlobalStyle from "../AtomicComponents/GlobalStyle";
-import Paragraph from "../AtomicComponents/A-Atomics/text/Paragraph";
 import Header from "../AtomicComponents/D-Templates/Header";
 import Calendar from "../AtomicComponents/E-Pages/Dashboard";
 

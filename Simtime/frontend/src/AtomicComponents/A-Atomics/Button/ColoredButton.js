@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import Paragraph from '../text/Paragraph'
+import Paragraph from '../Font/Paragraph'
 import * as Colors from '../../Colors'
 
 const Wrap = styled.div`

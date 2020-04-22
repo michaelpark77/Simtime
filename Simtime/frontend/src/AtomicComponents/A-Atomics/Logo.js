@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import H from "./text/Header";
+import StyledText from "./Font/Header";
 
 const Wrap = styled.div`
   // border: solid 1px red;
@@ -9,7 +9,7 @@ const Wrap = styled.div`
   vertical-align: middle;
 `;
 
-const Content = styled(H)`
+const Content = styled(StyledText)`
   font-weight: bold;
 `;
 

@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { BG_INACTIVE_LIGHT} from "../../Colors";
-import Paragraph from "../text/Paragraph";
+import { BG_INACTIVE_LIGHT} from "../Colors";
+
+import SelectArrow from "../A-Atomics/Filter/SelectArrow"
+import RadioText from "../A-Atomics/Filter/RadioText"
 
 const Wrap = styled.div`
   background-color: ${BG_INACTIVE_LIGHT};
@@ -12,23 +14,27 @@ const Wrap = styled.div`
 
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-around;
+  align-items: center;
   overflow: hidden;
 
 `;
 
-function FilWrap(props) {
-  return <Wrap {...props}></Wrap>;
+function Filter(props) {
+  return <Wrap {...props}>
+      <RadioText />
+      <SelectArrow />
+  </Wrap>;
 }
 
-export default FilWrap;
+export default Filter;
 
-FilWrap.propTypes = {
+Filter.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
 };
 
-FilWrap.defaultProps = {
+Filter.defaultProps = {
   height: "46px",
   width: "100%",
 };

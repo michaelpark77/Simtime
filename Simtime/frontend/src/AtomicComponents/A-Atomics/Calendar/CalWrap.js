@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { BG_INACTIVE_LIGHT} from "../../Colors";
-import Paragraph from "../text/Paragraph";
 
 const Wrap = styled.div`
   background-color: ${BG_INACTIVE_LIGHT};

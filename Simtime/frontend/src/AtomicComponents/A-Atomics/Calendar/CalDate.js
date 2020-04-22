@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import Paragraph from "../text/Paragraph";
+import Paragraph from "../Font/Paragraph";
 import { MAIN_COLOR,TEXT, ST_BLUE, ST_RED } from "../../Colors";
 
 const Wrap = styled.div`

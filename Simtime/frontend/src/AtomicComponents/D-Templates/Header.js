@@ -45,8 +45,7 @@ const MenuList = styled.div`
 `;
 
 const AccountWrap = styled.div`
-  // border: solid 1px blue;
-  width: 180px;
+  width: 150px;
 
   display: flex;
   flex-direction: row;
@@ -66,9 +65,9 @@ function Header() {
         </LogoWrap>
 
         <MenuList>
-          <MenuActive>Calendar</MenuActive>
-          <MenuInActive>My Simtime</MenuInActive>
-          <MenuInActive>Friends</MenuInActive>
+          <MenuActive>CALENDAR</MenuActive>
+          <MenuInActive>MY SIMTIME</MenuInActive>
+          <MenuInActive>FRIENDS</MenuInActive>
         </MenuList>
 
         <AccountWrap>

@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import {MAIN_COLOR} from '../Colors'
-import Header from '../A-Atomics/text/Header'
-import Paragraph from '../A-Atomics/text/Paragraph'
+import Header from '../A-Atomics/Font/Header'
+import Paragraph from '../A-Atomics/Font/Paragraph'
 import UserCard from '../B-Molecules/User/UserCard'
 import Image from "../A-Atomics/Image"
 

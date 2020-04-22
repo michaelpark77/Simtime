@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import Paragraph from '../../A-Atomics/text/Paragraph'
+import Paragraph from '../../A-Atomics/Font/Paragraph'
 import ImageUser from '../../A-Atomics/ImageUser'
 
 
