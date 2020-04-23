@@ -21,7 +21,6 @@ const CalendarWrap = styled.div`
   align-items: center;
   
   overflow: hidden;
-
 `
 
 // cal_prev_page = [0]; -현재(오늘)로부터 과거로 load한 page

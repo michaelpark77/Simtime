@@ -7,19 +7,23 @@ import Detail from "../D-Templates/Detail";
 import Filter from "../C-Organisms/Filter"
 
 const Wrap = styled.div`
+
     display : flex;
     flex-direction : row;
     justify-content: space-between;
-    height: 680px;
+
+
     @media only screen and (max-width: 920px) {
         width: 100%;
         flex-direction : column;
     }
+
+    overflow: hidden;
 `
 
 const LeftWrap = styled.div`
     width: 68.5%;
-    height: 100%;
+    height: 680px;
     display : flex;
     flex-direction : column;
     justify-content: flex-start;
@@ -30,7 +34,7 @@ const LeftWrap = styled.div`
 `
 const RightWrap = styled.div`
     width: 31%;
-    height: 100%;
+    height: 680px;
     display : flex;
     flex-direction : column;
     justify-content: flex-start;
@@ -48,10 +52,15 @@ const StyledCalendar  = styled(Calendar)`
 
 const StyledDashedButton = styled(DashedButton)`
     margin-bottom: 8px;
+    @media only screen and (max-width: 920px) {
+        display : none;
+    }
 `
 
 const StyledDetail = styled(Detail)`
-
+    @media only screen and (max-width: 920px) {
+        height: 100%;
+    }
 `
 
 function CalendarPage() {

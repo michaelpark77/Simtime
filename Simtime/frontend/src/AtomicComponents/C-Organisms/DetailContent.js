@@ -65,12 +65,11 @@ const Attendee = styled(ImageUser)`
 
 const StyledMap = styled(Map)`
     margin-top: 6px;
-    border: solid 1px red;
 `
 
 const StyledComment = styled.div`
     margin-top: 6px;
-    height: 96px;
+    height: 24%;
     width: 100%;
     overflow: auto;
 
@@ -101,7 +100,7 @@ function DetailContent(props) {
                     <Attendee />
                 </AttendanceList>
 
-                <StyledMap width="100%" height="200px" />
+                <StyledMap width="100%" height="38%" />
                 <StyledComment>
                     <Paragraph>Whether its a driving tour, a cruise or a bus, leaf viewing is a great way to spend a fall vacation.</Paragraph>
                 </StyledComment>

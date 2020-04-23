@@ -33,17 +33,21 @@ function Map(props) {
         });
       },[]);
 
-    return  <MapWrap id="myMap"></MapWrap>
+      console.log(props.height)
+    return  <MapWrap {...props} id="myMap"></MapWrap>
 }
 
 export default Map
 
 
 Map.propTypes = {
+  height: PropTypes.string,
+  width: PropTypes.string,
+};
 
-  };
-
-  Map.defaultProps = {
-
+Map.defaultProps = {
+  height: "50%",
+  width:  "100%",
 };
   
+

@@ -16,7 +16,6 @@ const Wrap = styled.div`
   align-items: center;
 
   width: 100%;
-  // height: ${props=> props.height};
   height: 100%;
 
   z-index: 99;

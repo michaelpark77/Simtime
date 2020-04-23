@@ -56,6 +56,6 @@ DashedButton.propTypes = {
 
   DashedButton.defaultProps = {
     height: "46px",
-    width: "284px",
+    width: "100%",
 };
   
