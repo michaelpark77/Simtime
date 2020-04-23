@@ -97,7 +97,7 @@ function Calendar(props) {
 
 export default Calendar;
 
-// const mapStateToProps = (state) => ({
+// const mapStateToProps = (state) => ({s
 //   events: state.events.events,
 // });
 

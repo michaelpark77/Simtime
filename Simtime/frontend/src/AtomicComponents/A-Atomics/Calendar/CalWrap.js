@@ -5,18 +5,19 @@ import { BG_INACTIVE_LIGHT} from "../../Colors";
 
 const Wrap = styled.div`
   background-color: ${BG_INACTIVE_LIGHT};
-  background-size: 610px;
+  background-size: 100%;
   background-image: url("static/img/months/4.png");
   background-position: center center;
 
-  width: ${props=> props.width};
+  width: 100%;
   height: ${props=> props.height};
   z-index: 99;
   padding-top: 4px;
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  // align-items: space-between;
+  
   overflow: hidden;
 
   @media only screen and (max-width: 920px) {

@@ -8,8 +8,12 @@ const height = "116px";
 const Wrap = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   height: ${height};
-  margin-bottom: 4px;
+
+  margin-right: 1%;
+  margin-bottom: 1%;
+
 `;
 
 

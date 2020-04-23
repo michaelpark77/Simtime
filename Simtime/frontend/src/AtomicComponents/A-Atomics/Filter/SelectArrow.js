@@ -13,7 +13,7 @@ const Select = styled.select`
     background-size: 15px;
     background-repeat: no-repeat;
     background-image: url("static/img/icons/arrow-down2.png");
-    background-position: 95% center;
+    background-position: 92% center;
     width: ${props => props.width};
     height: ${props => props.height};
     border-width: 0px;
@@ -23,8 +23,7 @@ const Select = styled.select`
     -moz-appearance: none;
 
     font-size: 15px;
-    font-weight: 500;
-    font-style: normal;
+    font-weight: 400;
 
     select::--ms-expand { opacity:0; }
 `

@@ -7,13 +7,12 @@ import CalDate from "../../A-Atomics/Calendar/CalDate";
 import { MAIN_COLOR, BG_INACTIVE, BG_WHITE } from "../../Colors";
 
 const Wrap = styled.div`
-  width: 84px;
+  width: 13.5%;
   height: 100%;
-  margin-right: 4px;
-  margin-bottom: 6px;
-  ${(props) => (props.day== 0 ? "margin-left: 4px;" : "")};
+
   background-color: ${(props) => (props.isActive ? BG_WHITE : BG_INACTIVE)}95;
   ${(props) => (props.isToday ? `background-color: ${MAIN_COLOR}95` : "" )};
+ 
   overflow: hidden;
 
   @media only screen and (max-width: 920px) {

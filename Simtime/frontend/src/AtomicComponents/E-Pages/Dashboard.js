@@ -21,16 +21,27 @@ const Wrap = styled.div`
 `
 
 const LeftWrap = styled.div`
+    width: 68.5%;
     height: 100%;
     display : flex;
     flex-direction : column;
     justify-content: space-around;
+
+    @media only screen and (max-width: 920px) {
+        width: 100%;
+    }
 `
 const RightWrap = styled.div`
+    width: 31%;
     height: 100%;
     display : flex;
     flex-direction : column;
     justify-content: space-around;
+
+    
+    @media only screen and (max-width: 920px) {
+        width: 100%;
+    }
 `
 
 const StyledCalWrap = styled(CalWrap)`

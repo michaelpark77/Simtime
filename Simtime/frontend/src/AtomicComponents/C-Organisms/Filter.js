@@ -5,6 +5,8 @@ import { BG_INACTIVE_LIGHT} from "../Colors";
 
 import SelectArrow from "../A-Atomics/Filter/SelectArrow"
 import RadioText from "../A-Atomics/Filter/RadioText"
+import Search from "../A-Atomics/Filter/Search"
+import DisplaySelections from "../B-Molecules/Filter/DisplaySelections"
 
 const Wrap = styled.div`
   background-color: ${BG_INACTIVE_LIGHT};
@@ -24,6 +26,9 @@ function Filter(props) {
   return <Wrap {...props}>
       <RadioText />
       <SelectArrow />
+
+      <DisplaySelections />
+      <Search />
   </Wrap>;
 }
 
