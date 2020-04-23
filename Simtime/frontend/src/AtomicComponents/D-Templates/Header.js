@@ -10,11 +10,17 @@ import Account from "../B-Molecules/User/Account";
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
+
+  margin-bottom: 15px;
+  @media only screen and (max-width: 680px) {
+    margin-bottom: 0px;
+  }
 `;
 
 const ContentWrap = styled.div`
   width: 100%;
   height: 62px;
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -26,6 +32,7 @@ const ContentWrap = styled.div`
 
   @media only screen and (max-width: 560px) {
     justify-content: center;
+    height: 40px;
   }
 `;
 

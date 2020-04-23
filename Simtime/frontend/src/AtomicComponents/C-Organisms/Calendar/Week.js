@@ -10,9 +10,8 @@ const Wrap = styled.div`
   flex-direction: row;
   justify-content: space-between;
   height: ${height};
-
-  margin-right: 1%;
-  margin-bottom: 1%;
+  width: 100%;
+  margin-bottom: 4px;
 
 `;
 

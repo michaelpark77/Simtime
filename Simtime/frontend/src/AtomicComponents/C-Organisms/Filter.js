@@ -16,20 +16,53 @@ const Wrap = styled.div`
 
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  overflow: hidden;
 
 `;
 
-function Filter(props) {
-  return <Wrap {...props}>
-      <RadioText />
-      <SelectArrow />
+const ContentWrap = styled.div`
+  width: 98%;
+  height: 98%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  
+`;
 
-      <DisplaySelections />
-      <Search />
-  </Wrap>;
+const StyledRadioText = styled(RadioText)`
+  
+`;
+
+const StyledSelectArrow = styled(SelectArrow)`
+  
+`;
+
+const StyledDisplaySelections= styled(DisplaySelections)`
+  @media (max-width: 620px) {
+    display: none;
+  }
+
+`;
+
+const StyledSearch = styled(Search)`
+
+`;
+
+
+
+function Filter(props) {
+  return (
+    <Wrap {...props}>
+      <ContentWrap>
+        <StyledRadioText />
+        <StyledSelectArrow />
+        <StyledDisplaySelections />
+        <StyledSearch />
+        </ContentWrap>
+    </Wrap>);
 }
 
 export default Filter;

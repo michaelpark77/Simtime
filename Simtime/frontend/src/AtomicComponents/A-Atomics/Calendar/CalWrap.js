@@ -8,22 +8,25 @@ const Wrap = styled.div`
   background-size: 100%;
   background-image: url("static/img/months/4.png");
   background-position: center center;
-
-  width: 100%;
-  height: ${props=> props.height};
-  z-index: 99;
-  padding-top: 4px;
+  background-repeat: no-repeat;
 
   display: flex;
   flex-direction: column;
-  // align-items: space-between;
-  
-  overflow: hidden;
+  justify-content: flex-start;
+  align-items: center;
+
+  width: 100%;
+  // height: ${props=> props.height};
+  height: 100%;
+
+  z-index: 99;
+
 
   @media only screen and (max-width: 920px) {
     width: 100%;
   }
 `;
+
 
 function CalWrap(props) {
   return <Wrap {...props}></Wrap>;
@@ -37,6 +40,6 @@ CalWrap.propTypes = {
 };
 
 CalWrap.defaultProps = {
-  height: "618px",
+  height: "660px",
   width: "620px",
 };

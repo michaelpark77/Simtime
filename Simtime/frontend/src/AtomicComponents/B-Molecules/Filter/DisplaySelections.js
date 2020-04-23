@@ -10,22 +10,29 @@ const Wrap = styled.div`
     height: ${props => props.height};
     background-color: ${ST_WHITE};
     display: flex;
-    flex-direction : row;
-    align-items : center;
+    flex-direction: row;
+    align-items: center;
     padding: 3px 3px 3px 3px;
 `;
 
 const StyledSelectedItem = styled(SelectedItem)`
-    margin-right: 2px;
+
 `
 
 function DisplaySelections(props) {
-    const {width, height} = props;
+    const {width, height, Items} = props;
+
+    const renderItem = () => {
+        return Items.map((item, index) => {
+          return (
+          <StyledSelectedItem key={"item" + index}>{item}</StyledSelectedItem>
+          );
+        });
+      };
+
     return (
         <Wrap width={width} height={height}>
-            <StyledSelectedItem>All</StyledSelectedItem>
-            <StyledSelectedItem>공파리</StyledSelectedItem>
-            <StyledSelectedItem>이겟겟겟...</StyledSelectedItem>
+            {renderItem()}
         </Wrap>
     )
 }
@@ -36,10 +43,12 @@ export default DisplaySelections
 DisplaySelections.propTypes = {
     width: PropTypes.string, 
     height: PropTypes.string, 
+    Items: PropTypes.array,
   };
 
 DisplaySelections.defaultProps = {
     width: "246px",
     height: "30px",
+    Items: ["ALL", "공파리", "이겟겟겟..."]
 };
 

@@ -1,12 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import CalWrap from "../../AtomicComponents/A-Atomics/Calendar/CalWrap";
-import Calendar from "../../AtomicComponents/D-Templates/Calendar/Calendar";
-
+import Calendar from "../D-Templates/Calendar/Calendar";
 import DashedButton from "../A-Atomics/Button/DashedButton";
-import Detail from "../../AtomicComponents/D-Templates/Detail";
-
+import Detail from "../D-Templates/Detail";
 import Filter from "../C-Organisms/Filter"
 
 const Wrap = styled.div`
@@ -25,7 +22,7 @@ const LeftWrap = styled.div`
     height: 100%;
     display : flex;
     flex-direction : column;
-    justify-content: space-around;
+    justify-content: flex-start;
 
     @media only screen and (max-width: 920px) {
         width: 100%;
@@ -36,39 +33,41 @@ const RightWrap = styled.div`
     height: 100%;
     display : flex;
     flex-direction : column;
-    justify-content: space-around;
+    justify-content: flex-start;
 
-    
     @media only screen and (max-width: 920px) {
         width: 100%;
     }
 `
+const StyledFilter = styled(Filter)`
+    margin-bottom: 8px;
+`
 
-const StyledCalWrap = styled(CalWrap)`
+const StyledCalendar  = styled(Calendar)`
+`
 
+const StyledDashedButton = styled(DashedButton)`
+    margin-bottom: 8px;
 `
 
 const StyledDetail = styled(Detail)`
 
 `
 
-function Dashboard() {
+function CalendarPage() {
     return (
         <Wrap>
             <LeftWrap>
-                <Filter></Filter>
-                <StyledCalWrap>
-                    <Calendar />
-                </StyledCalWrap>
+                <StyledFilter />
+                <StyledCalendar height="98%" />
             </LeftWrap>
-
             <RightWrap>
-                <DashedButton />
-                <StyledDetail />
+                <StyledDashedButton />
+                <StyledDetail height="98%" />
             </RightWrap>
         </Wrap>
 
     )
 }
 
-export default Dashboard
+export default CalendarPage

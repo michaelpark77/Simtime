@@ -16,6 +16,9 @@ const Wrap = styled.div`
     align-items: center;
 `;
 
+const OptionWrap = styled.div`
+`;
+
 const Option = styled(Paragraph)`
     ${props=> props.isSelected ? "font-weight: 700" : ""}
 `; 
@@ -28,13 +31,14 @@ function RadioText(props) {
     const renderOption = () => {
         return list.map((option, index) =>{
             const isSelected = (index == selectedId);
-            console.log(isSelected);
-            return (<Option 
-                        key={option}
-                        isSelected={isSelected}
+            return (
+            <OptionWrap key={option}>
+                <Option isSelected={isSelected}
                         color={ isSelected ?  "MAIN_COLOR" : "ST_GRAY" } 
                         fontSize="15px">{option}
-                    </Option>)
+                </Option>
+            </OptionWrap>)
+            
         }
 
         )

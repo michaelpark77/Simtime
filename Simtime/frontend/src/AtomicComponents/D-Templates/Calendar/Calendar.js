@@ -1,7 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Week from "../../C-Organisms/Calendar/Week";
 import { connect } from "react-redux";
+
+import styled from "styled-components"
+import CalWrap from "../../A-Atomics/Calendar/CalWrap";
+import Week from "../../C-Organisms/Calendar/Week";
+
+
+
+const StyledCalWrap = styled(CalWrap)`
+`
+
+const CalendarWrap = styled.div`
+  width: 98%;
+  height: 90%;
+  padding-top: 1%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  
+  overflow: hidden;
+
+`
 
 // cal_prev_page = [0]; -현재(오늘)로부터 과거로 load한 page
 // cal_next_pate = [0]; -현재(오늘)로부터 미래로 load한 page
@@ -89,9 +110,9 @@ function Calendar(props) {
   };
 
   return (
-    <div>
-      {renderWeek()}
-    </div>
+    <StyledCalWrap>
+      <CalendarWrap>{renderWeek()}</CalendarWrap>
+    </StyledCalWrap>
     );
 }
 
@@ -103,8 +124,13 @@ export default Calendar;
 
 // export default connect(mapStateToProps, {})(Calendar);
 
-Calendar.propTypes = {};
+Calendar.propTypes = {
+  height: PropTypes.string,
+  width: PropTypes.string,
+};
 
 Calendar.defaultProps = {
   currDate: new Date(),
+  height: "98%",
+  width:  "98%",
 };
