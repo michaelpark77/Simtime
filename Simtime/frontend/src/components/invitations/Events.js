@@ -14,28 +14,28 @@ export class Events extends Component {
   static propTypes = {
     events: PropTypes.array.isRequired,
     getEvents: PropTypes.func.isRequired,
-    deleteEvent: PropTypes.func.isRequired
+    deleteEvent: PropTypes.func.isRequired,
   };
 
   //Modal
   state = {
     modal: false,
-    eventId: null
+    eventId: null,
   };
 
-  handleOpenModal = id => {
+  handleOpenModal = (id) => {
     if (id) {
       this.props.getEvent(id);
     }
 
     this.setState({
-      modal: true
+      modal: true,
     });
   };
 
   handleCloseModal = () => {
     this.setState({
-      modal: false
+      modal: false,
     });
   };
 
@@ -69,7 +69,7 @@ export class Events extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.events.map(event => (
+            {this.props.events.map((event) => (
               <tr key={event.id}>
                 <td> {event.id}</td>
                 <td> {event.event_name}</td>
@@ -110,13 +110,13 @@ export class Events extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   events: state.events.events,
-  modal: state.modal
+  modal: state.modal,
 });
 
 export default connect(mapStateToProps, {
   getEvents,
   deleteEvent,
-  getEvent
+  getEvent,
 })(Events);

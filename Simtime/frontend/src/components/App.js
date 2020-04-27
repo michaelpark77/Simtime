@@ -17,14 +17,12 @@ import store from "../store";
 import { loadUser } from "../actions/auth";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
-
 import * as Colors from "../AtomicComponents/Colors";
 import GlobalStyle from "../AtomicComponents/GlobalStyle";
 import Header from "../AtomicComponents/D-Templates/Header";
 import CalendarPage from "../AtomicComponents/E-Pages/CalendarPage";
 
 import styled from "styled-components";
-
 
 const alertOptions = {
   timeout: 3000,

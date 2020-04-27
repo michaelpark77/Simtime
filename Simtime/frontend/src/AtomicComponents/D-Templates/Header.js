@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 import { MAIN_COLOR, ST_GRAY } from "../Colors";
 import LOGO from "../A-Atomics/Logo";
-import MenuActive from "../A-Atomics/MenuActive";
-import MenuInActive from "../A-Atomics/MenuInActive";
+import MenuActive from "../A-Atomics/Header/MenuActive";
+import MenuInActive from "../A-Atomics/Header/MenuInActive";
 import Account from "../B-Molecules/User/Account";
 
 const Wrap = styled.div`
@@ -66,7 +66,6 @@ function Header() {
   return (
     <Wrap>
       <ContentWrap>
-
         <LogoWrap>
           <LOGO />
         </LogoWrap>
@@ -80,7 +79,6 @@ function Header() {
         <AccountWrap>
           <Account />
         </AccountWrap>
-
       </ContentWrap>
     </Wrap>
   );
