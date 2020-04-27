@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import {MAIN_COLOR} from '../Colors'
-import DetailTitle from '../C-Organisms/DetatilTitle'
-import DetailContent from '../C-Organisms/DetailContent'
+import {MAIN_COLOR} from '../../Colors'
+import DetailTitle from '../../C-Organisms/DetatilTitle'
+import DetailContent from '../../C-Organisms/DetailContent'
 
 const Wrap = styled.div`
     border : solid 1px ${MAIN_COLOR};
@@ -21,7 +21,7 @@ const Wrap = styled.div`
     }
 `
 
-function Detail(props) {
+function EventDetail(props) {
     return (
         <Wrap {...props}>
             <DetailTitle />
@@ -30,14 +30,14 @@ function Detail(props) {
     )
 }
 
-export default Detail
+export default EventDetail
 
-Detail.propTypes = {
+EventDetail.propTypes = {
     height: PropTypes.string,
     width: PropTypes.string,
   };
 
-Detail.defaultProps = {
+EventDetail.defaultProps = {
     height: "618px",
     width: "100%",
 };

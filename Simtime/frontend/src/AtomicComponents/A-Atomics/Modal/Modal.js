@@ -26,18 +26,14 @@ const ContentWrap = styled.div`
 `;
 
 const Modal = (props) => {
-  const { onClose } = props;
+  const { onClose } = props.children;
+  // onClick={() => { onClose(); }}
 
+  console.log(props.children);
   return (
     <MyModal>
       <ContentWrap>
-        <ColoredButton
-          onClick={() => {
-            onClose();
-          }}
-        >
-          Close
-        </ColoredButton>
+          {props.children}
       </ContentWrap>
     </MyModal>
   );

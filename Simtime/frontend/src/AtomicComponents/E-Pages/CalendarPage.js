@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Calendar from "../D-Templates/Calendar/Calendar";
 import DashedButton from "../A-Atomics/Button/DashedButton";
-import Detail from "../D-Templates/Detail";
+import Detail from "../D-Templates/Event/EventDetail";
 import Filter from "../C-Organisms/Filter";
 
 import Modal from "../A-Atomics/Modal/Modal";
@@ -94,7 +94,9 @@ function CalendarPage() {
       {isModalOpen && (
         <ModalPortal
           children={
-            <Modal onClose={handleCloseModal} isModalOpen={isModalOpen}></Modal>
+            <Modal>
+                <DashedButton onClose={handleCloseModal}>Close</DashedButton>
+            </Modal>
           }
         ></ModalPortal>
       )}
