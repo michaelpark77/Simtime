@@ -3,7 +3,10 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import { MAIN_COLOR, ST_GTAY } from "../../Colors";
+
+import Input from "../../B-Molecules/Form/Input";
 import ProgressBar from "../../A-Atomics/Deco/ProgressBar";
+import DashedButton from "../../A-Atomics/Button/DashedButton";
 import ModalTitle from "../../A-Atomics/Modal/ModalTitle";
 
 const Wrap = styled.div`
@@ -14,7 +17,6 @@ const Wrap = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: ;
   align-items: center;
 
   @media only screen and (max-width: 320px) {
@@ -22,6 +24,19 @@ const Wrap = styled.div`
     height: 568px;
   }
 `;
+
+const HeaderWrap = styled.div`
+  width: 100%;
+  height: 18%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  
+  overflow: hidden;
+`;
+
 
 const BarWrap = styled.div`
   width: 92%;
@@ -33,27 +48,66 @@ const BarWrap = styled.div`
   align-items: center;
 `;
 
-const FormWrap = styled.div`
-  width: 92%;
-  height: 100%;
-  min-height: 50px;
+
+const ContentWrap = styled.div`
+  width: 90%;
+  height: 82%;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  overflow: hidden;
-
-  border: solid 1px red;
+  
 `;
+
+const FormWrap = styled.form`
+  width: 100%;
+  height: 85%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const MyInput = styled(Input)`
+  margin-bottom: 15px;
+`
+
+const ButtonWrap = styled.div`
+  width: 100%;
+  height: 15%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+`;
+
+
 
 function EventMaker(props) {
   return (
     <Wrap {...props}>
-      <BarWrap>
-        <ProgressBar />
-      </BarWrap>
-      <ModalTitle>EVENT</ModalTitle>
-      <FormWrap></FormWrap>
+      <HeaderWrap>
+        <BarWrap>
+          <ProgressBar />
+        </BarWrap>
+        <ModalTitle>EVENT</ModalTitle>
+      </HeaderWrap>
+
+      <ContentWrap>
+        <FormWrap>
+          <MyInput name="Event" desc="Event Name"/>
+          <MyInput name="Tag" desc="Tag"/>
+          <MyInput name="Date" desc="2020/05/04"/>
+          <MyInput desc="2020/05/04"/>
+        </FormWrap>
+
+        <ButtonWrap>
+          <DashedButton>NEXT</DashedButton>
+        </ButtonWrap>
+      </ContentWrap>
     </Wrap>
   );
 }
