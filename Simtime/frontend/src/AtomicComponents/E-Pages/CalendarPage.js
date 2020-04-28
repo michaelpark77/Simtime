@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Calendar from "../D-Templates/Calendar/Calendar";
 import DashedButton from "../A-Atomics/Button/DashedButton";
 import Detail from "../D-Templates/Event/EventDetail";
+import EventMaker from "../D-Templates/Event/EventMaker";
 import Filter from "../C-Organisms/Filter";
 
 import Modal from "../A-Atomics/Modal/Modal";
@@ -74,10 +75,21 @@ function CalendarPage() {
     setIsOpenModal(false);
   };
 
+  const next = () => {
+    alert("hello");
+  };
+
   useEffect(() => {});
 
   return (
     <Wrap>
+      <ModalPortal
+        children={
+          <Modal onClose={handleCloseModal}>
+            <EventMaker />
+          </Modal>
+        }
+      ></ModalPortal>
       <LeftWrap>
         <StyledFilter />
         <StyledCalendar height="98%" />
@@ -94,8 +106,8 @@ function CalendarPage() {
       {isModalOpen && (
         <ModalPortal
           children={
-            <Modal>
-                <DashedButton onClose={handleCloseModal}>Close</DashedButton>
+            <Modal onClose={handleCloseModal}>
+              <EventMaker />
             </Modal>
           }
         ></ModalPortal>

@@ -1,44 +1,71 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import React from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
 
-import {MAIN_COLOR} from '../../Colors'
-import DetailTitle from '../../C-Organisms/DetatilTitle'
-import DetailContent from '../../C-Organisms/DetailContent'
+import { MAIN_COLOR, ST_GTAY } from "../../Colors";
+import ProgressBar from "../../A-Atomics/Deco/ProgressBar";
+import ModalTitle from "../../A-Atomics/Modal/ModalTitle";
 
 const Wrap = styled.div`
-    border : solid 1px ${MAIN_COLOR};
-    width: ${props=> props.width};
-    height: ${props=> props.height};
-    
-    display : flex;
-    flex-direction : column;
-    justify-content: center;
-    align-items: center;
+  border: solid 1px ${MAIN_COLOR};
+  background-color: white;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
 
-    @media only screen and (max-width: 920px) {
-        width: 100%;
-    }
-`
+  display: flex;
+  flex-direction: column;
+  justify-content: ;
+  align-items: center;
 
-function EventDetail(props) {
-    return (
-        <Wrap {...props}>
-            <DetailTitle />
-            <DetailContent/>
-        </Wrap>
-    )
+  @media only screen and (max-width: 320px) {
+    width: 100%;
+    height: 568px;
+  }
+`;
+
+const BarWrap = styled.div`
+  width: 92%;
+  height: 10%;
+  min-height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const FormWrap = styled.div`
+  width: 92%;
+  height: 100%;
+  min-height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  border: solid 1px red;
+`;
+
+function EventMaker(props) {
+  return (
+    <Wrap {...props}>
+      <BarWrap>
+        <ProgressBar />
+      </BarWrap>
+      <ModalTitle>EVENT</ModalTitle>
+      <FormWrap></FormWrap>
+    </Wrap>
+  );
 }
 
-export default EventDetail
+export default EventMaker;
 
-EventDetail.propTypes = {
-    height: PropTypes.string,
-    width: PropTypes.string,
-  };
-
-EventDetail.defaultProps = {
-    height: "618px",
-    width: "100%",
+EventMaker.propTypes = {
+  height: PropTypes.string,
+  width: PropTypes.string,
 };
-  
+
+EventMaker.defaultProps = {
+  height: "568px",
+  width: "320px",
+};

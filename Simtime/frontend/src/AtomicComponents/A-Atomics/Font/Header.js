@@ -4,7 +4,6 @@ import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 
 const StyledContent = (props) => {
-
   const commonStyle = `
     color: ${Colors[props.color]};
     font-size: ${props.fontSize ? props.fontSize : ""};

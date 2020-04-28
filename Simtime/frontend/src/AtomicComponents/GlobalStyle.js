@@ -1,14 +1,10 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-html{
-    font-family: 'Roboto script=all rev=1' 
-}
-
-
 * {
   box-sizing: border-box;
-    }
+  font-family: 'Roboto', sans-serif;
+}
 
 #app{
     display: flex;

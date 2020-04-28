@@ -1,9 +1,12 @@
 import React, { Fragment, useState, useEffect } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
-// import { addEvent, getEvent, editEvent } from "../../actions/events";
-// import { EventForm } from "../invitations/EventForm";
 import ColoredButton from "../Button/ColoredButton";
+import GlobalStyle from "../../GlobalStyle";
+
+import Image from "../Image";
+import { MAIN_COLOR } from "../../Colors";
 
 const MyModal = styled.div`
   background: rgba(0, 0, 0, 0.25);
@@ -19,23 +22,45 @@ const MyModal = styled.div`
 `;
 
 const ContentWrap = styled.div`
-  background: white;
-  padding: 1rem;
-  width: 400px;
+  background: rgba(0, 0, 0, 0);
+  width: auto;
   height: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  align-items: flex-end;
+
+  @media only screen and (max-width: 320px) {
+    width: 98%;
+    position: relative;
+  }
+`;
+
+const CloseButton = styled(Image)`
+  @media only screen and (max-width: 320px) {
+    background-color: ${MAIN_COLOR};
+    position: absolute;
+    right: 6px;
+  }
 `;
 
 const Modal = (props) => {
-  const { onClose } = props.children;
-  // onClick={() => { onClose(); }}
-
-  console.log(props.children);
+  const { onClose, children } = props;
   return (
-    <MyModal>
-      <ContentWrap>
-          {props.children}
-      </ContentWrap>
-    </MyModal>
+    <Fragment>
+      <GlobalStyle />
+      <MyModal>
+        <ContentWrap>
+          {children}
+          <CloseButton
+            onClick={onClose}
+            src="static/img/icons/close-wh.png"
+            width="20px"
+            height="20px"
+          ></CloseButton>
+        </ContentWrap>
+      </MyModal>
+    </Fragment>
   );
 };
 
@@ -49,3 +74,11 @@ const Modal = (props) => {
 // );
 
 export default Modal;
+
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
+
+Modal.defaultProps = {
+  onClose: () => {},
+};
