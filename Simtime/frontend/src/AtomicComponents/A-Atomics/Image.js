@@ -1,39 +1,30 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-
-const Wrap = styled.div`
-`
+import React from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Img = styled.div`
     background-size: cover;
-    background-image: url("${props=>props.src}");
+    background-image: url("${(props) => props.src}");
     background-position: center center;
 
-    width: ${props=>props.width};
-    height: ${props=>props.height};
-`
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};
+`;
 
 function Image(props) {
-    return (
-        <Wrap>
-            <Img {...props}/>
-        </Wrap>
-    )
+  return <Img {...props} />;
 }
 
-export default Image
-
+export default Image;
 
 Image.propTypes = {
-    src: PropTypes.string,
-    width: PropTypes.string,
-    height: PropTypes.string
-  };
+  src: PropTypes.string,
+  width: PropTypes.string,
+  height: PropTypes.string,
+};
 
 Image.defaultProps = {
-    src: "static/img/icons/forbidden.png",
-    width: "14px",
-    height:"14px"
+  src: "static/img/icons/forbidden.png",
+  width: "14px",
+  height: "14px",
 };
-  
