@@ -3,14 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import styled from "styled-components";
-import CalWrap from "../../A-Atomics/Calendar/CalWrap";
 import Week from "../../C-Organisms/Calendar/Week";
 
-const StyledCalWrap = styled(CalWrap)``;
-
-const CalendarWrap = styled.div`
-  width: 98%;
-  height: 90%;
+const Wrap = styled.div`
+  width: 286px;
+  height: 260px;
   padding-top: 1%;
   display: flex;
   flex-direction: column;
@@ -27,10 +24,6 @@ const CalendarWrap = styled.div`
 function addDate(date, num) {
   const resDate = new Date();
   resDate.setDate(date.getDate() + num);
-  // console.log(
-  //   (resDate.getMonth() + 1).toString() + resDate.getDate().toString()
-  // );
-
   return resDate;
 }
 
@@ -60,7 +53,6 @@ function generate(startDate, endDate, currMonth) {
   while (curr < endDate) {
     //week별 저장
     weekDates_orgin.push({ id: `${subDate(today, curr)}D`, day: curr });
-
     weekDates.push({
       id: `${subDate(today, curr)}D`,
       strDate: `${curr.getFullYear().toString()}-${(
@@ -89,28 +81,27 @@ function generate(startDate, endDate, currMonth) {
   return dates;
 }
 
-function Calendar(props) {
+function DatePicker(props) {
   const { currDate } = props;
-  const weekDay = currDate.getDay();
-  const startDate = addDate(currDate, weekDay * -1);
-  const endDate = addDate(currDate, 35 + 6 - weekDay); // 5weeks
-  const dates = generate(startDate, endDate, 4); //["2020-4-12", 0, false, "12" ] [날짜, day(요일), isActive, date]
 
-  console.log("Calendar: ", dates);
+  const firstDay = new Date(currDate.getFullYear(), currDate.getMonth(), 1);
+  const weekDay = firstDay.getDay();
+
+  const startDate = addDate(firstDay, weekDay * -1);
+  const endDate = new Date(currDate.getFullYear(), currDate.getMonth() + 1, 0);
+  const dates = generate(startDate, endDate, 4); // res=>["2020-4-12", 0, false, "12" ] [날짜, day(요일), isActive, date]
+
+  console.log("picker: ", dates);
   const renderWeek = () => {
     return dates.map((week, index) => {
       return <Week key={week.id} id={week.id} weekDates={week.weekDates} />;
     });
   };
 
-  return (
-    <StyledCalWrap>
-      <CalendarWrap>{renderWeek()}</CalendarWrap>
-    </StyledCalWrap>
-  );
+  return <Wrap>{renderWeek()}</Wrap>;
 }
 
-export default Calendar;
+export default DatePicker;
 
 // const mapStateToProps = (state) => ({s
 //   events: state.events.events,
@@ -118,12 +109,12 @@ export default Calendar;
 
 // export default connect(mapStateToProps, {})(Calendar);
 
-Calendar.propTypes = {
+DatePicker.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
 };
 
-Calendar.defaultProps = {
+DatePicker.defaultProps = {
   currDate: new Date(),
   height: "98%",
   width: "98%",

@@ -12,6 +12,7 @@ export const ST_GREEN = "#028538";
 export const ST_GREEN_NEON = "#0081C2";
 
 export const ST_GRAY_LIGHT = "#FBFBFB";
+export const ST_SEMI_GRAY = "#ECEBED";
 export const ST_GRAY = "#D0C9D6";
 export const ST_GRAY_DARK = "#F4F3F1";
 

@@ -4,12 +4,14 @@ import PropTypes from "prop-types";
 
 import { MAIN_COLOR, ST_GTAY } from "../../Colors";
 
-import Input from "../../B-Molecules/Form/Input";
-import ProgressBar from "../../A-Atomics/Deco/ProgressBar";
-import DashedButton from "../../A-Atomics/Button/DashedButton";
-import TagInput from "../../B-Molecules/Form/TagInput";
-
 import ModalTitle from "../../A-Atomics/Modal/ModalTitle";
+import ProgressBar from "../../A-Atomics/Deco/ProgressBar";
+
+import Input from "../../B-Molecules/Form/Input";
+import TagInput from "../../B-Molecules/Form/TagInput";
+import DatePicker from "../../D-Templates/Calendar/DatePicker";
+
+import DashedButton from "../../A-Atomics/Button/DashedButton";
 
 const Wrap = styled.div`
   border: solid 1px ${MAIN_COLOR};
@@ -96,9 +98,10 @@ function EventMaker(props) {
       <ContentWrap>
         <FormWrap>
           <MyInput name="Event" desc="Event Name" />
-          <TagInput></TagInput>
           <MyInput name="Date" desc="2020/05/04" />
-          <MyInput desc="2020/05/04" />
+          <DatePicker></DatePicker>
+          {/* <MyInput name="Time" desc="PM 07:00" />
+          <TagInput></TagInput> */}
         </FormWrap>
 
         <ButtonWrap>

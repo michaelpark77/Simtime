@@ -11,8 +11,8 @@ const Wrap = styled.div`
   height: 100%;
 
   background-color: ${(props) => (props.isActive ? BG_WHITE : BG_INACTIVE)}95;
-  ${(props) => (props.isToday ? `background-color: ${MAIN_COLOR}95` : "" )};
- 
+  ${(props) => (props.isToday ? `background-color: ${MAIN_COLOR}95` : "")};
+
   overflow: hidden;
 
   @media only screen and (max-width: 920px) {
@@ -23,10 +23,8 @@ const Wrap = styled.div`
   }
 `;
 
-
 function Day(props) {
-
-  const {day, date, strDate} = props
+  const { day, date, strDate } = props;
   const contentHeight = (
     parseInt(props.height.replace(/[^0-9]/g, "")) / 7
   ).toFixed(2);
@@ -34,10 +32,10 @@ function Day(props) {
   return (
     <Wrap {...props}>
       <CalDate date={date} day={day} contentHeight={contentHeight}>
-        {date=="1"? `${(strDate.split("-")[1])}/1` : date }
+        {date == "1" ? `${strDate.split("-")[1]}/1` : date}
       </CalDate>
 
-      <CalContent contentHeight={contentHeight} >
+      {/* <CalContent contentHeight={contentHeight} >
         1
       </CalContent>
       <CalContent contentHeight={contentHeight} >
@@ -54,7 +52,7 @@ function Day(props) {
       </CalContent>
       <CalContent contentHeight={contentHeight} >
         6
-      </CalContent>
+      </CalContent> */}
     </Wrap>
   );
 }
@@ -66,7 +64,7 @@ Day.propTypes = {
   date: PropTypes.string.isRequired,
   numOfDay: PropTypes.number,
   isActive: PropTypes.bool,
-  isToday:  PropTypes.bool,
+  isToday: PropTypes.bool,
 };
 
 Day.defaultProps = {
