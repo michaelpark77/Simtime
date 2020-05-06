@@ -23,17 +23,32 @@ const Wrap = styled.div`
   }
 `;
 
+const DateWrap = styled.div`
+  height: ${(props) => props.contentHeight}px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const MyCalDate = styled(CalDate)`
+  margin-right: 4px;
+  ${(props) => (props.date == "1" ? `text-decoration: underline;` : "")}
+`;
+
 function Day(props) {
-  const { day, date, strDate } = props;
+  const { year, month, day, date } = props;
   const contentHeight = (
     parseInt(props.height.replace(/[^0-9]/g, "")) / 7
   ).toFixed(2);
 
   return (
     <Wrap {...props}>
-      <CalDate date={date} day={day} contentHeight={contentHeight}>
-        {date == "1" ? `${strDate.split("-")[1]}/1` : date}
-      </CalDate>
+      <DateWrap contentHeight={contentHeight}>
+        <MyCalDate date={date} day={day} contentHeight={contentHeight}>
+          {date == "1" ? `${month}/1` : date}
+        </MyCalDate>
+      </DateWrap>
 
       {/* <CalContent contentHeight={contentHeight} >
         1

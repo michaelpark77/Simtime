@@ -15,6 +15,7 @@ const Wrap = styled.div`
   align-items: center;
 
   overflow: hidden;
+  // border: solid 1px black;
 `;
 
 // cal_prev_page = [0]; -현재(오늘)로부터 과거로 load한 page
@@ -50,7 +51,17 @@ function generate(startDate, endDate, currMonth) {
   var dates_origin = [];
   var dates = [];
 
+  var yyyy = "";
+  var mm = "";
+  var dd = "";
+
   while (curr < endDate) {
+    yyyy = curr.getFullYear().toString();
+    mm = ("8" + (curr.getMonth() + 1).toString()).substr(-1, 0);
+    dd = ("8" + curr.getDate().toString()).substring(1, 3);
+
+    console.log(yyyy + mm);
+
     //week별 저장
     weekDates_orgin.push({ id: `${subDate(today, curr)}D`, day: curr });
     weekDates.push({
@@ -61,7 +72,10 @@ function generate(startDate, endDate, currMonth) {
 
       day: curr.getDay(), // 0~6
       // isActive: currMonth == curr.getMonth() + 1, // true or false
-      isActive: curr >= today,
+      isActive: `${curr.getDate()}${curr.getDate()}` >= `${today.getDate()}`,
+      isActiveMonth:
+        curr.getFullYear() >= today.getFullYear() &&
+        curr.getMonth() >= today.getMonth(),
       date: curr.getDate().toString(), // "15"
     });
 
@@ -92,9 +106,17 @@ function DatePicker(props) {
   const dates = generate(startDate, endDate, 4); // res=>["2020-4-12", 0, false, "12" ] [날짜, day(요일), isActive, date]
 
   console.log("picker: ", dates);
+
   const renderWeek = () => {
     return dates.map((week, index) => {
-      return <Week key={week.id} id={week.id} weekDates={week.weekDates} />;
+      return (
+        <Week
+          key={week.id}
+          id={week.id}
+          isDatePicker={true}
+          weekDates={week.weekDates}
+        />
+      );
     });
   };
 

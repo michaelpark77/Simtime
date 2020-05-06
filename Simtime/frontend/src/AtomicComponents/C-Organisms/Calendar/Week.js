@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Day from "../../B-Molecules/Calendar/Day";
+import Date from "../../B-Molecules/DatePicker/Date";
 
 const height = "116px";
 
@@ -9,16 +10,16 @@ const Wrap = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: ${height};
+  align-items: ${(props) => (props.isDatePicker ? "center" : "flex-start")};
+  ${(props) => (props.isDatePicker ? "100%" : height)};
+  height: ${(props) => (props.isDatePicker ? "100%" : height)};
   width: 100%;
-  margin-bottom: 4px;
-
+  margin-bottom: ${(props) => (props.isDatePicker ? "0px" : "4px")};
+  // border: solid 1px red;
 `;
 
-
 function Week(props) {
-  const { weekDates } = props;
-
+  const { weekDates, isDatePicker } = props;
 
   const renderDays = () => {
     return weekDates.map((date, index) => {
@@ -26,45 +27,48 @@ function Week(props) {
         <Day
           key={date.id}
           strDate={date.strDate}
+          year={date.year}
+          month={date.month}
           day={date.day}
           date={date.date}
           isActive={date.isActive}
-          isToday={date.id=="0D"}
+          isToday={date.id == "0D"}
           height={height}
         ></Day>
       );
     });
   };
 
-  // const renderDays = () => {
-  //   return dates.map((week, index) => {
-  //     return (
-  //       <Week key={week.id} id={week.id} dates={week.weekDates}/>
-  //     );
-  //   });
-  // };
+  const renderDates = () => {
+    return weekDates.map((date, index) => {
+      return (
+        <Date
+          key={date.id}
+          strDate={date.strDate}
+          year={date.year}
+          month={date.month}
+          day={date.day}
+          date={date.date}
+          isActive={date.isActive}
+          isActiveMonth={date.isActiveMonth}
+          isToday={date.id == "0D"}
+          height={height}
+        />
+      );
+    });
+  };
 
-  // return (
-  //   <Wrap {...props}>
-  //     <Day height={height} day={0} date="29" isActive={false} />
-  //     <Day height={height} day={1} date="30" isActive={false} />
-  //     <Day height={height} day={2} date="31" isActive={false} />
-  //     <Day height={height} day={3} date="1" isActive={true} />
-  //     <Day height={height} day={4} date="2" isActive={true} />
-  //     <Day height={height} day={5} date="3" isActive={true} />
-  //     <Day height={height} day={6} date="4" isActive={true} />
-  //   </Wrap>
-  // );
-  return (
-    <Wrap {...props}>
-      {renderDays()}
-    </Wrap>
-  )
-
+  return <Wrap {...props}>{isDatePicker ? renderDates() : renderDays()}</Wrap>;
 }
 
 export default Week;
 
-Week.propTypes = {};
+Week.propTypes = {
+  weekDates: PropTypes.array,
+  isDatePicker: PropTypes.bool,
+};
 
-Week.defaultProps = {};
+Week.defaultProps = {
+  weekDates: [],
+  isDatePicker: false,
+};

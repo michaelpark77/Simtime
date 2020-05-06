@@ -66,11 +66,12 @@ function generate(startDate, endDate, currMonth) {
       strDate: `${curr.getFullYear().toString()}-${(
         curr.getMonth() + 1
       ).toString()}-${curr.getDate().toString()}`, //"2020-4-15"
-
+      year: curr.getFullYear(),
+      month: curr.getMonth() + 1,
+      date: curr.getDate().toString(), // "15"
       day: curr.getDay(), // 0~6
       // isActive: currMonth == curr.getMonth() + 1, // true or false
-      isActive: curr >= today,
-      date: curr.getDate().toString(), // "15"
+      isActive: curr.getDate() >= today.getDate(),
     });
 
     //다음날 저장
