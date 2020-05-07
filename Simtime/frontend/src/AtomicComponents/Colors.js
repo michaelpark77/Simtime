@@ -1,6 +1,7 @@
 // MAIN COLORS PALETTE
 export const ST_YELLOW_LIGHT = "#FFF8E7";
-export const ST_YELLOW = "#FFCA17"; //main (Deep) yellow (242,201,76)
+export const ST_SEMI_YELLOW = "#FBE6A5";
+export const ST_YELLOW = "#F2C94C"; //main (Deep) yellow (242,201,76)
 
 export const ST_PINK = "#E7156E";
 export const ST_BLUE = "#0081C2";

@@ -3,6 +3,7 @@ export function getStrYear(date) {
 }
 
 export function getStrMonth(date, type = "mm") {
+  type.toLowerCase();
   if (type == "mm") {
     return ("0" + (date.getMonth() + 1).toString()).substr(-2);
   } else {
@@ -11,6 +12,7 @@ export function getStrMonth(date, type = "mm") {
 }
 
 export function getStrDate(date, type = "dd") {
+  type.toLowerCase();
   if (type == "dd") {
     return ("0" + date.getDate().toString()).substr(-2);
   } else {
@@ -43,9 +45,9 @@ export function getStrFullDate(date, type = "yyyymmdd") {
 }
 
 export function addDate(date, num) {
-  const resDate = new Date();
-  resDate.setDate(date.getDate() + num);
-  return resDate;
+  var res = new Date(getStrFullDate(date, "yyyy-m-d"))
+  res.setDate(res.getDate() + num);
+  return  res
 }
 
 export function subDate(date1, date2) {
@@ -59,9 +61,34 @@ export function subWeek(date1, date2) {
 }
 
 //달력 일자 생성
-export function generate(startDate, endDate, currDate) {
+export function generate(currDate, num=0) {
+  // type: n -- 특점 시점으로부터 n주씩,
+  // type: 0 -- monthly 달력
   //00시로 맞추기위해 따로 new Date()를 "yyyy-m-d"형태로 변환해줌. 안해주면 간헐적으로 today의 id가 -1, 0 으로 간헐적으로 왔다갔다함.
-  var today = new Date(getStrFullDate(new Date(), "yyyy-m-d"));
+  const today = new Date(getStrFullDate(new Date(), "yyyy-m-d"));
+  const firstDay = new Date(currDate.getFullYear(), currDate.getMonth(), 1); // 넘겨받은 달의 1일
+  const lastDay = new Date(currDate.getFullYear(), currDate.getMonth() + 1, 0); // 넘겨받은 달의 말일
+  
+  var weekDay = 0;
+  var offset = 0;
+  var startDate = new Date();
+  var endDate = new Date();
+
+
+  if(num==0){
+    weekDay = firstDay.getDay();
+    offset = 7 - parseInt((lastDay.getDate() + weekDay) % 7);
+    startDate = addDate(firstDay, weekDay * -1);
+    endDate = addDate(lastDay, offset < 7 ? offset : 0);
+
+
+  }else {
+    weekDay = currDate.getDay();
+    startDate = addDate(currDate, weekDay * -1);
+    offset = ( (7 * num) + 6 - weekDay); // num weeks
+    endDate = addDate(currDate, 35 + 6 - weekDay); 
+  }
+
   var curr = new Date(startDate);
 
   //한 주차씩 담기용
@@ -102,5 +129,6 @@ export function generate(startDate, endDate, currDate) {
       weekDates = [];
     }
   }
+
   return dates;
 }

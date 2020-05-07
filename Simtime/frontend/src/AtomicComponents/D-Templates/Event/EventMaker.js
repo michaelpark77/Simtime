@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -84,10 +84,23 @@ const ButtonWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
 `;
+
+const Button = styled(DashedButton)`
+  
+  border-radius: 6px;
+`
 
 function EventMaker(props) {
   const today = new Date();
+  const [date, setDate] = useState(getStrFullDate(today, "yyyy-mm-dd"));
+
+  const selectDate=(strDate)=>{
+    setDate(strDate);
+    console.log(date);
+  }
+
   return (
     <Wrap {...props}>
       <HeaderWrap>
@@ -100,14 +113,14 @@ function EventMaker(props) {
       <ContentWrap>
         <FormWrap>
           <MyInput name="Event" desc="Event Name" />
-          <MyInput name="Date" desc={getStrFullDate(today, "yyyy-mm-dd")} />
-          <DatePicker></DatePicker>
+          <MyInput name="Date" desc={date}></MyInput>
+          <DatePicker selectDate={selectDate}></DatePicker>
           {/* <MyInput name="Time" desc="PM 07:00" />
           <TagInput></TagInput> */}
         </FormWrap>
 
         <ButtonWrap>
-          <DashedButton>NEXT</DashedButton>
+          <Button>NEXT</Button>
         </ButtonWrap>
       </ContentWrap>
     </Wrap>

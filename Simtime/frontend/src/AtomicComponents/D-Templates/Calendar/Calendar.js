@@ -23,13 +23,11 @@ const CalendarWrap = styled.div`
 
 function Calendar(props) {
   const { currDate } = props;
-  const weekDay = currDate.getDay();
+  // const weekDay = currDate.getDay();
+  // const startDate = addDate(currDate, weekDay * -1);
+  // const endDate = addDate(currDate, 35 + 6 - weekDay); // 5weeks
+  var dates = generate(currDate,5); //["2020-4-12", 0, false, "12" ] [날짜, day(요일), isActive, date]
 
-  const startDate = addDate(currDate, weekDay * -1);
-  const endDate = addDate(currDate, 35 + 6 - weekDay); // 5weeks
-  const dates = generate(startDate, endDate, currDate); //["2020-4-12", 0, false, "12" ] [날짜, day(요일), isActive, date]
-
-  console.log("Calendar: ", dates);
   const renderWeek = () => {
     return dates.map((week, index) => {
       return <Week key={week.id} id={week.id} weekDates={week.weekDates} />;

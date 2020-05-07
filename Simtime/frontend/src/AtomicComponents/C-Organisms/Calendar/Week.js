@@ -19,7 +19,10 @@ const Wrap = styled.div`
 `;
 
 function Week(props) {
-  const { weekDates, isDatePicker } = props;
+  const { weekDates, isDatePicker,selectDate } = props;
+  const onSelect = (strDate) => {
+    selectDate(strDate);
+  }
 
   const renderDays = () => {
     return weekDates.map((date, index) => {
@@ -53,6 +56,7 @@ function Week(props) {
           isActiveMonth={date.isActiveMonth}
           isToday={date.id == "0D"}
           height={height}
+          onClick = {()=> date.isActive ? onSelect(date.strDate) : null}
         />
       );
     });

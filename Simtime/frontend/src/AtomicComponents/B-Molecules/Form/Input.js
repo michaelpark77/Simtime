@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import Paragraph from "../../A-Atomics/Font/Paragraph"
-import { MAIN_COLOR, ST_GRAY } from '../../Colors'
+import { MAIN_COLOR, ST_GRAY,ST_SEMI_YELLOW } from '../../Colors'
 
 const Wrap = styled.div`
     display: flex;
@@ -22,11 +22,12 @@ const MyInput = styled.input`
     ::placeholder {
         color: ${ST_GRAY};
         font-size: 15px;
+        font-weight: 300;
     };
 
     width: ${props => props.name ?  "70%": "100%"};
     height: 100%;
-    border : solid 1px ${MAIN_COLOR};
+    border : solid 1px ${ST_SEMI_YELLOW};
     border-radius : 6px;
     padding-left: 5px;
 `

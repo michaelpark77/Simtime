@@ -29,12 +29,11 @@ const Wrap = styled.div`
     ${(props) => (props.isActive ? `background-color: ${MAIN_COLOR}` : null)};
   }
 
-  @media only screen and (max-width: 920px) {
-    width: 14.8%;
-    margin-right: 2px;
-    margin-bottom: 2px;
-    ${(props) => (props.day == 0 ? "margin-left: 2px;" : "")};
-  }
+  // @media only screen and (max-width: 920px) {
+  //   margin-right: 2px;
+  //   margin-bottom: 2px;
+  //   ${(props) => (props.day == 0 ? "margin-left: 2px;" : "")};
+  // }
 
   // border: solid 1px blue;
 `;
