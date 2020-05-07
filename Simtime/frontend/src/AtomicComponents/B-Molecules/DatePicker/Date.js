@@ -10,7 +10,7 @@ import {
   ST_YELLOW_LIGHT,
 } from "../../Colors";
 
-const size = "38.34px";
+const size = "32px";
 
 const Wrap = styled.div`
   width: ${size};
@@ -23,9 +23,11 @@ const Wrap = styled.div`
 
   overflow: hidden;
 
-  background-color: ${(props) => (props.isActive ? BG_WHITE : BG_INACTIVE)};
-  // ${(props) =>
-    props.isToday ? `background-color: ${ST_YELLOW_LIGHT}` : ""};
+  ${(props) => (props.isToday ? `background-color: ${ST_YELLOW_LIGHT}` : null)};
+
+  &:hover {
+    ${(props) => (props.isActive ? `background-color: ${MAIN_COLOR}` : null)};
+  }
 
   @media only screen and (max-width: 920px) {
     width: 14.8%;
@@ -37,10 +39,13 @@ const Wrap = styled.div`
   // border: solid 1px blue;
 `;
 
-const MyCalDate = styled(CalDate)``;
+const MyCalDate = styled(CalDate)`
+  font-size: 12px;
+  font-weight: 500;
+`;
 
 function Date(props) {
-  const { year, month, day, date, isActive, isActiveMonth } = props;
+  const { day, date, isActive, isActiveMonth, isToday } = props;
   const contentHeight = size;
 
   return (
@@ -48,6 +53,7 @@ function Date(props) {
       <MyCalDate
         isActive={isActive}
         isActiveMonth={isActiveMonth}
+        isToday={isToday}
         date={date}
         day={day}
         contentHeight={contentHeight}

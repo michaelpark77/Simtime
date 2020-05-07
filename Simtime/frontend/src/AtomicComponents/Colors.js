@@ -5,6 +5,7 @@ export const ST_YELLOW = "#FFCA17"; //main (Deep) yellow (242,201,76)
 export const ST_PINK = "#E7156E";
 export const ST_BLUE = "#0081C2";
 export const ST_ORANGE = "#F96A32";
+export const ST_ORANGE_LIGHT = "#FFA26B";
 export const ST_RED = "#E90116";
 export const ST_VIOLET = "#69366E";
 

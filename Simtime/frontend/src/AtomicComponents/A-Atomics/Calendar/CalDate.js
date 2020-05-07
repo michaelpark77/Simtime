@@ -9,7 +9,7 @@ const Text = styled(Paragraph)`
 `;
 
 function CalDate(props) {
-  const { isActiveMonth, date, day, contentHeight } = props;
+  const { isActiveMonth, isToday, isActive, date, day, contentHeight } = props;
 
   const color = (day) => {
     if (day == 0) return "ST_RED";
@@ -21,7 +21,9 @@ function CalDate(props) {
     <Text
       {...props}
       date={date}
-      color={isActiveMonth ? color(day) : "ST_GRAY"}
+      color={
+        isActive ? (isActiveMonth ? color(day) : "ST_GRAY") : "ST_SEMI_GRAY"
+      }
       contentHeight={contentHeight}
     >
       {props.children}
@@ -34,11 +36,15 @@ export default CalDate;
 CalDate.propTypes = {
   contentHeight: PropTypes.string,
   day: PropTypes.number,
+  isActive: PropTypes.bool,
   isActiveMonth: PropTypes.bool,
+  isToday: PropTypes.bool,
 };
 
 CalDate.defaultProps = {
   contentHeight: "120px",
   day: 0,
+  isActive: true,
   isActiveMonth: true,
+  isToday: false,
 };

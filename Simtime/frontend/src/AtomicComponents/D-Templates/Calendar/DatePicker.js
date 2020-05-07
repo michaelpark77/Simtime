@@ -1,112 +1,109 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import styled from "styled-components";
 import Week from "../../C-Organisms/Calendar/Week";
+import Paragraph from "../../A-Atomics/Font/Paragraph";
+import Image from "../../A-Atomics/Image";
+import { addDate, generate } from "./Generator";
+import { MAIN_COLOR, ST_SEMI_GRAY } from "../../Colors";
+
+// cal_prev_page = [0]; -현재(오늘)로부터 과거로 load한 page
+// cal_next_pate = [0]; -현재(오늘)로부터 미래로 load한 page
 
 const Wrap = styled.div`
   width: 286px;
-  height: 260px;
-  padding-top: 1%;
+  height: 360px;
+  padding-top: 5px;
+  padding-bottom: 3px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 
   overflow: hidden;
-  // border: solid 1px black;
+  border: solid 1px ${MAIN_COLOR};
+  border-radius: 6px;
 `;
 
-// cal_prev_page = [0]; -현재(오늘)로부터 과거로 load한 page
-// cal_next_pate = [0]; -현재(오늘)로부터 미래로 load한 page
+const MonthWrap = styled.div`
+  width: 100%;
+  height: 36px;
 
-// 날짜 계산
-function addDate(date, num) {
-  const resDate = new Date();
-  resDate.setDate(date.getDate() + num);
-  return resDate;
-}
+  padding-left: 10px;
+  padding-right: 10px;
 
-//date1-date2
-function subDate(date1, date2) {
-  return Math.floor((date2 - date1) / 1000 / 60 / 60 / 24);
-}
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-//date1-date2
-function subWeek(date1, date2) {
-  return Math.floor(subDate(date1, date2) / 7);
-}
+  overflow: hidden;
+`;
 
-//달력 일자 생성
-function generate(startDate, endDate, currMonth) {
-  var today = new Date();
-  var curr = startDate;
+const Arrow = styled(Image)`
+  opacity: 0.75;
+`;
 
-  //한 주차씩 담기용
-  var weekDates_orgin = [];
-  var weekDates = [];
+const Month = styled(Paragraph)`
+  font-weight: 500;
+`;
 
-  //최종 배열
-  var dates_origin = [];
-  var dates = [];
+const DayWrap = styled.div`
+  width: 100%;
+  height: 30px;
+  padding-top: 1%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 
-  var yyyy = "";
-  var mm = "";
-  var dd = "";
+  overflow: hidden;
+  border-bottom: dashed 1px ${ST_SEMI_GRAY};
+`;
 
-  while (curr < endDate) {
-    yyyy = curr.getFullYear().toString();
-    mm = ("8" + (curr.getMonth() + 1).toString()).substr(-1, 0);
-    dd = ("8" + curr.getDate().toString()).substring(1, 3);
+const CalendarWrap = styled.div`
+  width: 100%;
+  height: 260px;
+  padding-top: 1%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 
-    console.log(yyyy + mm);
-
-    //week별 저장
-    weekDates_orgin.push({ id: `${subDate(today, curr)}D`, day: curr });
-    weekDates.push({
-      id: `${subDate(today, curr)}D`,
-      strDate: `${curr.getFullYear().toString()}-${(
-        curr.getMonth() + 1
-      ).toString()}-${curr.getDate().toString()}`, //"2020-4-15"
-
-      day: curr.getDay(), // 0~6
-      // isActive: currMonth == curr.getMonth() + 1, // true or false
-      isActive: `${curr.getDate()}${curr.getDate()}` >= `${today.getDate()}`,
-      isActiveMonth:
-        curr.getFullYear() >= today.getFullYear() &&
-        curr.getMonth() >= today.getMonth(),
-      date: curr.getDate().toString(), // "15"
-    });
-
-    //다음날 저장
-    curr.setDate(curr.getDate() + 1);
-
-    if (curr.getDay() == 0) {
-      dates_origin.push({
-        id: `${subWeek(today, curr)}W`,
-        weekDates: weekDates_orgin,
-      });
-      dates.push({ id: `${subWeek(today, curr)}W`, weekDates: weekDates });
-      weekDates_orgin = [];
-      weekDates = [];
-    }
-  }
-  return dates;
-}
+  overflow: hidden;
+`;
 
 function DatePicker(props) {
-  const { currDate } = props;
+  const [currDate, setCurrDate] = useState(props.currDate);
+  const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-  const firstDay = new Date(currDate.getFullYear(), currDate.getMonth(), 1);
-  const weekDay = firstDay.getDay();
+  var firstDay = new Date(currDate.getFullYear(), currDate.getMonth(), 1); // 넘겨받은 달의 1일
+  var lastDay = new Date(currDate.getFullYear(), currDate.getMonth() + 1, 0); // 넘겨받은 달의 말일
+  var weekDay = firstDay.getDay();
+  var offset = 7 - parseInt((lastDay.getDate() + weekDay) % 7);
 
-  const startDate = addDate(firstDay, weekDay * -1);
-  const endDate = new Date(currDate.getFullYear(), currDate.getMonth() + 1, 0);
-  const dates = generate(startDate, endDate, 4); // res=>["2020-4-12", 0, false, "12" ] [날짜, day(요일), isActive, date]
+  var startDate = addDate(firstDay, weekDay * -1);
+  var endDate = addDate(lastDay, offset < 7 ? offset : 0);
+  var dates = generate(startDate, endDate, currDate); // res=>["2020-4-12", 0, false, "12" ] [날짜, day(요일), isActive, date]
 
-  console.log("picker: ", dates);
+  console.log(dates);
+  console.log(weekDay);
+  console.log(currDate);
 
+  //요일
+  const renderDay = () => {
+    return days.map((day, index) => {
+      return (
+        <Paragraph key={day} color="ST_GRAY">
+          {day}
+        </Paragraph>
+      );
+    });
+  };
+
+  //일자
   const renderWeek = () => {
     return dates.map((week, index) => {
       return (
@@ -120,24 +117,41 @@ function DatePicker(props) {
     });
   };
 
-  return <Wrap>{renderWeek()}</Wrap>;
+  return (
+    <Wrap>
+      <MonthWrap>
+        <Arrow
+          width="10px"
+          height="10px"
+          src="static/img/icons/left-arrow.png"
+        />
+        <Month fontSize="14px" color="TEXT">
+          May 2020
+        </Month>
+        <Arrow
+          width="10px"
+          height="10px"
+          src="static/img/icons/right-arrow.png"
+          onClick={() => setCurrDate(addDate(currDate, lastDay.getDate()))}
+        />
+      </MonthWrap>
+      <DayWrap>{renderDay()}</DayWrap>
+      <CalendarWrap>{renderWeek()}</CalendarWrap>
+    </Wrap>
+  );
 }
 
 export default DatePicker;
 
-// const mapStateToProps = (state) => ({s
-//   events: state.events.events,
-// });
-
-// export default connect(mapStateToProps, {})(Calendar);
-
 DatePicker.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
+  selectedDate: PropTypes.string,
 };
 
 DatePicker.defaultProps = {
   currDate: new Date(),
   height: "98%",
   width: "98%",
+  selectedDate: "0D", //context로 해보자
 };

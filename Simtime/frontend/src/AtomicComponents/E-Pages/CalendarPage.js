@@ -53,6 +53,7 @@ const StyledCalendar = styled(Calendar)``;
 
 const StyledDashedButton = styled(DashedButton)`
   margin-bottom: 8px;
+  text-decoration: underline;
   @media only screen and (max-width: 920px) {
     display: none;
   }
@@ -96,10 +97,14 @@ function CalendarPage() {
       </LeftWrap>
       <RightWrap>
         <StyledDashedButton
+          hasIcon={true}
+          src="static/img/icons/edit2.png"
           onClick={() => {
             handleOpenModal(true);
           }}
-        />
+        >
+          Add a new event
+        </StyledDashedButton>
         <StyledDetail height="98%" />
       </RightWrap>
 

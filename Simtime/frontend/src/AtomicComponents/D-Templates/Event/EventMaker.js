@@ -12,6 +12,7 @@ import TagInput from "../../B-Molecules/Form/TagInput";
 import DatePicker from "../../D-Templates/Calendar/DatePicker";
 
 import DashedButton from "../../A-Atomics/Button/DashedButton";
+import { getStrFullDate } from "../Calendar/Generator";
 
 const Wrap = styled.div`
   border: solid 1px ${MAIN_COLOR};
@@ -86,6 +87,7 @@ const ButtonWrap = styled.div`
 `;
 
 function EventMaker(props) {
+  const today = new Date();
   return (
     <Wrap {...props}>
       <HeaderWrap>
@@ -98,7 +100,7 @@ function EventMaker(props) {
       <ContentWrap>
         <FormWrap>
           <MyInput name="Event" desc="Event Name" />
-          <MyInput name="Date" desc="2020/05/04" />
+          <MyInput name="Date" desc={getStrFullDate(today, "yyyy-mm-dd")} />
           <DatePicker></DatePicker>
           {/* <MyInput name="Time" desc="PM 07:00" />
           <TagInput></TagInput> */}
