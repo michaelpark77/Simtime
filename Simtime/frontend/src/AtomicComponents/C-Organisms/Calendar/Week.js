@@ -7,22 +7,30 @@ import Date from "../../B-Molecules/DatePicker/Date";
 const height = "116px";
 
 const Wrap = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: ${(props) => (props.isDatePicker ? "center" : "flex-start")};
-  ${(props) => (props.isDatePicker ? "100%" : height)};
-  height: ${(props) => (props.isDatePicker ? "100%" : height)};
-  width: 100%;
-  margin-bottom: ${(props) => (props.isDatePicker ? "0px" : "4px")};
-  // border: solid 1px red;
+
+  ${(props) =>
+    props.isDatePicker
+      ? `
+    align-items: center;
+    height: 100%;
+    margin-bottom: 0px;
+    `
+      : `
+    align-items: flex-start;
+    height: ${height};
+    margin-bottom: 4px;
+   `}
 `;
 
 function Week(props) {
-  const { weekDates, isDatePicker,selectDate } = props;
+  const { weekDates, isDatePicker, selectDate } = props;
   const onSelect = (strDate) => {
     selectDate(strDate);
-  }
+  };
 
   const renderDays = () => {
     return weekDates.map((date, index) => {
@@ -56,7 +64,7 @@ function Week(props) {
           isActiveMonth={date.isActiveMonth}
           isToday={date.id == "0D"}
           height={height}
-          onClick = {()=> date.isActive ? onSelect(date.strDate) : null}
+          onClick={() => (date.isActive ? onSelect(date.strDate) : null)}
         />
       );
     });

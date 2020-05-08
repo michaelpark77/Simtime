@@ -6,8 +6,8 @@ import styled from "styled-components";
 import Week from "../../C-Organisms/Calendar/Week";
 import Paragraph from "../../A-Atomics/Font/Paragraph";
 import Image from "../../A-Atomics/Image";
-import {  generate, getStrFullDate } from "./Generator";
-import { MAIN_COLOR, ST_SEMI_GRAY,ST_SEMI_YELLOW } from "../../Colors";
+import { generate, getStrFullDate } from "./Generator";
+import { MAIN_COLOR, ST_SEMI_GRAY, ST_SEMI_YELLOW } from "../../Colors";
 
 // cal_prev_page = [0]; -현재(오늘)로부터 과거로 load한 page
 // cal_next_pate = [0]; -현재(오늘)로부터 미래로 load한 page
@@ -43,7 +43,8 @@ const MonthWrap = styled.div`
 `;
 
 const Arrow = styled(Image)`
-  opacity: 0.75;
+  opacity: ${(props) => (props.isActive ? "0.75" : "0.3")};
+  cursor: ${(props) => (props.isActive ? "pointer" : "default")};
 `;
 
 const Month = styled(Paragraph)`
@@ -53,70 +54,90 @@ const Month = styled(Paragraph)`
 const DayWrap = styled.div`
   width: 100%;
   height: 30px;
-  padding-top: 1%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-
+  padding-top: 2px 1px 0px 1px;
   overflow: hidden;
   border-bottom: dashed 1px ${ST_SEMI_GRAY};
+`;
+
+const Day = styled(Paragraph)`
+  width: 32px;
+  text-align: middle;
 `;
 
 const CalendarWrap = styled.div`
   width: 100%;
   height: 260px;
-  padding-top: 1%;
+  padding: 2px 2px 2px 2px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-
   overflow: hidden;
 `;
+
+//일자
+const Weeks = React.memo((props) => {
+  const { curr, selectDate, selectedDate } = props;
+  var dates = generate(curr, 0);
+
+  console.log(dates);
+
+  return dates.map((week, index) => {
+    return (
+      <Week
+        key={week.id}
+        id={week.id}
+        isDatePicker={true}
+        weekDates={week.weekDates}
+        selectDate={selectDate}
+        selectedDate={selectedDate}
+      />
+    );
+  });
+});
 
 function DatePicker(props) {
   const [curr, setCurr] = useState(props.currDate);
   const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-  const months = ["January", "February", "March", "April","May","June","July","August","September","October"  ,"November" ,"December"];
-  
-  const nextMonth = () =>{
-    setCurr(new Date(curr.getFullYear(), curr.getMonth()+1, 1));
-  }
-  const prevMonth = () =>{
-    var today = getStrFullDate(new Date(), "yyyymmdd").substr(0,6);
-    var yyyymm = getStrFullDate(curr, "yyyymmdd").substr(0,6);
-    
-    if(yyyymm > today){
-      setCurr(new Date(curr.getFullYear(), curr.getMonth()-1, 1));
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const nextMonth = () => {
+    setCurr(new Date(curr.getFullYear(), curr.getMonth() + 1, 1));
+  };
+
+  const prevMonth = () => {
+    var today = getStrFullDate(new Date(), "yyyymmdd").substr(0, 6);
+    var yyyymm = getStrFullDate(curr, "yyyymmdd").substr(0, 6);
+
+    if (yyyymm > today) {
+      setCurr(new Date(curr.getFullYear(), curr.getMonth() - 1, 1));
     }
-  }
+  };
 
   //요일
   const renderDay = () => {
     return days.map((day, index) => {
       return (
-        <Paragraph key={day} color="ST_GRAY">
+        <Day key={day} color="ST_GRAY">
           {day}
-        </Paragraph>
-      );
-    });
-  };
-
-  //일자
-  const renderWeek = (curr) => {
-    var dates = generate(curr,0);
-    console.log(dates)
-    return dates.map((week, index) => {
-      return (
-        <Week
-          key={week.id}
-          id={week.id}
-          isDatePicker={true}
-          weekDates={week.weekDates}
-          selectDate={props.selectDate}
-
-        />
+        </Day>
       );
     });
   };
@@ -128,6 +149,10 @@ function DatePicker(props) {
           width="10px"
           height="10px"
           src="static/img/icons/left-arrow.png"
+          isActive={
+            getStrFullDate(curr, "yyyymmdd").substr(0, 6) >
+            getStrFullDate(new Date(), "yyyymmdd").substr(0, 6)
+          }
           onClick={prevMonth}
         />
         <Month fontSize="14px" color="TEXT">
@@ -138,10 +163,13 @@ function DatePicker(props) {
           height="10px"
           src="static/img/icons/right-arrow.png"
           onClick={nextMonth}
+          isActive={true}
         />
       </MonthWrap>
       <DayWrap>{renderDay()}</DayWrap>
-      <CalendarWrap>{renderWeek(curr)}</CalendarWrap>
+      <CalendarWrap>
+        <Weeks curr={curr} selectDate={props.selectDate} />
+      </CalendarWrap>
     </Wrap>
   );
 }

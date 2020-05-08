@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -13,6 +13,8 @@ import DatePicker from "../../D-Templates/Calendar/DatePicker";
 
 import DashedButton from "../../A-Atomics/Button/DashedButton";
 import { getStrFullDate } from "../Calendar/Generator";
+
+import { SampleProvider, SampleConsumer } from "../../../contexts/sample";
 
 const Wrap = styled.div`
   border: solid 1px ${MAIN_COLOR};
@@ -84,22 +86,30 @@ const ButtonWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 `;
 
 const Button = styled(DashedButton)`
-  
   border-radius: 6px;
-`
+`;
 
 function EventMaker(props) {
   const today = new Date();
-  const [date, setDate] = useState(getStrFullDate(today, "yyyy-mm-dd"));
+  const [selectedDate, setSelectedDate] = useState(
+    getStrFullDate(today, "yyyy-mm-dd")
+  );
 
-  const selectDate=(strDate)=>{
-    setDate(strDate);
-    console.log(date);
-  }
+  const selectDate = useCallback((strDate) => {
+    setSelectedDate(strDate);
+    // console.log(selectedDate);
+  }, []);
+
+  const Receives = () => {
+    return (
+      <SampleConsumer>
+        {(sample) => console.log(`현재 설정된 값: ${sample.state.value}`)}
+      </SampleConsumer>
+    );
+  };
 
   return (
     <Wrap {...props}>
@@ -113,8 +123,16 @@ function EventMaker(props) {
       <ContentWrap>
         <FormWrap>
           <MyInput name="Event" desc="Event Name" />
-          <MyInput name="Date" desc={date}></MyInput>
-          <DatePicker selectDate={selectDate}></DatePicker>
+          <MyInput
+            name="Date"
+            desc={selectedDate}
+            value={selectedDate}
+            readOnly={true}
+          ></MyInput>
+          <DatePicker
+            selectDate={selectDate}
+            selectedDate={selectedDate}
+          ></DatePicker>
           {/* <MyInput name="Time" desc="PM 07:00" />
           <TagInput></TagInput> */}
         </FormWrap>
@@ -132,9 +150,11 @@ export default EventMaker;
 EventMaker.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
+  selectedDate: PropTypes.string,
 };
 
 EventMaker.defaultProps = {
   height: "568px",
   width: "320px",
+  selectedDate: null,
 };

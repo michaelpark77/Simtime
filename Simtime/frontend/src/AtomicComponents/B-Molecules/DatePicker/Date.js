@@ -22,11 +22,11 @@ const Wrap = styled.div`
   align-items: center;
 
   overflow: hidden;
-
+  cursor:  ${(props) => (props.isActive ? "pointer" : "Default")} ;
   ${(props) => (props.isToday ? `background-color: ${ST_YELLOW_LIGHT}` : null)};
 
   &:hover {
-    ${(props) => (props.isActive ? `background-color: ${MAIN_COLOR}` : null)};
+    ${(props) => (props.isActive ? `border: solid 1px ${MAIN_COLOR}` : null)};
   }
 
   // @media only screen and (max-width: 920px) {
