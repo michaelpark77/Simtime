@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, Fragment } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -78,9 +78,20 @@ const MyInput = styled(Input)`
   margin-bottom: 15px;
 `;
 
+const Buttons = styled.div`
+width: 100%;
+height: 15%;
+
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+`
+
 const ButtonWrap = styled.div`
-  width: 100%;
-  height: 15%;
+  cursor: pointer;
+  width : ${props=>props.width};
+  height: 100%;
 
   display: flex;
   flex-direction: column;
@@ -88,22 +99,20 @@ const ButtonWrap = styled.div`
   align-items: center;
 `;
 
+
 const Button = styled(DashedButton)`
   border-radius: 6px;
 `;
 
+const MyDatePicker = styled(DatePicker)`
+`;
+
+
+
 function EventMaker(props) {
   const today = new Date();
 
-  // const [selectedDate, setSelectedDate] = useState(
-  //  getStrFullDate(today, "yyyy-mm-dd")
-  //);
-
-  //const selectDate = useCallback((strDate) => {
-  //  setSelectedDate(strDate);
-  //  // console.log(selectedDate);
-  //}, []);
-
+  const [page, setPage] = useState(0);
   const [event, setEvent] = useState({
     eId: null,
     eName: "",
@@ -113,10 +122,98 @@ function EventMaker(props) {
     eHost_id: "unknown",
   });
 
+  const nextPage = () => {
+    setPage(page+1);
+    console.log(page)
+  };
+
+  const prevPage = () => {
+    setPage(page-1);
+    console.log(page)
+  };
+
   const selectDate = useCallback((strDate) => {
     setEvent({ eDate: strDate });
     console.log(event.eDate);
   }, []);
+
+
+  
+
+const firstPage = () =>{
+  return( 
+  <Fragment>
+    <MyInput label="Event" name="eName" desc="Event Name" />
+    <MyInput
+      name="eDate"
+      label="Date"
+      desc={event.eDate}
+      value={event.eDate}
+      readOnly={true}
+    ></MyInput>
+    <MyDatePicker
+      selectDate={selectDate}
+      selectedDate={event.eDate}
+    ></MyDatePicker>
+  </Fragment>);
+}
+
+const secondPage = () =>{
+  return( 
+  <Fragment>
+    <MyInput label="Pax" name="ePax" desc="max" />
+  </Fragment>);
+}
+
+const thirdPage = () =>{
+    return( 
+    <Fragment>
+      <MyInput label="Place" name="place" desc="search" />
+    </Fragment>);
+  }
+
+
+const renderForm = (page) => {
+  switch(page) {
+    case 0 : return firstPage();
+    case 1 : return secondPage();
+    case 2 : return thirdPage();
+    default : return firstPage();
+  }
+};
+
+const renderButtons = (page) => {
+  switch(page) {
+    case 0 : return ( 
+    <ButtonWrap width="100%">
+      <Button onClick={nextPage}>Next</Button>
+    </ButtonWrap>);
+
+  case 2 : return ( 
+    <Fragment>
+        <ButtonWrap width="48%">
+          <Button onClick={prevPage}>Prev</Button>
+        </ButtonWrap>
+        <ButtonWrap width="48%">
+          <Button>Done</Button>
+        </ButtonWrap>
+      </Fragment> 
+      )
+    ;
+
+default : return (
+      <Fragment>
+        <ButtonWrap width="48%">
+          <Button onClick={prevPage}>Prev</Button>
+        </ButtonWrap>
+        <ButtonWrap width="48%">
+          <Button onClick={nextPage}>Next</Button>
+        </ButtonWrap>
+      </Fragment> )
+      ;
+  }
+};
+
 
   return (
     <ContextStore.Provider value={event.eDate}>
@@ -130,25 +227,12 @@ function EventMaker(props) {
 
         <ContentWrap>
           <FormWrap>
-            <MyInput label="Event" name="eName" desc="Event Name" />
-            <MyInput
-              name="eDate"
-              label="Date"
-              desc={event.eDate}
-              value={event.eDate}
-              readOnly={true}
-            ></MyInput>
-            <DatePicker
-              selectDate={selectDate}
-              selectedDate={event.eDate}
-            ></DatePicker>
-            {/* <MyInput name="Time" desc="PM 07:00" />
-          <TagInput></TagInput> */}
+            {renderForm(page)}
           </FormWrap>
 
-          <ButtonWrap>
-            <Button>NEXT</Button>
-          </ButtonWrap>
+          <Buttons>
+           {renderButtons(page)}
+          </Buttons>
         </ContentWrap>
       </Wrap>
     </ContextStore.Provider>

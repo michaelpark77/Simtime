@@ -13,7 +13,7 @@ import { MAIN_COLOR, ST_SEMI_GRAY, ST_SEMI_YELLOW } from "../../Colors";
 // cal_next_pate = [0]; -현재(오늘)로부터 미래로 load한 page
 
 const Wrap = styled.div`
-  width: 286px;
+  width: 100%;
   height: 360px;
   padding-top: 5px;
   padding-bottom: 3px;
