@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-
 import CalDate from "../../A-Atomics/Calendar/CalDate";
+import ContextStore from "../../../contexts/contextStore";
 import {
   MAIN_COLOR,
   BG_INACTIVE,
@@ -24,6 +24,7 @@ const Wrap = styled.div`
   overflow: hidden;
   cursor:  ${(props) => (props.isActive ? "pointer" : "Default")} ;
   ${(props) => (props.isToday ? `background-color: ${ST_YELLOW_LIGHT}` : null)};
+  ${(props) => (props.isSelected ? `background-color: ${MAIN_COLOR}` : null)};
 
   &:hover {
     ${(props) => (props.isActive ? `border: solid 1px ${MAIN_COLOR}` : null)};
@@ -44,22 +45,30 @@ const MyCalDate = styled(CalDate)`
 `;
 
 function Date(props) {
-  const { day, date, isActive, isActiveMonth, isToday } = props;
+  const { day, date, strDate, isActive, isActiveMonth, isToday } = props;
   const contentHeight = size;
 
+  const renderDate = (store) => {
+    return (
+      <Wrap {...props} isSelected={strDate == store}>
+        <MyCalDate
+          isActive={isActive}
+          isActiveMonth={isActiveMonth}
+          isToday={isToday}
+          date={date}
+          day={day}
+          contentHeight={contentHeight}
+        >
+          {date}
+        </MyCalDate>
+      </Wrap>
+    );
+  };
+
   return (
-    <Wrap {...props}>
-      <MyCalDate
-        isActive={isActive}
-        isActiveMonth={isActiveMonth}
-        isToday={isToday}
-        date={date}
-        day={day}
-        contentHeight={contentHeight}
-      >
-        {date}
-      </MyCalDate>
-    </Wrap>
+    <ContextStore.Consumer>
+      {(store) => renderDate(store)}
+    </ContextStore.Consumer>
   );
 }
 

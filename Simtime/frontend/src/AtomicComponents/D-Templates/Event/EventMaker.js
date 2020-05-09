@@ -14,7 +14,7 @@ import DatePicker from "../../D-Templates/Calendar/DatePicker";
 import DashedButton from "../../A-Atomics/Button/DashedButton";
 import { getStrFullDate } from "../Calendar/Generator";
 
-import { SampleProvider, SampleConsumer } from "../../../contexts/sample";
+import ContextStore from "../../../contexts/contextStore";
 
 const Wrap = styled.div`
   border: solid 1px ${MAIN_COLOR};
@@ -94,54 +94,64 @@ const Button = styled(DashedButton)`
 
 function EventMaker(props) {
   const today = new Date();
-  const [selectedDate, setSelectedDate] = useState(
-    getStrFullDate(today, "yyyy-mm-dd")
-  );
+
+  // const [selectedDate, setSelectedDate] = useState(
+  //  getStrFullDate(today, "yyyy-mm-dd")
+  //);
+
+  //const selectDate = useCallback((strDate) => {
+  //  setSelectedDate(strDate);
+  //  // console.log(selectedDate);
+  //}, []);
+
+  const [event, setEvent] = useState({
+    eId: null,
+    eName: "",
+    eDate: getStrFullDate(today, "yyyy-mm-dd"),
+    eMessage: "",
+    eStatus: "CLOSED",
+    eHost_id: "unknown",
+  });
 
   const selectDate = useCallback((strDate) => {
-    setSelectedDate(strDate);
-    // console.log(selectedDate);
+    setEvent({ eDate: strDate });
+    console.log(event.eDate);
   }, []);
 
-  const Receives = () => {
-    return (
-      <SampleConsumer>
-        {(sample) => console.log(`현재 설정된 값: ${sample.state.value}`)}
-      </SampleConsumer>
-    );
-  };
-
   return (
-    <Wrap {...props}>
-      <HeaderWrap>
-        <BarWrap>
-          <ProgressBar />
-        </BarWrap>
-        <ModalTitle>EVENT</ModalTitle>
-      </HeaderWrap>
+    <ContextStore.Provider value={event.eDate}>
+      <Wrap {...props}>
+        <HeaderWrap>
+          <BarWrap>
+            <ProgressBar />
+          </BarWrap>
+          <ModalTitle>EVENT</ModalTitle>
+        </HeaderWrap>
 
-      <ContentWrap>
-        <FormWrap>
-          <MyInput name="Event" desc="Event Name" />
-          <MyInput
-            name="Date"
-            desc={selectedDate}
-            value={selectedDate}
-            readOnly={true}
-          ></MyInput>
-          <DatePicker
-            selectDate={selectDate}
-            selectedDate={selectedDate}
-          ></DatePicker>
-          {/* <MyInput name="Time" desc="PM 07:00" />
+        <ContentWrap>
+          <FormWrap>
+            <MyInput label="Event" name="eName" desc="Event Name" />
+            <MyInput
+              name="eDate"
+              label="Date"
+              desc={event.eDate}
+              value={event.eDate}
+              readOnly={true}
+            ></MyInput>
+            <DatePicker
+              selectDate={selectDate}
+              selectedDate={event.eDate}
+            ></DatePicker>
+            {/* <MyInput name="Time" desc="PM 07:00" />
           <TagInput></TagInput> */}
-        </FormWrap>
+          </FormWrap>
 
-        <ButtonWrap>
-          <Button>NEXT</Button>
-        </ButtonWrap>
-      </ContentWrap>
-    </Wrap>
+          <ButtonWrap>
+            <Button>NEXT</Button>
+          </ButtonWrap>
+        </ContentWrap>
+      </Wrap>
+    </ContextStore.Provider>
   );
 }
 

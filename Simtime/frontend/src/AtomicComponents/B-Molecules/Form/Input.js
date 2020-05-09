@@ -36,7 +36,7 @@ const MyInput = styled.input`
 `;
 
 function Input(props) {
-  const { width, height, name, desc, value, readOnly } = props;
+  const { width, height, label, name, desc, value, readOnly } = props;
   const [myValue, setMyValue] = useState(value);
 
   const handleChange = useCallback((e) => {
@@ -45,9 +45,9 @@ function Input(props) {
 
   return (
     <Wrap {...props}>
-      {name && (
+      {label && (
         <MyParagraph fontSize="18px" color="MAIN_COLOR">
-          {name}
+          {label}
         </MyParagraph>
       )}
       <MyInput
@@ -66,6 +66,7 @@ export default Input;
 Input.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
+  label: PropTypes.string,
   name: PropTypes.string,
   desc: PropTypes.string,
   value: PropTypes.string,
@@ -75,6 +76,7 @@ Input.propTypes = {
 Input.defaultProps = {
   width: "100%",
   height: "40px",
+  label: null,
   name: null,
   desc: null,
   value: "",

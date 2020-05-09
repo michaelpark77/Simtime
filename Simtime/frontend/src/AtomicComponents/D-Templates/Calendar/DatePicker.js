@@ -79,12 +79,22 @@ const CalendarWrap = styled.div`
   overflow: hidden;
 `;
 
+//요일
+const Days = React.memo(() => {
+  const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  return days.map((day, index) => {
+    return (
+      <Day key={day} color="ST_GRAY">
+        {day}
+      </Day>
+    );
+  });
+});
+
 //일자
 const Weeks = React.memo((props) => {
   const { curr, selectDate, selectedDate } = props;
   var dates = generate(curr, 0);
-
-  console.log(dates);
 
   return dates.map((week, index) => {
     return (
@@ -102,7 +112,6 @@ const Weeks = React.memo((props) => {
 
 function DatePicker(props) {
   const [curr, setCurr] = useState(props.currDate);
-  const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const months = [
     "January",
     "February",
@@ -131,17 +140,6 @@ function DatePicker(props) {
     }
   };
 
-  //요일
-  const renderDay = () => {
-    return days.map((day, index) => {
-      return (
-        <Day key={day} color="ST_GRAY">
-          {day}
-        </Day>
-      );
-    });
-  };
-
   return (
     <Wrap>
       <MonthWrap>
@@ -166,7 +164,10 @@ function DatePicker(props) {
           isActive={true}
         />
       </MonthWrap>
-      <DayWrap>{renderDay()}</DayWrap>
+
+      <DayWrap>
+        <Days />
+      </DayWrap>
       <CalendarWrap>
         <Weeks curr={curr} selectDate={props.selectDate} />
       </CalendarWrap>
