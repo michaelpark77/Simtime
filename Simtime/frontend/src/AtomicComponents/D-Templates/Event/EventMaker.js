@@ -10,6 +10,8 @@ import ProgressBar from "../../A-Atomics/Deco/ProgressBar";
 import Input from "../../B-Molecules/Form/Input";
 import TagInput from "../../B-Molecules/Form/TagInput";
 import DatePicker from "../../D-Templates/Calendar/DatePicker";
+import TimePicker from "../../D-Templates/Calendar/TimePicker";
+import Map from "../../A-Atomics/Map/Map";
 
 import DashedButton from "../../A-Atomics/Button/DashedButton";
 import { getStrFullDate } from "../Calendar/Generator";
@@ -78,19 +80,52 @@ const MyInput = styled(Input)`
   margin-bottom: 15px;
 `;
 
-const Buttons = styled.div`
-width: 100%;
-height: 15%;
+const MyDateInput = styled(Input)`
+  margin-bottom: 15px;
+`;
 
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
-`
+const PositionWrap = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+const MyDatePicker = styled(DatePicker)`
+  ${(props) =>
+    props.isShown
+      ? `  
+      width: 100%;
+      background-color: white;
+      position: absolute;
+      top: 45px;
+      right: 0px;`
+      : "display: none;"}
+`;
+
+const MyTimePicker = styled(TimePicker)`
+  ${(props) =>
+    props.isShown
+      ? `  
+      width: 100%;
+      background-color: white;
+      position: absolute;
+      top: 45px;
+      right: 0px;`
+      : "display: none;"}
+`;
+
+const Buttons = styled.div`
+  width: 100%;
+  height: 15%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 const ButtonWrap = styled.div`
   cursor: pointer;
-  width : ${props=>props.width};
+  width: ${(props) => props.width};
   height: 100%;
 
   display: flex;
@@ -99,121 +134,161 @@ const ButtonWrap = styled.div`
   align-items: center;
 `;
 
+const StyledMap = styled(Map)`
+  border: solid 1px red;
+`;
 
 const Button = styled(DashedButton)`
   border-radius: 6px;
 `;
 
-const MyDatePicker = styled(DatePicker)`
-`;
-
-
-
 function EventMaker(props) {
   const today = new Date();
-
+  const [datePicker, setDatePicker] = useState(false);
+  const [timePicker, setTimePicker] = useState(false);
   const [page, setPage] = useState(0);
   const [event, setEvent] = useState({
     eId: null,
     eName: "",
     eDate: getStrFullDate(today, "yyyy-mm-dd"),
+    eTime: "AM 12:00",
     eMessage: "",
     eStatus: "CLOSED",
     eHost_id: "unknown",
   });
 
+  const showDatePicker = () => {
+    if (timePicker) {
+      setTimePicker(!timePicker);
+    }
+    setDatePicker(!datePicker);
+  };
+
+  const showTimePicker = () => {
+    if (datePicker) {
+      setDatePicker(!datePicker);
+    }
+    setTimePicker(!timePicker);
+  };
+
   const nextPage = () => {
-    setPage(page+1);
-    console.log(page)
+    setPage(page + 1);
+    console.log(page);
   };
 
   const prevPage = () => {
-    setPage(page-1);
-    console.log(page)
+    setPage(page - 1);
+    console.log(page);
   };
 
   const selectDate = useCallback((strDate) => {
     setEvent({ eDate: strDate });
-    console.log(event.eDate);
   }, []);
 
+  const selectTime = useCallback((time) => {
+    setEvent({ eTime: time });
+  }, []);
 
-  
-
-const firstPage = () =>{
-  return( 
-  <Fragment>
-    <MyInput label="Event" name="eName" desc="Event Name" />
-    <MyInput
-      name="eDate"
-      label="Date"
-      desc={event.eDate}
-      value={event.eDate}
-      readOnly={true}
-    ></MyInput>
-    <MyDatePicker
-      selectDate={selectDate}
-      selectedDate={event.eDate}
-    ></MyDatePicker>
-  </Fragment>);
-}
-
-const secondPage = () =>{
-  return( 
-  <Fragment>
-    <MyInput label="Pax" name="ePax" desc="max" />
-  </Fragment>);
-}
-
-const thirdPage = () =>{
-    return( 
-    <Fragment>
-      <MyInput label="Place" name="place" desc="search" />
-    </Fragment>);
-  }
-
-
-const renderForm = (page) => {
-  switch(page) {
-    case 0 : return firstPage();
-    case 1 : return secondPage();
-    case 2 : return thirdPage();
-    default : return firstPage();
-  }
-};
-
-const renderButtons = (page) => {
-  switch(page) {
-    case 0 : return ( 
-    <ButtonWrap width="100%">
-      <Button onClick={nextPage}>Next</Button>
-    </ButtonWrap>);
-
-  case 2 : return ( 
-    <Fragment>
-        <ButtonWrap width="48%">
-          <Button onClick={prevPage}>Prev</Button>
-        </ButtonWrap>
-        <ButtonWrap width="48%">
-          <Button>Done</Button>
-        </ButtonWrap>
-      </Fragment> 
-      )
-    ;
-
-default : return (
+  const firstPage = () => {
+    return (
       <Fragment>
-        <ButtonWrap width="48%">
-          <Button onClick={prevPage}>Prev</Button>
-        </ButtonWrap>
-        <ButtonWrap width="48%">
-          <Button onClick={nextPage}>Next</Button>
-        </ButtonWrap>
-      </Fragment> )
-      ;
-  }
-};
+        <MyInput label="Event" name="eName" desc="Event Name" />
+        <PositionWrap>
+          <MyDateInput
+            name="eDate"
+            label="Date"
+            desc={event.eDate}
+            value={event.eDate}
+            readOnly={true}
+            cursor="pointer"
+            onClick={showDatePicker}
+          ></MyDateInput>
+          <MyDatePicker
+            isShown={datePicker}
+            selectDate={selectDate}
+            selectedDate={event.eDate}
+          />
+        </PositionWrap>
+        <PositionWrap>
+          <MyDateInput
+            name="eTime"
+            label="Time"
+            desc={event.eTime}
+            value={event.eTime}
+            readOnly={true}
+            cursor="pointer"
+            onClick={showTimePicker}
+          />
+        </PositionWrap>
+        <MyInput label="Location" name="eLocation" desc="Search Location" />
+        <StyledMap width="100%" height="164px"></StyledMap>
+      </Fragment>
+    );
+  };
 
+  const secondPage = () => {
+    return (
+      <Fragment>
+        <MyInput label="Message" name="eMessage" desc="Message" />
+      </Fragment>
+    );
+  };
+
+  const thirdPage = () => {
+    return (
+      <Fragment>
+        <MyInput label="Place" name="place" desc="search" />
+      </Fragment>
+    );
+  };
+
+  const renderForm = (page) => {
+    switch (page) {
+      case 0:
+        return firstPage();
+      case 1:
+        return secondPage();
+      case 2:
+        return thirdPage();
+      default:
+        return firstPage();
+    }
+  };
+
+  const renderButtons = (page) => {
+    switch (page) {
+      case 0:
+        return (
+          <ButtonWrap width="100%">
+            <Button onClick={nextPage}>Next</Button>
+          </ButtonWrap>
+        );
+
+      case 2:
+        return (
+          <Fragment>
+            <ButtonWrap width="48%">
+              <Button onClick={prevPage}>Prev</Button>
+            </ButtonWrap>
+            <ButtonWrap width="48%">
+              <Button>Done</Button>
+            </ButtonWrap>
+          </Fragment>
+        );
+
+      default:
+        return (
+          <Fragment>
+            <ButtonWrap width="48%">
+              <Button onClick={prevPage}>Prev</Button>
+            </ButtonWrap>
+            <ButtonWrap width="48%">
+              <Button onClick={nextPage}>Next</Button>
+            </ButtonWrap>
+          </Fragment>
+        );
+    }
+  };
 
   return (
     <ContextStore.Provider value={event.eDate}>
@@ -226,13 +301,9 @@ default : return (
         </HeaderWrap>
 
         <ContentWrap>
-          <FormWrap>
-            {renderForm(page)}
-          </FormWrap>
+          <FormWrap>{renderForm(page)}</FormWrap>
 
-          <Buttons>
-           {renderButtons(page)}
-          </Buttons>
+          <Buttons>{renderButtons(page)}</Buttons>
         </ContentWrap>
       </Wrap>
     </ContextStore.Provider>

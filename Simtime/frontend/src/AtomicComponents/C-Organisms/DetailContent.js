@@ -64,7 +64,7 @@ const Attendee = styled(ImageUser)`
 `;
 
 const StyledMap = styled(Map)`
-  margin-top: 6px;
+  margin-top: 14px;
 `;
 
 const StyledComment = styled.div`

@@ -24,7 +24,7 @@ const MyInput = styled.input`
     font-weight: 300;
   }
 
-  width: ${(props) => (props.name ? "76%" : "100%")};
+  width: ${(props) => (props.name ? "72%" : "100%")};
   height: 100%;
   border: solid 1px ${ST_SEMI_YELLOW};
   border-radius: 6px;
@@ -33,10 +33,12 @@ const MyInput = styled.input`
   :focus {
     border: solid 1px ${MAIN_COLOR};
   }
+
+  ${(props) => (props.cursor ? `cursor: ${props.cursor}` : null)}
 `;
 
 function Input(props) {
-  const { width, height, label, name, desc, value, readOnly } = props;
+  const { width, height, label, name, desc, value, readOnly, cursor } = props;
   const [myValue, setMyValue] = useState(value);
 
   const handleChange = useCallback((e) => {
@@ -50,13 +52,18 @@ function Input(props) {
           {label}
         </MyParagraph>
       )}
-      <MyInput
-        name={name}
-        placeholder={desc}
-        readOnly={readOnly}
-        value={readOnly ? value : myValue}
-        onChange={handleChange}
-      ></MyInput>
+      {props.children ? (
+        props.childen
+      ) : (
+        <MyInput
+          name={name}
+          placeholder={desc}
+          readOnly={readOnly}
+          value={readOnly ? value : myValue}
+          onChange={handleChange}
+          cursor={cursor}
+        ></MyInput>
+      )}
     </Wrap>
   );
 }
@@ -71,6 +78,7 @@ Input.propTypes = {
   desc: PropTypes.string,
   value: PropTypes.string,
   readOnly: PropTypes.bool,
+  cursor: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -81,4 +89,5 @@ Input.defaultProps = {
   desc: null,
   value: "",
   readOnly: false,
+  cursor: null,
 };

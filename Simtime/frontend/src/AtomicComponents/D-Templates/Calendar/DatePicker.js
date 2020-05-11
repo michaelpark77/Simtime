@@ -6,15 +6,22 @@ import styled from "styled-components";
 import Week from "../../C-Organisms/Calendar/Week";
 import Paragraph from "../../A-Atomics/Font/Paragraph";
 import Image from "../../A-Atomics/Image";
+
 import { generate, getStrFullDate } from "./Generator";
-import { MAIN_COLOR, ST_SEMI_GRAY, ST_SEMI_YELLOW } from "../../Colors";
+import {
+  ST_WHITE,
+  MAIN_COLOR,
+  ST_SEMI_GRAY,
+  ST_SEMI_YELLOW,
+} from "../../Colors";
 
 // cal_prev_page = [0]; -현재(오늘)로부터 과거로 load한 page
 // cal_next_pate = [0]; -현재(오늘)로부터 미래로 load한 page
 
 const Wrap = styled.div`
+  background-color: ${ST_WHITE}
   width: 100%;
-  height: 360px;
+  height: 300px;
   padding-top: 5px;
   padding-bottom: 3px;
   display: flex;
@@ -25,6 +32,8 @@ const Wrap = styled.div`
   overflow: hidden;
   border: solid 1px ${ST_SEMI_YELLOW};
   border-radius: 6px;
+
+  z-index: 9999;
 `;
 
 const MonthWrap = styled.div`
@@ -95,7 +104,6 @@ const Days = React.memo(() => {
 const Weeks = React.memo((props) => {
   const { curr, selectDate, selectedDate } = props;
   var dates = generate(curr, 0);
-
   return dates.map((week, index) => {
     return (
       <Week
@@ -141,7 +149,7 @@ function DatePicker(props) {
   };
 
   return (
-    <Wrap>
+    <Wrap {...props}>
       <MonthWrap>
         <Arrow
           width="10px"
