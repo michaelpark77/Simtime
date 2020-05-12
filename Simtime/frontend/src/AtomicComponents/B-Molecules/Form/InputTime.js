@@ -50,26 +50,29 @@ const MyInput = styled.input`
   ${(props) => (props.cursor ? `cursor: ${props.cursor}` : null)}
 `;
 
-const M = styled(SelectBox)``;
+const MySelectBox = styled(SelectBox)``;
 
 function InputTime(props) {
   const { width, height, label, name, value, cursor } = props;
-  const [time, setTime] = useState({ hour: "00", min: "00" });
+  const [hour, setHour] = useState("");
+  const [min, setMin] = useState("");
 
-  const handleChange = useCallback((e) => {
-    var keyValue = e.keyCode;
-    console.log(e);
+  const handleChange = (e) => {
+    e.preventDefault();
+    var myValue= parseInt(e.target.value.replace(/[^0-9]/g, '').substr(e.target.value.length - 2, 2));
+    var newValue = parseInt(e.target.value.substr(e.target.value.length - 1 , 1));
 
-    if (keyValue >= 48 && keyValue <= 57) {
-      alert("숫자를 입력하세요");
+    if(e.target.name == "hour") {
+      if(myValue <= 24 && myValue >= 0) setHour(myValue)
+      else setHour(newValue)
     }
-
-    if (e.target.name == "hour") {
-      setTime({ [e.target.name]: e.target.value });
-    } else {
-      setTime({ [e.target.name]: e.target.value });
+    else{
+      if(myValue <= 59 && myValue >= 0) setMin(myValue)
+      else setMin(newValue)
     }
-  }, []);
+  };
+
+
 
   return (
     <Wrap {...props}>
@@ -79,10 +82,11 @@ function InputTime(props) {
         </MyParagraph>
       )}
       <InnerWrap name={name}>
-        <MyInput placeholder="" name="hour" onChange={handleChange}></MyInput>:
-        <MyInput placeholder="" name="min" onChange={handleChange}></MyInput>
-        <M width="60px" height="40px" options={["AM", "PM", "dd"]}></M>
+      <MyInput placeholder="" name="hour" onChange={handleChange} value={("00" + hour).substr(("00" + hour).length - 2 , 2)}></MyInput>:
+      <MyInput placeholder="" name="min" onChange={handleChange} value={("00" + min).substr(("00" + min).length - 2 , 2)}></MyInput>
+      <MySelectBox width="60px" height="40px" options={["AM", "PM"]}></MySelectBox>
       </InnerWrap>
+      
     </Wrap>
   );
 }

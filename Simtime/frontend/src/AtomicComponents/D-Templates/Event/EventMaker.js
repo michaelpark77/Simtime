@@ -12,7 +12,9 @@ import InputTag from "../../B-Molecules/Form/InputTag";
 import InputTime from "../../B-Molecules/Form/InputTime";
 import DatePicker from "../../D-Templates/Calendar/DatePicker";
 import TimePicker from "../../D-Templates/Calendar/TimePicker";
+import SearchBar from "../../B-Molecules/Form/SearchBar";
 import Map from "../../A-Atomics/Map/Map";
+
 
 import DashedButton from "../../A-Atomics/Button/DashedButton";
 import { getStrFullDate } from "../Calendar/Generator";
@@ -106,6 +108,10 @@ const MyDatePicker = styled(DatePicker)`
       : "display: none;"}
 `;
 
+const MySearchBar =  styled(SearchBar)`
+  margin-bottom: 15px;
+`;
+
 const Buttons = styled.div`
   width: 100%;
   height: 15%;
@@ -190,7 +196,8 @@ function EventMaker(props) {
           />
         </PositionWrap>
         <MyInputTime name="eTime" label="Time" cursor="pointer" />
-        <MyInput label="Location" name="eLocation" desc="Search Location" />
+        {/* <MyInput label="Location" name="eLocation" desc="Search Location" /> */}
+        <MySearchBar label="Place" name="ePlace" width="100%"/>
         <StyledMap
           width="100%"
           height="164px"

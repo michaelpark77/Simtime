@@ -1,27 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import Paragraph from "../Font/Paragraph";
+import Paragraph from "..//Font/Paragraph";
+
+
 import {
   MAIN_COLOR,
   ST_YELLOW_LIGHT,
   ST_SEMI_YELLOW,
   ST_SEMI_GRAY,
+  ST_GRAY,
 } from "../../Colors";
 
 const Wrap = styled.div`
   width: ${(props) => props.width};
   height : ${(props) => props.height};
   position: relative;
+
+
 `;
 
-const Select = styled.div`
+const Select = styled.input`
   padding-left: 4px;
+  border: solid 1px ${ST_SEMI_YELLOW};
+  border-radius: 6px;
 
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   line-height: ${(props) => props.height};
-  border-width: 0px;
 
   font-size: 15px;
   font-weight: 400;
@@ -34,16 +40,16 @@ const Select = styled.div`
   background-image: url("static/img/icons/arrow-down2.png");
   background-position: 88% center;`
   : null };
+
 `;
 
 const OptionWrap = styled.div`
-  // border: solid 1px ${ST_SEMI_YELLOW};
   padding: 1px 1px 1px 1px;
-
   background-color: white;
   ${(props) => (props.showOptions ? null : "display: none")};
   width: ${(props) => props.width};
   height: ${(props) => props.contentHeight};
+  max-height: 160px;
 
   position: absolute;
   top: ${(props) => props.top};
@@ -52,6 +58,31 @@ const OptionWrap = styled.div`
   font-size: 15px;
   font-weight: 400;
   z-index: 9999;
+ 
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${ST_SEMI_YELLOW};
+    border-radius: 10px;
+
+    &:hover {
+      background-color: ${ST_GRAY};
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: ${ST_SEMI_GRAY};
+    border-radius: 5px;
+    box-shadow: inset 0px 0px 3x white;
+  }
+
 `;
 
 const Option = styled.div`
@@ -70,16 +101,23 @@ const Option = styled.div`
   }
 `;
 
-function SelectBox(props) {
+function SearchBox(props) {
   const { width, height, defaultOption, options, name, arrow, cursor } = props;
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultOption);
+
+  const handleChange = useCallback((e) => {
+
+    setSelectedOption(e.target.value);
+    setShowOptions(true);
+  }, []);
 
   const changeShowOptions = () => {
     setShowOptions(!showOptions);
   };
 
   const changeSelectedOptions = (option) => {
+    setShowOptions(!showOptions);
     setSelectedOption(option);
   };
 
@@ -95,6 +133,7 @@ function SelectBox(props) {
         {options.map((option) => {
           return (
             <Option
+              height={height}
               key={option}
               isSelected={option === selectedOption}
               onClick={() => changeSelectedOptions(option)}
@@ -110,23 +149,25 @@ function SelectBox(props) {
   return (
     <Wrap {...props}>
       <Select
+        type="text"
+        autoComplete="off"
+        onChange={handleChange}
+        width={width}
         height= {height}
-        onClick={changeShowOptions}
         name={name}
-        value={selectedOption}
         arrow={arrow}
         cursor={cursor}
-      >
-        <Paragraph fontSize="15px">{selectedOption}</Paragraph>
+        value={selectedOption}
+      />
         {renderOptions(options)}
-      </Select>
+    
     </Wrap>
   );
 }
 
-export default SelectBox;
+export default SearchBox;
 
-SelectBox.propTypes = {
+SearchBox.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   options: PropTypes.array,
@@ -135,9 +176,9 @@ SelectBox.propTypes = {
   cursor: PropTypes.string,
 };
 
-SelectBox.defaultProps = {
-  width: "80px",
-  height: "30px",
+SearchBox.defaultProps = {
+  width: "100%",
+  height: "100%",
   options: ["AM", "PM"],
   defaultOption: "PM",
   arrow: true,
