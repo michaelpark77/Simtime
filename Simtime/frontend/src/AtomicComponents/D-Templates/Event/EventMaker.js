@@ -8,7 +8,8 @@ import ModalTitle from "../../A-Atomics/Modal/ModalTitle";
 import ProgressBar from "../../A-Atomics/Deco/ProgressBar";
 
 import Input from "../../B-Molecules/Form/Input";
-import TagInput from "../../B-Molecules/Form/TagInput";
+import InputTag from "../../B-Molecules/Form/InputTag";
+import InputTime from "../../B-Molecules/Form/InputTime";
 import DatePicker from "../../D-Templates/Calendar/DatePicker";
 import TimePicker from "../../D-Templates/Calendar/TimePicker";
 import Map from "../../A-Atomics/Map/Map";
@@ -80,6 +81,10 @@ const MyInput = styled(Input)`
   margin-bottom: 15px;
 `;
 
+const MyInputTime = styled(InputTime)`
+  margin-bottom: 15px;
+`;
+
 const MyDateInput = styled(Input)`
   margin-bottom: 15px;
 `;
@@ -90,18 +95,6 @@ const PositionWrap = styled.div`
 `;
 
 const MyDatePicker = styled(DatePicker)`
-  ${(props) =>
-    props.isShown
-      ? `  
-      width: 100%;
-      background-color: white;
-      position: absolute;
-      top: 45px;
-      right: 0px;`
-      : "display: none;"}
-`;
-
-const MyTimePicker = styled(TimePicker)`
   ${(props) =>
     props.isShown
       ? `  
@@ -134,9 +127,7 @@ const ButtonWrap = styled.div`
   align-items: center;
 `;
 
-const StyledMap = styled(Map)`
-  border: solid 1px red;
-`;
+const StyledMap = styled(Map)``;
 
 const Button = styled(DashedButton)`
   border-radius: 6px;
@@ -145,7 +136,6 @@ const Button = styled(DashedButton)`
 function EventMaker(props) {
   const today = new Date();
   const [datePicker, setDatePicker] = useState(false);
-  const [timePicker, setTimePicker] = useState(false);
   const [page, setPage] = useState(0);
   const [event, setEvent] = useState({
     eId: null,
@@ -158,17 +148,7 @@ function EventMaker(props) {
   });
 
   const showDatePicker = () => {
-    if (timePicker) {
-      setTimePicker(!timePicker);
-    }
     setDatePicker(!datePicker);
-  };
-
-  const showTimePicker = () => {
-    if (datePicker) {
-      setDatePicker(!datePicker);
-    }
-    setTimePicker(!timePicker);
   };
 
   const nextPage = () => {
@@ -209,19 +189,13 @@ function EventMaker(props) {
             selectedDate={event.eDate}
           />
         </PositionWrap>
-        <PositionWrap>
-          <MyDateInput
-            name="eTime"
-            label="Time"
-            desc={event.eTime}
-            value={event.eTime}
-            readOnly={true}
-            cursor="pointer"
-            onClick={showTimePicker}
-          />
-        </PositionWrap>
+        <MyInputTime name="eTime" label="Time" cursor="pointer" />
         <MyInput label="Location" name="eLocation" desc="Search Location" />
-        <StyledMap width="100%" height="164px"></StyledMap>
+        <StyledMap
+          width="100%"
+          height="164px"
+          mapId="eventMakerMap"
+        ></StyledMap>
       </Fragment>
     );
   };

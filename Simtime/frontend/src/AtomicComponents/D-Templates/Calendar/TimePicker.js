@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import Week from "../../C-Organisms/Calendar/Week";
 import Paragraph from "../../A-Atomics/Font/Paragraph";
-import Image from "../../A-Atomics/Image";
 import SelectArrow from "../../A-Atomics/Filter/SelectArrow";
 import Input from "../../B-Molecules/Form/Input";
 

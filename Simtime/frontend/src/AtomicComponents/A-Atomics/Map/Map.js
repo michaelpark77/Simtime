@@ -9,7 +9,7 @@ const MapWrap = styled.div`
 `;
 
 function Map(props) {
-  const { lat, lng, hight, width } = props;
+  const { lat, lng, hight, width, mapId } = props;
 
   const [loadMap, setLoadMap] = useState(false);
   // const [mapLat, setLat] = useState(lat);
@@ -19,7 +19,7 @@ function Map(props) {
     var eventLocation = new kakao.maps.LatLng(lat, lng);
 
     kakao.maps.load(() => {
-      let container = document.getElementById("myMap");
+      let container = document.getElementById(mapId);
       let options = {
         center: eventLocation,
         level: 7,
@@ -34,7 +34,7 @@ function Map(props) {
     });
   }, []);
 
-  return <MapWrap {...props} id="myMap"></MapWrap>;
+  return <MapWrap {...props} id={mapId}></MapWrap>;
 }
 
 export default Map;
@@ -44,6 +44,7 @@ Map.propTypes = {
   width: PropTypes.string,
   lat: PropTypes.number,
   lng: PropTypes.number,
+  mapId: PropTypes.string,
 };
 
 Map.defaultProps = {
@@ -51,4 +52,5 @@ Map.defaultProps = {
   width: "100%",
   lat: 37.506502,
   lng: 127.053617,
+  mapId: "myMap",
 };

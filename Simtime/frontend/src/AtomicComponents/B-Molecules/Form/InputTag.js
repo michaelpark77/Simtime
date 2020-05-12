@@ -65,7 +65,7 @@ const MyItem = styled(SelectedItem)`
   white-space: nowrap;
 `;
 
-function TagInput(props) {
+function InputTag(props) {
   return (
     <Wrap>
       <MyInput name="Tag" desc="Tag" />
@@ -81,10 +81,10 @@ function TagInput(props) {
   );
 }
 
-export default TagInput;
+export default InputTag;
 
-TagInput.propTypes = {};
+InputTag.propTypes = {};
 
-TagInput.defaultProps = {};
+InputTag.defaultProps = {};
 
 // hasitem ? "" : "display: hidden" ;

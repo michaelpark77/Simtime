@@ -111,7 +111,7 @@ function DetailContent(props) {
           <Attendee />
         </AttendanceList>
 
-        <StyledMap width="100%" height="38%" />
+        <StyledMap width="100%" height="38%" mapId="eventDetailMap" />
         <StyledComment>
           <Paragraph>
             Whether its a driving tour, a cruise or a bus, leaf viewing is a
