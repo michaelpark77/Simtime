@@ -13,8 +13,8 @@ import InputTime from "../../B-Molecules/Form/InputTime";
 import DatePicker from "../../D-Templates/Calendar/DatePicker";
 import TimePicker from "../../D-Templates/Calendar/TimePicker";
 import SearchBar from "../../B-Molecules/Form/SearchBar";
+import SearchLocation from "../../C-Organisms/Event/Create/SearchLocation";
 import Map from "../../A-Atomics/Map/Map";
-
 
 import DashedButton from "../../A-Atomics/Button/DashedButton";
 import { getStrFullDate } from "../Calendar/Generator";
@@ -108,7 +108,7 @@ const MyDatePicker = styled(DatePicker)`
       : "display: none;"}
 `;
 
-const MySearchBar =  styled(SearchBar)`
+const MySearchBar = styled(SearchBar)`
   margin-bottom: 15px;
 `;
 
@@ -148,6 +148,7 @@ function EventMaker(props) {
     eName: "",
     eDate: getStrFullDate(today, "yyyy-mm-dd"),
     eTime: "AM 12:00",
+    ePlace: "",
     eMessage: "",
     eStatus: "CLOSED",
     eHost_id: "unknown",
@@ -197,12 +198,7 @@ function EventMaker(props) {
         </PositionWrap>
         <MyInputTime name="eTime" label="Time" cursor="pointer" />
         {/* <MyInput label="Location" name="eLocation" desc="Search Location" /> */}
-        <MySearchBar label="Place" name="ePlace" width="100%"/>
-        <StyledMap
-          width="100%"
-          height="164px"
-          mapId="eventMakerMap"
-        ></StyledMap>
+        <SearchLocation />
       </Fragment>
     );
   };

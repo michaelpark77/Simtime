@@ -3,7 +3,6 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import Paragraph from "..//Font/Paragraph";
 
-
 import {
   MAIN_COLOR,
   ST_YELLOW_LIGHT,
@@ -14,10 +13,8 @@ import {
 
 const Wrap = styled.div`
   width: ${(props) => props.width};
-  height : ${(props) => props.height};
+  height: ${(props) => props.height};
   position: relative;
-
-
 `;
 
 const Select = styled.input`
@@ -32,15 +29,16 @@ const Select = styled.input`
   font-size: 15px;
   font-weight: 400;
 
-  cursor: ${(props) => props.cursor };
+  cursor: ${(props) => props.cursor};
 
-  ${(props) => props.arrow ? `  
+  ${(props) =>
+    props.arrow
+      ? `  
   background-size: 15px;
   background-repeat: no-repeat;
   background-image: url("static/img/icons/arrow-down2.png");
   background-position: 88% center;`
-  : null };
-
+      : null};
 `;
 
 const OptionWrap = styled.div`
@@ -58,11 +56,9 @@ const OptionWrap = styled.div`
   font-size: 15px;
   font-weight: 400;
   z-index: 9999;
- 
 
   overflow-x: hidden;
   overflow-y: auto;
-
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -82,11 +78,9 @@ const OptionWrap = styled.div`
     border-radius: 5px;
     box-shadow: inset 0px 0px 3x white;
   }
-
 `;
 
 const Option = styled.div`
-
   width: 100%;
   height: ${(props) => props.height};
   line-height: ${(props) => props.height};
@@ -102,14 +96,21 @@ const Option = styled.div`
 `;
 
 function SearchBox(props) {
-  const { width, height, defaultOption, options, name, arrow, cursor } = props;
+  const {
+    width,
+    height,
+    defaultOption,
+    options,
+    name,
+    arrow,
+    cursor,
+    search,
+  } = props;
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultOption);
 
   const handleChange = useCallback((e) => {
-
     setSelectedOption(e.target.value);
-    setShowOptions(true);
   }, []);
 
   const changeShowOptions = () => {
@@ -126,7 +127,11 @@ function SearchBox(props) {
       <OptionWrap
         width={width}
         top={height}
-        contentHeight={(parseInt(height.replace(/[^0-9]/g, "")).toFixed(0) * options.length + 2) + "px"}
+        contentHeight={
+          parseInt(height.replace(/[^0-9]/g, "")).toFixed(0) * options.length +
+          2 +
+          "px"
+        }
         showOptions={showOptions}
         onBlur={changeShowOptions}
       >
@@ -153,14 +158,13 @@ function SearchBox(props) {
         autoComplete="off"
         onChange={handleChange}
         width={width}
-        height= {height}
+        height={height}
         name={name}
         arrow={arrow}
         cursor={cursor}
         value={selectedOption}
       />
-        {renderOptions(options)}
-    
+      {renderOptions(options)}
     </Wrap>
   );
 }
@@ -182,5 +186,5 @@ SearchBox.defaultProps = {
   options: ["AM", "PM"],
   defaultOption: "PM",
   arrow: true,
-  cursor: "pointer"
+  cursor: "pointer",
 };
