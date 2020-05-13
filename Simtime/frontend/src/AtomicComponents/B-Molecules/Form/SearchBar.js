@@ -28,7 +28,7 @@ const MyOptions = styled(SearchBox)`
 
 function SearchBar(props) {
   const test = ["dddwers", "ddwerd", "dddasf"];
-  const { options, name, label, width, height, search } = props;
+  const { options, name, label, width, height, search,locationRef } = props;
 
   return (
     <Wrap {...props}>

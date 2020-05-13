@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Paragraph from "..//Font/Paragraph";
@@ -96,6 +96,7 @@ const Option = styled.div`
 `;
 
 function SearchBox(props) {
+
   const {
     width,
     height,
@@ -105,14 +106,22 @@ function SearchBox(props) {
     arrow,
     cursor,
     search,
+    refName
   } = props;
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultOption);
 
-  const handleChange = useCallback((e) => {
+  const handleChange = (e) => {
     setSelectedOption(e.target.value);
-  }, []);
+    setShowOptions(true);
+  };
 
+  const handleKeyPress = (e) => {
+    if(e.key=='Enter'){
+    console.log(e.target.value);
+    search();
+  }
+  };
   const changeShowOptions = () => {
     setShowOptions(!showOptions);
   };
@@ -154,9 +163,11 @@ function SearchBox(props) {
   return (
     <Wrap {...props}>
       <Select
+        ref={refName}
         type="text"
         autoComplete="off"
         onChange={handleChange}
+        onKeyPress={handleKeyPress}
         width={width}
         height={height}
         name={name}
