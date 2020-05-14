@@ -1,19 +1,17 @@
 /*global kakao*/
-import React, { useState, useCallback, Fragment } from "react";
+import React, { useState, useCallback, Fragment, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { searchPlaces } from "../../../../actions/mapApi";
+import SearchBar from "../../../B-Molecules/Form/SearchBar";
+import Map from "../../../A-Atomics/Map/Map";
+import ContextStore from "../../../../contexts/contextStore";
 import {
   MAIN_COLOR,
   ST_GTAY,
   ST_SEMI_YELLOW,
   ST_YELLOW_LIGHT,
 } from "../../../Colors";
-
-import SearchBar from "../../../B-Molecules/Form/SearchBar";
-import Map from "../../../A-Atomics/Map/Map";
-import { searchPlaces } from "../../../../actions/mapApi";
-
-import ContextStore from "../../../../contexts/contextStore";
 
 const Wrap = styled.div`
   width: 100%;
@@ -24,15 +22,13 @@ const MySearchBar = styled(SearchBar)`
 
 const StyledMap = styled(Map)``;
 
+
 function SearchLocation(props) {
-  const [location, setLocation] = useState({
-    lat: 37.488376,
-    lng: 126.752351,
-    name: "현위치",
-  });
+  const [myLocation, setMyLocation] = useState(props.location);
 
   return (
     <Wrap {...props}>
+      {myLocation.lat}
       <MySearchBar
         label="Place"
         name="ePlace"
@@ -43,9 +39,9 @@ function SearchLocation(props) {
         width="100%"
         height="164px"
         mapId="eventMakerMap"
-        name={location.name}
-        lng={location.lng}
-        lat={location.lat}
+        name={myLocation.name}
+        lng={myLocation.lng}
+        lat={myLocation.lat}
       ></StyledMap>
     </Wrap>
   );
@@ -61,4 +57,5 @@ SearchLocation.propTypes = {
 SearchLocation.defaultProps = {
   width: "100%",
   height: "40px",
+  location: {lat: 37.488376,lng: 126.752351, name: "현위치"}
 };
