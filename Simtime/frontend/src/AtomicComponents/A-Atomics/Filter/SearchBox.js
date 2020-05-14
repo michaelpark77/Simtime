@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useRef } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import Paragraph from "..//Font/Paragraph";
+import Paragraph from "../Font/Paragraph";
 
 import {
   MAIN_COLOR,
@@ -93,10 +94,13 @@ const Option = styled.div`
   &:hover {
     background-color: ${ST_YELLOW_LIGHT};
   }
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 function SearchBox(props) {
-
   const {
     width,
     height,
@@ -106,22 +110,50 @@ function SearchBox(props) {
     arrow,
     cursor,
     search,
-    refName
+    refName,
   } = props;
-  const [showOptions, setShowOptions] = useState(false);
+
+  const [optionDatas, setOptionDatas] = useState(options);
+  const [showOptions, setShowOptions] = useState(true);
   const [selectedOption, setSelectedOption] = useState(defaultOption);
+  const [currOption, setCurrOption] = useState(defaultOption);
+
+  const startSearch = (keyword) => {
+    return new Promise(function (resolve, reject) {
+      resolve(search(keyword));
+    });
+  };
+
+  // const handleKeyPress = (e) => {
+  //   if (e.key == "Enter") {
+  //     startSearch(e.target.value)
+  //       .then((resolvedData) => {
+  //         setOptionDatas(resolvedData.items);
+  //       })
+  //       .then(() => {
+  //         console.log("then", optionDatas);
+  //         setShowOptions(true);
+  //       });
+  //   }
+  // };
 
   const handleChange = (e) => {
-    setSelectedOption(e.target.value);
-    setShowOptions(true);
+    var val = e.target.value;
+    setCurrOption(val);
+
+    if (val.length > 0) {
+      startSearch(val)
+        .then((resolvedData) => {
+          setOptionDatas(resolvedData.items);
+        })
+        .then(() => {
+          setShowOptions(true);
+        });
+    } else {
+      setShowOptions(false);
+    }
   };
 
-  const handleKeyPress = (e) => {
-    if(e.key=='Enter'){
-    console.log(e.target.value);
-    search();
-  }
-  };
   const changeShowOptions = () => {
     setShowOptions(!showOptions);
   };
@@ -144,15 +176,15 @@ function SearchBox(props) {
         showOptions={showOptions}
         onBlur={changeShowOptions}
       >
-        {options.map((option) => {
+        {optionDatas.map((option) => {
           return (
             <Option
               height={height}
-              key={option}
-              isSelected={option === selectedOption}
+              key={option.id + option.name}
+              isSelected={option.id === selectedOption}
               onClick={() => changeSelectedOptions(option)}
             >
-              {option}
+              <Paragraph>{option.name}</Paragraph>
             </Option>
           );
         })}
@@ -167,15 +199,16 @@ function SearchBox(props) {
         type="text"
         autoComplete="off"
         onChange={handleChange}
-        onKeyPress={handleKeyPress}
+        // onFocus={handleChange}
+        // onKeyPress={handleKeyPress}
         width={width}
         height={height}
         name={name}
         arrow={arrow}
         cursor={cursor}
-        value={selectedOption}
+        value={currOption.name}
       />
-      {renderOptions(options)}
+      {renderOptions(optionDatas)}
     </Wrap>
   );
 }
@@ -186,7 +219,7 @@ SearchBox.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   options: PropTypes.array,
-  defaultOption: PropTypes.string,
+  defaultOption: PropTypes.object,
   arrow: PropTypes.bool,
   cursor: PropTypes.string,
 };
@@ -194,8 +227,8 @@ SearchBox.propTypes = {
 SearchBox.defaultProps = {
   width: "100%",
   height: "100%",
-  options: ["AM", "PM"],
-  defaultOption: "PM",
-  arrow: true,
+  options: [{ id: 0, name: "" }],
+  defaultOption: null,
+  arrow: false,
   cursor: "pointer",
 };

@@ -27,8 +27,7 @@ const MyOptions = styled(SearchBox)`
 `;
 
 function SearchBar(props) {
-  const test = ["dddwers", "ddwerd", "dddasf"];
-  const { options, name, label, width, height, search,locationRef } = props;
+  const { options, name, label, width, height, search } = props;
 
   return (
     <Wrap {...props}>
@@ -38,12 +37,12 @@ function SearchBar(props) {
         children={
           <MyOptions
             name={name}
-            options={test}
+            options={options}
             width={"100%"}
             height={height}
             arrow={false}
             cursor={"default"}
-            defaultOption={""}
+            defaultOption={{ id: 0, name: "" }}
             search={search}
           />
         }
@@ -58,9 +57,11 @@ SearchBar.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   name: PropTypes.string,
+  options: PropTypes.array,
 };
 SearchBar.defaultProps = {
   width: "100%",
   height: "40px",
   name: null,
+  options: [],
 };

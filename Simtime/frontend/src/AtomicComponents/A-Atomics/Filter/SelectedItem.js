@@ -22,6 +22,11 @@ const ContentWrap = styled.div`
 
 const Content = styled(Paragraph)`
   margin-right: 6px;
+
+  min-width: 34px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 const DeleteIcon = styled(Image)``;
@@ -29,7 +34,7 @@ const DeleteIcon = styled(Image)``;
 function SelectedItem(props) {
   return (
     <ContentWrap {...props}>
-      <Content fontSize="12px" color="MAIN_COLOR">
+      <Content {...props} fontSize="12px" color="MAIN_COLOR">
         {props.children}
       </Content>
       <DeleteIcon src="static/img/icons/close.png" width="8px" height="8px" />
