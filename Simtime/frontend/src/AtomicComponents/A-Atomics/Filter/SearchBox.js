@@ -19,7 +19,12 @@ const Wrap = styled.div`
 `;
 
 const Select = styled.input`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
   padding-left: 4px;
+  padding-right: 30px;
   border: solid 1px ${ST_SEMI_YELLOW};
   border-radius: 6px;
 
@@ -33,21 +38,30 @@ const Select = styled.input`
   cursor: ${(props) => props.cursor};
 
   ${(props) =>
-    props.arrow
+    props.isValid
       ? `  
-  background-size: 15px;
+  background-size: 18px;
   background-repeat: no-repeat;
-  background-image: url("static/img/icons/arrow-down2.png");
-  background-position: 88% center;`
+  background-image: url("static/img/icons/check-valid.png");
+  background-position: 94% center;`
       : null};
 `;
+
+//////////// css로 구현////////
+//  display: none;
+// ${Select}:focus ~ & {
+//   display: block;
+// }
 
 const OptionWrap = styled.div`
   padding: 1px 1px 1px 1px;
   background-color: white;
+
   ${(props) => (props.showOptions ? null : "display: none")};
+
   width: ${(props) => props.width};
   height: ${(props) => props.contentHeight};
+  min-height: ${(props) => props.minHeight};
   max-height: 160px;
 
   position: absolute;
@@ -84,21 +98,45 @@ const OptionWrap = styled.div`
 const Option = styled.div`
   width: 100%;
   height: ${(props) => props.height};
-  line-height: ${(props) => props.height};
-  font-size: 15px;
-  font-weight: 400;
 
   padding-left: 4px;
   padding-right: 4px;
 
-  &:hover {
+  ${(props) =>
+    props.isActive
+      ? ` &:hover {
     background-color: ${ST_YELLOW_LIGHT};
-  }
+    cursor: pointer;
+  }`
+      : "cursor: default;"};
+`;
+
+const OptionName = styled.div`
+  width: 100%;
+  height: ${(props) => props.height};
+
+  font-size: 15px;
+  font-weight: 400;
 
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 `;
+
+const OptionDesc = styled.div`
+  width: 100%;
+  height: 45%;
+  font-size: 10px;
+
+  padding-left: 2px;
+  padding-right: 2px;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+`;
+
+const MyParagraph = styled(Paragraph)``;
 
 function SearchBox(props) {
   const {
@@ -110,13 +148,15 @@ function SearchBox(props) {
     arrow,
     cursor,
     search,
+    doAfterSelect,
     refName,
   } = props;
 
   const [optionDatas, setOptionDatas] = useState(options);
-  const [showOptions, setShowOptions] = useState(true);
+  const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultOption);
-  const [currOption, setCurrOption] = useState(defaultOption);
+  const [currInput, setCurrInput] = useState("");
+  const [isValid, setIsValid] = useState(false);
 
   const startSearch = (keyword) => {
     return new Promise(function (resolve, reject) {
@@ -124,22 +164,19 @@ function SearchBox(props) {
     });
   };
 
-  // const handleKeyPress = (e) => {
-  //   if (e.key == "Enter") {
-  //     startSearch(e.target.value)
-  //       .then((resolvedData) => {
-  //         setOptionDatas(resolvedData.items);
-  //       })
-  //       .then(() => {
-  //         console.log("then", optionDatas);
-  //         setShowOptions(true);
-  //       });
-  //   }
-  // };
+  const handleKeyPress = (e) => {
+    if (e.key == "Enter") {
+      startSearch(e.target.value).then((resolvedData) => {
+        setOptionDatas(resolvedData.items);
+      });
+    }
+  };
 
   const handleChange = (e) => {
     var val = e.target.value;
-    setCurrOption(val);
+    // setMyValue(e.target.value);
+    setCurrInput(e.target.value);
+    setIsValid(false);
 
     if (val.length > 0) {
       startSearch(val)
@@ -159,35 +196,56 @@ function SearchBox(props) {
   };
 
   const changeSelectedOptions = (option) => {
-    setShowOptions(!showOptions);
     setSelectedOption(option);
+    setShowOptions(false);
+    setCurrInput(option.name);
+    setIsValid(true);
+    console.log(option);
   };
 
   const renderOptions = (options) => {
+    var contentHeight =
+      parseInt(height.replace(/[^0-9]/g, "")).toFixed(0) *
+        (options.length || 1) +
+      2;
     return (
       <OptionWrap
         width={width}
         top={height}
-        contentHeight={
-          parseInt(height.replace(/[^0-9]/g, "")).toFixed(0) * options.length +
-          2 +
-          "px"
-        }
         showOptions={showOptions}
-        onBlur={changeShowOptions}
+        minHeight={height}
+        contentHeight={contentHeight + "px"}
       >
-        {optionDatas.map((option) => {
-          return (
-            <Option
-              height={height}
-              key={option.id + option.name}
-              isSelected={option.id === selectedOption}
-              onClick={() => changeSelectedOptions(option)}
-            >
-              <Paragraph>{option.name}</Paragraph>
-            </Option>
-          );
-        })}
+        {options.length ? (
+          optionDatas.map((option) => {
+            return (
+              <Option
+                key={option.id + option.name}
+                height={height}
+                isActive={true}
+                isSelected={option.id === selectedOption}
+                onClick={() => changeSelectedOptions(option)}
+              >
+                <OptionName height={option.desc ? "55%" : "100%"}>
+                  <MyParagraph>{option.name}</MyParagraph>
+                </OptionName>
+                {option.desc ? (
+                  <OptionDesc>
+                    <MyParagraph fontSize="12px" color="ST_GRAY">
+                      {option.desc}
+                    </MyParagraph>
+                  </OptionDesc>
+                ) : null}
+              </Option>
+            );
+          })
+        ) : (
+          <Option height={height} isActive={false}>
+            <OptionName height="100%">
+              <MyParagraph>해당하는 결과가 없습니다.</MyParagraph>
+            </OptionName>
+          </Option>
+        )}
       </OptionWrap>
     );
   };
@@ -199,15 +257,17 @@ function SearchBox(props) {
         type="text"
         autoComplete="off"
         onChange={handleChange}
-        // onFocus={handleChange}
-        // onKeyPress={handleKeyPress}
+        onKeyPress={handleKeyPress}
+        onClick={changeShowOptions}
         width={width}
         height={height}
         name={name}
         arrow={arrow}
         cursor={cursor}
-        value={currOption.name}
+        value={currInput}
+        isValid={isValid}
       />
+      {console.log(showOptions)}
       {renderOptions(optionDatas)}
     </Wrap>
   );
@@ -227,7 +287,7 @@ SearchBox.propTypes = {
 SearchBox.defaultProps = {
   width: "100%",
   height: "100%",
-  options: [{ id: 0, name: "" }],
+  options: [{ id: 0, name: "", desc: "" }],
   defaultOption: null,
   arrow: false,
   cursor: "pointer",

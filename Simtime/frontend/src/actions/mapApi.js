@@ -20,7 +20,7 @@ export const searchPlaces = (
   //   radius = "",
   //   rect = "",
   page = 1,
-  size = 15,
+  size = 10,
   sort = "accuracy"
 ) => {
   const params = {
@@ -76,6 +76,7 @@ export const searchPlaces = (
                     return {
                       id: id,
                       name: place_name,
+                      desc: road_address_name,
                       place_id: id,
                       place_url,
                       lan: x,
@@ -86,7 +87,6 @@ export const searchPlaces = (
                 )
               : [],
         };
-        console.log(result);
         return result;
       } else {
         throw new Error(`${status}:${statusText}`);

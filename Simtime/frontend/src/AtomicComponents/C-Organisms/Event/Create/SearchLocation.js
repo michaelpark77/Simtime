@@ -25,11 +25,23 @@ const MySearchBar = styled(SearchBar)`
 const StyledMap = styled(Map)``;
 
 function SearchLocation(props) {
+  const { width, height, mapId } = props;
+
   const [location, setLocation] = useState({
     lat: 37.488376,
     lng: 126.752351,
     name: "현위치",
   });
+
+  function saveLocation(location) {
+    console.log("saveLocation : ", location);
+    var map = document.getElementById(props.mapId);
+    var eventLocation = new kakao.maps.LatLng(location.lat, location.lng);
+    var marker = new kakao.maps.Marker({
+      position: eventLocation,
+    });
+    marker.setMap(map);
+  }
 
   return (
     <Wrap {...props}>
@@ -38,11 +50,12 @@ function SearchLocation(props) {
         name="ePlace"
         width="100%"
         search={searchPlaces}
+        doAfterSelect={saveLocation}
       />
       <StyledMap
         width="100%"
         height="164px"
-        mapId="eventMakerMap"
+        mapId={props.mapId}
         name={location.name}
         lng={location.lng}
         lat={location.lat}
@@ -56,9 +69,11 @@ export default SearchLocation;
 SearchLocation.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
+  mapId: PropTypes.string,
 };
 
 SearchLocation.defaultProps = {
   width: "100%",
   height: "40px",
+  mapId: "eventMakerMap",
 };

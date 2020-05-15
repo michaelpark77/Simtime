@@ -1,5 +1,5 @@
 /*global kakao*/
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -34,6 +34,7 @@ function Map(props) {
     });
   }, []);
 
+  //forwardRef
   return <MapWrap {...props} id={mapId}></MapWrap>;
 }
 

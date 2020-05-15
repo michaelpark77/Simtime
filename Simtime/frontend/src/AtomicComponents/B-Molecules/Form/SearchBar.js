@@ -27,7 +27,7 @@ const MyOptions = styled(SearchBox)`
 `;
 
 function SearchBar(props) {
-  const { options, name, label, width, height, search } = props;
+  const { options, name, label, width, height, search, doAfterSelect } = props;
 
   return (
     <Wrap {...props}>
@@ -44,6 +44,7 @@ function SearchBar(props) {
             cursor={"default"}
             defaultOption={{ id: 0, name: "" }}
             search={search}
+            doAfterSelect={doAfterSelect}
           />
         }
       ></Input>
