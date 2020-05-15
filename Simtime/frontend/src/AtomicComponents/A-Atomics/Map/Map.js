@@ -8,14 +8,15 @@ const MapWrap = styled.div`
   height: ${(props) => (props.height ? props.height : "150px")};
 `;
 
-
 function Map(props) {
-  const { location, name, hight, width, mapId } = props;
+  const { lat, lng, name, hight, width, mapId } = props;
+
   const [loadMap, setLoadMap] = useState(false);
+  // const [mapLat, setLat] = useState(lat);
+  // const [mapLng, setLng] = useState(lng);
 
   useEffect(() => {
-    console.log(location)
-    var eventLocation = new kakao.maps.LatLng(location.lat, location.lng);
+    var eventLocation = new kakao.maps.LatLng(lat, lng);
 
     kakao.maps.load(() => {
       let container = document.getElementById(mapId);
@@ -31,8 +32,7 @@ function Map(props) {
 
       marker.setMap(map);
     });
-
-  });
+  }, []);
 
   //forwardRef
   return <MapWrap {...props} id={mapId}></MapWrap>;
@@ -43,13 +43,15 @@ export default Map;
 Map.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
-  location: PropTypes.object,
+  lat: PropTypes.number,
+  lng: PropTypes.number,
   mapId: PropTypes.string,
 };
 
 Map.defaultProps = {
   height: "50%",
   width: "100%",
-  location:{ lat: 37.488376, lng: 126.752351, name: "현위치"},
+  lat: 37.506502,
+  lng: 127.053617,
   mapId: "myMap",
 };
