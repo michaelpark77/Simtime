@@ -1,19 +1,17 @@
 /*global kakao*/
-import React, { useState, useCallback, Fragment } from "react";
+import React, { useState, useCallback, Fragment, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { searchPlaces } from "../../../../actions/mapApi";
+import SearchBar from "../../../B-Molecules/Form/SearchBar";
+import Map from "../../../A-Atomics/Map/Map";
+import ContextStore from "../../../../contexts/contextStore";
 import {
   MAIN_COLOR,
   ST_GTAY,
   ST_SEMI_YELLOW,
   ST_YELLOW_LIGHT,
 } from "../../../Colors";
-
-import SearchBar from "../../../B-Molecules/Form/SearchBar";
-import Map from "../../../A-Atomics/Map/Map";
-import { searchPlaces } from "../../../../actions/mapApi";
-
-import ContextStore from "../../../../contexts/contextStore";
 
 const Wrap = styled.div`
   width: 100%;
@@ -45,6 +43,7 @@ function SearchLocation(props) {
 
   return (
     <Wrap {...props}>
+      {myLocation.lat}
       <MySearchBar
         label="Place"
         name="ePlace"
