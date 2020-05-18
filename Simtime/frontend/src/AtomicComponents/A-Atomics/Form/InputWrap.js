@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, Fragment } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import Paragraph from "../../A-Atomics/Font/Paragraph";
+import Paragraph from "../Font/Paragraph";
 import { MAIN_COLOR, ST_GRAY, ST_SEMI_YELLOW } from "../../Colors";
 
 const Wrap = styled.div`
@@ -37,21 +37,26 @@ const MyInput = styled.input`
   ${(props) => (props.cursor ? `cursor: ${props.cursor}` : null)}
 `;
 
-function Input(props) {
-  const { width, height, label, name, desc, value, readOnly, cursor } = props;
+function InputWrap(props) {
+  const {
+    children,
+    width,
+    height,
+    label,
+    name,
+    desc,
+    value,
+    readOnly,
+    cursor,
+  } = props;
   const [myValue, setMyValue] = useState(value);
 
   const handleChange = useCallback((e) => {
     setMyValue(e.target.value);
   }, []);
 
-  return (
-    <Wrap {...props}>
-      {label && (
-        <MyParagraph fontSize="18px" color="MAIN_COLOR">
-          {label}
-        </MyParagraph>
-      )}
+  const defaultInput = () => {
+    return (
       <MyInput
         name={name}
         placeholder={desc}
@@ -60,13 +65,24 @@ function Input(props) {
         onChange={handleChange}
         cursor={cursor}
       ></MyInput>
+    );
+  };
+
+  return (
+    <Wrap {...props}>
+      {label && (
+        <MyParagraph fontSize="18px" color="MAIN_COLOR">
+          {label}
+        </MyParagraph>
+      )}
+      {children ? children : defaultInput()}
     </Wrap>
   );
 }
 
-export default Input;
+export default InputWrap;
 
-Input.propTypes = {
+InputWrap.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   label: PropTypes.string,
@@ -77,7 +93,7 @@ Input.propTypes = {
   cursor: PropTypes.string,
 };
 
-Input.defaultProps = {
+InputWrap.defaultProps = {
   width: "100%",
   height: "40px",
   label: null,

@@ -8,7 +8,7 @@ import {
   ST_YELLOW_LIGHT,
 } from "../../Colors";
 
-import Input from "../../A-Atomics/Form/Input";
+import InputWrap from "../../A-Atomics/Form/InputWrap";
 import SearchBox from "../../A-Atomics/Filter/SearchBox";
 
 const Wrap = styled.div`
@@ -23,8 +23,10 @@ const Wrap = styled.div`
 `;
 
 const MyOptions = styled(SearchBox)`
-  width: ${(props) => (props.name ? "72%" : "100%")};
+  width: ${(props) => (props.name ? "80%" : "100%")};
 `;
+
+const Input = styled(InputWrap)``;
 
 function SearchBar(props) {
   const { options, name, label, width, height, search, doAfterSelect } = props;

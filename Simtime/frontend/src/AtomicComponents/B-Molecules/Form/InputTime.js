@@ -21,7 +21,7 @@ const MyParagraph = styled(Paragraph)`
 `;
 
 const InnerWrap = styled.div`
-  width: ${(props) => (props.name ? "72%" : "100%")};
+  width: ${(props) => (props.name ? "80%" : "100%")};
   height: 100%;
   display: flex;
 
@@ -59,20 +59,21 @@ function InputTime(props) {
 
   const handleChange = (e) => {
     e.preventDefault();
-    var myValue= parseInt(e.target.value.replace(/[^0-9]/g, '').substr(e.target.value.length - 2, 2));
-    var newValue = parseInt(e.target.value.substr(e.target.value.length - 1 , 1));
+    var myValue = parseInt(
+      e.target.value.replace(/[^0-9]/g, "").substr(e.target.value.length - 2, 2)
+    );
+    var newValue = parseInt(
+      e.target.value.substr(e.target.value.length - 1, 1)
+    );
 
-    if(e.target.name == "hour") {
-      if(myValue <= 24 && myValue >= 0) setHour(myValue)
-      else setHour(newValue)
-    }
-    else{
-      if(myValue <= 59 && myValue >= 0) setMin(myValue)
-      else setMin(newValue)
+    if (e.target.name == "hour") {
+      if (myValue <= 24 && myValue >= 0) setHour(myValue);
+      else setHour(newValue);
+    } else {
+      if (myValue <= 59 && myValue >= 0) setMin(myValue);
+      else setMin(newValue);
     }
   };
-
-
 
   return (
     <Wrap {...props}>
@@ -82,11 +83,25 @@ function InputTime(props) {
         </MyParagraph>
       )}
       <InnerWrap name={name}>
-      <MyInput placeholder="" name="hour" onChange={handleChange} value={("00" + hour).substr(("00" + hour).length - 2 , 2)}></MyInput>:
-      <MyInput placeholder="" name="min" onChange={handleChange} value={("00" + min).substr(("00" + min).length - 2 , 2)}></MyInput>
-      <MySelectBox width="60px" height="40px" options={["AM", "PM"]}></MySelectBox>
+        <MyInput
+          placeholder=""
+          name="hour"
+          onChange={handleChange}
+          value={("00" + hour).substr(("00" + hour).length - 2, 2)}
+        ></MyInput>
+        :
+        <MyInput
+          placeholder=""
+          name="min"
+          onChange={handleChange}
+          value={("00" + min).substr(("00" + min).length - 2, 2)}
+        ></MyInput>
+        <MySelectBox
+          width="60px"
+          height="40px"
+          options={["AM", "PM"]}
+        ></MySelectBox>
       </InnerWrap>
-      
     </Wrap>
   );
 }

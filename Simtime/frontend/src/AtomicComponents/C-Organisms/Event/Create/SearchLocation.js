@@ -31,19 +31,16 @@ function SearchLocation(props) {
     name: "현위치",
   });
 
-  function saveLocation(location) {
-    console.log("saveLocation : ", location);
-    var map = document.getElementById(props.mapId);
-    var eventLocation = new kakao.maps.LatLng(location.lat, location.lng);
-    var marker = new kakao.maps.Marker({
-      position: eventLocation,
+  const saveLocation = (option) => {
+    setLocation({
+      lat: parseFloat(option.lat),
+      lng: parseFloat(option.lan),
+      name: option.name,
     });
-    marker.setMap(map);
-  }
+  };
 
   return (
     <Wrap {...props}>
-      {myLocation.lat}
       <MySearchBar
         label="Place"
         name="ePlace"
@@ -58,6 +55,7 @@ function SearchLocation(props) {
         name={location.name}
         lng={location.lng}
         lat={location.lat}
+        location={location}
       ></StyledMap>
     </Wrap>
   );

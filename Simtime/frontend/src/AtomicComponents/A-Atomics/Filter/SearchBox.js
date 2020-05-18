@@ -200,6 +200,7 @@ function SearchBox(props) {
     setShowOptions(false);
     setCurrInput(option.name);
     setIsValid(true);
+    doAfterSelect(option);
     console.log(option);
   };
 
@@ -267,7 +268,6 @@ function SearchBox(props) {
         value={currInput}
         isValid={isValid}
       />
-      {console.log(showOptions)}
       {renderOptions(optionDatas)}
     </Wrap>
   );

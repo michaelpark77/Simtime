@@ -17,14 +17,14 @@ const Wrap = styled.div`
 
 const MyParagraph = styled(Paragraph)``;
 
-const MyInput = styled.input`
+const MyTextArea = styled.textarea`
   ::placeholder {
     color: ${ST_GRAY};
     font-size: 15px;
     font-weight: 300;
   }
 
-  width: ${(props) => (props.name ? "80%" : "100%")};
+  width: ${(props) => (props.name ? "72%" : "100%")};
   height: 100%;
   border: solid 1px ${ST_SEMI_YELLOW};
   border-radius: 6px;
@@ -52,14 +52,14 @@ function Input(props) {
           {label}
         </MyParagraph>
       )}
-      <MyInput
+      <MyTextArea
         name={name}
         placeholder={desc}
         readOnly={readOnly}
         value={readOnly ? value : myValue}
         onChange={handleChange}
         cursor={cursor}
-      ></MyInput>
+      ></MyTextArea>
     </Wrap>
   );
 }

@@ -22,7 +22,7 @@ const Wrap = styled.div`
 
 const MyInput = styled(Input)``;
 
-const MyTags = styled.div`
+const MyTagsWrap = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -30,7 +30,7 @@ const MyTags = styled.div`
   overflow-y: hidden;
 
   height: 30px;
-  margin-top: 5px;
+  margin-top: 10px;
   margin-bottom: 5px;
 
   &::-webkit-scrollbar {
@@ -66,17 +66,18 @@ const MyItem = styled(SelectedItem)`
 `;
 
 function InputTag(props) {
+  const { name, label, desc } = props;
   return (
     <Wrap>
-      <MyInput name="Tag" desc="Tag" />
-      <MyTags>
+      <MyInput label={label} name={name} desc={TextDecoderStream} />
+      <MyTagsWrap>
         <MyItem>#한강1</MyItem>
         <MyItem>#한강2</MyItem>
         <MyItem>#한강3</MyItem>
         <MyItem>#테스트</MyItem>
         <MyItem>#공파리</MyItem>
         <MyItem>#치맥</MyItem>
-      </MyTags>
+      </MyTagsWrap>
     </Wrap>
   );
 }

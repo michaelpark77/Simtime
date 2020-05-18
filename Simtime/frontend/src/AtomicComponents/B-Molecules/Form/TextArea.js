@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Fragment } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -7,25 +7,26 @@ import { MAIN_COLOR, ST_GRAY, ST_SEMI_YELLOW } from "../../Colors";
 
 const Wrap = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 
-  height: ${(props) => props.height};
-  width: ${(props) => props.width};
+  height: auto;
+  width: 100%;
 `;
 
 const MyParagraph = styled(Paragraph)``;
 
-const MyInput = styled.input`
+const MyTextArea = styled.textarea`
   ::placeholder {
     color: ${ST_GRAY};
     font-size: 15px;
     font-weight: 300;
   }
+  resize: none;
 
-  width: ${(props) => (props.name ? "72%" : "100%")};
-  height: 100%;
+  width: 100%;
+  height: ${(props) => props.height};
   border: solid 1px ${ST_SEMI_YELLOW};
   border-radius: 6px;
   padding-left: 5px;
@@ -37,9 +38,8 @@ const MyInput = styled.input`
   ${(props) => (props.cursor ? `cursor: ${props.cursor}` : null)}
 `;
 
-function Input(props) {
+function TextArea(props) {
   const {
-    children,
     width,
     height,
     label,
@@ -48,25 +48,13 @@ function Input(props) {
     value,
     readOnly,
     cursor,
+    maxlength,
   } = props;
   const [myValue, setMyValue] = useState(value);
 
   const handleChange = useCallback((e) => {
     setMyValue(e.target.value);
   }, []);
-
-  const defaultInput = () => {
-    return (
-      <MyInput
-        name={name}
-        placeholder={desc}
-        readOnly={readOnly}
-        value={readOnly ? value : myValue}
-        onChange={handleChange}
-        cursor={cursor}
-      ></MyInput>
-    );
-  };
 
   return (
     <Wrap {...props}>
@@ -75,14 +63,23 @@ function Input(props) {
           {label}
         </MyParagraph>
       )}
-      {children ? children : defaultInput()}
+      <MyTextArea
+        name={name}
+        placeholder={desc}
+        readOnly={readOnly}
+        value={readOnly ? value : myValue}
+        onChange={handleChange}
+        cursor={cursor}
+        maxlength={maxlength}
+        height={height}
+      ></MyTextArea>
     </Wrap>
   );
 }
 
-export default Input;
+export default TextArea;
 
-Input.propTypes = {
+TextArea.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   label: PropTypes.string,
@@ -91,15 +88,17 @@ Input.propTypes = {
   value: PropTypes.string,
   readOnly: PropTypes.bool,
   cursor: PropTypes.string,
+  maxlength: PropTypes.number,
 };
 
-Input.defaultProps = {
+TextArea.defaultProps = {
   width: "100%",
-  height: "40px",
+  height: "140px",
   label: null,
   name: null,
-  desc: null,
+  desc: "1000자 이내",
   value: "",
   readOnly: false,
   cursor: null,
+  maxlength: 1000,
 };

@@ -6,8 +6,10 @@ import { MAIN_COLOR, ST_GTAY } from "../../Colors";
 
 import ModalTitle from "../../A-Atomics/Modal/ModalTitle";
 import ProgressBar from "../../A-Atomics/Deco/ProgressBar";
-
+import InputWrap from "../../A-Atomics/Form/InputWrap";
 import Input from "../../B-Molecules/Form/Input";
+import TextArea from "../../B-Molecules/Form/TextArea";
+
 import InputTag from "../../B-Molecules/Form/InputTag";
 import InputTime from "../../B-Molecules/Form/InputTime";
 import DatePicker from "../../D-Templates/Calendar/DatePicker";
@@ -83,6 +85,9 @@ const MyInput = styled(Input)`
   margin-bottom: 15px;
 `;
 
+const MyTextArea = styled(TextArea)`
+  margin-bottom: 15px;
+`;
 const MyInputTime = styled(InputTime)`
   margin-bottom: 15px;
 `;
@@ -206,7 +211,14 @@ function EventMaker(props) {
   const secondPage = () => {
     return (
       <Fragment>
-        <MyInput label="Message" name="eMessage" desc="Message" />
+        <MyTextArea
+          label="Message"
+          name="eMessage"
+          desc="1000자 이내"
+          height="200px"
+          maxLength={1000}
+        />
+        <InputTag label="Tag" name="eTag"></InputTag>
       </Fragment>
     );
   };
