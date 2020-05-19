@@ -74,11 +74,23 @@ const ContentWrap = styled.div`
 const FormWrap = styled.form`
   width: 100%;
   height: 85%;
-
+  border: solid 1px blue;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
+`;
+
+const PageWrap = styled.div`
+  border: solid 1px red;
+  width: 100%;
+  ${(props) =>
+    props.isActivePage
+      ? `display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;`
+      : `display:none;`}
 `;
 
 const MyInput = styled(Input)`
@@ -163,16 +175,6 @@ function EventMaker(props) {
     setDatePicker(!datePicker);
   };
 
-  const nextPage = () => {
-    setPage(page + 1);
-    console.log(page);
-  };
-
-  const prevPage = () => {
-    setPage(page - 1);
-    console.log(page);
-  };
-
   const selectDate = useCallback((strDate) => {
     setEvent({ eDate: strDate });
   }, []);
@@ -183,7 +185,7 @@ function EventMaker(props) {
 
   const firstPage = () => {
     return (
-      <Fragment>
+      <PageWrap {...props} isActivePage={page == 0}>
         <MyInput label="Event" name="eName" desc="Event Name" />
         <PositionWrap>
           <MyDateInput
@@ -204,13 +206,13 @@ function EventMaker(props) {
         <MyInputTime name="eTime" label="Time" cursor="pointer" />
         {/* <MyInput label="Location" name="eLocation" desc="Search Location" /> */}
         <SearchLocation />
-      </Fragment>
+      </PageWrap>
     );
   };
 
   const secondPage = () => {
     return (
-      <Fragment>
+      <PageWrap {...props} isActivePage={page == 1}>
         <MyTextArea
           label="Message"
           name="eMessage"
@@ -219,29 +221,16 @@ function EventMaker(props) {
           maxLength={1000}
         />
         <InputTag label="Tag" name="eTag"></InputTag>
-      </Fragment>
+      </PageWrap>
     );
   };
 
   const thirdPage = () => {
     return (
-      <Fragment>
+      <PageWrap {...props} isActivePage={page == 2}>
         <MyInput label="Place" name="place" desc="search" />
-      </Fragment>
+      </PageWrap>
     );
-  };
-
-  const renderForm = (page) => {
-    switch (page) {
-      case 0:
-        return firstPage();
-      case 1:
-        return secondPage();
-      case 2:
-        return thirdPage();
-      default:
-        return firstPage();
-    }
   };
 
   const renderButtons = (page) => {
@@ -249,7 +238,7 @@ function EventMaker(props) {
       case 0:
         return (
           <ButtonWrap width="100%">
-            <Button onClick={nextPage}>Next</Button>
+            <Button onClick={() => setPage(page + 1)}>Next</Button>
           </ButtonWrap>
         );
 
@@ -257,7 +246,7 @@ function EventMaker(props) {
         return (
           <Fragment>
             <ButtonWrap width="48%">
-              <Button onClick={prevPage}>Prev</Button>
+              <Button onClick={() => setPage(page - 1)}>Prev</Button>
             </ButtonWrap>
             <ButtonWrap width="48%">
               <Button>Done</Button>
@@ -269,10 +258,10 @@ function EventMaker(props) {
         return (
           <Fragment>
             <ButtonWrap width="48%">
-              <Button onClick={prevPage}>Prev</Button>
+              <Button onClick={() => setPage(page - 1)}>Prev</Button>
             </ButtonWrap>
             <ButtonWrap width="48%">
-              <Button onClick={nextPage}>Next</Button>
+              <Button onClick={() => setPage(page + 1)}>Next</Button>
             </ButtonWrap>
           </Fragment>
         );
@@ -290,7 +279,11 @@ function EventMaker(props) {
         </HeaderWrap>
 
         <ContentWrap>
-          <FormWrap>{renderForm(page)}</FormWrap>
+          <FormWrap>
+            {firstPage()}
+            {secondPage()}
+            {thirdPage()}
+          </FormWrap>
 
           <Buttons>{renderButtons(page)}</Buttons>
         </ContentWrap>

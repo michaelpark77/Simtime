@@ -29,7 +29,16 @@ const MyOptions = styled(SearchBox)`
 const Input = styled(InputWrap)``;
 
 function SearchBar(props) {
-  const { options, name, label, width, height, search, doAfterSelect } = props;
+  const {
+    options,
+    name,
+    label,
+    desc,
+    width,
+    height,
+    search,
+    doAfterSelect,
+  } = props;
 
   return (
     <Wrap {...props}>
@@ -39,6 +48,7 @@ function SearchBar(props) {
         children={
           <MyOptions
             name={name}
+            desc={desc}
             options={options}
             width={"100%"}
             height={height}

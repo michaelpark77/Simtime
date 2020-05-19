@@ -45,6 +45,12 @@ const Select = styled.input`
   background-image: url("static/img/icons/check-valid.png");
   background-position: 94% center;`
       : null};
+
+  ::placeholder {
+    color: ${ST_GRAY};
+    font-size: 15px;
+    font-weight: 300;
+  }
 `;
 
 //////////// css로 구현////////
@@ -145,6 +151,7 @@ function SearchBox(props) {
     defaultOption,
     options,
     name,
+    desc,
     arrow,
     cursor,
     search,
@@ -263,6 +270,7 @@ function SearchBox(props) {
         width={width}
         height={height}
         name={name}
+        placeholder={desc}
         arrow={arrow}
         cursor={cursor}
         value={currInput}

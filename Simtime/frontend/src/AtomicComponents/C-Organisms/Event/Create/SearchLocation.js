@@ -44,6 +44,7 @@ function SearchLocation(props) {
       <MySearchBar
         label="Place"
         name="ePlace"
+        desc="Event Place"
         width="100%"
         search={searchPlaces}
         doAfterSelect={saveLocation}
