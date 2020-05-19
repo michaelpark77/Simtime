@@ -15,7 +15,9 @@ const Wrap = styled.div`
   width: ${(props) => props.width};
 `;
 
-const MyParagraph = styled(Paragraph)``;
+const MyParagraph = styled(Paragraph)`
+  width: 20%;
+`;
 
 const MyInput = styled.input`
   ::placeholder {

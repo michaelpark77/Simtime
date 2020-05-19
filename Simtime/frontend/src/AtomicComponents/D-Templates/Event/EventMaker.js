@@ -74,7 +74,7 @@ const ContentWrap = styled.div`
 const FormWrap = styled.form`
   width: 100%;
   height: 85%;
-  border: solid 1px blue;
+  // border: solid 1px blue;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -82,7 +82,7 @@ const FormWrap = styled.form`
 `;
 
 const PageWrap = styled.div`
-  border: solid 1px red;
+  // border: solid 1px red;
   width: 100%;
   ${(props) =>
     props.isActivePage
@@ -220,7 +220,7 @@ function EventMaker(props) {
           height="200px"
           maxLength={1000}
         />
-        <InputTag label="Tag" name="eTag"></InputTag>
+        <InputTag label="Tag" name="eTag" desc="Tag 입력"></InputTag>
       </PageWrap>
     );
   };

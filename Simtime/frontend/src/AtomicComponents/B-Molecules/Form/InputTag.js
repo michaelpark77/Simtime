@@ -1,9 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, createRef,  useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import SelectedItem from "../../A-Atomics/Filter/SelectedItem";
-import Input from "./Input";
+import Input from "../../A-Atomics/Form/Input";
+import InputWrap from "../../A-Atomics/Form/InputWrap";
+
 import {
   ST_GRAY,
   ST_SEMI_GRAY,
@@ -19,39 +21,43 @@ const Wrap = styled.div`
   width: 100%;
 `;
 
-const StyledInput = styled(Input)``;
-
 const MyTagsWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  overflow-x: auto;
-  overflow-y: hidden;
 
-  height: 30px;
+  display: block;
+
+  height: auto;
   width: 100%;
   margin-top: 10px;
   margin-bottom: 5px;
 
-  &::-webkit-scrollbar {
-    height: 5px;
-  }
+  // display: flex;
+  // flex-direction: row;
+  // justify-content: flex-start;
 
-  &::-webkit-scrollbar-thumb {
-    background-color: ${ST_SEMI_YELLOW};
-    border-radius: 5px;
+  // overflow-x: auto;
+  // overflow-y: hidden;
+  // &::-webkit-scrollbar {
+  //   height: 5px;
+  // }
 
-    &:hover {
-      background-color: ${ST_GRAY};
-    }
-  }
+  // &::-webkit-scrollbar-thumb {
+  //   background-color: ${ST_SEMI_YELLOW};
+  //   border-radius: 5px;
 
-  &::-webkit-scrollbar-track {
-    background-color: ${ST_SEMI_GRAY};
-    border-radius: 5px;
-    box-shadow: inset 0px 0px 3x white;
-  }
+  //   &:hover {
+  //     background-color: ${ST_GRAY};
+  //   }
+  // }
+
+  // &::-webkit-scrollbar-track {
+  //   background-color: ${ST_SEMI_GRAY};
+  //   border-radius: 5px;
+  //   box-shadow: inset 0px 0px 3x white;
+  // }
 `;
+
+const MyInput = styled(Input)`
+`
 
 // ::-webkit-scrollbar { width: 5.2px; } /* 스크롤 바 */
 // ::-webkit-scrollbar-track { background-color:#5D5D5D; } /* 스크롤 바 밑의 배경 */
@@ -63,43 +69,61 @@ const MyTagsWrap = styled.div`
 const MyItem = styled(SelectedItem)`
   height: 20px;
   white-space: nowrap;
+
 `;
 
 function InputTag(props) {
   const { name, label, desc, tags, width, height, items } = props;
   const [myTags, setMyTags] = useState(items);
+  // const inputRef = useRef();
 
-  const inputRef = useRef(null);
-  const MyInput = React.forwardRef((props, ref) => {
-    return <StyledInput {...props} ref={inputRef} className="FancyButton" />;
-  });
+  const deleteItem = (value) =>{
+    let newItems = myTags.filter(tag => tag != value);
+    setMyTags(newItems);
 
+  } 
   const renderItems = () => {
     return myTags.map((tag, index) => {
-      return <MyItem key={tag + index}>#{tag}</MyItem>;
+      return <MyItem key={tag} deleteItem={()=>deleteItem(tag)}>#{tag}</MyItem>;
     });
   };
 
   const handleKeyPress = (e) => {
-    const newItems = [...myTags, e.target.value];
-    alert(newItems);
-    setMyTags(newItems);
-    inputRef.current.value = "";
+    if (e.key == "Enter") {
+      if( myTags.indexOf( e.target.value) == -1 ){
+        let newItems = [...myTags, e.target.value];
+        setMyTags(newItems);
+        e.target.value=""
+      }else{
+        alert("중복된 값 입니다.")
+        e.target.value=""
+      }
+
+    }
   };
+
+  // useEffect(() => {
+  //   console.log(inputRef.current);
+  // }, [inputRef]);
+
+  // const MyInput = React.forwardRef((props, inputRef) => (
+  //   <Input ref={inputRef} onKeyPress={handleKeyPress} {...props} />
+  // ));
 
   return (
     <Wrap {...props}>
-      <MyInput
-        {...props}
-        label={label}
+      <InputWrap
+      onKeyPress={handleKeyPress} 
         name={name}
-        desc={desc}
-        onKeyPress={handleKeyPress}
-      />
+        label={label}
+        children={
+          <MyInput {...props}/>
+        }></InputWrap>
       <MyTagsWrap>{renderItems()}</MyTagsWrap>
     </Wrap>
   );
 }
+
 
 export default InputTag;
 
@@ -114,6 +138,6 @@ InputTag.propTypes = {
 
 InputTag.defaultProps = {
   items: ["test1", "test2"],
+  desc:"Tag",
 };
 
-// hasitem ? "" : "display: hidden" ;

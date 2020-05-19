@@ -37,7 +37,7 @@ const MyTextArea = styled.textarea`
   ${(props) => (props.cursor ? `cursor: ${props.cursor}` : null)}
 `;
 
-function Input(props) {
+function TextArea(props) {
   const { width, height, label, name, desc, value, readOnly, cursor } = props;
   const [myValue, setMyValue] = useState(value);
 
@@ -64,9 +64,9 @@ function Input(props) {
   );
 }
 
-export default Input;
+export default TextArea;
 
-Input.propTypes = {
+TextArea.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   label: PropTypes.string,
@@ -77,7 +77,7 @@ Input.propTypes = {
   cursor: PropTypes.string,
 };
 
-Input.defaultProps = {
+TextArea.defaultProps = {
   width: "100%",
   height: "40px",
   label: null,

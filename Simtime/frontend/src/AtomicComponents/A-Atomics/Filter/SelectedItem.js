@@ -23,13 +23,15 @@ const ContentWrap = styled.div`
 const Content = styled(Paragraph)`
   margin-right: 6px;
 
-  min-width: 34px;
+  min-width: 16px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 `;
 
-const DeleteIcon = styled(Image)``;
+const DeleteIcon = styled(Image)`
+cursor:pointer;
+`;
 
 function SelectedItem(props) {
   return (
@@ -37,7 +39,7 @@ function SelectedItem(props) {
       <Content {...props} fontSize="12px" color="MAIN_COLOR">
         {props.children}
       </Content>
-      <DeleteIcon src="static/img/icons/close.png" width="8px" height="8px" />
+      <DeleteIcon onClick={props.deleteItem}src="static/img/icons/close.png" width="8px" height="8px" />
     </ContentWrap>
   );
 }

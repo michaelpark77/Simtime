@@ -8,16 +8,14 @@ export class Map extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      location: props.location,
-    };
+
   }
 
   componentDidMount() {
     this.loadMap();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       this.marker.setMap(null);
       this.displayMarker(this.props.location);
@@ -39,8 +37,8 @@ export class Map extends Component {
 
   loadMap() {
     var eventLocation = new kakao.maps.LatLng(
-      this.state.location.lat,
-      this.state.location.lng
+      this.props.location.lat,
+      this.props.location.lng
     );
     var container = document.getElementById(this.props.mapId);
     var options = {
@@ -54,8 +52,8 @@ export class Map extends Component {
 
     this.myMap = new window.kakao.maps.Map(container, options);
     this.displayMarker({
-      lat: this.state.location.lat,
-      lng: this.state.location.lng,
+      lat: this.props.location.lat,
+      lng: this.props.location.lng,
     });
   }
 }
@@ -73,6 +71,7 @@ Map.propTypes = {
   mapId: PropTypes.string,
   lat: PropTypes.number,
   lng: PropTypes.number,
+  location: PropTypes.object
 };
 
 Map.defaultProps = {
