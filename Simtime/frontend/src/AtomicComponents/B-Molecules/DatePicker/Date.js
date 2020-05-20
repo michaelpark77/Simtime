@@ -3,12 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import CalDate from "../../A-Atomics/Calendar/CalDate";
 import ContextStore from "../../../contexts/contextStore";
-import {
-  MAIN_COLOR,
-  BG_INACTIVE,
-  BG_WHITE,
-  ST_YELLOW_LIGHT,
-} from "../../Colors";
+import { MAIN_COLOR, ST_WHITE, ST_YELLOW_LIGHT } from "../../Colors";
 
 const size = "32px";
 
@@ -42,6 +37,7 @@ const Wrap = styled.div`
 const MyCalDate = styled(CalDate)`
   font-size: 12px;
   font-weight: 500;
+  ${(props) => (props.isSelected ? `color: ${ST_WHITE}` : null)};
 `;
 
 function Date(props) {
@@ -54,6 +50,7 @@ function Date(props) {
         <MyCalDate
           isActive={isActive}
           isActiveMonth={isActiveMonth}
+          isSelected={strDate == store}
           isToday={isToday}
           date={date}
           day={day}

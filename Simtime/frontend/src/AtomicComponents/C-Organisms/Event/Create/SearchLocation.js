@@ -24,12 +24,28 @@ const StyledMap = styled(Map)``;
 
 function SearchLocation(props) {
   const { width, height, mapId } = props;
+  const [location, setLocation] = useState({ lat: 0, lng: 0, name: "현위치" });
 
-  const [location, setLocation] = useState({
-    lat: 37.488376,
-    lng: 126.752351,
-    name: "현위치",
-  });
+  useEffect(() => {
+    function success(position) {
+      const curr = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        name: "현위치",
+      };
+
+      setLocation(curr);
+      console.log(curr);
+    }
+
+    if (!navigator.geolocation) {
+      console.log("Geolocation is not supported by your browser");
+    } else {
+      var a = navigator.geolocation.getCurrentPosition(success, () => {
+        console.log("Unable to retrieve your location");
+      });
+    }
+  }, []);
 
   const saveLocation = (option) => {
     setLocation({

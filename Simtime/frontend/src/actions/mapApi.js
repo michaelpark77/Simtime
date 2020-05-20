@@ -93,29 +93,3 @@ export const searchPlaces = (
       }
     });
 };
-
-
-export const getMyLocation = () =>{  
-  var location = {lat:0, lng:0};
-  var getPosition = function (options) {
-    return new Promise(function (resolve, reject) {
-      navigator.geolocation.getCurrentPosition(resolve, reject, options);
-    });
-  }
- 
-  if(!navigator.geolocation) {
-    console.log('Geolocation is not supported by your browser');
-  } else {
-    getPosition()
-    .then((position) => {
-      console.log("po", position);
-      location.lat=position.coords.latitude;
-      location.lng=position.coords.longitude;
-    })
-    .then(()=>{console.log("lo", location)})
-    .catch((err) => {
-      console.error(err.message);
-    });
-  }
-
-  }

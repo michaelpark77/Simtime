@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import Week from "../../C-Organisms/Calendar/Week";
 import Paragraph from "../../A-Atomics/Font/Paragraph";
+import ColoredButton from "../../A-Atomics/Button/ColoredButton";
 import Image from "../../A-Atomics/Image";
 
 import { generate, getStrFullDate } from "./Generator";
@@ -86,6 +87,11 @@ const CalendarWrap = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   overflow: hidden;
+`;
+
+const CloseBtn = styled(Paragraph)`
+  padding: 0px 5px 0px 5px;
+  cursor: pointer;
 `;
 
 //요일
@@ -172,13 +178,15 @@ function DatePicker(props) {
           isActive={true}
         />
       </MonthWrap>
-
       <DayWrap>
         <Days />
       </DayWrap>
       <CalendarWrap>
         <Weeks curr={curr} selectDate={props.selectDate} />
       </CalendarWrap>
+      <CloseBtn onClick={props.onClose} color="MAIN_COLOR" fontSize="12px">
+        닫기
+      </CloseBtn>
     </Wrap>
   );
 }

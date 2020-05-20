@@ -8,7 +8,6 @@ export class Map extends Component {
 
   constructor(props) {
     super(props);
-
   }
 
   componentDidMount() {
@@ -71,7 +70,7 @@ Map.propTypes = {
   mapId: PropTypes.string,
   lat: PropTypes.number,
   lng: PropTypes.number,
-  location: PropTypes.object
+  location: PropTypes.object,
 };
 
 Map.defaultProps = {

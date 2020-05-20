@@ -201,6 +201,9 @@ function EventMaker(props) {
             isShown={datePicker}
             selectDate={selectDate}
             selectedDate={event.eDate}
+            onClose={() => {
+              setDatePicker(false);
+            }}
           />
         </PositionWrap>
         <MyInputTime name="eTime" label="Time" cursor="pointer" />
