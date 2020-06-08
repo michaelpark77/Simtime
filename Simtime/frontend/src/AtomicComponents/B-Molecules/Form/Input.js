@@ -53,7 +53,7 @@ function Input(props) {
         </MyParagraph>
       )}
       <MyInput
-        ref={props.myRef ? props.myRef: null}
+        ref={props.myRef ? props.myRef : null}
         name={name}
         placeholder={desc}
         readOnly={readOnly}
