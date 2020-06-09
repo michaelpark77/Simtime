@@ -38,10 +38,20 @@ const MyInput = styled.input`
 `;
 
 function Input(props) {
-  const { width, height, label, name, desc, value, readOnly, cursor } = props;
+  const {
+    width,
+    height,
+    label,
+    name,
+    desc,
+    value,
+    readOnly,
+    cursor,
+    handleChange,
+  } = props;
   const [myValue, setMyValue] = useState(value);
 
-  const handleChange = useCallback((e) => {
+  const myHandleChange = useCallback((e) => {
     setMyValue(e.target.value);
   }, []);
 
@@ -57,8 +67,9 @@ function Input(props) {
         name={name}
         placeholder={desc}
         readOnly={readOnly}
-        value={readOnly ? value : undefined}
-        onChange={handleChange}
+        // value={readOnly ? value : undefined}
+        value={readOnly || value ? value : ""}
+        onChange={handleChange ? handleChange : myHandleChange}
         cursor={cursor}
       ></MyInput>
     </Wrap>

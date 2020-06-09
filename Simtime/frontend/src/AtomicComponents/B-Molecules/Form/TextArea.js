@@ -49,10 +49,12 @@ function TextArea(props) {
     readOnly,
     cursor,
     maxlength,
+    handleChange,
   } = props;
+
   const [myValue, setMyValue] = useState(value);
 
-  const handleChange = useCallback((e) => {
+  const MyHandleChange = useCallback((e) => {
     setMyValue(e.target.value);
   }, []);
 
@@ -67,8 +69,8 @@ function TextArea(props) {
         name={name}
         placeholder={desc}
         readOnly={readOnly}
-        value={readOnly ? value : myValue}
-        onChange={handleChange}
+        value={readOnly || value ? value : myValue}
+        onChange={handleChange ? handleChange : MyHandleChange}
         cursor={cursor}
         maxlength={maxlength}
         height={height}

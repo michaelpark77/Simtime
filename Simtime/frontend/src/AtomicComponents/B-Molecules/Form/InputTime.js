@@ -56,6 +56,7 @@ function InputTime(props) {
   const { width, height, label, name, value, cursor } = props;
   const [hour, setHour] = useState("");
   const [min, setMin] = useState("");
+  const [option, setOption] = useState("AM");
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -67,8 +68,10 @@ function InputTime(props) {
     );
 
     if (e.target.name == "hour") {
-      if (myValue <= 24 && myValue >= 0) setHour(myValue);
-      else setHour(newValue);
+      if (myValue <= 24 && myValue >= 0) {
+        setHour(myValue);
+        if (myValue > 12) setOption("PM");
+      } else setHour(newValue);
     } else {
       if (myValue <= 59 && myValue >= 0) setMin(myValue);
       else setMin(newValue);
@@ -100,6 +103,7 @@ function InputTime(props) {
           width="60px"
           height="40px"
           options={["AM", "PM"]}
+          defaultOption={option}
         ></MySelectBox>
       </InnerWrap>
     </Wrap>

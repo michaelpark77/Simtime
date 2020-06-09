@@ -1,7 +1,10 @@
 import React, { useState, useCallback, Fragment } from "react";
+import { connect } from "react-redux";
+
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+import { addEvent, getEvent, editEvent } from "../../../actions/events";
 import { MAIN_COLOR, ST_GTAY } from "../../Colors";
 
 import ModalTitle from "../../A-Atomics/Modal/ModalTitle";
@@ -61,17 +64,17 @@ const BarWrap = styled.div`
   align-items: center;
 `;
 
-const ContentWrap = styled.div`
+const ContentWrap = styled.form`
   width: 90%;
   height: 82%;
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
 `;
 
-const FormWrap = styled.form`
+const FormWrap = styled.div`
   width: 100%;
   height: 85%;
   // border: solid 1px blue;
@@ -165,7 +168,7 @@ function EventMaker(props) {
     eName: "",
     eDate: getStrFullDate(today, "yyyy-mm-dd"),
     eTime: "AM 12:00",
-    ePlace: "",
+    ePlace: { lat: 0, lng: 0, name: "unknown" },
     eMessage: "",
     eStatus: "CLOSED",
     eHost_id: "unknown",
@@ -183,10 +186,71 @@ function EventMaker(props) {
     setEvent({ eTime: time });
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { eId, eName, eDate, eStatus, eMessage, ePlace } = event;
+    const host = props.user.id;
+
+    if (props.event) {
+      props.editEvent({
+        id: eId,
+        host: host,
+        event_name: eName,
+        event_at: eDate,
+        status: eStatus,
+        message: eMessage,
+      });
+    } else {
+      props.addEvent({
+        host: host,
+        event_name: eName,
+        event_at: eDate,
+        status: eStatus,
+        message: eMessage,
+      });
+    }
+
+    // props.onClose();
+  };
+
+  // const handleChange = useCallback((e) => {
+  //   setEvent({ ...event, [e.target.name]: e.target.value });
+  //   alert({ ...event, [e.target.name]: e.target.value });
+  // }, []);
+
+  const handleChange = (e) => {
+    // if (e.target.name == "ePlace") {
+    //   setEvent({ ...event, ePlace: { lat: 1, lng: 1, name: "unknown" } });
+    // } else {
+    //   setEvent({ ...event, [e.target.name]: e.target.value });
+    //   console.log({ ...event, [e.target.name]: e.target.value });
+    // }
+    setEvent({ ...event, [e.target.name]: e.target.value });
+    console.log({ ...event, [e.target.name]: e.target.value });
+  };
+
+  const locationChange = (location) => {
+    // if (e.target.name == "ePlace") {
+    //   setEvent({ ...event, ePlace: { lat: 1, lng: 1, name: "unknown" } });
+    // } else {
+    //   setEvent({ ...event, [e.target.name]: e.target.value });
+    //   console.log({ ...event, [e.target.name]: e.target.value });
+    // }
+    setEvent({ ...event, ePlace: location });
+    console.log("gell", { ...event, ePlace: location });
+  };
+
   const firstPage = () => {
     return (
       <PageWrap {...props} isActivePage={page == 0}>
-        <MyInput label="Event" name="eName" desc="Event Name" />
+        <MyInput
+          label="Event"
+          name="eName"
+          desc="Event Name"
+          value={event.eName}
+          onChange={handleChange}
+        />
         <PositionWrap>
           <MyDateInput
             name="eDate"
@@ -208,7 +272,7 @@ function EventMaker(props) {
         </PositionWrap>
         <MyInputTime name="eTime" label="Time" cursor="pointer" />
         {/* <MyInput label="Location" name="eLocation" desc="Search Location" /> */}
-        <SearchLocation />
+        <SearchLocation name="ePlace" onChange={locationChange} />
       </PageWrap>
     );
   };
@@ -219,6 +283,8 @@ function EventMaker(props) {
         <MyTextArea
           label="Message"
           name="eMessage"
+          value={event.eMessage}
+          onChange={handleChange}
           desc="1000자 이내"
           height="200px"
           maxLength={1000}
@@ -236,12 +302,17 @@ function EventMaker(props) {
     );
   };
 
+  const handleClick = (e, targetPage) => {
+    e.preventDefault();
+    setPage(targetPage);
+  };
+
   const renderButtons = (page) => {
     switch (page) {
       case 0:
         return (
           <ButtonWrap width="100%">
-            <Button onClick={() => setPage(page + 1)}>Next</Button>
+            <Button onClick={(e) => handleClick(e, page + 1)}>Next</Button>
           </ButtonWrap>
         );
 
@@ -249,10 +320,10 @@ function EventMaker(props) {
         return (
           <Fragment>
             <ButtonWrap width="48%">
-              <Button onClick={() => setPage(page - 1)}>Prev</Button>
+              <Button onClick={(e) => handleClick(e, page - 1)}>Prev</Button>
             </ButtonWrap>
             <ButtonWrap width="48%">
-              <Button>Done</Button>
+              <Button type="submit">Done</Button>
             </ButtonWrap>
           </Fragment>
         );
@@ -261,10 +332,10 @@ function EventMaker(props) {
         return (
           <Fragment>
             <ButtonWrap width="48%">
-              <Button onClick={() => setPage(page - 1)}>Prev</Button>
+              <Button onClick={(e) => handleClick(e, page - 1)}>Prev</Button>
             </ButtonWrap>
             <ButtonWrap width="48%">
-              <Button onClick={() => setPage(page + 1)}>Next</Button>
+              <Button onClick={(e) => handleClick(e, page + 1)}>Next</Button>
             </ButtonWrap>
           </Fragment>
         );
@@ -281,13 +352,10 @@ function EventMaker(props) {
           <ModalTitle>EVENT</ModalTitle>
         </HeaderWrap>
 
-        <ContentWrap>
-          <FormWrap>
-            {firstPage()}
-            {secondPage()}
-            {thirdPage()}
-          </FormWrap>
-
+        <ContentWrap onSubmit={handleSubmit}>
+          {firstPage()}
+          {secondPage()}
+          {thirdPage()}
           <Buttons>{renderButtons(page)}</Buttons>
         </ContentWrap>
       </Wrap>
@@ -295,7 +363,18 @@ function EventMaker(props) {
   );
 }
 
-export default EventMaker;
+const mapStateToProps = (state) => ({
+  event: state.events.selectedEvent[0],
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps, {
+  addEvent,
+  getEvent,
+  editEvent,
+})(EventMaker);
+
+// export default EventMaker;
 
 EventMaker.propTypes = {
   height: PropTypes.string,

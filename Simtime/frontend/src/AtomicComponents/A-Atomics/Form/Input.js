@@ -31,10 +31,10 @@ const MyInput = styled.input`
 `;
 
 function Input(props) {
-  const { width, height, name, desc, value } = props;
+  const { width, height, name, desc, value, handleChange } = props;
   const [myValue, setMyValue] = useState(value);
 
-  const handleChange = useCallback((e) => {
+  const myHandleChange = useCallback((e) => {
     setMyValue(e.target.value);
     // console.log(e.target.value)
   }, []);
@@ -43,7 +43,7 @@ function Input(props) {
     <MyInput
       {...props}
       placeholder={desc}
-      onChange={handleChange}
+      onChange={handleChange ? handleChange : myHandleChange}
       {...props}
     ></MyInput>
   );

@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 class EventAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
+    print("hello", permission_classes)
 
     def get(self, request):
         events = self.request.user.events.all()

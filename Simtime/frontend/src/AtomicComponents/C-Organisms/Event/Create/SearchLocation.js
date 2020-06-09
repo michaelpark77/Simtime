@@ -26,6 +26,7 @@ function SearchLocation(props) {
   const { width, height, mapId } = props;
   const [location, setLocation] = useState({ lat: 0, lng: 0, name: "현위치" });
 
+  //현재 위치 얻어오기
   useEffect(() => {
     function success(position) {
       const curr = {
@@ -53,13 +54,19 @@ function SearchLocation(props) {
       lng: parseFloat(option.lan),
       name: option.name,
     });
+
+    props.onChange({
+      lat: parseFloat(option.lat),
+      lng: parseFloat(option.lan),
+      name: option.name,
+    });
   };
 
   return (
     <Wrap {...props}>
       <MySearchBar
         label="Place"
-        name="ePlace"
+        name={props.name}
         desc="Event Place"
         width="100%"
         search={searchPlaces}

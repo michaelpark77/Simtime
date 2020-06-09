@@ -11,7 +11,7 @@ import {
 
 const Wrap = styled.div`
   width: ${(props) => props.width};
-  height : ${(props) => props.height};
+  height: ${(props) => props.height};
   position: relative;
 `;
 
@@ -26,14 +26,16 @@ const Select = styled.div`
   font-size: 15px;
   font-weight: 400;
 
-  cursor: ${(props) => props.cursor };
+  cursor: ${(props) => props.cursor};
 
-  ${(props) => props.arrow ? `  
+  ${(props) =>
+    props.arrow
+      ? `  
   background-size: 15px;
   background-repeat: no-repeat;
   background-image: url("static/img/icons/arrow-down2.png");
   background-position: 88% center;`
-  : null };
+      : null};
 `;
 
 const OptionWrap = styled.div`
@@ -55,7 +57,6 @@ const OptionWrap = styled.div`
 `;
 
 const Option = styled.div`
-
   width: 100%;
   height: ${(props) => props.height};
   line-height: ${(props) => props.height};
@@ -88,7 +89,11 @@ function SelectBox(props) {
       <OptionWrap
         width={width}
         top={height}
-        contentHeight={(parseInt(height.replace(/[^0-9]/g, "")).toFixed(0) * options.length + 2) + "px"}
+        contentHeight={
+          parseInt(height.replace(/[^0-9]/g, "")).toFixed(0) * options.length +
+          2 +
+          "px"
+        }
         showOptions={showOptions}
         onBlur={changeShowOptions}
       >
@@ -110,7 +115,7 @@ function SelectBox(props) {
   return (
     <Wrap {...props}>
       <Select
-        height= {height}
+        height={height}
         onClick={changeShowOptions}
         name={name}
         value={selectedOption}
@@ -141,5 +146,5 @@ SelectBox.defaultProps = {
   options: ["AM", "PM"],
   defaultOption: "PM",
   arrow: true,
-  cursor: "pointer"
+  cursor: "pointer",
 };

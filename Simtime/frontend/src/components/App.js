@@ -42,20 +42,24 @@ const AppContents = styled.div`
   }
 `;
 class App extends Component {
-  // componentDidMount() {
+  // componentWillMount() {
   //   store.dispatch(loadUser());
   // }
 
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
+
   render() {
-    return (
-      <Fragment>
-        <GlobalStyle />
-        <AppContents>
-          <Header />
-          <CalendarPage />
-        </AppContents>
-      </Fragment>
-    );
+    // return (
+    //   <Fragment>
+    //     <GlobalStyle />
+    //     <AppContents>
+    //       <Header />
+    //       <CalendarPage />
+    //     </AppContents>
+    //   </Fragment>
+    // );
     // return (
     //   <Provider store={store}>
     //     <AlertProvider template={AlertTemplate} {...alertOptions}>
@@ -74,7 +78,27 @@ class App extends Component {
     //       </HashRouter>
     //     </AlertProvider>
     //   </Provider>
-    //);
+    // );
+
+    return (
+      <Provider store={store}>
+        <AlertProvider template={AlertTemplate} {...alertOptions}>
+          <HashRouter>
+            <Fragment>
+              <GlobalStyle />
+              <AppContents>
+                <Header />
+                <Switch>
+                  <PrivateRoute exact path="/" component={CalendarPage} />
+                  <Route exact path="/register" component={Register} />
+                  <Route exact path="/login" component={Login} />
+                </Switch>
+              </AppContents>
+            </Fragment>
+          </HashRouter>
+        </AlertProvider>
+      </Provider>
+    );
   }
 }
 

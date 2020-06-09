@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { MAIN_COLOR, ST_GRAY } from "../Colors";
 import LOGO from "../A-Atomics/Logo";
@@ -62,7 +65,9 @@ const AccountWrap = styled.div`
   }
 `;
 
-function Header() {
+function Header(props) {
+  const { isAuthenticated, user } = props.auth;
+
   return (
     <Wrap>
       <ContentWrap>
@@ -77,11 +82,17 @@ function Header() {
         </MenuList>
 
         <AccountWrap>
-          <Account />
+          <Account username={user ? user.username : "unknown"} />
         </AccountWrap>
       </ContentWrap>
     </Wrap>
   );
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {})(Header);
+
+// export default connect(mapStateToProps, { logout });
