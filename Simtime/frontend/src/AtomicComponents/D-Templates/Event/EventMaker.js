@@ -188,7 +188,7 @@ function EventMaker(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    //event_at = new Date('2019/5/16/17:24:30:10');
     const { eId, eName, eDate, eStatus, eMessage, ePlace } = event;
     const host = props.user.id;
 
@@ -270,7 +270,12 @@ function EventMaker(props) {
             }}
           />
         </PositionWrap>
-        <MyInputTime name="eTime" label="Time" cursor="pointer" />
+        <MyInputTime
+          name="eTime"
+          label="Time"
+          cursor="pointer"
+          onChange={selectTime}
+        />
         {/* <MyInput label="Location" name="eLocation" desc="Search Location" /> */}
         <SearchLocation name="ePlace" onChange={locationChange} />
       </PageWrap>

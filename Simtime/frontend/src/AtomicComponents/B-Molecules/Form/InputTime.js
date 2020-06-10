@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Input from "./Input";
@@ -53,29 +53,54 @@ const MyInput = styled.input`
 const MySelectBox = styled(SelectBox)``;
 
 function InputTime(props) {
-  const { width, height, label, name, value, cursor } = props;
+  const { width, height, label, name, value, cursor, onChange } = props;
   const [hour, setHour] = useState("");
   const [min, setMin] = useState("");
-  const [option, setOption] = useState("AM");
+  const [meridiem, setMeridiem] = useState("AM");
+
+  const hourRef = useRef(null);
+  const minRef = useRef(null);
+  const meridiemRef = useRef(null); //meridiem
 
   const handleChange = (e) => {
     e.preventDefault();
-    var myValue = parseInt(
+    
+    // 마지막 입력한 2개의  (queue?)
+    var inputValue = parseInt(
       e.target.value.replace(/[^0-9]/g, "").substr(e.target.value.length - 2, 2)
     );
+
+    //마지막 입력만 남기기
     var newValue = parseInt(
       e.target.value.substr(e.target.value.length - 1, 1)
     );
 
+    var res = null;
+
     if (e.target.name == "hour") {
-      if (myValue <= 24 && myValue >= 0) {
-        setHour(myValue);
-        if (myValue > 12) setOption("PM");
-      } else setHour(newValue);
-    } else {
-      if (myValue <= 59 && myValue >= 0) setMin(myValue);
-      else setMin(newValue);
+      //시간
+      if (inputValue <= 24 && inputValue >= 0) { //0~24 (범위내)
+        res = inputValue;
+        if (inputValue > 12) setMeridiem("PM");
+      }
+      else res = newValue; //범위 밖이면 마지막 입력만 남긴다.
+      setHour(res);
+    } 
+    else {
+      //분
+      if (inputValue <= 59 && inputValue >= 0) res = inputValue;
+      else res = newValue; 
+      setMin(res);
     }
+
+    if(meridiemRef.current == "PM" && hourRef.current.value <  ){
+
+    }
+
+
+    resTime = hourRef.current.value.toString() + minRef.current.value.toString()
+    onChange(resTime);
+
   };
 
   return (
@@ -87,6 +112,7 @@ function InputTime(props) {
       )}
       <InnerWrap name={name}>
         <MyInput
+          ref={hourRef}
           placeholder=""
           name="hour"
           onChange={handleChange}
@@ -94,16 +120,18 @@ function InputTime(props) {
         ></MyInput>
         :
         <MyInput
+          ref={minRef}
           placeholder=""
           name="min"
           onChange={handleChange}
           value={("00" + min).substr(("00" + min).length - 2, 2)}
         ></MyInput>
         <MySelectBox
+          ref={meridiemRef}
           width="60px"
           height="40px"
           options={["AM", "PM"]}
-          defaultOption={option}
+          defaultOption={meridiem}
         ></MySelectBox>
       </InnerWrap>
     </Wrap>
