@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Fragment } from "react";
+import React, { useState, useCallback, Fragment,useRef } from "react";
 import { connect } from "react-redux";
 
 import styled from "styled-components";
@@ -161,8 +161,14 @@ const Button = styled(DashedButton)`
 
 function EventMaker(props) {
   const today = new Date();
+
+  const timeRef = useRef();
+
   const [datePicker, setDatePicker] = useState(false);
   const [page, setPage] = useState(0);
+  const [message, setMessage] = useState("");
+  // const [time, setTime] = useState("");
+
   const [event, setEvent] = useState({
     eId: null,
     eName: "",
@@ -178,18 +184,9 @@ function EventMaker(props) {
     setDatePicker(!datePicker);
   };
 
-  const selectDate = useCallback((strDate) => {
-    setEvent({ ...event, eDate: strDate });
-  }, []);
-
-  // const selectTime = useCallback((time) => {
-  //   console.log("hello");
-  //   setEvent({ ...event, eTime: time });
-  // }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    //event_at = new Date('2019/5/16/17:24:30:10');
+    // var event_at = new Date('2019/5/16/17:24:30:10');
     const { eId, eName, eDate, eStatus, eMessage, ePlace } = event;
     const host = props.user.id;
 
@@ -215,30 +212,21 @@ function EventMaker(props) {
     // props.onClose();
   };
 
-  // const handleChange = useCallback((e) => {
-  //   setEvent({ ...event, [e.target.name]: e.target.value });
-  //   alert({ ...event, [e.target.name]: e.target.value });
-  // }, []);
-
-  const handleChange = (e) => {
-    // if (e.target.name == "ePlace") {
-    //   setEvent({ ...event, ePlace: { lat: 1, lng: 1, name: "unknown" } });
-    // } else {
-    //   setEvent({ ...event, [e.target.name]: e.target.value });
-    //   console.log({ ...event, [e.target.name]: e.target.value });
-    // }
+  const handleChange = useCallback((e) => {
     setEvent({ ...event, [e.target.name]: e.target.value });
-    console.log({ ...event, [e.target.name]: e.target.value });
-  };
-  const locationChange = (location) => {
-    // if (e.target.name == "ePlace") {
-    //   setEvent({ ...event, ePlace: { lat: 1, lng: 1, name: "unknown" } });
-    // } else {
-    //   setEvent({ ...event, [e.target.name]: e.target.value });
-    //   console.log({ ...event, [e.target.name]: e.target.value });
-    // }
+  }, []);
+
+  const locationChange = useCallback((location) => {
     setEvent({ ...event, ePlace: location });
-  };
+  });
+  
+  const changeDate = useCallback((strDate) => {
+    setEvent({ ...event, eDate: strDate });
+  });
+
+  const changeTime = useCallback((time) => {
+    setEvent({ ...event, eTime: time });
+  });
 
   const firstPage = () => {
     return (
@@ -262,7 +250,7 @@ function EventMaker(props) {
           ></MyDateInput>
           <MyDatePicker
             isShown={datePicker}
-            selectDate={selectDate}
+            selectDate={changeDate}
             selectedDate={event.eDate}
             onClose={() => {
               setDatePicker(false);
@@ -273,7 +261,7 @@ function EventMaker(props) {
           name="eTime"
           label="Time"
           cursor="pointer"
-          // onChange={selectTime}
+          changeTime={changeTime}
         />
         {/* <MyInput label="Location" name="eLocation" desc="Search Location" /> */}
         <SearchLocation name="ePlace" onChange={locationChange} />
@@ -287,8 +275,8 @@ function EventMaker(props) {
         <MyTextArea
           label="Message"
           name="eMessage"
-          value={event.eMessage}
-          onChange={handleChange}
+          value={message}
+          onChange={(e)=>setMessage(e.target.value)}
           desc="1000자 이내"
           height="200px"
           maxLength={1000}
@@ -308,6 +296,7 @@ function EventMaker(props) {
 
   const handleClick = (e, targetPage) => {
     e.preventDefault();
+    console.log(event);
     setPage(targetPage);
   };
 

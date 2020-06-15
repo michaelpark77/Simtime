@@ -1,4 +1,4 @@
-import React, { Component, setState } from "react";
+import React, { Component, setState, createRef } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Paragraph from "../Font/Paragraph";
@@ -13,6 +13,9 @@ const Wrap = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   position: relative;
+  :focus {
+    border: solid 1px red;
+  }
 `;
 
 const MySelect = styled.div`
@@ -69,16 +72,17 @@ const Option = styled.div`
     background-color: ${ST_YELLOW_LIGHT};
   }
 `;
+
 export class SelectBoxRef extends Component {
   constructor(props) {
     super(props);
-    console.log("rerender", props);
+
+    this.myRef = React.createRef();
     this.state = {
       showOptions: false,
       selectedOption: props.defaultOption,
     };
 
-    this.merHandleChange = this.props.merHandleChange;
     this.changeShowOptions = this.changeShowOptions.bind(this);
     this.changeSelectedOptions = this.changeSelectedOptions.bind(this);
   }
@@ -105,7 +109,7 @@ export class SelectBoxRef extends Component {
       selectedOption: option,
     }));
 
-    () => this.merHandleChange();
+    this.props.meridiemChange(option);
   }
 
   renderOptions = (options) => {
@@ -146,6 +150,7 @@ export class SelectBoxRef extends Component {
           value={this.state.selectedOption}
           arrow={this.props.arrow}
           cursor={this.props.cursor}
+          ref={this.myRef}
         >
           <Paragraph fontSize="15px">{this.state.selectedOption}</Paragraph>
           {this.renderOptions(this.props.options)}

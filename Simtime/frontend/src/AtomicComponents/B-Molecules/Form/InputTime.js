@@ -57,32 +57,35 @@ const MyInput = styled.input`
   ${(props) => (props.cursor ? `cursor: ${props.cursor}` : null)}
 `;
 
-const StyledSelectBox = styled(SelectBoxRef)``;
+const StyledSelectBox = styled(SelectBoxRef)`
+  :focus {
+    border: solid 1px ${MAIN_COLOR};
+  }`;
 
 function InputTime(props) {
-  const { width, height, label, name, value, cursor } = props;
+  const { width, height, label, name, value, cursor,changeTime } = props;
   const [hour, setHour] = useState("");
   const [min, setMin] = useState("");
   const [meridiem, setMeridiem] = useState("AM");
+  const [param, setParam] = useState("");
 
   const hourRef = useRef();
   const minRef = useRef();
   const meridiemRef = useRef(); //meridiem
 
-  // useEffect(() => {
-  //   console.log(meridiemRef.current.state);
-  // }, [meridiem]);
+  var minAsParam = 0; //24시기준
 
-  const merHandleChange = (e, option) => {
-    console.log("merHandleChange");
+  const meridiemChange = (meridiem) => {
+    if(meridiem=="AM"&&hour>12) hourRef.current.focus();
+    changeTime(hour.toString().padStart(2,'0') + ":" + min.toString().padStart(2,'0') + " "+ meridiem)
   };
 
   const handleChange = (e) => {
     e.preventDefault();
-    var max = e.target.name == "hour" ? 24 : 59;
 
     var res = null;
-    var hourAsParam = 0; //24시기준
+    var max = e.target.name == "hour" ? 23 : 59;
+    var selectedMerdiem = meridiemRef.current.state.selectedOption;
 
     // 마지막 입력한 2개값 남기기  (queue?)
     var inputValue = parseInt(
@@ -91,41 +94,23 @@ function InputTime(props) {
 
     //마지막 입력만 남기기
     var newValue = parseInt(
-      e.target.value.substr(e.target.value.length - 1, 1)
+      e.target.value.replace(/[^0-9]/g, "").substr(e.target.value.length - 1, 1)
     );
+      // 입력값 보정
+    res = (inputValue <= max && inputValue >= 0) ? inputValue : newValue;
 
-    if (e.target.name == "hour") {
-      //시간
-      if (inputValue <= max && inputValue >= 0) {
-        //0~24 (범위내)
-        res = inputValue;
-        setHour(res);
-        console.log(meridiem);
-
-        if (meridiem == "PM") {
-          hourAsParam = res < 12 ? res + 12 : res;
-          console.log(hourAsParam);
-        } else {
-          //"AM"
-          if (res == 12) hourAsParam = res - 12;
-          else if (res > 12) setMeridiem("PM");
-        }
+    if(e.target.name == "hour"){
+      setHour(res);
+      if(res==0 && selectedMerdiem == "PM" ) setMeridiem("AM");
+      else if(res<12 && selectedMerdiem == "PM") res = res + 12;
+      else if(res==12 && selectedMerdiem == "AM" ) res = res - 12;
+      else if(res>12 && selectedMerdiem == "AM")  setMeridiem("PM");
+        changeTime(res.toString().padStart(2,'0') + ":" + min.toString().padStart(2,'0') + " " + selectedMerdiem)
       } else {
-        res = newValue;
-        setHour(res);
-      } //범위 밖이면 마지막 입력만 남긴다.
-    } else {
-      //분
-      if (inputValue <= max && inputValue >= 0) {
-        res = inputValue;
-        setMin(res);
-      } else {
-        res = newValue;
-        setMin(newValue);
-      }
-    }
+        setMin(res)
+        changeTime(hour.toString().padStart(2,'0') + ":" + res.toString().padStart(2,'0') + " " + selectedMerdiem)
+      };
 
-    // onChange(hourAsParam.toString() + ":" + minRef.current.value.toString());
   };
 
   return (
@@ -156,12 +141,10 @@ function InputTime(props) {
           height="40px"
           options={["AM", "PM"]}
           defaultOption={meridiem}
-          onChange={merHandleChange}
+          meridiemChange={meridiemChange}
           ref={meridiemRef}
+          
         />
-        {/*
-
-        <MySelectBox ref={meridiemRef}></MySelectBox> */}
       </InnerWrap>
     </Wrap>
   );
