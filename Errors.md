@@ -1,4 +1,11 @@
-import React, { useState, forwardRef } from "react";
+# Errors
+
+## 1. Uncaught TypeError: Cannot set property 'myRef' of undefined
+
+![ref](https://github.com/arara90/images/blob/master/Simtime/simtime_029.png?raw=true)
+
+```react
+import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Paragraph from "../Font/Paragraph";
@@ -15,7 +22,7 @@ const Wrap = styled.div`
   position: relative;
 `;
 
-const StyledSelect = styled.div`
+const MySelect = styled.div`
   padding-left: 4px;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
@@ -70,34 +77,13 @@ const Option = styled.div`
   }
 `;
 
-const MySelect = forwardRef((props, ref) => <StyledSelect ref={ref} />);
+export class SelectBoxRef extends Component {
+  constructor(props) {
+    console.log("props");
+    this.myRef = React.createRef();
+  }
 
-function SelectBox(props) {
-  const { width, height, defaultOption, options, name, arrow, cursor } = props;
-  const [showOptions, setShowOptions] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(defaultOption);
-
-  const changeShowOptions = () => {
-    setShowOptions(!showOptions);
-  };
-
-  const changeSelectedOptions = (option) => {
-    setSelectedOption(option);
-  };
-
-  const MySelect = forwardRef((props, ref) => (
-    <StyledSelect
-      ref={ref}
-      height={height}
-      onClick={changeShowOptions}
-      name={name}
-      value={selectedOption}
-      arrow={arrow}
-      cursor={cursor}
-    />
-  ));
-
-  const renderOptions = (options) => {
+  renderOptions = (options) => {
     return (
       <OptionWrap
         width={width}
@@ -125,19 +111,21 @@ function SelectBox(props) {
     );
   };
 
-  return (
-    <Wrap {...props}>
-      <MySelect>
-        <Paragraph fontSize="15px">{selectedOption}</Paragraph>
-        {renderOptions(options)}
-      </MySelect>
-    </Wrap>
-  );
+  render() {
+    return (
+      <Wrap {...props}>
+        <MySelect ref={this.myRef}>
+          <Paragraph fontSize="15px">{selectedOption}</Paragraph>
+          {renderOptions(options)}
+        </MySelect>
+      </Wrap>
+    );
+  }
 }
 
-export default SelectBox;
+export default SelectBoxRef;
 
-SelectBox.propTypes = {
+SelectBoxRef.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   options: PropTypes.array,
@@ -146,7 +134,7 @@ SelectBox.propTypes = {
   cursor: PropTypes.string,
 };
 
-SelectBox.defaultProps = {
+SelectBoxRef.defaultProps = {
   width: "80px",
   height: "30px",
   options: ["AM", "PM"],
@@ -154,3 +142,6 @@ SelectBox.defaultProps = {
   arrow: true,
   cursor: "pointer",
 };
+
+```
+

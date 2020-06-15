@@ -179,12 +179,13 @@ function EventMaker(props) {
   };
 
   const selectDate = useCallback((strDate) => {
-    setEvent({ eDate: strDate });
+    setEvent({ ...event, eDate: strDate });
   }, []);
 
-  const selectTime = useCallback((time) => {
-    setEvent({ eTime: time });
-  }, []);
+  // const selectTime = useCallback((time) => {
+  //   console.log("hello");
+  //   setEvent({ ...event, eTime: time });
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -229,7 +230,6 @@ function EventMaker(props) {
     setEvent({ ...event, [e.target.name]: e.target.value });
     console.log({ ...event, [e.target.name]: e.target.value });
   };
-
   const locationChange = (location) => {
     // if (e.target.name == "ePlace") {
     //   setEvent({ ...event, ePlace: { lat: 1, lng: 1, name: "unknown" } });
@@ -238,7 +238,6 @@ function EventMaker(props) {
     //   console.log({ ...event, [e.target.name]: e.target.value });
     // }
     setEvent({ ...event, ePlace: location });
-    console.log("gell", { ...event, ePlace: location });
   };
 
   const firstPage = () => {
@@ -274,7 +273,7 @@ function EventMaker(props) {
           name="eTime"
           label="Time"
           cursor="pointer"
-          onChange={selectTime}
+          // onChange={selectTime}
         />
         {/* <MyInput label="Location" name="eLocation" desc="Search Location" /> */}
         <SearchLocation name="ePlace" onChange={locationChange} />
