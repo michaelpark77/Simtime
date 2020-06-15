@@ -1,5 +1,9 @@
 # Errors
 
+
+
+
+
 ## 1. Uncaught TypeError: Cannot set property 'myRef' of undefined
 
 ![ref](https://github.com/arara90/images/blob/master/Simtime/simtime_029.png?raw=true)
@@ -145,3 +149,8 @@ SelectBoxRef.defaultProps = {
 
 ```
 
+
+
+예상?
+
+​	
