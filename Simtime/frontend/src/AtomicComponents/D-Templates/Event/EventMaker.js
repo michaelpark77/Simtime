@@ -171,7 +171,6 @@ function EventMaker(props) {
   const [tags, setTags] = useState("");
   const [message, setMessage] = useState("");
 
-
   const [imgBase64, setImgBase64] = useState(""); // 파일 base64
   const [image, setImage] = useState(null); //파일
 
@@ -193,14 +192,18 @@ function EventMaker(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // var event_at = new Date('2019/5/16/17:24:30:10');
+    console.log(image);
+
     const { eId, eName, eDate, eStatus, eMessage, ePlace } = event;
     const myEvent = {
       host: props.user.id,
       event_name: name,
-      event_at: new Date(date.replace(/-/gi, "/") + "/" + time.split(" ")[0]),
+      //"2020-06-19T20:00"
+      event_at: date + "T" + time.split(" ")[0],
       status: eStatus,
       location: place,
       message: message,
+      // photo: image,
     };
 
     if (props.event) {
@@ -209,7 +212,8 @@ function EventMaker(props) {
         ...myEvent,
       });
     } else {
-      props.addEvent(myEvent);
+      console.log("check: ", myEvent);
+      props.addEvent(myEvent, image);
     }
 
     // props.onClose();
@@ -217,16 +221,19 @@ function EventMaker(props) {
 
   const handleChangeFile = (e) => {
     let reader = new FileReader();
+    console.log("hc");
 
     reader.onloadend = () => {
       // 2. 읽기가 완료되면 아래코드가 실행됩니다.
+      console.log("hc2");
       const base64 = reader.result;
       if (base64) {
+        console.log("hc3");
         setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
       }
     };
     if (e.target.files[0]) {
-      console.log("yes");
+      console.log("hc4", e.target.files);
       reader.readAsDataURL(e.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
       setImage(e.target.files[0]); // 파일 상태 업데이트
     }
@@ -356,7 +363,7 @@ function EventMaker(props) {
       eDate: new Date(date.replace(/-/gi, "/") + "/" + time.split(" ")[0]),
       eMessage: message,
       ePlace: place,
-      eImage: image
+      eImage: image,
     });
 
     setPage(targetPage);

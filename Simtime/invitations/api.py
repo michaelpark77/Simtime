@@ -16,6 +16,7 @@ class EventAPI(APIView):
         # return self.request.user.events.all()  # related_name으로 invitations지정
 
     def post(self, request):
+        print("gre", request.data)
         serializer = EventSerializer(data=request.data)
         if(serializer.is_valid()):
             serializer.save(host=self.request.user)
