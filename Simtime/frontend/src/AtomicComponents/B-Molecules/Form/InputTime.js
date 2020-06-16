@@ -60,10 +60,11 @@ const MyInput = styled.input`
 const StyledSelectBox = styled(SelectBoxRef)`
   :focus {
     border: solid 1px ${MAIN_COLOR};
-  }`;
+  }
+`;
 
 function InputTime(props) {
-  const { width, height, label, name, value, cursor,changeTime } = props;
+  const { width, height, label, name, value, cursor, changeTime } = props;
   const [hour, setHour] = useState("");
   const [min, setMin] = useState("");
   const [meridiem, setMeridiem] = useState("AM");
@@ -76,8 +77,14 @@ function InputTime(props) {
   var minAsParam = 0; //24시기준
 
   const meridiemChange = (meridiem) => {
-    if(meridiem=="AM"&&hour>12) hourRef.current.focus();
-    changeTime(hour.toString().padStart(2,'0') + ":" + min.toString().padStart(2,'0') + " "+ meridiem)
+    if (meridiem == "AM" && hour > 12) hourRef.current.focus();
+    changeTime(
+      hour.toString().padStart(2, "0") +
+        ":" +
+        min.toString().padStart(2, "0") +
+        " " +
+        meridiem
+    );
   };
 
   const handleChange = (e) => {
@@ -96,21 +103,32 @@ function InputTime(props) {
     var newValue = parseInt(
       e.target.value.replace(/[^0-9]/g, "").substr(e.target.value.length - 1, 1)
     );
-      // 입력값 보정
-    res = (inputValue <= max && inputValue >= 0) ? inputValue : newValue;
+    // 입력값 보정
+    res = inputValue <= max && inputValue >= 0 ? inputValue : newValue;
 
-    if(e.target.name == "hour"){
+    if (e.target.name == "hour") {
       setHour(res);
-      if(res==0 && selectedMerdiem == "PM" ) setMeridiem("AM");
-      else if(res<12 && selectedMerdiem == "PM") res = res + 12;
-      else if(res==12 && selectedMerdiem == "AM" ) res = res - 12;
-      else if(res>12 && selectedMerdiem == "AM")  setMeridiem("PM");
-        changeTime(res.toString().padStart(2,'0') + ":" + min.toString().padStart(2,'0') + " " + selectedMerdiem)
-      } else {
-        setMin(res)
-        changeTime(hour.toString().padStart(2,'0') + ":" + res.toString().padStart(2,'0') + " " + selectedMerdiem)
-      };
-
+      if (res == 0 && selectedMerdiem == "PM") setMeridiem("AM");
+      else if (res < 12 && selectedMerdiem == "PM") res = res + 12;
+      else if (res == 12 && selectedMerdiem == "AM") res = res - 12;
+      else if (res > 12 && selectedMerdiem == "AM") setMeridiem("PM");
+      changeTime(
+        res.toString().padStart(2, "0") +
+          ":" +
+          min.toString().padStart(2, "0") +
+          " " +
+          selectedMerdiem
+      );
+    } else {
+      setMin(res);
+      changeTime(
+        hour.toString().padStart(2, "0") +
+          ":" +
+          res.toString().padStart(2, "0") +
+          " " +
+          selectedMerdiem
+      );
+    }
   };
 
   return (
@@ -143,7 +161,6 @@ function InputTime(props) {
           defaultOption={meridiem}
           meridiemChange={meridiemChange}
           ref={meridiemRef}
-          
         />
       </InnerWrap>
     </Wrap>

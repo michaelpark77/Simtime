@@ -8,7 +8,7 @@ const StyledContent = (props) => {
     color: ${Colors[props.color]};
     font-size: ${props.fontSize};
   `;
-  
+
   switch (props.type) {
     case "a":
       return styled.a`
@@ -32,14 +32,14 @@ const StyledContent = (props) => {
 
     case "tag":
       return styled.span`
-      color: ${Colors.ST_GRAY};
-      font-size : ${props=> props.fontSize ? props.fontSize : "12px" };
-      text-decoration: underline;
+        color: ${Colors.ST_GRAY};
+        font-size: ${(props) => (props.fontSize ? props.fontSize : "12px")};
+        text-decoration: underline;
       `;
 
     default:
       return styled.span`
-      ${commonStyle}
+        ${commonStyle}
       `;
   }
 };
@@ -60,10 +60,10 @@ const StyledText = (props) => {
   return renderText();
 };
 
-export default StyledText;
+export default React.memo(StyledText);
 
 StyledText.propTypes = {
-  type: PropTypes.oneOf(["a", "span","tag"]),
+  type: PropTypes.oneOf(["a", "span", "tag"]),
   src: PropTypes.string,
   color: PropTypes.string,
   fontSize: PropTypes.string,
