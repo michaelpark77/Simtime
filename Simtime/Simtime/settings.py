@@ -55,12 +55,15 @@ INSTALLED_APPS = [
     'invitations',
     # 'knox',
     'accounts',
+    'files',
+    'storages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 
 ]
 
@@ -85,8 +88,24 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
-AUTH_USER_MODEL = "accounts.Account"
+#S3
+S3 = {
+    "AWS_UPLOAD_BUCKET"         : get_secret("AWS_UPLOAD_BUCKET"),
+    "AWS_UPLOAD_USERNAME"       : get_secret("AWS_UPLOAD_USERNAME"),
+    "AWS_UPLOAD_GROUP"          : get_secret("AWS_UPLOAD_GROUP"),
+    "AWS_UPLOAD_REGION"         : get_secret("AWS_UPLOAD_REGION"),
+    "AWS_UPLOAD_ACCESS_KEY_ID"  : get_secret("AWS_UPLOAD_ACCESS_KEY_ID"),
+    "AWS_UPLOAD_SECRET_KEY"     : get_secret("AWS_UPLOAD_SECRET_KEY"),
+    "AWS_S3_SIGNATURE_VERSION"  : get_secret('AWS_S3_SIGNATURE_VERSION'),
+    "AWS_DEFAULT_ACL": 'public-read'
+    
+}
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_HOST = 's3.%s.amazonaws.com' % S3["AWS_UPLOAD_REGION"]
+AWS_S3_CUSTOM_DOMAIN = f'{S3["AWS_UPLOAD_BUCKET"]}.s3.amazonaws.com' 
 
+
+AUTH_USER_MODEL = "accounts.Account"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -181,5 +200,15 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'Simtime', 'assets')
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+# # Media Setting
+MEDIA_URL = f'http://{AWS_S3_CUSTOM_DOMAIN}/'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+

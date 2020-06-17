@@ -415,7 +415,7 @@ function EventMaker(props) {
           <ModalTitle>EVENT</ModalTitle>
         </HeaderWrap>
 
-        <ContentWrap onSubmit={handleSubmit}>
+        <ContentWrap onSubmit={handleSubmit} encType="multipart/form-data">
           {firstPage()}
           {secondPage()}
           {thirdPage()}

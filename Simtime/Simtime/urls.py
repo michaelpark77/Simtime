@@ -20,6 +20,7 @@ urlpatterns = [
     path('', include('frontend.urls')),
     path('', include('invitations.urls')),
     path('', include('accounts.urls')),
+    path('', include('files.urls')),
     path('admin/', admin.site.urls),
 
 

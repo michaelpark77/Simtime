@@ -62,10 +62,12 @@ export const addEvent = (event, img) => (dispatch) => {
   data.append("message", event.message);
   data.append("photo", img);
 
+
   console.log(data);
   // axiosInstance
+      // .post("/api/events/create", data)
   axiosInstanceImage
-    .post("/api/events/create", data)
+    .post("/api/events/img", data)
     .then((res) => {
       dispatch({
         type: ADD_EVENT,

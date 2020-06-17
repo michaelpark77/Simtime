@@ -1,8 +1,11 @@
 from .models import Invitation, Event
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions,authentication, status
 from rest_framework.response import Response
 from .serializers import InvitationSerializer, EventSerializer
 from rest_framework.views import APIView
+from django.conf import settings
+import io
+import boto3
 
 
 class EventAPI(APIView):
@@ -22,6 +25,42 @@ class EventAPI(APIView):
             serializer.save(host=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class EventImageAPI(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    # authentication_classes = [authentication.SessionAuthentication]
+
+    print("hello", permission_classes)
+
+    def get(self, request):
+        events = self.request.user.events.all()
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data)
+        # return self.request.user.events.all()  # related_name으로 invitations지정
+
+    def post(self, request):
+        print("gre", request.data)
+        serializer = EventSerializer(data=request.data)
+        if(serializer.is_valid()):
+            serializer.save(host=self.request.user)
+
+            #파일 저장
+            S3= settings.S3
+            s3_client = boto3.client(
+            's3',
+            aws_access_key_id=S3["AWS_UPLOAD_ACCESS_KEY_ID"],
+            aws_secret_access_key=S3["AWS_UPLOAD_SECRET_KEY"],
+            )
+            print(S3["AWS_UPLOAD_BUCKET"])
+
+
+            for file in request.FILES.getlist('photo'):
+                s3_client.upload_fileobj(file,S3["AWS_UPLOAD_BUCKET"],file.name,ExtraArgs={"ContentType": file.content_type}
+                )
+
+            # "ContentType": 'application/octet-stream'
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response({serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class EventDetailAPI(APIView):
