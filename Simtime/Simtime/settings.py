@@ -63,7 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
 
 ]
 
@@ -87,23 +87,6 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
-
-#S3
-S3 = {
-    "AWS_UPLOAD_BUCKET"         : get_secret("AWS_UPLOAD_BUCKET"),
-    "AWS_UPLOAD_USERNAME"       : get_secret("AWS_UPLOAD_USERNAME"),
-    "AWS_UPLOAD_GROUP"          : get_secret("AWS_UPLOAD_GROUP"),
-    "AWS_UPLOAD_REGION"         : get_secret("AWS_UPLOAD_REGION"),
-    "AWS_UPLOAD_ACCESS_KEY_ID"  : get_secret("AWS_UPLOAD_ACCESS_KEY_ID"),
-    "AWS_UPLOAD_SECRET_KEY"     : get_secret("AWS_UPLOAD_SECRET_KEY"),
-    "AWS_S3_SIGNATURE_VERSION"  : get_secret('AWS_S3_SIGNATURE_VERSION'),
-    "AWS_DEFAULT_ACL": 'public-read'
-    
-}
-AWS_QUERYSTRING_AUTH = False
-AWS_S3_HOST = 's3.%s.amazonaws.com' % S3["AWS_UPLOAD_REGION"]
-AWS_S3_CUSTOM_DOMAIN = f'{S3["AWS_UPLOAD_BUCKET"]}.s3.amazonaws.com' 
-
 
 AUTH_USER_MODEL = "accounts.Account"
 MIDDLEWARE = [
@@ -192,23 +175,47 @@ USE_L10N = True
 USE_TZ = False
 
 
+# S3
+S3 = {
+    "AWS_UPLOAD_BUCKET": get_secret("AWS_UPLOAD_BUCKET"),
+    "AWS_UPLOAD_USERNAME": get_secret("AWS_UPLOAD_USERNAME"),
+    "AWS_UPLOAD_GROUP": get_secret("AWS_UPLOAD_GROUP"),
+    "AWS_UPLOAD_REGION": get_secret("AWS_UPLOAD_REGION"),
+    "AWS_UPLOAD_ACCESS_KEY_ID": get_secret("AWS_UPLOAD_ACCESS_KEY_ID"),
+    "AWS_UPLOAD_SECRET_KEY": get_secret("AWS_UPLOAD_SECRET_KEY"),
+    "AWS_S3_SIGNATURE_VERSION": get_secret('AWS_S3_SIGNATURE_VERSION'),
+    "AWS_DEFAULT_ACL": 'public-read'
+}
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_HOST = 's3.%s.amazonaws.com' % S3["AWS_UPLOAD_REGION"]
+AWS_S3_CUSTOM_DOMAIN = f'{S3["AWS_UPLOAD_BUCKET"]}.s3.amazonaws.com'
+
+# AWS Access
+AWS_ACCESS_KEY_ID = get_secret("AWS_UPLOAD_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = get_secret("AWS_UPLOAD_SECRET_KEY")
+AWS_STORAGE_BUCKET_NAME = 'simtime-bucket'
+AWS_LOCATION = "simtime"
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'Simtime', 'assets')
 ]
 
+# Media Setting
+MEDIA_URL = f'http://{AWS_S3_CUSTOM_DOMAIN}/'
 
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-
-# # Media Setting
-MEDIA_URL = f'http://{AWS_S3_CUSTOM_DOMAIN}/'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+# # s3storage
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
+DEFAULT_FILE_STORAGE = 'conf.storages.MediaStorage'
+STATICFILES_STORAGE = 'conf.storages.StaticStorage'
+
+MEDIAFILES_LOCATION = 'media'
+STATICFILES_LOCATION = 'static'
