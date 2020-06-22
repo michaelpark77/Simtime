@@ -38,14 +38,13 @@ const Wrap = styled.div`
 
   @media only screen and (max-width: 320px) {
     width: 100%;
-    height: 568px;
   }
 `;
 
 const HeaderWrap = styled.div`
   width: 100%;
-  height: 18%;
-
+  // height: 18%;
+  height: 14%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -57,7 +56,8 @@ const HeaderWrap = styled.div`
 const BarWrap = styled.div`
   width: 92%;
   height: 10%;
-  min-height: 50px;
+  // min-height: 50px;
+  min-height: 18px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,7 +66,8 @@ const BarWrap = styled.div`
 
 const ContentWrap = styled.form`
   width: 90%;
-  height: 82%;
+  // height: 82%;
+  height: 84%;
 
   display: flex;
   flex-direction: column;
@@ -409,9 +410,7 @@ function EventMaker(props) {
     <ContextStore.Provider value={date}>
       <Wrap {...props}>
         <HeaderWrap>
-          <BarWrap>
-            <ProgressBar />
-          </BarWrap>
+          <BarWrap>{/* <ProgressBar /> */}</BarWrap>
           <ModalTitle>EVENT</ModalTitle>
         </HeaderWrap>
 
@@ -446,7 +445,8 @@ EventMaker.propTypes = {
 };
 
 EventMaker.defaultProps = {
-  height: "568px",
+  // height: "568px",
+  height: "548px",
   width: "320px",
   selectedDate: null,
 };
