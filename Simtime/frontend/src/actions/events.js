@@ -1,5 +1,5 @@
 import { createMessage, returnErrors } from "./messages";
-import { axiosInstance } from "./axiosApi";
+import { axiosInstance, axiosInstanceEvent } from "./axiosApi";
 import axios from "axios";
 import { getCookie } from "./cookie";
 
@@ -13,17 +13,8 @@ import {
   CREATE_MESSAGE,
 } from "./types";
 
-const axiosInstanceImage = axios.create({
-  baseURL: "http://127.0.0.1:8000",
-  timeout: 5000,
-  headers: {
-    Authorization: "JWT " + getCookie("access"),
-    "content-type": "multipart/form-data",
-  },
-});
-
 export const getEvents = () => (dispatch) => {
-  axiosInstance
+  axiosInstanceEvent
     .get("/api/events/")
     .then((res) => {
       dispatch({
@@ -47,12 +38,6 @@ export const getEvent = (id) => (dispatch) => {
 export const addEvent = (event, img) => (dispatch) => {
   console.log("action", event);
   const data = new FormData();
-  // host: props.user.id,
-  // event_name: name,
-  // event_at: new Date(date.replace(/-/gi, "/") + "/" + time.split(" ")[0]),
-  // status: eStatus,
-  // location: place,
-  // message: message,
 
   data.append("host", event.host);
   data.append("event_name", event.event_name);
@@ -62,12 +47,8 @@ export const addEvent = (event, img) => (dispatch) => {
   data.append("message", event.message);
   data.append("photo", img);
 
-
-  console.log(data);
-  // axiosInstance
-      // .post("/api/events/create", data)
-  axiosInstanceImage
-    .post("/api/events/img", data)
+  axiosInstanceEvent
+    .post("/api/events/create", data)
     .then((res) => {
       dispatch({
         type: ADD_EVENT,
@@ -116,7 +97,7 @@ export const deleteEvent = (id) => (dispatch) => {
 };
 
 export const editEvent = (event) => (dispatch) => {
-  axiosInstance
+  axiosInstanceEvent
     .put(`/api/events/${event.id}`, event)
     .then((res) => {
       dispatch({
