@@ -4,6 +4,8 @@
 
 ### Security ###
 secrets.json
+##.env.development
+##.env.production
 
 
 ### Django ###
