@@ -84,13 +84,13 @@ function CalendarPage() {
 
   return (
     <Wrap>
-      <ModalPortal
+      {/* <ModalPortal
         children={
           <Modal onClose={handleCloseModal}>
             <EventMaker />
           </Modal>
         }
-      ></ModalPortal>
+      ></ModalPortal> */}
       <LeftWrap>
         <StyledFilter />
         <StyledCalendar height="98%" />

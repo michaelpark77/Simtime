@@ -1,13 +1,16 @@
 from .models import Invitation, Event
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions, authentication, status
 from rest_framework.response import Response
 from .serializers import InvitationSerializer, EventSerializer
 from rest_framework.views import APIView
+from django.conf import settings
+import io
+import boto3
+import tempfile
 
 
 class EventAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
-    print("hello", permission_classes)
 
     def get(self, request):
         events = self.request.user.events.all()

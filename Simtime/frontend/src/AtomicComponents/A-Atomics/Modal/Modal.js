@@ -37,9 +37,9 @@ const ContentWrap = styled.div`
 `;
 
 const CloseButton = styled(Image)`
-background-color: ${MAIN_COLOR};
+  background-color: ${MAIN_COLOR};
+  cursor: pointer;
   @media only screen and (max-width: 320px) {
-    
     position: absolute;
     right: 6px;
   }
