@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 from django.contrib.postgres.fields import ArrayField
 from django.conf import settings
 # from django.contrib.auth.models import User as User
@@ -57,7 +58,9 @@ class Event(CustomizedModel):
     host = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE, related_name='events')
     event_name = models.CharField(max_length=200, blank=False)
-    event_at = models.DateTimeField(blank=False)
+    event_time = models.DateTimeField(blank=False, null=False)
+    event_place = JSONField(),
+    tags = JSONField(),  # 미구현
     status = models.CharField(max_length=10,
                               choices=EventStatus.choices,
                               default=EventStatus.OPEN)
@@ -70,12 +73,32 @@ class Event(CustomizedModel):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+# # Create your models here.
+# class Invitation(CustomizedModel):
+#     objects = models.Manager()
+#     event = models.ForeignKey(
+#         Event, on_delete=models.CASCADE, related_name='invitations')
+#     # guest = models.ForeignKey(
+#     #     settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='invitations')
+#     attendance = models.CharField(
+#         max_length=25, choices=Attendance.choices, default=Attendance.Unknown)
+
+
 # Create your models here.
 class Invitation(CustomizedModel):
     objects = models.Manager()
     event = models.ForeignKey(
-        Event, on_delete=models.CASCADE, related_name='invitations')
-    guest = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='invitations')
+        Event, on_delete=models.CASCADE, related_name='sendTo')
+    relationship = models.ForeignKey(
+        settings.AUTH_USER_RELATIONSHIP_MODEL, on_delete=models.CASCADE, related_name='invitations')
     attendance = models.CharField(
         max_length=25, choices=Attendance.choices, default=Attendance.Unknown)
+    # 초대받은 사람의 달력에 보일것인지, 초대받은 사람이 설정함
+    is_shown = models.BooleanField(default=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(
+            fields=['event', 'relationship'], name='compositeKey')]
+
+
+#UniqueConstraint(fields=['room', 'date'], name='unique_booking')
