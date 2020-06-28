@@ -45,8 +45,8 @@ class EventStatus(models.TextChoices):
 
 
 class Attendance(models.TextChoices):
-    Yes = 'Yes'
-    No = 'No'
+    Yes = 'Y'
+    No = 'N'
     Unknown = "Waiting for a response"
 
 
@@ -98,7 +98,7 @@ class Invitation(CustomizedModel):
 
     class Meta:
         constraints = [models.UniqueConstraint(
-            fields=['event', 'relationship'], name='compositeKey')]
+            fields=['event', 'relationship'], name='er_compositeKey')]
 
 
 #UniqueConstraint(fields=['room', 'date'], name='unique_booking')

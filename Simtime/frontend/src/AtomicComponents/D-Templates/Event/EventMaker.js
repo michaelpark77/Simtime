@@ -200,9 +200,9 @@ function EventMaker(props) {
       host: props.user.id,
       event_name: name,
       //"2020-06-19T20:00"
-      event_at: date + "T" + time.split(" ")[0],
+      event_time: date + "T" + time.split(" ")[0],
       status: eStatus,
-      location: place,
+      event_place: place,
       message: message,
       // photo: image,
     };

@@ -28,7 +28,6 @@ export const getEvents = () => (dispatch) => {
 };
 
 export const getEvent = (id) => (dispatch) => {
-  console.log("hello");
   dispatch({
     type: GET_EVENT,
     payload: id,
@@ -41,9 +40,9 @@ export const addEvent = (event, img) => (dispatch) => {
 
   data.append("host", event.host);
   data.append("event_name", event.event_name);
-  data.append("event_at", event.event_at);
+  data.append("event_time", event.event_time);
   data.append("status", event.status);
-  data.append("location", event.location);
+  data.append("event_place", event.event_place);
   data.append("message", event.message);
   data.append("photo", img);
 

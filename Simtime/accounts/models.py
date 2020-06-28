@@ -59,7 +59,8 @@ class Relationship(models.Model):
     # Status = 0;본인 1;request 2.confirm 3; A blocks B 4;B blocks A 5; block each others.
 
     class Meta:
-        unique_together = ('account', 'friend')
+        constraints = [models.UniqueConstraint(
+            fields=['account', 'friend'], name='af_compositeKey')]
 
 
 # 한 명의 친구는 여러 그룹을 가질 수 있음
@@ -70,4 +71,5 @@ class Relationship_FriendGroup_MAP(models.Model):  # Which Group
         Relationship, on_delete=models.CASCADE, related_name='groups')
 
     class Meta:
-        unique_together = ('group', 'relationship')
+        constraints = [models.UniqueConstraint(
+            fields=['group', 'relationship'], name='gr_compositeKey')]
