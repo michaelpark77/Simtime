@@ -11,6 +11,7 @@ const Wrap = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const ContentWrap = styled.div`

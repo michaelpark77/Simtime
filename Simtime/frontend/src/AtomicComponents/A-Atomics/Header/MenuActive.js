@@ -31,7 +31,7 @@ function MenuActive(props) {
   return (
     <Wrap>
       <ContentWrap>
-        <StyledContent type="h4" color={TEXT_ACTIVE}>
+        <StyledContent type="h4" color="TEXT_ACTIVE">
           {props.children}
         </StyledContent>
         <Bottom />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -65,8 +65,38 @@ const AccountWrap = styled.div`
   }
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+`;
+
 function Header(props) {
   const { isAuthenticated, user } = props.auth;
+  const [activeMenu, setActiveMenu] = useState(0);
+
+  const handleClick = (e, menuNum) => {
+    e.preventDefault();
+    console.log(menuNum);
+    setActiveMenu(menuNum);
+  };
+
+  const MenuRender = (menuNum, menuName) => {
+    if (menuNum == activeMenu) return <MenuActive>{menuName}</MenuActive>;
+    else {
+      return (
+        <MenuInActive onClick={(e) => handleClick(e, menuNum)}>
+          {menuName}
+        </MenuInActive>
+      );
+    }
+  };
 
   return (
     <Wrap>
@@ -76,9 +106,15 @@ function Header(props) {
         </LogoWrap>
 
         <MenuList>
-          <MenuActive>CALENDAR</MenuActive>
-          <MenuInActive>MY SIMTIME</MenuInActive>
-          <MenuInActive>FRIENDS</MenuInActive>
+          <StyledLink to={"/"}>{MenuRender(0, "CALENDAR")}</StyledLink>
+
+          <StyledLink to={"/"}>
+            <MenuInActive>{MenuRender(1, "MY SIMTIME")}</MenuInActive>
+          </StyledLink>
+
+          <StyledLink to={"/friends"}>
+            <MenuInActive>{MenuRender(2, "FRIENDS")}</MenuInActive>
+          </StyledLink>
         </MenuList>
 
         <AccountWrap>

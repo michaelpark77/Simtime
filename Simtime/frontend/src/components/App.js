@@ -21,6 +21,7 @@ import * as Colors from "../AtomicComponents/Colors";
 import GlobalStyle from "../AtomicComponents/GlobalStyle";
 import Header from "../AtomicComponents/D-Templates/Header";
 import CalendarPage from "../AtomicComponents/E-Pages/CalendarPage";
+import Friends from "../AtomicComponents/E-Pages/Friends";
 
 import styled from "styled-components";
 
@@ -92,6 +93,7 @@ class App extends Component {
                   <PrivateRoute exact path="/" component={CalendarPage} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
+                  <Route exact path="/friends" component={Friends} />
                 </Switch>
               </AppContents>
             </Fragment>
