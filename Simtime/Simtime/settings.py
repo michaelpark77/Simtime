@@ -185,11 +185,13 @@ S3 = {
     "AWS_UPLOAD_ACCESS_KEY_ID": get_secret("AWS_UPLOAD_ACCESS_KEY_ID"),
     "AWS_UPLOAD_SECRET_KEY": get_secret("AWS_UPLOAD_SECRET_KEY"),
     "AWS_S3_SIGNATURE_VERSION": get_secret('AWS_S3_SIGNATURE_VERSION'),
-    "AWS_DEFAULT_ACL": 'public-read'
 }
+AWS_DEFAULT_ACL = 'public-read'
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_HOST = 's3.%s.amazonaws.com' % S3["AWS_UPLOAD_REGION"]
-AWS_S3_CUSTOM_DOMAIN = f'{S3["AWS_UPLOAD_BUCKET"]}.s3.amazonaws.com'
+# AWS_S3_CUSTOM_DOMAIN = f'{S3["AWS_UPLOAD_BUCKET"]}.s3.amazonaws.com'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (S3["AWS_UPLOAD_BUCKET"], S3["AWS_UPLOAD_REGION"])
+
 
 # AWS Access
 AWS_ACCESS_KEY_ID = get_secret("AWS_UPLOAD_ACCESS_KEY_ID")
@@ -199,24 +201,24 @@ AWS_LOCATION = "simtime"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'Simtime', 'assets')
-]
+
+# STATICFILES_STORAGE = 'Simtime.storages.StaticStorage' #'storages.backends.s3boto3.S3Boto3Storage'
+
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+STATICFILES_STORAGE = 'Simtime.storages.StaticStorage' #'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_LOCATION = 'static'
+
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'Simtime', 'assets')
+# ]
+
 
 # Media Setting
-MEDIA_URL = f'http://{AWS_S3_CUSTOM_DOMAIN}/media/'
-
+DEFAULT_FILE_STORAGE = 'Simtime.storages.MediaStorage' #'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+MEDIAFILES_LOCATION = 'media'
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-# # s3storage
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
-DEFAULT_FILE_STORAGE = 'Simtime.storages.MediaStorage'
-STATICFILES_STORAGE = 'Simtime.storages.StaticStorage'
-
-MEDIAFILES_LOCATION = 'media'
-STATICFILES_LOCATION = 'static'

@@ -13,7 +13,7 @@ import Account from "../B-Molecules/User/Account";
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-
+                                      
   margin-bottom: 15px;
   @media only screen and (max-width: 680px) {
     margin-bottom: 0px;
@@ -81,42 +81,31 @@ function Header(props) {
   const { isAuthenticated, user } = props.auth;
   const [activeMenu, setActiveMenu] = useState(0);
 
-  const handleClick = (e, menuNum) => {
-    e.preventDefault();
-    console.log(menuNum);
-    setActiveMenu(menuNum);
+  const handleClick = (e, menu) => {
+    setActiveMenu(menu);
   };
 
-  const MenuRender = (menuNum, menuName) => {
-    if (menuNum == activeMenu) return <MenuActive>{menuName}</MenuActive>;
-    else {
-      return (
-        <MenuInActive onClick={(e) => handleClick(e, menuNum)}>
-          {menuName}
-        </MenuInActive>
-      );
-    }
+  const ActiveMenuRender = (menuName) => {
+    return <MenuActive>{menuName}</MenuActive>
   };
+
+  const InActiveMenuRender = (menuName) => {
+    return <MenuInActive>{menuName}</MenuInActive>
+    }
 
   return (
     <Wrap>
       <ContentWrap>
         <LogoWrap>
+          <StyledLink to={"/"} onClick={e=>handleClick(e, 0)}>
           <LOGO />
+          </StyledLink>
         </LogoWrap>
-
         <MenuList>
-          <StyledLink to={"/"}>{MenuRender(0, "CALENDAR")}</StyledLink>
-
-          <StyledLink to={"/"}>
-            <MenuInActive>{MenuRender(1, "MY SIMTIME")}</MenuInActive>
-          </StyledLink>
-
-          <StyledLink to={"/friends"}>
-            <MenuInActive>{MenuRender(2, "FRIENDS")}</MenuInActive>
-          </StyledLink>
+          <StyledLink to={"/"} onClick={e=>handleClick(e, 0)}>{ activeMenu == 0 ? ActiveMenuRender("CALENDAR") : InActiveMenuRender("CALENDAR") }</StyledLink>
+          <StyledLink to={"/mysimtime"} onClick={e=>handleClick(e, 1)}>{activeMenu == 1 ? ActiveMenuRender("MY SIMTIME") : InActiveMenuRender("MY SIMTIME") }</StyledLink>
+          <StyledLink to={"/friends"} onClick={e=>handleClick(e, 2)}>{ activeMenu == 2 ? ActiveMenuRender("FRIENDS") : InActiveMenuRender("FRIENDS") }</StyledLink>
         </MenuList>
-
         <AccountWrap>
           <Account username={user ? user.username : "unknown"} />
         </AccountWrap>

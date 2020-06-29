@@ -5,5 +5,4 @@ urlpatterns = [
     path('api/events/', EventAPI.as_view(), name='events'),
     path('api/events/<int:pk>', EventDetailAPI.as_view(), name='events'),
     path('api/events/create', EventAPI.as_view(), name='events_create'),
-
 ]

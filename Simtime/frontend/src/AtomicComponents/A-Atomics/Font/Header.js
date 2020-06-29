@@ -71,6 +71,6 @@ StyledText.propTypes = {
 StyledText.defaultProps = {
   type: "h1",
   src: "http://localhost:8080/",
-  color: Colors.TEXT,
+  color: "TEXT",
   // fontSize: "13px",
 };

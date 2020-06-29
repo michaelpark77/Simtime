@@ -20,8 +20,11 @@ import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import * as Colors from "../AtomicComponents/Colors";
 import GlobalStyle from "../AtomicComponents/GlobalStyle";
 import Header from "../AtomicComponents/D-Templates/Header";
+
+//Page
 import CalendarPage from "../AtomicComponents/E-Pages/CalendarPage";
 import Friends from "../AtomicComponents/E-Pages/Friends";
+import MySimtime from "../AtomicComponents/E-Pages/MySimtime";
 
 import styled from "styled-components";
 
@@ -94,6 +97,7 @@ class App extends Component {
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/friends" component={Friends} />
+                  <Route exact path="/mysimtime" component={MySimtime} />
                 </Switch>
               </AppContents>
             </Fragment>

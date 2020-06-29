@@ -4,9 +4,11 @@ import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 
 const StyledContent = (props) => {
-  const commonStyle = `
+
+  const commonStyle = css`
     color: ${Colors[props.color]};
     font-size: ${props.fontSize};
+    vertical-align: middle;
   `;
 
   switch (props.type) {
