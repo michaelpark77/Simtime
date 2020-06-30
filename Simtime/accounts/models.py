@@ -55,7 +55,11 @@ class Relationship(models.Model):
     friend = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='friendOf')
     # friends can block the user. (=수신동의)
-    is_blocked = models.BooleanField(null=False, default=False)
+    subscribe = models.BooleanField(null=False, default=True)   # 수신여부
+    dispatch = models.BooleanField(
+        null=False, default=True)    # 발신여부 (false면 보내지않음)
+    is_friend = models.BooleanField(null=False, default=True)
+
     # Status = 0;본인 1;request 2.confirm 3; A blocks B 4;B blocks A 5; block each others.
 
     class Meta:

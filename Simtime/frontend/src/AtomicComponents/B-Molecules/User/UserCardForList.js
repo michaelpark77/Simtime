@@ -1,33 +1,31 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import React from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
 
-import {MAIN_COLOR, TEXT} from '../../Colors'
-import Paragraph from '../../A-Atomics/Font/Paragraph'
-import ImageUser from '../../A-Atomics/ImageUser'
-
+import { MAIN_COLOR, TEXT } from "../../Colors";
+import Paragraph from "../../A-Atomics/Font/Paragraph";
+import ImageUser from "../../A-Atomics/ImageUser";
 
 const Wrap = styled.div`
-    display : flex;
-    flex-direction : row;
-    justify-content: flex-start;
-    align-items: center;
-`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`;
 
 const Image = styled(ImageUser)`
-    margin-right: 5px;
-`
+  margin-right: 5px;
+`;
 
-const Name = styled(Paragraph)`
-`
+const Name = styled(Paragraph)``;
 
 function UserCardForList(props) {
-    return (
-        <Wrap {...props}>
-            <Image width={props.imageSize} height={props.imageSize}/>
-            <Name fontSize="14px">{props.username}</Name>
-        </Wrap>
-    )
+  return (
+    <Wrap {...props}>
+      <Image width={props.imageSize} height={props.imageSize} url={props.url} />
+      <Name fontSize="14px">{props.username}</Name>
+    </Wrap>
+  );
 }
 
 // const mapStateToProps = (state) => ({
@@ -36,16 +34,14 @@ function UserCardForList(props) {
 
 // export default connect(mapStateToProps, {})(UserCard);
 
-export default UserCardForList
+export default UserCardForList;
 
 UserCardForList.propTypes = {
-    username: PropTypes.string, 
-    imageSize: PropTypes.string, 
-  };
-
-  UserCardForList.defaultProps = {
-    username: "unknown",
-    imageSize: "40px"
-
+  username: PropTypes.string,
+  imageSize: PropTypes.string,
 };
 
+UserCardForList.defaultProps = {
+  username: "unknown",
+  imageSize: "40px",
+};

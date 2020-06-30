@@ -4,11 +4,9 @@ import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 
 const StyledContent = (props) => {
-
   const commonStyle = css`
     color: ${Colors[props.color]};
     font-size: ${props.fontSize};
-    vertical-align: middle;
   `;
 
   switch (props.type) {
@@ -39,6 +37,12 @@ const StyledContent = (props) => {
         text-decoration: underline;
       `;
 
+    case "button":
+      return styled.span`
+        ${commonStyle}
+        text-decoration: underline;
+      `;
+
     default:
       return styled.span`
         ${commonStyle}
@@ -65,7 +69,7 @@ const StyledText = (props) => {
 export default React.memo(StyledText);
 
 StyledText.propTypes = {
-  type: PropTypes.oneOf(["a", "span", "tag"]),
+  type: PropTypes.oneOf(["a", "span", "tag", "button"]),
   src: PropTypes.string,
   color: PropTypes.string,
   fontSize: PropTypes.string,

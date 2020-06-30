@@ -7,31 +7,35 @@ const StyledContent = (props) => {
   const commonStyle = `
     color: ${Colors[props.color]};
     font-size: ${props.fontSize ? props.fontSize : ""};
-    font-weight: 700;
+    ${props.height ? "height: " + props.height + ";" : ""}
   `;
 
   switch (props.type) {
     case "h1":
       return styled.span`
         ${commonStyle}
+        font-weight: 700;
         font-size: ${props.fontsize ? props.fontSize : "36px"};
       `;
 
     case "h2":
       return styled.span`
         ${commonStyle}
+        font-weight: 700;
         font-size: ${props.fontSize ? props.fontSize : "24px"};
       `;
 
     case "h3":
       return styled.span`
         ${commonStyle}
+        font-weight: 600;
         font-size: ${props.fontSize ? props.fontSize : "18px"};
       `;
 
     case "h4":
       return styled.span`
         ${commonStyle}
+        font-weight: 500;
         font-size: ${props.fontSize ? props.fontSize : "15px"};
       `;
 
@@ -65,12 +69,10 @@ StyledText.propTypes = {
   type: PropTypes.oneOf(["h1", "h2", "h3", "h4"]),
   src: PropTypes.string,
   color: PropTypes.string,
-  fontSize: PropTypes.string,
 };
 
 StyledText.defaultProps = {
   type: "h1",
   src: "http://localhost:8080/",
   color: "TEXT",
-  // fontSize: "13px",
 };

@@ -1,58 +1,118 @@
-import React, {Fragment} from 'react'
-import styled from 'styled-components';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
-import TableRow from '../../A-Atomics/Table/TableRow'
-import TableHeader from '../../A-Atomics/Table/TableHeader';
-import TableTitle from '../../A-Atomics/Table/TableTitle';
-import Header from '../../A-Atomics/Font/Header';
+import TableHeader from "../../A-Atomics/Table/TableHeader";
+import TableTitle from "../../A-Atomics/Table/TableTitle";
+import Header from "../../A-Atomics/Font/Header";
+import ButtonWithImage from "../../B-Molecules/Button/ButtonWithImage";
+import MyFriends from "../../C-Organisms/Friends/Table/MyFriends";
 
-import ButtonWithImage from '../../B-Molecules/Button/ButtonWithImage'
-import UserCardForList from '../../B-Molecules/User/UserCardForList'
+const TableWrap = styled.div`
+  height: auto;
+  width: ${(props) => props.width};
+  display: inline-block;
+`;
 
 const StyledTableTitle = styled(TableTitle)`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 4px;
+`;
 
-    padding-left : 10px;
-`
+const TableContent = styled.div`
+  // border: solid 1px grey;
+  height: ${(props) => props.height}px;
+  overflow-y: auto;
+`;
 
-
-const StyledHeader = styled(Header)`
-    height: ${props=> props.height};
-`
-const StyledTableRow = styled(TableRow)`
-`
-
-const UserCard = styled(UserCardForList)`
-    
-`
-
-
-function Table() {
-    
-    return (
-        <Fragment>
-        <StyledTableTitle><Header type="h4" height="22px">내가 등록한 친구</Header>
-        <ButtonWithImage height="22px" width="auto" imgurl="https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png">친구추가</ButtonWithImage></StyledTableTitle>
-        <TableHeader>hello?</TableHeader>
-            <TableRow rowNum={1}><UserCard imageSize="32px">1</UserCard><div>2</div></TableRow>
-            <TableRow rowNum={2}><UserCard imageSize="32px">1</UserCard><div>2</div><div>3</div></TableRow>
-            <TableRow rowNum={3}><UserCard imageSize="32px">1</UserCard><div>2</div><div>3</div></TableRow>
-            <TableRow rowNum={4}><UserCard imageSize="32px">1</UserCard><div>2</div></TableRow>
-        </Fragment>
-        
-    )
+function Table(props) {
+  return (
+    <TableWrap {...props}>
+      <StyledTableTitle>
+        <Header type="h4">{props.title}</Header>
+        <ButtonWithImage
+          height="20px"
+          width="auto"
+          imgurl="https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png"
+        >
+          Add
+        </ButtonWithImage>
+      </StyledTableTitle>
+      {props.headers ? <TableHeader>hello?</TableHeader> : null}
+      <TableContent
+        height={parseInt(props.rowHeight.replace(/[^0-9]/g, "")) * props.rowNum}
+      >
+        <MyFriends datas={props.datas} />
+      </TableContent>
+    </TableWrap>
+  );
 }
 
-export default Table
+export default Table;
 
 Table.propTypes = {
-
+  rowNum: PropTypes.number,
+  rowHeight: PropTypes.string,
+  width: PropTypes.string,
+  title: PropTypes.string,
+  headers: PropTypes.array,
+  datas: PropTypes.array,
 };
-  
+
 Table.defaultProps = {
-
+  rowNum: 5,
+  height: "45px",
+  width: "48%",
+  title: "Table Title",
+  headers: null,
+  // datas: null,
+  datas: [
+    {
+      profile_image:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
+      username: "arara",
+      subscribe: true,
+      dispatch: true,
+    },
+    {
+      profile_image:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
+      username: "arara90",
+      subscribe: true,
+      dispatch: true,
+    },
+    {
+      profile_image:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
+      username: "hello",
+      subscribe: false,
+      dispatch: true,
+    },
+    {
+      profile_image:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down.png",
+      username: "hey",
+      subscribe: true,
+      dispatch: true,
+    },
+    {
+      profile_image:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
+      username: "parkh",
+      subscribe: true,
+      dispatch: true,
+    },
+    {
+      profile_image:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check-valid.png",
+      username: "admin",
+      subscribe: true,
+      dispatch: false,
+    },
+  ],
 };
-  
