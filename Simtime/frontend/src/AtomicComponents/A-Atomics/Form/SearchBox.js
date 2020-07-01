@@ -13,7 +13,6 @@ import {
 } from "../../Colors";
 
 const Wrap = styled.div`
-  border: solid 1px green;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   position: relative;
@@ -26,6 +25,8 @@ const Select = styled.input`
 
   padding-left: 4px;
   padding-right: 30px;
+  border: solid 1px ${ST_SEMI_YELLOW};
+  border-radius: 6px;
 
   width: ${(props) => props.width};
   height: ${(props) => props.height};
@@ -39,23 +40,16 @@ const Select = styled.input`
   ${(props) =>
     props.isValid
       ? `  
-      background-size: 18px;
-      background-repeat: no-repeat;
-      background-image: url("https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check-valid.png");
-      background-position: 94% center;`
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-image: url("static/img/icons/check-valid.png");
+  background-position: 94% center;`
       : null};
 
   ::placeholder {
     color: ${ST_GRAY};
     font-size: 15px;
     font-weight: 300;
-  }
-
-  border: none;
-
-  &:focus {
-    outline: none;
-    // border: none;
   }
 `;
 

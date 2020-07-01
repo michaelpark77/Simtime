@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { ST_WHITE, ST_GRAY } from "../../Colors";
+import InputWrap from "../../A-Atomics/Filter/InputWrap";
 
 const Wrap = styled.div`
   width: ${(props) => props.width};
@@ -20,7 +21,7 @@ const Icon = styled.div`
   height: ${(props) => props.size};
 `;
 
-const SearchBox = styled.input`
+const MyInput = styled(InputWrap)`
   width: 118px;
   color: ${ST_GRAY};
 
@@ -44,11 +45,11 @@ const SearchBox = styled.input`
 `;
 
 function Search(props) {
-  const { width, height, value } = props;
+  const { width, height, value, desc } = props;
   return (
     <Wrap {...props}>
       <Icon size={height} />
-      <SearchBox value={value}></SearchBox>
+      <MyInput desc={desc} height="24px"></MyInput>
     </Wrap>
   );
 }
@@ -65,4 +66,5 @@ Search.defaultProps = {
   width: "150px",
   height: "30px",
   value: "Search",
+  desc: "Search",
 };

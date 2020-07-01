@@ -31,17 +31,19 @@ const TableContent = styled.div`
 `;
 
 function Table(props) {
+  const renderButton = (button) => {
+    return (
+      <ButtonWithImage height="20px" width="auto" imgurl={button.url}>
+        {button.content}
+      </ButtonWithImage>
+    );
+  };
+
   return (
     <TableWrap {...props}>
       <StyledTableTitle>
         <Header type="h4">{props.title}</Header>
-        <ButtonWithImage
-          height="20px"
-          width="auto"
-          imgurl="https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png"
-        >
-          Add
-        </ButtonWithImage>
+        {props.addButton ? renderButton(props.button) : null}
       </StyledTableTitle>
       {props.headers ? <TableHeader>hello?</TableHeader> : null}
       <TableContent
@@ -56,19 +58,27 @@ function Table(props) {
 export default Table;
 
 Table.propTypes = {
+  title: PropTypes.string,
+  needButton: PropTypes.bool,
+  button: PropTypes.object,
+  width: PropTypes.string,
   rowNum: PropTypes.number,
   rowHeight: PropTypes.string,
-  width: PropTypes.string,
-  title: PropTypes.string,
   headers: PropTypes.array,
   datas: PropTypes.array,
 };
 
 Table.defaultProps = {
-  rowNum: 5,
-  height: "45px",
-  width: "48%",
   title: "Table Title",
+  addButton: false,
+  button: {
+    content: "Add",
+    url:
+      "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
+  },
+  width: "48%",
+  rowNum: 5,
+  rowHeight: "45px",
   headers: null,
   // datas: null,
   datas: [
