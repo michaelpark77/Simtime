@@ -35,7 +35,7 @@ const MySelect = styled.div`
       ? `
       background-size: 15px;
       background-repeat: no-repeat;
-      background-image: url("static/img/icons/arrow-down2.png");
+      background-image: url("https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down2.png");
       background-position: 88% center;`
       : null};
 `;
@@ -71,6 +71,16 @@ const Option = styled.div`
   &:hover {
     background-color: ${ST_YELLOW_LIGHT};
   }
+
+  ${(props) =>
+    props.isSelected
+      ? `
+      font-weight: 600;
+      background-size: 12px;
+      background-repeat: no-repeat;
+      background-image: url("https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check.png");
+      background-position: 88% center;`
+      : null}
 `;
 
 export class SelectBoxRef extends Component {
@@ -129,7 +139,7 @@ export class SelectBoxRef extends Component {
           return (
             <Option
               key={option}
-              isSelected={option === this.props.selectedOption}
+              isSelected={option === this.state.selectedOption}
               onClick={(e) => this.changeSelectedOptions(option, e)}
             >
               {option}
@@ -146,6 +156,7 @@ export class SelectBoxRef extends Component {
         <MySelect
           onClick={this.changeShowOptions}
           height={this.props.height}
+          width={this.props.width}
           name={this.props.name}
           value={this.state.selectedOption}
           arrow={this.props.arrow}

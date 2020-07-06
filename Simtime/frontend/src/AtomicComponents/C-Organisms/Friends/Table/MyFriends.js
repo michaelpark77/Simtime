@@ -99,5 +99,49 @@ MyFriends.propTypes = {
 MyFriends.defaultProps = {
   title: "Table Title",
   headers: null,
-  datas: null,
+  // datas: null,
+  datas: [
+    {
+      profile_image:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
+      username: "arara",
+      subscribe: true,
+      dispatch: true,
+    },
+    {
+      profile_image:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
+      username: "arara90",
+      subscribe: true,
+      dispatch: true,
+    },
+    {
+      profile_image:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
+      username: "hello",
+      subscribe: false,
+      dispatch: true,
+    },
+    {
+      profile_image:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down.png",
+      username: "hey",
+      subscribe: true,
+      dispatch: true,
+    },
+    {
+      profile_image:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
+      username: "parkh",
+      subscribe: true,
+      dispatch: true,
+    },
+    {
+      profile_image:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check-valid.png",
+      username: "admin",
+      subscribe: true,
+      dispatch: false,
+    },
+  ],
 };

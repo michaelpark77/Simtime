@@ -15,14 +15,15 @@ const Wrap = styled.div`
 const Icon = styled.div`
   background-size: 15px;
   background-repeat: no-repeat;
-  background-image: url("static/img/icons/search.png");
+  background-image: url("https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/search.png");
   background-position: center center;
   width: ${(props) => props.size};
   height: ${(props) => props.size};
 `;
 
 const MyInput = styled(InputWrap)`
-  width: 118px;
+  width: auto;
+  height: 99%;
   color: ${ST_GRAY};
 
   border-width: 0px;
@@ -48,8 +49,8 @@ function Search(props) {
   const { width, height, value, desc } = props;
   return (
     <Wrap {...props}>
-      <Icon size={height} />
       <MyInput desc={desc} height="24px"></MyInput>
+      <Icon size={height} />
     </Wrap>
   );
 }
@@ -63,7 +64,7 @@ Search.propTypes = {
 };
 
 Search.defaultProps = {
-  width: "150px",
+  width: "120px",
   height: "30px",
   value: "Search",
   desc: "Search",

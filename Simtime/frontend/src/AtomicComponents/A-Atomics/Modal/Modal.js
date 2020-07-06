@@ -55,7 +55,7 @@ const Modal = (props) => {
           {children}
           <CloseButton
             onClick={onClose}
-            src="static/img/icons/close-wh.png"
+            src="https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/close-wh.png"
             width="20px"
             height="20px"
           ></CloseButton>

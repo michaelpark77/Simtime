@@ -25,13 +25,39 @@ const Select = styled.select`
     props.arrow
       ? ` background-size: 15px;
   background-repeat: no-repeat;
-  background-image: url("static/img/icons/arrow-down2.png");
+  background-image: url("https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down2.png");
   background-position: 92% center;
 `
       : null}
 
   select::--ms-expand {
     opacity: 0;
+    outline: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  & > option {
+    color: black;
+    background: white;
+    font-weight: small;
+    display: flex;
+    white-space: pre;
+    height: 30px;
+    min-height: 30px;
+    padding: 1px 2px 1px 2px;
+
+    &:hover {
+      outline: none;
+      background: yellow;
+    }
+
+    &:focus {
+      outline: none;
+      background: yellow;
+    }
   }
 `;
 

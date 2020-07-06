@@ -6,7 +6,6 @@ import TableHeader from "../../A-Atomics/Table/TableHeader";
 import TableTitle from "../../A-Atomics/Table/TableTitle";
 import Header from "../../A-Atomics/Font/Header";
 import ButtonWithImage from "../../B-Molecules/Button/ButtonWithImage";
-import MyFriends from "../../C-Organisms/Friends/Table/MyFriends";
 
 const TableWrap = styled.div`
   height: auto;
@@ -33,7 +32,12 @@ const TableContent = styled.div`
 function Table(props) {
   const renderButton = (button) => {
     return (
-      <ButtonWithImage height="20px" width="auto" imgurl={button.url}>
+      <ButtonWithImage
+        height="20px"
+        width="auto"
+        imgurl={button.url}
+        onClick={() => props.onButtonClick()}
+      >
         {button.content}
       </ButtonWithImage>
     );
@@ -42,14 +46,16 @@ function Table(props) {
   return (
     <TableWrap {...props}>
       <StyledTableTitle>
-        <Header type="h4">{props.title}</Header>
+        <Header type="h4" color={props.titleColor}>
+          {props.title}
+        </Header>
         {props.addButton ? renderButton(props.button) : null}
       </StyledTableTitle>
       {props.headers ? <TableHeader>hello?</TableHeader> : null}
       <TableContent
         height={parseInt(props.rowHeight.replace(/[^0-9]/g, "")) * props.rowNum}
       >
-        <MyFriends datas={props.datas} />
+        {props.children}
       </TableContent>
     </TableWrap>
   );
@@ -59,7 +65,9 @@ export default Table;
 
 Table.propTypes = {
   title: PropTypes.string,
-  needButton: PropTypes.bool,
+  titleColor: PropTypes.string,
+  addButton: PropTypes.bool,
+  onButtonClick: PropTypes.func,
   button: PropTypes.object,
   width: PropTypes.string,
   rowNum: PropTypes.number,
@@ -70,7 +78,11 @@ Table.propTypes = {
 
 Table.defaultProps = {
   title: "Table Title",
+  titleColor: "TEXT",
   addButton: false,
+  onButtonClick: () => {
+    alert("click");
+  },
   button: {
     content: "Add",
     url:
@@ -80,49 +92,5 @@ Table.defaultProps = {
   rowNum: 5,
   rowHeight: "45px",
   headers: null,
-  // datas: null,
-  datas: [
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "arara",
-      subscribe: true,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "arara90",
-      subscribe: true,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
-      username: "hello",
-      subscribe: false,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down.png",
-      username: "hey",
-      subscribe: true,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "parkh",
-      subscribe: true,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check-valid.png",
-      username: "admin",
-      subscribe: true,
-      dispatch: false,
-    },
-  ],
+  datas: null,
 };

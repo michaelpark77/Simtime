@@ -1,3 +1,5 @@
+////// Not In Use /////////
+
 import React, { useState, forwardRef } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
@@ -30,10 +32,10 @@ const StyledSelect = styled.div`
   ${(props) =>
     props.arrow
       ? `  
-  background-size: 15px;
-  background-repeat: no-repeat;
-  background-image: url("static/img/icons/arrow-down2.png");
-  background-position: 88% center;`
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-image: url("static/img/icons/arrow-down2.png");
+    background-position: 88% center;`
       : null};
 `;
 
@@ -74,6 +76,7 @@ const MySelect = forwardRef((props, ref) => <StyledSelect ref={ref} />);
 
 function SelectBox(props) {
   const { width, height, defaultOption, options, name, arrow, cursor } = props;
+
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultOption);
 
