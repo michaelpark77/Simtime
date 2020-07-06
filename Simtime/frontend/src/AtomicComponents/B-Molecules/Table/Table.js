@@ -36,7 +36,7 @@ function Table(props) {
         height="20px"
         width="auto"
         imgurl={button.url}
-        onClick={() => props.onButtonClick()}
+        onClick={() => handleButtonClick}
       >
         {button.content}
       </ButtonWithImage>
@@ -67,7 +67,7 @@ Table.propTypes = {
   title: PropTypes.string,
   titleColor: PropTypes.string,
   addButton: PropTypes.bool,
-  onButtonClick: PropTypes.func,
+  handleButtonClick: PropTypes.func,
   button: PropTypes.object,
   width: PropTypes.string,
   rowNum: PropTypes.number,
@@ -80,7 +80,7 @@ Table.defaultProps = {
   title: "Table Title",
   titleColor: "TEXT",
   addButton: false,
-  onButtonClick: () => {
+  handleButtonClick: () => {
     alert("click");
   },
   button: {

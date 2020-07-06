@@ -2,8 +2,8 @@ import React, { useCallback } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import Table from "../../Table/Table";
-import SelectTable from "../../Table/SelectTable";
+import Table from "../../../B-Molecules/Table/Table";
+import SelectTable from "../../../B-Molecules/Table/SelectTable";
 import UserCardForList from "../../../B-Molecules/User/UserCardForList";
 
 const UserCard = styled(UserCardForList)`
@@ -11,6 +11,20 @@ const UserCard = styled(UserCardForList)`
 `;
 
 function ResultTable(props) {
+
+  const renderRows = (datas = []) => {
+    return datas.map((data, index) => {
+      return  ( 
+        <UserCard
+        key={data.username}
+        username={data.username}
+        imageSize="32px"
+        url={data.profile_image}
+      />);
+    });
+  };
+
+
   return (
     <Table
       title={props.title}
@@ -18,7 +32,9 @@ function ResultTable(props) {
       width="100%"
       rowNum={props.rowNum}
     >
-      <SelectTable></SelectTable>
+      <SelectTable>
+        {renderRows(props.datas)}
+      </SelectTable>
     </Table>
   );
 }

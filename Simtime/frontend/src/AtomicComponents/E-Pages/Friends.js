@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ST_WHITE, ST_GRAY } from "../Colors";
 
-import Table from "../C-Organisms/Table/Table";
+import Table from "../B-Molecules/Table/Table";
 import Header from "../A-Atomics/Font/Header";
 import Search from "../B-Molecules/Filter/Search";
 

@@ -146,7 +146,7 @@ function DefaultModal(props) {
             <Button onClick={(e) => handleClick(e, page - 1)}>Prev</Button>
           </ButtonWrap>
           <ButtonWrap width="48%">
-            <Button type="submit">Done</Button>
+            <Button type="submit" onSubmit={(e) =>handleSubmit()}>Done</Button>
           </ButtonWrap>
         </Fragment>
       );
@@ -171,7 +171,7 @@ function DefaultModal(props) {
         {props.title && <ModalTitle>{props.title}</ModalTitle>}
       </HeaderWrap>
 
-      <ContentWrap onSubmit={handleSubmit} encType="multipart/form-data">
+      <ContentWrap encType="multipart/form-data">
         {renderPages()}
         <Buttons>{renderButtons(page)}</Buttons>
       </ContentWrap>

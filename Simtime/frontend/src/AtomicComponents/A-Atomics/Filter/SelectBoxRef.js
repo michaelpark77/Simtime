@@ -119,7 +119,10 @@ export class SelectBoxRef extends Component {
       selectedOption: option,
     }));
 
-    this.props.meridiemChange(option);
+
+    //이거 정리필요
+    if( this.props.meridiemChange) this.props.meridiemChange(option);
+    
   }
 
   renderOptions = (options) => {
