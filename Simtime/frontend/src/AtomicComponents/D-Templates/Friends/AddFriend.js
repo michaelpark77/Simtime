@@ -28,6 +28,7 @@ const ResultWrap = styled.div`
   margin-bottom: 10px;
 `;
 const Result = styled(ResultTable)``;
+const Groups = styled(ResultTable)``;
 
 function AddFriend(props) {
   const renderChild = () => {
@@ -44,6 +45,7 @@ function AddFriend(props) {
 
         <ResultWrap>
           <Result
+            datas={props.resultData}
             title="Result"
             titleColor="MAIN_COLOR"
             width="100%"
@@ -52,12 +54,13 @@ function AddFriend(props) {
         </ResultWrap>
 
         <ResultWrap>
-          <Result
+          <Groups
+            datas={props.resultData}
             title="Group"
             titleColor="MAIN_COLOR"
             width="100%"
             rowNum={3}
-          ></Result>
+          ></Groups>
         </ResultWrap>
       </Fragment>
     );
@@ -78,4 +81,36 @@ AddFriend.propTypes = {
 AddFriend.defaultProps = {
   height: "548px",
   width: "320px",
+  resultData: [
+    {
+      id: 0,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
+      name: "arara",
+    },
+    {
+      id: 1,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
+      name: "hello",
+    },
+    {
+      id: 2,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down.png",
+      name: "hey",
+    },
+    {
+      id: 3,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
+      name: "parkh",
+    },
+    {
+      id: 4,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check-valid.png",
+      name: "admin",
+    },
+  ],
 };

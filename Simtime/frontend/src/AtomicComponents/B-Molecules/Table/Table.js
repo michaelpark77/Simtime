@@ -36,7 +36,7 @@ function Table(props) {
         height="20px"
         width="auto"
         imgurl={button.url}
-        onClick={() => handleButtonClick}
+        onClick={() => props.handleButtonClick()}
       >
         {button.content}
       </ButtonWithImage>

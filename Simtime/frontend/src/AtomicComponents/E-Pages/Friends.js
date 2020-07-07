@@ -115,7 +115,7 @@ function Friends(props) {
           <Table
             title="My Friends"
             addButton={true}
-            onButtonClick={() => handleOpenModal("friend")}
+            handleButtonClick={() => handleOpenModal("friend")}
             width="48%"
             rowHeight="45px"
             rowNum={6}
@@ -133,7 +133,7 @@ function Friends(props) {
           <Table
             title="My Groups"
             addButton={true}
-            onButtonClick={() => handleOpenModal("group")}
+            handleButtonClick={() => handleOpenModal("group")}
             width="100%"
             rowHeight="45px"
             rowNum={5}

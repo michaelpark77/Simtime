@@ -1,29 +1,55 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+import {
+  MAIN_COLOR,
+  ST_YELLOW_LIGHT,
+  ST_SEMI_YELLOW,
+  ST_SEMI_GRAY,
+  ST_WHITE,
+} from "../../../Colors";
+
+import TableRow from "../../../A-Atomics/Table/TableRow";
 import Table from "../../../B-Molecules/Table/Table";
 import SelectTable from "../../../B-Molecules/Table/SelectTable";
 import UserCardForList from "../../../B-Molecules/User/UserCardForList";
 
+const Row = styled(TableRow)`
+  cursor: pointer;
+`;
 const UserCard = styled(UserCardForList)`
   cursor: pointer;
 `;
 
 function ResultTable(props) {
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
+  const handleClick = (e, id) => {
+    console.log(id);
+    e.preventDefault();
+    setSelectedOption(id);
+  };
   const renderRows = (datas = []) => {
     return datas.map((data, index) => {
-      return  ( 
-        <UserCard
-        key={data.username}
-        username={data.username}
-        imageSize="32px"
-        url={data.profile_image}
-      />);
+      return (
+        <Row
+          key={data.id}
+          onClick={(e) => handleClick(e, data.id)}
+          isSelected={data.id == selectedOption}
+          // isSelected={selectedOptions.includes(data.id)}
+          selectIcon
+        >
+          <UserCard
+            username={data.name}
+            imageSize="32px"
+            url={data.image_url}
+          />
+        </Row>
+      );
     });
   };
-
 
   return (
     <Table
@@ -32,11 +58,20 @@ function ResultTable(props) {
       width="100%"
       rowNum={props.rowNum}
     >
-      <SelectTable>
-        {renderRows(props.datas)}
-      </SelectTable>
+      {renderRows(props.datas)}
     </Table>
   );
+
+  // return (
+  //   <Table
+  //     title={props.title}
+  //     titleColor={props.titleColor}
+  //     width="100%"
+  //     rowNum={props.rowNum}
+  //   >
+  //     <SelectTable children={<UserCard />} />
+  //   </Table>
+  // );
 }
 
 export default ResultTable;
@@ -52,37 +87,5 @@ ResultTable.defaultProps = {
   title: "Table Title",
   titleColor: "MAIN_COLOR",
   rowNum: 3,
-  // datas: null,
-  datas: [
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "arara",
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "arara90",
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
-      username: "hello",
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down.png",
-      username: "hey",
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "parkh",
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check-valid.png",
-      username: "admin",
-    },
-  ],
+  datas: [{ id: 0 }],
 };
