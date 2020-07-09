@@ -113,6 +113,13 @@ export class SelectBoxRef extends Component {
     }));
   }
 
+  changeShowOptions(e) {
+    e.preventDefault();
+    this.setState((state) => ({
+      ...state,
+      showOptions: !state.showOptions,
+    }));
+  }
   changeSelectedOptions(option) {
     this.setState((state) => ({
       ...state,

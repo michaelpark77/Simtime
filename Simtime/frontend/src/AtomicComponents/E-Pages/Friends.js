@@ -149,7 +149,6 @@ function Friends(props) {
       </Section>
 
       {isModalOpen && (
-        <form onSubmit={(e) => handleSubmit(e)}>
           <ModalPortal
             children={
               <Modal onClose={handleCloseModal}>
@@ -157,7 +156,6 @@ function Friends(props) {
               </Modal>
             }
           ></ModalPortal>
-        </form>
       )}
     </Wrap>
   );

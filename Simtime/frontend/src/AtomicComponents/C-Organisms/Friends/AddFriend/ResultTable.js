@@ -17,32 +17,43 @@ const ImageCard = styled(UserCardForList)`
 function ResultTable(props) {
   //UI용
   const [selectionFilter, setSelectionFilter] = useState([]);
-  const [defaultFilter, setDefaultFilter] = useState([]);
-
-  useEffect(() => {
-    let tmp = props.datas.map(function (data) {
-      return false;
-    });
-    setDefaultFilter(tmp);
-    setSelectionFilter(tmp);
-  }, []);
+  // const [defaultFilter, setDefaultFilter] = useState([]);
+  // useEffect(() => {
+  //   let tmp = props.datas.map(function (data) {
+  //     return false;
+  //   });
+  //   setDefaultFilter(tmp);
+  //   setSelectionFilter(tmp);
+  // }, []);
 
   const handleClick = (e, id) => {
     e.preventDefault();
-    var res = props.multiple ? [...selectionFilter] : [...defaultFilter];
-    res[id] = !res[id];
+    var res = [];
+
+    if(props.multiple){
+      if(selectionFilter.indexOf(id) > -1){ // = selectionFilter.includes(id)
+        res = selectionFilter.filter((selection) => selection != id);
+      }else res = [...selectionFilter, id]
+    }else{
+      res= [id];
+    }
+
     setSelectionFilter(res);
-    props.onSelect(props.datas.filter((data) => res[data.id]));
+    props.onSelect(res);
+    // var res = props.multiple ? [...selectionFilter] : [...defaultFilter];
+    // res[id] = !res[id];
+    // setSelectionFilter(res);
+    // props.onSelect(props.datas.filter((data) => res[data.id]));
   };
 
   const renderRows = (datas = []) => {
-    // console.log("renderRows", selectionFilter);
+    console.log("renderRows", selectionFilter);
     return datas.map((data, index) => {
       return (
         <Row
           key={data.id}
           onClick={(e) => handleClick(e, data.id)}
-          isSelected={selectionFilter[data.id]}
+          isSelected={selectionFilter.includes(data.id)}
           selectIcon
         >
           <ImageCard

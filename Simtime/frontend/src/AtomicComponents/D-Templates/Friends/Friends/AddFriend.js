@@ -2,11 +2,15 @@ import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+import { connect } from "react-redux";
+import { createRelationship } from "../../../../actions/events";
+
 import DefaultModal from "../../../B-Molecules/Modal/DefaultModal";
 import SelectBoxRef from "../../../A-Atomics/Filter/SelectBoxRef";
 import Search from "../../../B-Molecules/Filter/Search";
 import ResultTable from "../../../C-Organisms/Friends/AddFriend/ResultTable";
 import { MAIN_COLOR } from "../../../Colors";
+
 
 const SearchWrap = styled.div`
   width: 100%;
@@ -35,10 +39,9 @@ function AddFriend(props) {
   const [groups, setGroups] = useState([]);
 
   const handleSubmit = () => {
-    console.log({
-      friend: friend[0].id,
-      groups: groups.map((group) => group.id),
-    });
+    console.log("요기", {account: props.user.id,friend: friend});
+
+    createRelationship({ account: props.user.id, friend: friend})
   };
 
   const renderChild = () => {
@@ -50,7 +53,7 @@ function AddFriend(props) {
             defaultOption="Username"
             width="102px"
           ></StyledSelectBox>
-          <StyledSearch width="auto" desc="Find a friend" height="25px" />
+          <StyledSearch width="auto" desc="Find a friend" height="25px"  />
         </SearchWrap>
 
         <ResultWrap>
@@ -88,12 +91,16 @@ function AddFriend(props) {
       title="Add Friend"
       children={renderChild()}
       totalPage={0}
-      handleSubmit={handleSubmit}
+      handleSubmit={()=>handleSubmit()}
     ></DefaultModal>
   );
 }
 
-export default AddFriend;
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
+// export default AddFriend;
+export default connect(mapStateToProps,{createRelationship})(AddFriend);
 
 AddFriend.propTypes = {
   height: PropTypes.string,
@@ -105,31 +112,31 @@ AddFriend.defaultProps = {
   width: "320px",
   resultData: [
     {
-      id: 0,
-      image_url:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      name: "arara",
-    },
-    {
-      id: 1,
-      image_url:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
-      name: "hello",
-    },
-    {
-      id: 2,
-      image_url:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down.png",
-      name: "hey",
-    },
-    {
       id: 3,
       image_url:
         "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      name: "parkh",
+      name: "ara",
     },
     {
       id: 4,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
+      name: "arara",
+    },
+    {
+      id: 19,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down.png",
+      name: "aasa",
+    },
+    {
+      id: 7,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
+      name: "ara2",
+    },
+    {
+      id: 5,
       image_url:
         "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check-valid.png",
       name: "admin",

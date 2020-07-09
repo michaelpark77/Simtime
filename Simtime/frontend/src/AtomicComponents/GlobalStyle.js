@@ -26,6 +26,11 @@ const GlobalStyle = createGlobalStyle`
   &:hover {
     background-color: ${Color["ST_SEMI_YELLOW"]};
   }
+
+  
+  &:active {
+    background-color: ${Color["ST_SEMI_YELLOW"]};
+  }
 }
 
 &::-webkit-scrollbar-track {
