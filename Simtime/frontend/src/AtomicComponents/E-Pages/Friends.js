@@ -10,7 +10,7 @@ import MyFriends from "../C-Organisms/Friends/Table/MyFriends";
 
 import Modal from "../A-Atomics/Modal/Modal";
 import ModalPortal from "../A-Atomics/Modal/ModalPortal";
-import AddFriend from "../D-Templates/Friends/AddFriend";
+import AddFriend from "../D-Templates/Friends/Friends/AddFriend";
 
 import DialogModal from "../B-Molecules/Modal/DialogModal";
 import DefaultModal from "../B-Molecules/Modal/DefaultModal";
@@ -45,6 +45,11 @@ const ContentWrap = styled.div`
 function Friends(props) {
   const [isModalOpen, setIsOpenModal] = useState(true);
   const [targetModal, setTargetModal] = useState("friend"); //friend, group
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("hello");
+  };
 
   const handleOpenModal = (target) => {
     setTargetModal(target);
@@ -144,13 +149,15 @@ function Friends(props) {
       </Section>
 
       {isModalOpen && (
-        <ModalPortal
-          children={
-            <Modal onClose={handleCloseModal}>
-              {targetModal == "friend" ? <AddFriend /> : <DefaultModal />}
-            </Modal>
-          }
-        ></ModalPortal>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <ModalPortal
+            children={
+              <Modal onClose={handleCloseModal}>
+                {targetModal == "friend" ? <AddFriend /> : <DefaultModal />}
+              </Modal>
+            }
+          ></ModalPortal>
+        </form>
       )}
     </Wrap>
   );

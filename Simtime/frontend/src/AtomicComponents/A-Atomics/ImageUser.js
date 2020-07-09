@@ -34,7 +34,7 @@ ImageUser.propTypes = {
 };
 
 ImageUser.defaultProps = {
-  url: "static/img/icons/user-basic.png",
+  url: "",
   width: "40px",
   height: "40px",
 };

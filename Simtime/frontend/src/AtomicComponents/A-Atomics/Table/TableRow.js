@@ -31,10 +31,13 @@ const Content = styled.div`
 `;
 
 export class TableRow extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <Wrap {...this.props} isOdd={this.props.rowNum % 2 == 1}>
-        <Content {...this.props}></Content>
+        <Content>{this.props.children}</Content>
       </Wrap>
     );
   }

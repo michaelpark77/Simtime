@@ -1,14 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-
-import {
-  MAIN_COLOR,
-  ST_YELLOW_LIGHT,
-  ST_SEMI_YELLOW,
-  ST_SEMI_GRAY,
-  ST_WHITE,
-} from "../../../Colors";
 
 import TableRow from "../../../A-Atomics/Table/TableRow";
 import Table from "../../../B-Molecules/Table/Table";
@@ -18,30 +10,42 @@ import UserCardForList from "../../../B-Molecules/User/UserCardForList";
 const Row = styled(TableRow)`
   cursor: pointer;
 `;
-const UserCard = styled(UserCardForList)`
+const ImageCard = styled(UserCardForList)`
   cursor: pointer;
 `;
 
 function ResultTable(props) {
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  //UI용
+  const [selectionFilter, setSelectionFilter] = useState([]);
+  const [defaultFilter, setDefaultFilter] = useState([]);
+
+  useEffect(() => {
+    let tmp = props.datas.map(function (data) {
+      return false;
+    });
+    setDefaultFilter(tmp);
+    setSelectionFilter(tmp);
+  }, []);
 
   const handleClick = (e, id) => {
-    console.log(id);
     e.preventDefault();
-    setSelectedOption(id);
+    var res = props.multiple ? [...selectionFilter] : [...defaultFilter];
+    res[id] = !res[id];
+    setSelectionFilter(res);
+    props.onSelect(props.datas.filter((data) => res[data.id]));
   };
+
   const renderRows = (datas = []) => {
+    // console.log("renderRows", selectionFilter);
     return datas.map((data, index) => {
       return (
         <Row
           key={data.id}
           onClick={(e) => handleClick(e, data.id)}
-          isSelected={data.id == selectedOption}
-          // isSelected={selectedOptions.includes(data.id)}
+          isSelected={selectionFilter[data.id]}
           selectIcon
         >
-          <UserCard
+          <ImageCard
             username={data.name}
             imageSize="32px"
             url={data.image_url}
@@ -61,20 +65,9 @@ function ResultTable(props) {
       {renderRows(props.datas)}
     </Table>
   );
-
-  // return (
-  //   <Table
-  //     title={props.title}
-  //     titleColor={props.titleColor}
-  //     width="100%"
-  //     rowNum={props.rowNum}
-  //   >
-  //     <SelectTable children={<UserCard />} />
-  //   </Table>
-  // );
 }
 
-export default ResultTable;
+export default React.memo(ResultTable);
 
 ResultTable.propTypes = {
   title: PropTypes.string,

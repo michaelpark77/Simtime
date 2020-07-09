@@ -23,6 +23,7 @@ const selectedStyle = {
 
 function SelectTable(props) {
   const [selectedOption, setSelectedOption] = useState(props.defaultOption);
+  var selectionFilter = [];
 
   const handleClick = (d) => {
     console.log(d);
@@ -30,10 +31,15 @@ function SelectTable(props) {
 
   let fn = (child) => {
     console.log(child.key, selectedOption);
+
     var style =
       child.key == selectedOption
         ? { ...child.props.style, ...selectedStyle }
         : null;
+
+    //Filter
+    selectionFilter.push(child.key == selectedOption);
+    console.log("selectionFilter : ", selectionFilter);
 
     return React.cloneElement(child, {
       style,

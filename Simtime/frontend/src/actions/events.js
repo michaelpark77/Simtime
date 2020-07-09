@@ -1,5 +1,5 @@
 import { createMessage, returnErrors } from "./messages";
-import { axiosInstance, axiosInstanceEvent } from "./axiosApi";
+import { axiosInstance, axiosFormInstance } from "./axiosApi";
 import axios from "axios";
 import { getCookie } from "./cookie";
 
@@ -14,7 +14,7 @@ import {
 } from "./types";
 
 export const getEvents = () => (dispatch) => {
-  axiosInstanceEvent
+  axiosFormInstance
     .get("/api/events/")
     .then((res) => {
       dispatch({
@@ -41,12 +41,13 @@ export const addEvent = (event, img) => (dispatch) => {
   data.append("host", event.host);
   data.append("event_name", event.event_name);
   data.append("event_time", event.event_time);
+  axiosForInstance;
   data.append("status", event.status);
   data.append("event_place", event.event_place);
   data.append("message", event.message);
   data.append("photo", img);
 
-  axiosInstanceEvent
+  axiosFormInstance
     .post("/api/events/create", data)
     .then((res) => {
       dispatch({
@@ -96,7 +97,7 @@ export const deleteEvent = (id) => (dispatch) => {
 };
 
 export const editEvent = (event) => (dispatch) => {
-  axiosInstanceEvent
+  axiosFormInstance
     .put(`/api/events/${event.id}`, event)
     .then((res) => {
       dispatch({

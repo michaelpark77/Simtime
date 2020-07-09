@@ -1,12 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import DefaultModal from "../../B-Molecules/Modal/DefaultModal";
-import SelectBoxRef from "../../A-Atomics/Filter/SelectBoxRef";
-import Search from "../../B-Molecules/Filter/Search";
-import ResultTable from "../../C-Organisms/Friends/AddFriend/ResultTable";
-import { MAIN_COLOR } from "../../Colors";
+import DefaultModal from "../../../B-Molecules/Modal/DefaultModal";
+import SelectBoxRef from "../../../A-Atomics/Filter/SelectBoxRef";
+import Search from "../../../B-Molecules/Filter/Search";
+import ResultTable from "../../../C-Organisms/Friends/AddFriend/ResultTable";
+import { MAIN_COLOR } from "../../../Colors";
 
 const SearchWrap = styled.div`
   width: 100%;
@@ -31,6 +31,16 @@ const Result = styled(ResultTable)``;
 const Groups = styled(ResultTable)``;
 
 function AddFriend(props) {
+  const [friend, setFriend] = useState(null);
+  const [groups, setGroups] = useState([]);
+
+  const handleSubmit = () => {
+    console.log({
+      friend: friend[0].id,
+      groups: groups.map((group) => group.id),
+    });
+  };
+
   const renderChild = () => {
     return (
       <Fragment>
@@ -50,6 +60,9 @@ function AddFriend(props) {
             titleColor="MAIN_COLOR"
             width="100%"
             rowNum={3}
+            onSelect={(res) => {
+              setFriend(res);
+            }}
           ></Result>
         </ResultWrap>
 
@@ -60,6 +73,10 @@ function AddFriend(props) {
             titleColor="MAIN_COLOR"
             width="100%"
             rowNum={3}
+            onSelect={(res) => {
+              setGroups(res);
+            }}
+            multiple
           ></Groups>
         </ResultWrap>
       </Fragment>
@@ -67,7 +84,12 @@ function AddFriend(props) {
   };
 
   return (
-    <DefaultModal title="Add Friend" children={renderChild()}></DefaultModal>
+    <DefaultModal
+      title="Add Friend"
+      children={renderChild()}
+      totalPage={0}
+      handleSubmit={handleSubmit}
+    ></DefaultModal>
   );
 }
 

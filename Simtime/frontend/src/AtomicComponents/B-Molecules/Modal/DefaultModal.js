@@ -117,6 +117,7 @@ function DefaultModal(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("hadleSubmit");
+    props.handleSubmit();
   };
 
   const handleClick = (e, newPage) => {
@@ -133,22 +134,35 @@ function DefaultModal(props) {
   };
 
   const renderButtons = (page) => {
-    if (page == 0) {
+    if (page == props.totalPage) {
+      if (props.totalPage == 0) {
+        return (
+          <ButtonWrap width="100%">
+            <Button type="submit" onClick={(e) => handleSubmit(e)}>
+              Done
+            </Button>
+          </ButtonWrap>
+        );
+      } else {
+        return (
+          <Fragment>
+            <ButtonWrap width="48%">
+              <Button onClick={(e) => handleClick(e, page - 1)}>Prev</Button>
+            </ButtonWrap>
+
+            <ButtonWrap width="48%">
+              <Button type="submit" onSubmit={(e) => handleSubmit(e)}>
+                Done
+              </Button>
+            </ButtonWrap>
+          </Fragment>
+        );
+      }
+    } else if (page == 0) {
       return (
         <ButtonWrap width="100%">
           <Button onClick={(e) => handleClick(e, page + 1)}>Next</Button>
         </ButtonWrap>
-      );
-    } else if (props.page - 1 == page) {
-      return (
-        <Fragment>
-          <ButtonWrap width="48%">
-            <Button onClick={(e) => handleClick(e, page - 1)}>Prev</Button>
-          </ButtonWrap>
-          <ButtonWrap width="48%">
-            <Button type="submit" onSubmit={(e) =>handleSubmit()}>Done</Button>
-          </ButtonWrap>
-        </Fragment>
       );
     } else {
       return (
@@ -184,13 +198,13 @@ export default DefaultModal;
 DefaultModal.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
-  page: PropTypes.number,
+  totalPage: PropTypes.number,
   title: PropTypes.string,
 };
 
 DefaultModal.defaultProps = {
   height: "548px",
   width: "320px",
-  page: 1,
+  totalPage: 1,
   title: null,
 };
