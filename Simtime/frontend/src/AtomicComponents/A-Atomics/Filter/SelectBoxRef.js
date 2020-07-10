@@ -96,7 +96,14 @@ export class SelectBoxRef extends Component {
     this.changeShowOptions = this.changeShowOptions.bind(this);
     this.changeSelectedOptions = this.changeSelectedOptions.bind(this);
   }
-
+  componentDidMount() {
+    document.querySelector("body").addEventListener("click", this.closeOptions);
+  }
+  componentWillUnmount() {
+    document
+      .querySelector("body")
+      .removeEventListener("click", this.closeOptions);
+  }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.defaultOption !== this.props.defaultOption) {
       this.setState((state) => ({
@@ -105,31 +112,45 @@ export class SelectBoxRef extends Component {
       }));
     }
   }
-
-  changeShowOptions() {
+  closeOptions = () => {
+    console.log("close options");
+    this.setState(
+      {
+        showOptions: false,
+      },
+      () => {
+        console.log("first change");
+      }
+    );
+  };
+  setShowOptions() {
     this.setState((state) => ({
-      ...state,
       showOptions: !state.showOptions,
     }));
   }
 
   changeShowOptions(e) {
-    e.preventDefault();
-    this.setState((state) => ({
-      ...state,
-      showOptions: !state.showOptions,
-    }));
+    e.stopPropagation();
+    // e.preventDefault();
+    this.setState(
+      (state) => ({
+        ...state,
+        showOptions: !state.showOptions,
+      }),
+      () => {
+        console.log("second change");
+      }
+    );
   }
-  changeSelectedOptions(option) {
+  changeSelectedOptions(e, option) {
+    e.stopPropagation();
     this.setState((state) => ({
-      ...state,
+      showOptions: false,
       selectedOption: option,
     }));
 
-
     //이거 정리필요
-    if( this.props.meridiemChange) this.props.meridiemChange(option);
-    
+    if (this.props.meridiemChange) this.props.meridiemChange(option);
   }
 
   renderOptions = (options) => {
@@ -150,7 +171,7 @@ export class SelectBoxRef extends Component {
             <Option
               key={option}
               isSelected={option === this.state.selectedOption}
-              onClick={(e) => this.changeSelectedOptions(option, e)}
+              onClick={(e) => this.changeSelectedOptions(e, option)}
             >
               {option}
             </Option>

@@ -41,7 +41,6 @@ export const addEvent = (event, img) => (dispatch) => {
   data.append("host", event.host);
   data.append("event_name", event.event_name);
   data.append("event_time", event.event_time);
-  axiosForInstance;
   data.append("status", event.status);
   data.append("event_place", event.event_place);
   data.append("message", event.message);
@@ -96,19 +95,6 @@ export const deleteEvent = (id) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const editEvent = (event) => (dispatch) => {
-  axiosFormInstance
-    .put(`/api/events/${event.id}`, event)
-    .then((res) => {
-      dispatch({
-        type: EDIT_EVENT,
-        payload: res.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
-
 export const createRelationship = (friend) => (dispatch) => {
   console.log("createRelationship", friend);
   axiosInstance
@@ -121,3 +107,26 @@ export const createRelationship = (friend) => (dispatch) => {
     });
 };
 
+export const editEvent = (event) => (dispatch) => {
+  axiosFormInstance
+    .put(`/api/events/${event.id}`, event)
+    .then((res) => {
+      dispatch({
+        type: EDIT_EVENT,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+// export const createRelationship = (friend) => (dispatch) => {
+//   console.log("createRelationship", friend);
+//   // axiosInstance
+//   //   .post("/api/friend/create", friend)
+//   //   .then((res) => {
+//   //     dispatch(createMessage({ addFriend: "Friend Added" }));
+//   //   })
+//   //   .catch((err) => {
+//   //     dispatch(returnErrors(err.response.data, err.response.status));
+//   //   });
+// };

@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 
 const StyledContent = (props) => {
   const commonStyle = css`
-    color: ${Colors[props.color]};
-    font-size: ${props.fontSize};
+    color: ${(props) => Colors[props.color]};
+    font-size: ${(props) => props.fontSize};
   `;
 
   switch (props.type) {
