@@ -41,7 +41,6 @@ function ResultTable(props) {
 
   const renderRows = (datas = []) => {
     console.log("renderRows", selectionFilter);
-    console.log("tmp",tmp);
     
     return datas.map((data, index) => {
       return (
