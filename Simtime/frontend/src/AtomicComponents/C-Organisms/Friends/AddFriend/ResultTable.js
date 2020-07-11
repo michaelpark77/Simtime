@@ -14,17 +14,10 @@ const ImageCard = styled(UserCardForList)`
   cursor: pointer;
 `;
 
+
 function ResultTable(props) {
   //UI용
   const [selectionFilter, setSelectionFilter] = useState([]);
-  // const [defaultFilter, setDefaultFilter] = useState([]);
-  // useEffect(() => {
-  //   let tmp = props.datas.map(function (data) {
-  //     return false;
-  //   });
-  //   setDefaultFilter(tmp);
-  //   setSelectionFilter(tmp);
-  // }, []);
 
   const handleClick = (e, id) => {
     e.preventDefault();
@@ -48,6 +41,8 @@ function ResultTable(props) {
 
   const renderRows = (datas = []) => {
     console.log("renderRows", selectionFilter);
+    console.log("tmp",tmp);
+    
     return datas.map((data, index) => {
       return (
         <Row

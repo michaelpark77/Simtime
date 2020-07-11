@@ -98,7 +98,7 @@ export const deleteEvent = (id) => (dispatch) => {
 export const createRelationship = (friend) => (dispatch) => {
   console.log("createRelationship", friend);
   axiosInstance
-    .post("/api/friend/create", friend)
+    .post("/api/friend/create/", friend)
     .then((res) => {
       dispatch(createMessage({ addFriend: "Friend Added" }));
     })

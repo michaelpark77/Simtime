@@ -40,8 +40,7 @@ function AddFriend(props) {
 
   const handleSubmit = () => {
     console.log("요기", {account: props.user.id,friend: friend});
-
-    createRelationship({ account: props.user.id, friend: friend})
+    props.createRelationship({ account: props.user.id, friend: friend[0]})
   };
 
   const renderChild = () => {
