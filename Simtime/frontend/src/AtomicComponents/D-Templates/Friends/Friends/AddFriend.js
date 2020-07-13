@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-
+import 'babel-polyfill';
 import { connect } from "react-redux";
-import { createRelationship } from "../../../../actions/events";
+import { createRelationship,addToGroup } from "../../../../actions/friends";
 
 import DefaultModal from "../../../B-Molecules/Modal/DefaultModal";
 import SelectBoxRef from "../../../A-Atomics/Filter/SelectBoxRef";
@@ -37,28 +37,57 @@ function AddFriend(props) {
   const [friend, setFriend] = useState(null);
   const [groups, setGroups] = useState([]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // console.log("요기", { account: props.user.id, friend: friend });
     // props.createRelationship({ account: props.user.id, friend: friend[0] });
 
-    function create() {
-      return new Promise((resolve, reject) => {
-        if (friend == null) reject(new Error("친구를 선택하세요"));
-        else
-          resolve(
-            props.createRelationship({
-              account: props.user.id,
-              friend: friend[0],
-            })
-          );
-      });
-    }
+    // function newFriend() {
+    //   return new Promise((resolve, reject) => {
+    //     if (friend == null) reject(new Error("친구를 선택하세요"));
+    //     else
+    //       resolve(
+    //         props.createRelationship({
+    //           account: props.user.id,
+    //           friend: friend[0],
+    //           groups: groups
+    //         })
+    //       );
+    //   });
+    // }
+    
+    
+    // function mapToGroup() {
+    //   return new Promise((resolve, reject) => {
+    //     if (group == null) {resolve();}
+    //     else
+    //       resolve(
+    //         props.createRelationship({
+    //           account: props.user.id,
+    //           friend: friend[0],
+    //           groups: groups
+    //         })
+    //       );
+    //   });
+    // }
 
-    create()
-      .then(() => {
-        console.log(result);
-      })
-      .catch((error) => console.log(error));
+    // newFriend()
+    //   .then(() => {
+    //     addToGroup()
+    //   })
+    //   .catch((error) => console.log(error));
+
+    try {
+      const relationship = await props.createRelationship({account: props.user.id, friend: friend[0]})
+      console.log(relationship)
+
+      const group = await props.addToGroup({relationship: relationship.data.id, group: 1 })
+      console.log(group)
+    }catch (err) {
+      // catches errors both in fetch and response.json
+      console.log("relationshipError" , err);
+    }
+    
+
   };
 
   const renderChild = () => {
@@ -117,7 +146,7 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 // export default AddFriend;
-export default connect(mapStateToProps, { createRelationship })(AddFriend);
+export default connect(mapStateToProps, { createRelationship,addToGroup })(AddFriend);
 
 AddFriend.propTypes = {
   height: PropTypes.string,

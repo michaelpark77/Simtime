@@ -1,5 +1,5 @@
 import axios from "axios";
-import { axiosInstance } from "./axiosApi"
+import { axiosInstance, axiosFormInstance } from "./axiosApi"
 import { returnErrors } from "./messages";
 import { setCookie, getCookie } from "./cookie"
 import {
@@ -46,6 +46,7 @@ export const login = (username, password) => dispatch => {
         setCookie('refresh', res.data.refresh, 10 );
         //instance header 설정
         axiosInstance.defaults.headers['Authorization'] = "JWT " + getCookie('access');
+        axiosFormInstance.defaults.headers['Authorization'] = "JWT " + getCookie('access');
         //dispatch
         dispatch({
           type: LOGIN_SUCCESS,

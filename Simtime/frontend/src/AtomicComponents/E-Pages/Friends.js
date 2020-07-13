@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ST_WHITE, ST_GRAY } from "../Colors";
+
+import { connect } from "react-redux";
+import { getGroups } from "../../actions/groups";
 
 import Table from "../B-Molecules/Table/Table";
 import Header from "../A-Atomics/Font/Header";
 import Search from "../B-Molecules/Filter/Search";
 
 import MyFriends from "../C-Organisms/Friends/Table/MyFriends";
+import Groups from "../C-Organisms/Friends/Table/Groups";
+
 
 import Modal from "../A-Atomics/Modal/Modal";
 import ModalPortal from "../A-Atomics/Modal/ModalPortal";
 import AddFriend from "../D-Templates/Friends/Friends/AddFriend";
+import AddGroup from "../D-Templates/Friends/Groups/AddGroup";
 
 import DialogModal from "../B-Molecules/Modal/DialogModal";
 import DefaultModal from "../B-Molecules/Modal/DefaultModal";
@@ -43,8 +49,14 @@ const ContentWrap = styled.div`
 `;
 
 function Friends(props) {
-  const [isModalOpen, setIsOpenModal] = useState(true);
+  const [isModalOpen, setIsOpenModal] = useState(false);
   const [targetModal, setTargetModal] = useState("friend"); //friend, group
+
+
+  useEffect( () => {
+    props.getGroups();
+  },[])
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -143,7 +155,7 @@ function Friends(props) {
             rowHeight="45px"
             rowNum={5}
           >
-            <MyFriends datas={datas} />
+            <Groups datas={props.groups} />
           </Table>
         </ContentWrap>
       </Section>
@@ -152,7 +164,7 @@ function Friends(props) {
           <ModalPortal
             children={
               <Modal onClose={handleCloseModal}>
-                {targetModal == "friend" ? <AddFriend /> : <DefaultModal />}
+                {targetModal == "friend" ? <AddFriend onClose={handleCloseModal}/> : <AddGroup onClose={handleCloseModal}/>}
               </Modal>
             }
           ></ModalPortal>
@@ -161,4 +173,15 @@ function Friends(props) {
   );
 }
 
-export default Friends;
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+  groups: state.groups.groups
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getGroups: () => dispatch(getGroups()),
+  }
+}
+// export default AddGroup;
+export default connect(mapStateToProps, mapDispatchToProps)(Friends);

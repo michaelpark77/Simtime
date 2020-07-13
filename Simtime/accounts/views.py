@@ -7,8 +7,8 @@ from rest_framework_simplejwt.models import TokenUser
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenVerifyView
 
 from .tokenSerializers import MyTokenObtainPairSerializer, MyTokenVerifySerializer
-from .serializers import AccountSerializer, UserSerializer,RelationshipSerializer
-from .models import Account, Relationship
+from .serializers import AccountSerializer, UserSerializer, RelationshipSerializer, GroupSerializer, RGMapSerializer
+from .models import Account, Relationship, FriendGroup, Relationship_FriendGroup_MAP
 
 
 
@@ -92,17 +92,6 @@ class TokenVerify(TokenVerifyView):
 class RelationshipAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
-    # def post(self, request, format='json'):
-    #     serializer = RelationshipSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         relationship = serializer.save()
-    #         if relationship:
-    #             json = serializer.data
-    #             response = Response(json, status=status.HTTP_201_CREATED)    
-    #             return response
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
     def post(self, request):
         print("gre", request.data)
         serializer = RelationshipSerializer(data=request.data)
@@ -110,29 +99,80 @@ class RelationshipAPI(APIView):
             serializer.save(account=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    # def get_object(self, pk):
+    #     try:
+    #         return Relationship.objects.get(pk=pk)
+    #     except Relationship.DoesNotExist:
+    #         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    # def get(self, request, pk):
+    #     relationship = self.get_object(pk)
+    #     serializer = RelationshipSerializer(relationship)
+    #     return Response(serializer.data)
+
+    # def put(self, request, pk):
+    #     relationship = self.get_object(pk)
+    #     serializer = RelationshipSerializer(relationship, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def delete(self, request, pk):
+    #     relationship = self.get_object(pk)
+    #     relationship.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+
+
+#Relationship-Group
+class RGMapAPI(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        print("RGMap", request.data)
+        serializer = RGMapSerializer(data=request.data)
+        if(serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    # def get_object(self, pk):
+    #     try:
+    #         return Relationship.objects.get(pk=pk)
+    #     except Relationship.DoesNotExist:
+    #         return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+#Relationship-Group
+class GroupAPI(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        print("GroupAPI", request.data)
+        serializer = GroupSerializer(data=request.data)
+        if(serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get_object(self, pk):
         try:
-            return Relationship.objects.get(pk=pk)
-        except Relationship.DoesNotExist:
+            return FriendGroup.objects.get(pk=pk)
+        except FriendGroup.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-    def get(self, request, pk):
-        relationship = self.get_object(pk)
-        serializer = RelationshipSerializer(relationship)
+    def get(self, request):
+        groups = self.request.user.FriendGroups.all()
+        serializer = GroupSerializer(groups, many=True)
         return Response(serializer.data)
-
-    def put(self, request, pk):
-        relationship = self.get_object(pk)
-        serializer = RelationshipSerializer(relationship, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # return self.request.user.events.all()  # related_name으로 invitations지정
 
     def delete(self, request, pk):
-        relationship = self.get_object(pk)
-        relationship.delete()
+        group = self.get_object(pk)
+        print(group)
+        group.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+

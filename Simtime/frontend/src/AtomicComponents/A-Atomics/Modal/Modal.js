@@ -54,6 +54,7 @@ const Modal = (props) => {
         <ContentWrap>
           {children}
           <CloseButton
+            className="modalCloseBtn"
             onClick={onClose}
             src="https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/close-wh.png"
             width="20px"

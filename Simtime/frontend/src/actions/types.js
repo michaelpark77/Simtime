@@ -23,3 +23,18 @@ export const LOGOUT = "LOGOUT";
 
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
+
+
+//groups
+export const GET_GROUPS = "GET_GROUPS";
+export const GET_GROUP = "GET_GROUP";
+export const ADD_GROUP = "ADD_GROUP";
+export const DELETE_GROUP = "DELETE_GROUP";
+export const EDIT_GROUP = "EDIT_GROUP";
+
+//friend(relationship)
+export const GET_FRIENDS = "GET_FRIENDS";
+export const GET_FRIEND = "GET_FRIEND";
+export const ADD_FRIEND = "ADD_FRIEND";
+export const DELETE_FRIEND = "DELETE_FRIEND";
+export const EDIT_FRIEND = "EDIT_FRIEND";

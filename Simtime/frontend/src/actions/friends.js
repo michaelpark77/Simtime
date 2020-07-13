@@ -1,7 +1,7 @@
 import { createMessage, returnErrors } from "./messages";
 import { axiosInstance, axiosFormInstance } from "./axiosApi";
-import axios from "axios";
-import { getCookie } from "./cookie";
+// import axios from "axios";
+// import { getCookie } from "./cookie";
 
 import {
   GET_EVENTS,
@@ -15,25 +15,33 @@ import {
 
 export const createRelationship = (friend) => (dispatch) => {
   console.log("createRelationship", friend);
-  axiosInstance
-    .post("/api/friend/create/", friend)
+
+  return axiosInstance
+    .post("/api/friend/create/", {
+      account: friend.account,
+      friend: friend.friend }
+      )
     .then((res) => {
       dispatch(createMessage({ addFriend: "Friend Added" }));
+      return res
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(returnErrors(err.response, err.response.status));
+      return err
     });
 };
 
 // 친구가 속한 그룹 관리
-export const createRGMap = (groupInfo) => (dispatch) => {
-  console.log("createRGMap", groupInfo);
-  axiosInstance
-    .post("/api/friend/create/", friend)
+export const addToGroup = (datas) => (dispatch) => {
+  console.log("addToGroup", datas);
+  return axiosInstance
+    .post("/api/friend/add-to-group/", datas)
     .then((res) => {
-      dispatch(createMessage({ addFriend: "Friend Added" }));
+      dispatch(createMessage({ addToGroup: "Added to Group" }));
+      return res
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
+      return err
     });
 };

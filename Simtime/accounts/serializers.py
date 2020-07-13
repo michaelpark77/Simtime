@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from .models import Account, Relationship
+from .models import Account, Relationship, FriendGroup, Relationship_FriendGroup_MAP
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -45,4 +45,14 @@ class LoginSerializer(serializers.Serializer):
 class RelationshipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Relationship
+        fields = '__all__'
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FriendGroup
+        fields = '__all__'
+
+class RGMapSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Relationship_FriendGroup_MAP
         fields = '__all__'

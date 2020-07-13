@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
-from .views import ObtainTokenPair, TokenVerify, AccountDetailAPI, AccountCreateAPI, AccountLoadAPI, RelationshipAPI
+from .views import ObtainTokenPair, TokenVerify, AccountDetailAPI, AccountCreateAPI, AccountLoadAPI, RelationshipAPI, GroupAPI, RGMapAPI
 
 # data = {'token': token}
 # valid_data = VerifyJSONWebTokenSerializer().validate(data)
@@ -22,8 +22,15 @@ urlpatterns = [
     path('api/auth/account/', AccountLoadAPI.as_view(), name='account_load'),
     path('api/auth/register/', AccountCreateAPI.as_view(), name="account_create"),
     path('api/auth/<int:pk>/', AccountDetailAPI.as_view(), name="account_detail"),
-
-    path('api/friend/create/', RelationshipAPI.as_view(), name='friend_create'),
     # path('api/auth/register/', AccountCreateAPI.as_view(), name="account_create"),
     # path('api/auth/<int:pk>/', AccountDetailAPI.as_view(), name="account_detail"),
+
+    # create friend, group, RGmap
+    path('api/friend/create/', RelationshipAPI.as_view(), name='friend_create'),
+    path('api/friend/add-to-group/', RGMapAPI.as_view(), name='group_add_to'),
+
+    path('api/groups/', GroupAPI.as_view(), name='groups'),
+    path('api/groups/create/', GroupAPI.as_view(), name='group_create'),
+    path('api/groups/<int:pk>', GroupAPI.as_view(), name='group_delete'),
+  
 ]
