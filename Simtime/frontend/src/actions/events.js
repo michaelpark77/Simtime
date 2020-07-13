@@ -95,18 +95,6 @@ export const deleteEvent = (id) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const createRelationship = (friend) => (dispatch) => {
-  console.log("createRelationship", friend);
-  axiosInstance
-    .post("/api/friend/create/", friend)
-    .then((res) => {
-      dispatch(createMessage({ addFriend: "Friend Added" }));
-    })
-    .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-    });
-};
-
 export const editEvent = (event) => (dispatch) => {
   axiosFormInstance
     .put(`/api/events/${event.id}`, event)
@@ -119,14 +107,14 @@ export const editEvent = (event) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-// export const createRelationship = (friend) => (dispatch) => {
-//   console.log("createRelationship", friend);
-//   // axiosInstance
-//   //   .post("/api/friend/create", friend)
-//   //   .then((res) => {
-//   //     dispatch(createMessage({ addFriend: "Friend Added" }));
-//   //   })
-//   //   .catch((err) => {
-//   //     dispatch(returnErrors(err.response.data, err.response.status));
-//   //   });
-// };
+export const createRelationship = (friend) => (dispatch) => {
+  console.log("createRelationship", friend);
+  axiosInstance
+    .post("/api/friend/create/", friend)
+    .then((res) => {
+      dispatch(createMessage({ addFriend: "Friend Added" }));
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};

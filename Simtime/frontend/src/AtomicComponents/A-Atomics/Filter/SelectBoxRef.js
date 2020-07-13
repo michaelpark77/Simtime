@@ -112,6 +112,7 @@ export class SelectBoxRef extends Component {
       }));
     }
   }
+
   closeOptions = () => {
     console.log("close options");
     this.setState(
@@ -123,6 +124,7 @@ export class SelectBoxRef extends Component {
       }
     );
   };
+
   setShowOptions() {
     this.setState((state) => ({
       showOptions: !state.showOptions,

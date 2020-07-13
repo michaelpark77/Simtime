@@ -46,9 +46,14 @@ class FriendGroup(models.Model):
     account = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='FriendGroups')
     group_name = models.CharField(max_length=16, null=False, blank=False)
+    is_default = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(
+            fields=['account', 'group_name'], name='group_name_unique')]
 
 
-# 서로 친구맺기는 구현 전.
 class Relationship(models.Model):
     account = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='friends')
@@ -59,7 +64,7 @@ class Relationship(models.Model):
     dispatch = models.BooleanField(
         null=False, default=True)    # 발신여부 (false면 보내지않음)
     is_friend = models.BooleanField(null=False, default=True)
-
+    created_at = models.DateTimeField(auto_now_add=True)
     # Status = 0;본인 1;request 2.confirm 3; A blocks B 4;B blocks A 5; block each others.
 
     class Meta:
@@ -73,6 +78,7 @@ class Relationship_FriendGroup_MAP(models.Model):  # Which Group
         FriendGroup, on_delete=models.CASCADE, related_name='relationships')
     relationship = models.ForeignKey(
         Relationship, on_delete=models.CASCADE, related_name='groups')
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         constraints = [models.UniqueConstraint(

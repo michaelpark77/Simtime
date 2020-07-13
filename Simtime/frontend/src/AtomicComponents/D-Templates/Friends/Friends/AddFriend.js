@@ -11,7 +11,6 @@ import Search from "../../../B-Molecules/Filter/Search";
 import ResultTable from "../../../C-Organisms/Friends/AddFriend/ResultTable";
 import { MAIN_COLOR } from "../../../Colors";
 
-
 const SearchWrap = styled.div`
   width: 100%;
   display: flex;
@@ -39,8 +38,27 @@ function AddFriend(props) {
   const [groups, setGroups] = useState([]);
 
   const handleSubmit = () => {
-    console.log("요기", {account: props.user.id,friend: friend});
-    props.createRelationship({ account: props.user.id, friend: friend[0]})
+    // console.log("요기", { account: props.user.id, friend: friend });
+    // props.createRelationship({ account: props.user.id, friend: friend[0] });
+
+    function create() {
+      return new Promise((resolve, reject) => {
+        if (friend == null) reject(new Error("친구를 선택하세요"));
+        else
+          resolve(
+            props.createRelationship({
+              account: props.user.id,
+              friend: friend[0],
+            })
+          );
+      });
+    }
+
+    create()
+      .then(() => {
+        console.log(result);
+      })
+      .catch((error) => console.log(error));
   };
 
   const renderChild = () => {
@@ -52,7 +70,7 @@ function AddFriend(props) {
             defaultOption="Username"
             width="102px"
           ></StyledSelectBox>
-          <StyledSearch width="auto" desc="Find a friend" height="25px"  />
+          <StyledSearch width="auto" desc="Find a friend" height="25px" />
         </SearchWrap>
 
         <ResultWrap>
@@ -90,7 +108,7 @@ function AddFriend(props) {
       title="Add Friend"
       children={renderChild()}
       totalPage={0}
-      handleSubmit={()=>handleSubmit()}
+      handleSubmit={() => handleSubmit()}
     ></DefaultModal>
   );
 }
@@ -99,7 +117,7 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 // export default AddFriend;
-export default connect(mapStateToProps,{createRelationship})(AddFriend);
+export default connect(mapStateToProps, { createRelationship })(AddFriend);
 
 AddFriend.propTypes = {
   height: PropTypes.string,
