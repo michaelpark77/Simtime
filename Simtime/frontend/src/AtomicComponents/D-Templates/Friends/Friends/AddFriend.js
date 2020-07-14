@@ -28,7 +28,6 @@ const StyledSearch = styled(Search)`
 
 const ResultWrap = styled.div`
   width: 100%;
-  margin-bottom: 10px;
 `;
 const Result = styled(ResultTable)``;
 const Groups = styled(ResultTable)``;
@@ -138,6 +137,7 @@ function AddFriend(props) {
       children={renderChild()}
       totalPage={0}
       handleSubmit={() => handleSubmit()}
+      height="auto"
     ></DefaultModal>
   );
 }
@@ -154,7 +154,7 @@ AddFriend.propTypes = {
 };
 
 AddFriend.defaultProps = {
-  height: "548px",
+  height: "520px",
   width: "320px",
   resultData: [
     {

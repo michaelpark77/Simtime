@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
-from .views import ObtainTokenPair, TokenVerify, AccountDetailAPI, AccountCreateAPI, AccountLoadAPI, RelationshipAPI, GroupAPI, RGMapAPI
+from .views import ObtainTokenPair, TokenVerify, AccountDetailAPI, AccountCreateAPI, AccountLoadAPI, RelationshipAPI, GroupAPI,GroupDetailAPI, RGMapAPI
 
 # data = {'token': token}
 # valid_data = VerifyJSONWebTokenSerializer().validate(data)
@@ -31,6 +31,9 @@ urlpatterns = [
 
     path('api/groups/', GroupAPI.as_view(), name='groups'),
     path('api/groups/create/', GroupAPI.as_view(), name='group_create'),
-    path('api/groups/<int:pk>', GroupAPI.as_view(), name='group_delete'),
+
+    path('api/group/<int:pk>', GroupDetailAPI.as_view(), name='group_delete'),
+    path('api/group/<int:pk>/', GroupDetailAPI.as_view(), name="group_edit"),
+    path('api/group/<int:pk>/', GroupDetailAPI.as_view(), name="group_detail"),
   
 ]

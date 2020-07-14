@@ -38,18 +38,6 @@ const HeaderWrap = styled.div`
   overflow: hidden;
 `;
 
-const BarWrap = styled.div`
-  position: relative;
-  width: 92%;
-  height: 10%;
-  // min-height: 50px;
-  min-height: 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 const ContentWrap = styled.form`
   position: relative;
   width: 90%;
@@ -181,7 +169,6 @@ function InputModal(props) {
   return (
     <Wrap {...props}>
       <HeaderWrap>
-        <BarWrap>{/* <ProgressBar /> */}</BarWrap>
         {props.title && <ModalTitle>{props.title}</ModalTitle>}
       </HeaderWrap>
 

@@ -13,17 +13,8 @@ function AddGroup(props) {
   // const [groups, setGroups] = useState([]);
 
   const handleSubmit = async () => {
-    try{
-      //중복검사 valid 추가하기.
-      
-      await props.createGroup({account: props.user.id, groupname: groupname})
-      props.onClose()
-      //완성 dialog
-    }
-    catch{
-      console.log("err")
-    }
-
+      var res = await props.createGroup({account: props.user.id, groupname: groupname})
+      if(res)  props.onClose()
     };
 
   const handleChange = useCallback((e) => {

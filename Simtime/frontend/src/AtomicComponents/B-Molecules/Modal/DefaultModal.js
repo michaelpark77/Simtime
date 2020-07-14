@@ -19,6 +19,7 @@ const Wrap = styled.div`
 
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
 
   @media only screen and (max-width: 320px) {
@@ -28,33 +29,30 @@ const Wrap = styled.div`
 
 const HeaderWrap = styled.div`
   width: 100%;
-  // height: 18%;
-  height: 14%;
+  height: 50px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
   overflow: hidden;
 `;
 
-const BarWrap = styled.div`
-  position: relative;
-  width: 92%;
-  height: 10%;
-  // min-height: 50px;
-  min-height: 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+// const BarWrap = styled.div`
+//   position: relative;
+//   width: 92%;
+//   height: 10%;
+//   // min-height: 50px;
+//   min-height: 18px;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 const ContentWrap = styled.form`
   position: relative;
   width: 90%;
-  // height: 82%;
-  height: 84%;
+  height: auto;
 
   display: flex;
   flex-direction: column;
@@ -63,8 +61,8 @@ const ContentWrap = styled.form`
 `;
 
 const PageWrap = styled.div`
-  // border: solid 1px red;
   width: 100%;
+  padding-bottom: 25px;
   ${(props) =>
     props.isActivePage
       ? `display: flex;
@@ -74,20 +72,12 @@ const PageWrap = styled.div`
       : `display:none;`}
 `;
 
-const FormWrap = styled.div`
-  width: 100%;
-  height: 85%;
-  // border: solid 1px blue;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-`;
 
 const ButtonWrap = styled.div`
   cursor: pointer;
   width: ${(props) => props.width};
-  height: 100%;
+  height: 75px;
+  padding-bottom: 30px;
 
   display: flex;
   flex-direction: column;
@@ -96,11 +86,9 @@ const ButtonWrap = styled.div`
 `;
 
 const Buttons = styled.div`
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  height: 15%;
 
+  width: 100%;
+  height: 45px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -116,12 +104,10 @@ function DefaultModal(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("hadleSubmit");
     props.handleSubmit();
   };
 
   const handleClick = (e, newPage) => {
-    console.log("handleClick");
     setPage(newPage);
   };
 
@@ -180,9 +166,9 @@ function DefaultModal(props) {
 
   return (
     <Wrap {...props}>
-      <HeaderWrap>
-        <BarWrap>{/* <ProgressBar /> */}</BarWrap>
-        {props.title && <ModalTitle>{props.title}</ModalTitle>}
+      <HeaderWrap className="HeaderWrap">
+      {props.title && <ModalTitle>{props.title}</ModalTitle>}
+      {/* <BarWrap><ProgressBar /></BarWrap> */}
       </HeaderWrap>
 
       <ContentWrap encType="multipart/form-data">

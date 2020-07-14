@@ -86,7 +86,7 @@ class Relationship(models.Model):
 
     class Meta:
         constraints = [models.UniqueConstraint(
-            fields=['account', 'friend'], name='af_compositeKey')]
+            fields=['account_id', 'friend_id'], name='af_compositeKey')]
 
 
 # 한 명의 친구는 여러 그룹을 가질 수 있음

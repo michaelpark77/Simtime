@@ -8,7 +8,8 @@ import {
   
   const initialState = {
     groups: [],
-    selectedGroup: {}
+    selectedGroup:{}
+
   };
   
   export default function(state = initialState, action) {
@@ -40,8 +41,21 @@ import {
             group.id == action.payload.id ? action.payload : group
           )
         };
-      default:
-        return state;
-    }
+    // case REGISTER_FAIL:
+    // case AUTH_ERROR:
+    // case LOGIN_FAIL:
+    // case CREATE_FAIL:
+    //   return {
+    //     ...state,
+    //     user: null,
+    //     isAuthenticated: false,
+    //     isLoading: false
+    //   };
+
+    default:
+      return state;
+  }
   }
   
+
+

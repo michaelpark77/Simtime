@@ -10,13 +10,18 @@ export class Alerts extends Component {
   };
   componentDidUpdate(prevProps) {
     // this.props.alert.show("It works");
+
     const { error, alert, message } = this.props;
+
+
     if (error !== prevProps.error) {
       if (error.msg.username)
         alert.error(`username: ${error.msg.username.join()}`);
       if (error.msg.email) alert.error(`email: ${error.msg.email.join()}`);
       if (error.msg.password)
         alert.error(`password: ${error.msg.password.join()}`);
+        if (error.msg.groupname)
+        alert.error(`groupname: ${error.msg.groupname.join()}`);
       if (error.msg.non_field_errors)
         alert.error(error.msg.non_field_errors.join());
     }
@@ -25,6 +30,9 @@ export class Alerts extends Component {
       if (message.deleteInvitation) alert.success(message.deleteInvitation);
       if (message.addInvitation) alert.success(message.addInvitation);
       if (message.passwordsNotMatch) alert.error(message.passwordsNotMatch);
+      //group
+      if (message.addGroup) alert.success(message.addGroup);
+      if (message.deleteGroup) alert.success(message.deleteGroup);
     }
   }
 

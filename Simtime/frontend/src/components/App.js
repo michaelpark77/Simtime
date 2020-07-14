@@ -27,10 +27,11 @@ import Friends from "../AtomicComponents/E-Pages/Friends";
 import MySimtime from "../AtomicComponents/E-Pages/MySimtime";
 
 import styled from "styled-components";
-
+import { ModalProvider } from "../contexts/modalContext";
 const alertOptions = {
   timeout: 3000,
   position: "top center",
+  //expected one of ["top left","top center","top right","middle left","middle","middle right","bottom left","bottom center","bottom right"]
 };
 
 const AppContents = styled.div`
@@ -86,12 +87,14 @@ class App extends Component {
 
     return (
       <Provider store={store}>
+        <ModalProvider>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <HashRouter>
             <Fragment>
               <GlobalStyle />
               <AppContents>
                 <Header />
+                <Alerts />
                 <Switch>
                   <PrivateRoute exact path="/" component={CalendarPage} />
                   <Route exact path="/register" component={Register} />
@@ -103,6 +106,7 @@ class App extends Component {
             </Fragment>
           </HashRouter>
         </AlertProvider>
+        </ModalProvider>
       </Provider>
     );
   }

@@ -150,29 +150,44 @@ class RGMapAPI(APIView):
 class GroupAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
-    def post(self, request):
-        print("GroupAPI", request.data)
-        serializer = GroupSerializer(data=request.data)
-        if(serializer.is_valid()):
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
     def get_object(self, pk):
         try:
             return FriendGroup.objects.get(pk=pk)
         except FriendGroup.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+    def post(self, request):
+        serializer = GroupSerializer(data=request.data)
+        if(serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def get(self, request):
         groups = self.request.user.FriendGroups.all()
         serializer = GroupSerializer(groups, many=True)
+        print(serializer.data)
         return Response(serializer.data)
         # return self.request.user.events.all()  # related_name으로 invitations지정
 
+
+class GroupDetailAPI(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_object(self, pk):
+        try:
+            return FriendGroup.objects.get(pk=pk)
+        except FriendGroup.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, pk):
+        group = self.get_object(pk)
+        serializer = GroupSerializer(group)
+        return Response(serializer.data)
+
     def delete(self, request, pk):
         group = self.get_object(pk)
-        print(group)
         group.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

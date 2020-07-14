@@ -7,8 +7,7 @@ import Detail from "../D-Templates/Event/EventDetail";
 import EventMaker from "../D-Templates/Event/EventMaker";
 import Filter from "../C-Organisms/Filter";
 
-import Modal from "../A-Atomics/Modal/Modal";
-import ModalPortal from "../A-Atomics/Modal/ModalPortal";
+import { ModalContext } from "../../contexts/modalContext";
 
 const Wrap = styled.div`
   display: flex;
@@ -66,31 +65,12 @@ const StyledDetail = styled(Detail)`
 `;
 
 function CalendarPage() {
-  const [isModalOpen, setIsOpenModal] = useState(false);
-
-  const handleOpenModal = () => {
-    setIsOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsOpenModal(false);
-  };
-
-  const next = () => {
-    alert("hello");
-  };
+  const { handleModal, closeModal } = React.useContext(ModalContext);
 
   useEffect(() => {});
 
   return (
     <Wrap>
-      {/* <ModalPortal
-        children={
-          <Modal onClose={handleCloseModal}>
-            <EventMaker />
-          </Modal>
-        }
-      ></ModalPortal> */}
       <LeftWrap>
         <StyledFilter />
         <StyledCalendar height="98%" />
@@ -99,24 +79,12 @@ function CalendarPage() {
         <StyledDashedButton
           hasIcon={true}
           src="static/img/icons/edit2.png"
-          onClick={() => {
-            handleOpenModal(true);
-          }}
+          onClick={() => handleModal(<EventMaker onClose={closeModal}/>)}
         >
           Add a new event
         </StyledDashedButton>
         <StyledDetail height="98%" />
       </RightWrap>
-
-      {isModalOpen && (
-        <ModalPortal
-          children={
-            <Modal onClose={handleCloseModal}>
-              <EventMaker />
-            </Modal>
-          }
-        ></ModalPortal>
-      )}
     </Wrap>
   );
 }

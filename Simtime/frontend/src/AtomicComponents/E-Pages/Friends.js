@@ -18,8 +18,7 @@ import ModalPortal from "../A-Atomics/Modal/ModalPortal";
 import AddFriend from "../D-Templates/Friends/Friends/AddFriend";
 import AddGroup from "../D-Templates/Friends/Groups/AddGroup";
 
-import DialogModal from "../B-Molecules/Modal/DialogModal";
-import DefaultModal from "../B-Molecules/Modal/DefaultModal";
+import { ModalContext } from "../../contexts/modalContext";
 
 const Wrap = styled.div`
   overflow: hidden;
@@ -49,31 +48,14 @@ const ContentWrap = styled.div`
 `;
 
 function Friends(props) {
-  const [isModalOpen, setIsOpenModal] = useState(false);
-  const [targetModal, setTargetModal] = useState("friend"); //friend, group
-
+  const { handleModal, closeModal } = React.useContext(ModalContext);
 
   useEffect( () => {
     props.getGroups();
   },[])
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("hello");
-  };
-
-  const handleOpenModal = (target) => {
-    setTargetModal(target);
-    setIsOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsOpenModal(false);
-  };
-
-  const next = () => {
-    alert("hello");
   };
 
   const datas = [
@@ -125,14 +107,14 @@ function Friends(props) {
     <Wrap>
       <Section bottom="30px">
         <SectionTitle>
-          <Header type="h3">Friends</Header>
+          <Header type="h3" color="MAIN_COLOR">Friends</Header>
           <StyledSearch width="125px" desc="Find a friend" height="25px" />
         </SectionTitle>
         <ContentWrap>
           <Table
             title="My Friends"
             addButton={true}
-            handleButtonClick={() => handleOpenModal("friend")}
+            handleButtonClick={() => handleModal(<AddFriend onClose={closeModal}/>)}
             width="48%"
             rowHeight="45px"
             rowNum={6}
@@ -145,12 +127,12 @@ function Friends(props) {
         </ContentWrap>
       </Section>
       <Section bottom="0px">
-        <Header type="h3">Group</Header>
+        <Header type="h3" color="MAIN_COLOR">Group</Header>
         <ContentWrap>
           <Table
             title="My Groups"
             addButton={true}
-            handleButtonClick={() => handleOpenModal("group")}
+            handleButtonClick={() => handleModal(<AddGroup onClose={closeModal}/>)}
             width="100%"
             rowHeight="45px"
             rowNum={5}
@@ -159,16 +141,6 @@ function Friends(props) {
           </Table>
         </ContentWrap>
       </Section>
-
-      {isModalOpen && (
-          <ModalPortal
-            children={
-              <Modal onClose={handleCloseModal}>
-                {targetModal == "friend" ? <AddFriend onClose={handleCloseModal}/> : <AddGroup onClose={handleCloseModal}/>}
-              </Modal>
-            }
-          ></ModalPortal>
-      )}
     </Wrap>
   );
 }

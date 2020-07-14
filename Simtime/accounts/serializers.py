@@ -47,10 +47,17 @@ class RelationshipSerializer(serializers.ModelSerializer):
         model = Relationship
         fields = '__all__'
 
+
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = FriendGroup
-        fields = '__all__'
+        fields = ('id', 'groupname','account')
+        validators = [
+            serializers.UniqueTogetherValidator(
+                queryset=FriendGroup.objects.all(),fields=['account', 'groupname'],message=("already exists"))
+        ]
+
+
 
 class RGMapSerializer(serializers.ModelSerializer):
     class Meta:

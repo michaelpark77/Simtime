@@ -2,10 +2,11 @@ import React, { Fragment, useState, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import ColoredButton from "../Button/ColoredButton";
+
 import GlobalStyle from "../../GlobalStyle";
 
-import Image from "../Image";
+import ColoredButton from "../Button/ColoredButton";
+import CloseButton from "../Button/CloseButton";
 import { MAIN_COLOR } from "../../Colors";
 
 const MyModal = styled.div`
@@ -36,8 +37,8 @@ const ContentWrap = styled.div`
   }
 `;
 
-const CloseButton = styled(Image)`
-  background-color: ${MAIN_COLOR};
+const StyledCloseButton = styled(CloseButton)`
+  background-color: white;
   cursor: pointer;
   @media only screen and (max-width: 320px) {
     position: absolute;
@@ -45,21 +46,17 @@ const CloseButton = styled(Image)`
   }
 `;
 
+
 const Modal = (props) => {
   const { onClose, children } = props;
+
   return (
     <Fragment>
       <GlobalStyle />
       <MyModal>
-        <ContentWrap>
+        <ContentWrap closeFn={onClose}>
+          <StyledCloseButton onClick={onClose}/>
           {children}
-          <CloseButton
-            className="modalCloseBtn"
-            onClick={onClose}
-            src="https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/close-wh.png"
-            width="20px"
-            height="20px"
-          ></CloseButton>
         </ContentWrap>
       </MyModal>
     </Fragment>
