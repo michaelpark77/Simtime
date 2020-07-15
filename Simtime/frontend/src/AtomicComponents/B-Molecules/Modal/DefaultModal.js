@@ -12,6 +12,7 @@ import ProgressBar from "../../A-Atomics/Deco/ProgressBar";
 import DashedButton from "../../A-Atomics/Button/DashedButton";
 
 const Wrap = styled.div`
+  position : relative;
   border: solid 1px ${MAIN_COLOR};
   background-color: white;
   width: ${(props) => props.width};
@@ -35,6 +36,7 @@ const HeaderWrap = styled.div`
   justify-content: flex-start;
   align-items: center;
   overflow: hidden;
+  position: relative;
 `;
 
 // const BarWrap = styled.div`
@@ -49,8 +51,18 @@ const HeaderWrap = styled.div`
 //   align-items: center;
 // `;
 
-const ContentWrap = styled.form`
-  position: relative;
+// const ContentWrap = styled.form`
+//   position: relative;
+//   width: 90%;
+//   height: auto;
+
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   align-items: center;
+// `;
+
+const ContentWrap = styled.div`
   width: 90%;
   height: auto;
 
@@ -62,7 +74,7 @@ const ContentWrap = styled.form`
 
 const PageWrap = styled.div`
   width: 100%;
-  padding-bottom: 25px;
+  padding-bottom: 5px;
   ${(props) =>
     props.isActivePage
       ? `display: flex;
@@ -74,30 +86,29 @@ const PageWrap = styled.div`
 
 
 const ButtonWrap = styled.div`
-  cursor: pointer;
-  width: ${(props) => props.width};
-  height: 75px;
-  padding-bottom: 30px;
+  position: absolute;
+  bottom: 0px;
+  width: 90%;
+  height: auto;
+  
+  padding-bottom: 15px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  cursor: pointer;
 `;
 
-const Buttons = styled.div`
-
-  width: 100%;
-  height: 45px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
 
 const Button = styled(DashedButton)`
   border-radius: 6px;
 `;
+
+const ButtonSpace = styled.div`
+height: 60px;
+`
 
 function DefaultModal(props) {
   const [page, setPage] = useState(0);
@@ -115,6 +126,7 @@ function DefaultModal(props) {
     return (
       <PageWrap {...props} isActivePage={page == 0}>
         {props.children}
+        <ButtonSpace></ButtonSpace>
       </PageWrap>
     );
   };
@@ -173,7 +185,7 @@ function DefaultModal(props) {
 
       <ContentWrap encType="multipart/form-data">
         {renderPages()}
-        <Buttons>{renderButtons(page)}</Buttons>
+        {renderButtons(page)}
       </ContentWrap>
     </Wrap>
   );

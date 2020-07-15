@@ -15,6 +15,9 @@ export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
 
+//Account
+// export const SEARCH_USER ="SEARCH_USER";
+
 //Events
 export const GET_EVENT = "GET_EVENT";
 export const GET_EVENTS = "GET_EVENTS";

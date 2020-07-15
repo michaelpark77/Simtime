@@ -18,8 +18,6 @@ const MyModal = styled.div`
 `;
 
 const ContentWrap = styled.div`
-  border: solid 1px red;
-  
   background: rgba(0, 0, 0, 0);
   width: auto;
   height: auto;

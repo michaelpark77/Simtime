@@ -23,13 +23,21 @@ function ResultTable(props) {
     e.preventDefault();
     var res = [];
 
-    if(props.multiple){
-      if(selectionFilter.indexOf(id) > -1){ // = selectionFilter.includes(id)
-        res = selectionFilter.filter((selection) => selection != id);
-      }else res = [...selectionFilter, id]
-    }else{
-      res= [id];
+    if(selectionFilter.indexOf(id) > -1){ // = selectionFilter.includes(id)
+      res = selectionFilter.filter((selection) => selection != id);
+    }else {
+      if(props.multiple) res = [...selectionFilter, id]
+      else res= [id];
     }
+
+
+    // if(props.multiple){
+    //   if(selectionFilter.indexOf(id) > -1){ // = selectionFilter.includes(id)
+    //     res = selectionFilter.filter((selection) => selection != id);
+    //   }else res = [...selectionFilter, id]
+    // }else{
+    //   res= [id];
+    // }
 
     setSelectionFilter(res);
     props.onSelect(res);
@@ -51,9 +59,9 @@ function ResultTable(props) {
           selectIcon
         >
           <ImageCard
-            username={data.name}
+            username={data.username}
             imageSize="32px"
-            url={data.image_url}
+            url={data.profile_image}
           />
         </Row>
       );

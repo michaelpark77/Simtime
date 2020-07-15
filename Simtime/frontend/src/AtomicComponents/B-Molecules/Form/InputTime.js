@@ -1,7 +1,7 @@
 import React, {
   useState,
   useCallback,
-  useRef,
+  createRef,
   forwardRef,
   useEffect,
 } from "react";
@@ -70,9 +70,9 @@ function InputTime(props) {
   const [meridiem, setMeridiem] = useState("AM");
   const [param, setParam] = useState("");
 
-  const hourRef = useRef();
-  const minRef = useRef();
-  const meridiemRef = useRef(); //meridiem
+  const hourRef = createRef();
+  const minRef = createRef();
+  const meridiemRef = createRef(); //meridiem
 
   var minAsParam = 0; //24시기준
 
@@ -92,7 +92,7 @@ function InputTime(props) {
 
     var res = null;
     var max = e.target.name == "hour" ? 23 : 59;
-    var selectedMerdiem = meridiemRef.current.state.selectedOption;
+    var selectedMerdiem = meridiemRef.current.innerText;
 
     // 마지막 입력한 2개값 남기기  (queue?)
     var inputValue = parseInt(
@@ -159,7 +159,7 @@ function InputTime(props) {
           height="40px"
           options={["AM", "PM"]}
           defaultOption={meridiem}
-          meridiemChange={meridiemChange}
+          handleOptionChange={meridiemChange}
           ref={meridiemRef}
         />
       </InnerWrap>

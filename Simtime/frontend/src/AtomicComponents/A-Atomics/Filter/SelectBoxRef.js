@@ -1,4 +1,4 @@
-import React, { Component, setState, createRef } from "react";
+import React, { Component, setState, forwardRef } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Paragraph from "../Font/Paragraph";
@@ -87,7 +87,7 @@ export class SelectBoxRef extends Component {
   constructor(props) {
     super(props);
 
-    this.myRef = React.createRef();
+    // this.myRef = React.createRef();
     this.state = {
       showOptions: false,
       selectedOption: props.defaultOption,
@@ -114,13 +114,13 @@ export class SelectBoxRef extends Component {
   }
 
   closeOptions = () => {
-    console.log("close options");
+    // console.log("close options");
     this.setState(
       {
         showOptions: false,
       },
       () => {
-        console.log("first change");
+        // console.log("first change");
       }
     );
   };
@@ -140,10 +140,11 @@ export class SelectBoxRef extends Component {
         showOptions: !state.showOptions,
       }),
       () => {
-        console.log("second change");
+        // console.log("second change");
       }
     );
   }
+
   changeSelectedOptions(e, option) {
     e.stopPropagation();
     this.setState((state) => ({
@@ -152,7 +153,10 @@ export class SelectBoxRef extends Component {
     }));
 
     //이거 정리필요
-    if (this.props.meridiemChange) this.props.meridiemChange(option);
+    if (this.props.handleOptionChange){
+      console.log("handleOptionChange")
+      this.props.handleOptionChange(option);
+    } 
   }
 
   renderOptions = (options) => {
@@ -184,6 +188,8 @@ export class SelectBoxRef extends Component {
   };
 
   render() {
+  
+    const {selectRef} = this.props;
     return (
       <Wrap {...this.props}>
         <MySelect
@@ -194,7 +200,7 @@ export class SelectBoxRef extends Component {
           value={this.state.selectedOption}
           arrow={this.props.arrow}
           cursor={this.props.cursor}
-          ref={this.myRef}
+          ref={selectRef}
         >
           <Paragraph fontSize="15px">{this.state.selectedOption}</Paragraph>
           {this.renderOptions(this.props.options)}
@@ -204,7 +210,7 @@ export class SelectBoxRef extends Component {
   }
 }
 
-export default SelectBoxRef;
+export default React.forwardRef((props, ref) => <SelectBoxRef selectRef={ref} {...props}/>);
 
 SelectBoxRef.propTypes = {
   width: PropTypes.string,

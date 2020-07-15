@@ -45,3 +45,27 @@ export const addToGroup = (datas) => (dispatch) => {
       return err
     });
 };
+
+
+
+// export const getEvents = () => (dispatch) => {
+//   axiosFormInstance
+//     .get("/api/events/")
+//     .then((res) => {
+//       dispatch({
+//         type: GET_EVENTS,
+//         payload: res.data,
+//       });
+//     })
+//     .catch((err) =>
+//       dispatch(returnErrors(err.response.data, err.response.status))
+//     );
+// };
+
+// export const getEvent = (id) => (dispatch) => {
+//   dispatch({
+//     type: GET_EVENT,
+//     payload: id,
+//   });
+// };
+

@@ -56,13 +56,28 @@ function InputWrap(props) {
     value,
     readOnly,
     cursor,
+    innerRef,
+    enterHandler
   } = props;
   const [myValue, setMyValue] = useState(value);
 
   const handleChange = useCallback((e) => {
-    console.log(e.target.value);
+    e.preventDefault();
     setMyValue(e.target.value);
+  
+    
   }, []);
+
+  const handleKeyUp = useCallback((e)=>{
+    // e.preventDefault();
+    e.stopPropagation();
+    if(e.key==="Enter"){
+      console.log("enter")
+      enterHandler();
+    }
+  })
+
+
 
   const defaultInput = () => {
     return (
@@ -72,7 +87,9 @@ function InputWrap(props) {
         readOnly={readOnly}
         value={readOnly ? value : myValue}
         onChange={handleChange}
+        onKeyUp={handleKeyUp}
         cursor={cursor}
+        ref={innerRef}
       ></MyInput>
     );
   };
@@ -89,7 +106,8 @@ function InputWrap(props) {
   );
 }
 
-export default InputWrap;
+export default React.forwardRef((props, ref) => (<InputWrap {...props} innerRef={ref}/>));
+;
 
 InputWrap.propTypes = {
   width: PropTypes.string,
@@ -100,6 +118,7 @@ InputWrap.propTypes = {
   value: PropTypes.string,
   readOnly: PropTypes.bool,
   cursor: PropTypes.string,
+  enterHandler: PropTypes.func
 };
 
 InputWrap.defaultProps = {
@@ -111,4 +130,5 @@ InputWrap.defaultProps = {
   value: "",
   readOnly: false,
   cursor: null,
+  enterHandler: null
 };

@@ -60,6 +60,19 @@ class AccountDetailAPI(APIView):
         account.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class AccountSearchAPI(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, field, keyword):
+        query = {"%s__contains" % field: keyword }
+        results = Account.objects.filter(**query).order_by('username')
+        data = []
+        for item in results:
+             serializer = UserSerializer(item)
+             data.append(serializer.data)
+
+        return Response(data)
+
 
 class AccountLoadAPI(generics.RetrieveAPIView):
     permission_classes = (permissions.IsAuthenticated,)
