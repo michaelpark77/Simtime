@@ -68,7 +68,6 @@ function SearchFriend(props) {
           searchHandler={()=>{searchHandler()}}
           />
       </SearchWrap>
-
       <ResultWrap>
         <Result
           datas={users}

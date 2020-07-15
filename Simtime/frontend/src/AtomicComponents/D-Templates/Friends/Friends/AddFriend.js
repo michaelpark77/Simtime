@@ -34,8 +34,6 @@ function AddFriend(props) {
     try {
       const relationship = await props.createRelationship({account: props.user.id, friend: friend[0]})
       const group = await props.addToGroup({relationship: relationship.data.id, group: 1 })
-      console.log(relationship)
-      console.log(group)
     }catch (err) {
       console.log("relationshipError" , err);
     }
@@ -77,13 +75,19 @@ function AddFriend(props) {
   const renderChild = () => {
     return (
       <Fragment>
-        <SearchFriend onSelect={(res) => {
-                setFriend(res);
-                console.log(res);
-              }}/>
-            
-
+        <SearchFriend onSelect={(res) => setFriend(res);}/>
+{/*             
           <ResultWrap>
+            <Result
+              datas={users}
+              title="Result"
+              titleColor="MAIN_COLOR"
+              width="100%"
+              rowNum={3}
+              onSelect={props.onSelect}
+            />
+        </ResultWrap> */}
+        <ResultWrap>
           {friend.length>0 &&  
             <Groups
               datas={props.resultData}
@@ -96,8 +100,7 @@ function AddFriend(props) {
               }}
               multiple
            /> }
-          </ResultWrap>
-         
+        </ResultWrap>
       </Fragment>
     );
   };
