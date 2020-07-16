@@ -1,20 +1,17 @@
 import { createMessage, returnErrors } from "./messages";
 import { axiosInstance, axiosFormInstance } from "./axiosApi";
-// import axios from "axios";
-// import { getCookie } from "./cookie";
 
 import {
-  GET_EVENTS,
-  GET_EVENT,
-  ADD_EVENT,
-  DELETE_EVENT,
-  EDIT_EVENT,
-  GET_ERRORS,
-  CREATE_MESSAGE,
+  ADD_FRIEND,
+  GET_FRIENDS,
+  GET_FRIEND,
+  EDIT_FRIEND,
+  DELETE_FRIEND,
 } from "./types";
 
-export const createRelationship = (friend) => (dispatch) => {
-  console.log("createRelationship", friend);
+
+export const addfriend = (friend) => (dispatch) => {
+  console.log("addfriend", friend);
 
   return axiosInstance
     .post("/api/friend/create/", {
@@ -46,26 +43,18 @@ export const addToGroup = (datas) => (dispatch) => {
     });
 };
 
-
-
-// export const getEvents = () => (dispatch) => {
-//   axiosFormInstance
-//     .get("/api/events/")
-//     .then((res) => {
-//       dispatch({
-//         type: GET_EVENTS,
-//         payload: res.data,
-//       });
-//     })
-//     .catch((err) =>
-//       dispatch(returnErrors(err.response.data, err.response.status))
-//     );
-// };
-
-// export const getEvent = (id) => (dispatch) => {
-//   dispatch({
-//     type: GET_EVENT,
-//     payload: id,
-//   });
-// };
-
+export const getFriends = () => (dispatch) => {
+  console.log("getFriends");
+  axiosInstance
+    .get("/api/friends/")
+    .then((res) => {
+      console.log("friends", res)
+      dispatch({
+        type: GET_FRIENDS,
+        payload: res.data,
+      });
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};

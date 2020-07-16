@@ -8,12 +8,11 @@ import SelectTable from "../../../B-Molecules/Table/SelectTable";
 import UserCardForList from "../../../B-Molecules/User/UserCardForList";
 
 const Row = styled(TableRow)`
-  cursor: pointer;
+  ${props => props.pointer ? "cursor: pointer" : "cursor: default"};
 `;
 const ImageCard = styled(UserCardForList)`
   cursor: pointer;
 `;
-
 
 function ResultTable(props) {
   //UI용
@@ -30,36 +29,22 @@ function ResultTable(props) {
       else res= [id];
     }
 
-
-    // if(props.multiple){
-    //   if(selectionFilter.indexOf(id) > -1){ // = selectionFilter.includes(id)
-    //     res = selectionFilter.filter((selection) => selection != id);
-    //   }else res = [...selectionFilter, id]
-    // }else{
-    //   res= [id];
-    // }
-
     setSelectionFilter(res);
     props.onSelect(res);
-    // var res = props.multiple ? [...selectionFilter] : [...defaultFilter];
-    // res[id] = !res[id];
-    // setSelectionFilter(res);
-    // props.onSelect(props.datas.filter((data) => res[data.id]));
   };
 
   const renderRows = (datas = []) => {
-    console.log("renderRows", selectionFilter);
-    
     return datas.map((data, index) => {
       return (
         <Row
           key={data.id}
           onClick={(e) => handleClick(e, data.id)}
           isSelected={selectionFilter.includes(data.id)}
+          pointer
           selectIcon
         >
           <ImageCard
-            username={data.username}
+            username={data.username||data.groupname}
             imageSize="32px"
             url={data.profile_image}
           />
@@ -68,6 +53,8 @@ function ResultTable(props) {
     });
   };
 
+  const renderDefaultRow = () => {return (<Row> 검색결과가 없습니다. </Row>) };
+
   return (
     <Table
       title={props.title}
@@ -75,7 +62,7 @@ function ResultTable(props) {
       width="100%"
       rowNum={props.rowNum}
     >
-      {renderRows(props.datas)}
+      {props.datas.length == 0 ? renderDefaultRow() : renderRows(props.datas)}
     </Table>
   );
 }
@@ -90,7 +77,6 @@ ResultTable.propTypes = {
 };
 
 ResultTable.defaultProps = {
-  title: "Table Title",
   titleColor: "MAIN_COLOR",
   rowNum: 3,
   datas: [{ id: 0 }],

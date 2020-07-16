@@ -67,8 +67,6 @@ const StyledDetail = styled(Detail)`
 function CalendarPage() {
   const { handleModal, closeModal } = React.useContext(ModalContext);
 
-  useEffect(() => {});
-
   return (
     <Wrap>
       <LeftWrap>

@@ -1,7 +1,7 @@
 import React from "react";
 
-function Hosts() {
+function HostList() {
   return <div></div>;
 }
 
-export default Hosts;
+export default HostList;

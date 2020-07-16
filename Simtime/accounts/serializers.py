@@ -30,6 +30,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = Account
         fields = ('id', 'username', 'email', 'profile_image')
 
+
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
@@ -41,11 +42,16 @@ class LoginSerializer(serializers.Serializer):
         raise serializers.ValidationError("Incorrect Credentials")
 
 
-
 class RelationshipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Relationship
         fields = '__all__'
+
+class FriendSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Account
+        fields = ('id', 'username', 'email', 'profile_image')
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -56,7 +62,6 @@ class GroupSerializer(serializers.ModelSerializer):
             serializers.UniqueTogetherValidator(
                 queryset=FriendGroup.objects.all(),fields=['account', 'groupname'],message=("already exists"))
         ]
-
 
 
 class RGMapSerializer(serializers.ModelSerializer):

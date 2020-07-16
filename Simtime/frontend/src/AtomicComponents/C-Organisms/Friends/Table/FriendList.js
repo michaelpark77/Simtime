@@ -38,7 +38,7 @@ const StyledButtonWithImage = styled(ButtonWithImage)`
   margin-left: ${buttonMargin}px;
 `;
 
-function MyFriends(props) {
+function FriendList(props) {
   const renderButton = useCallback(
     (status, content = "차단", color = "TEXT_LINK") => {
       if (status) {
@@ -88,15 +88,15 @@ function MyFriends(props) {
   return <div>{renderRows(props.datas)}</div>;
 }
 
-export default MyFriends;
+export default FriendList;
 
-MyFriends.propTypes = {
+FriendList.propTypes = {
   title: PropTypes.string,
   headers: PropTypes.array,
   datas: PropTypes.array,
 };
 
-MyFriends.defaultProps = {
+FriendList.defaultProps = {
   title: "Table Title",
   headers: null,
   // datas: null,

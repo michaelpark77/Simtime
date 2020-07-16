@@ -18,7 +18,7 @@ const SearchWrap = styled.div`
   justify-content: flex-start;
   align-items: center;
   border-bottom: solid 1px ${MAIN_COLOR};
-  margin-bottom: 15px;
+
 `;
 
 const StyledSelectBox = styled(SelectBoxRef)``;
@@ -34,7 +34,6 @@ const Result = styled(ResultTable)``;
 const Groups = styled(ResultTable)``;
 
 function SearchFriend(props) {
-  const [users, setUsers] = useState([]);
   const selectRef = createRef();
   const searchRef = createRef();
 
@@ -43,16 +42,15 @@ function SearchFriend(props) {
   }
 
   const searchHandler = async ()=> {
-
     var field = await selectRef.current.innerText;
     var keyword = await searchRef.current.value;
     var res = await props.searchUsers(field, keyword);
-    setUsers(res);
+    props.onSearch(res);
   }
 
   return (
     <Fragment>
-      <SearchWrap>
+      <SearchWrap {...props}>
         <StyledSelectBox
           options={["Username", "E-mail", "Phone"]}
           defaultOption="Username"
@@ -68,16 +66,6 @@ function SearchFriend(props) {
           searchHandler={()=>{searchHandler()}}
           />
       </SearchWrap>
-      <ResultWrap>
-        <Result
-          datas={users}
-          title="Result"
-          titleColor="MAIN_COLOR"
-          width="100%"
-          rowNum={3}
-          onSelect={props.onSelect}
-        />
-    </ResultWrap>
   </Fragment>
   );
 }
@@ -94,6 +82,6 @@ SearchFriend.propTypes = {
 };
 
 SearchFriend.defaultProps = {
-  height: "520px",
+  height: "40px",
   width: "320px",
 };

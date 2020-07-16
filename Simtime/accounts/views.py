@@ -106,23 +106,19 @@ class RelationshipAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request):
-        print("gre", request.data)
         serializer = RelationshipSerializer(data=request.data)
         if(serializer.is_valid()):
             serializer.save(account=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    # def get_object(self, pk):
-    #     try:
-    #         return Relationship.objects.get(pk=pk)
-    #     except Relationship.DoesNotExist:
-    #         return Response(status=status.HTTP_404_NOT_FOUND)
-
-    # def get(self, request, pk):
-    #     relationship = self.get_object(pk)
-    #     serializer = RelationshipSerializer(relationship)
-    #     return Response(serializer.data)
+    def get(self, request):     
+        res = self.request.user.friends.select_related('friend')
+        friends = []
+        for i in res:
+            friends.append(i.friend)
+        serializer = UserSerializer(friends, many=True)
+        return Response(serializer.data)
 
     # def put(self, request, pk):
     #     relationship = self.get_object(pk)
@@ -139,7 +135,6 @@ class RelationshipAPI(APIView):
 
 
 
-
 #Relationship-Group
 class RGMapAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -151,15 +146,8 @@ class RGMapAPI(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    # def get_object(self, pk):
-    #     try:
-    #         return Relationship.objects.get(pk=pk)
-    #     except Relationship.DoesNotExist:
-    #         return Response(status=status.HTTP_404_NOT_FOUND)
 
-
-#Relationship-Group
+#add,get group
 class GroupAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -174,17 +162,14 @@ class GroupAPI(APIView):
         if(serializer.is_valid()):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
         groups = self.request.user.FriendGroups.all()
         serializer = GroupSerializer(groups, many=True)
-        print(serializer.data)
         return Response(serializer.data)
-        # return self.request.user.events.all()  # related_name으로 invitations지정
 
-
+#groupDetail
 class GroupDetailAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 

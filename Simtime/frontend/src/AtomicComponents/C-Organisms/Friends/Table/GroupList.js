@@ -48,7 +48,7 @@ const StyledButtonWithImage = styled(ButtonWithImage)`
 `;
 
 
-function MyGroups(props) {
+function GroupList(props) {
 
   const [isModalOpen, setIsOpenModal] = useState(false);
   const [targetModal, setTargetModal] = useState("group"); //group, members
@@ -116,15 +116,15 @@ const mapStateToProps = (state) => ({
 
 });
 // export default AddGroup;
-export default connect(mapStateToProps, { deleteGroup, getGroup })(MyGroups);
+export default connect(mapStateToProps, { deleteGroup, getGroup })(GroupList);
 
-MyGroups.propTypes = {
+GroupList.propTypes = {
   title: PropTypes.string,
   headers: PropTypes.array,
   datas: PropTypes.array,
 };
 
-MyGroups.defaultProps = {
+GroupList.defaultProps = {
   title: "Table Title",
   headers: null,
   // datas: null,

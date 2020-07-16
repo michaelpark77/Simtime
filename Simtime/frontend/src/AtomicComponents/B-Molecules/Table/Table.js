@@ -45,13 +45,15 @@ function Table(props) {
 
   return (
     <TableWrap {...props}>
-      <StyledTableTitle>
-        <Header type="h4" color={props.titleColor}>
-          {props.title}
-        </Header>
-        {props.addButton ? renderButton(props.button) : null}
+      {props.title || props.addButton ? 
+      (<StyledTableTitle>
+        { props.title ? <Header type="h4" color={props.titleColor}>{props.title}</Header> : null}
+        { props.addButton ? renderButton(props.button) : null}
       </StyledTableTitle>
+       ) : null}
+      
       {props.headers ? <TableHeader>hello?</TableHeader> : null}
+
       <TableContent
         height={parseInt(props.rowHeight.replace(/[^0-9]/g, "")) * props.rowNum}
       >
@@ -77,7 +79,6 @@ Table.propTypes = {
 };
 
 Table.defaultProps = {
-  title: "Table Title",
   titleColor: "TEXT",
   addButton: false,
   handleButtonClick: () => {

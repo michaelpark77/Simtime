@@ -27,10 +27,13 @@ urlpatterns = [
     # path('api/auth/register/', AccountCreateAPI.as_view(), name="account_create"),
     # path('api/auth/<int:pk>/', AccountDetailAPI.as_view(), name="account_detail"),
 
-    # create friend, group, RGmap
+    # friend(=relationship)
     path('api/friend/create/', RelationshipAPI.as_view(), name='friend_create'),
     path('api/friend/add-to-group/', RGMapAPI.as_view(), name='group_add_to'),
+    path('api/friends/', RelationshipAPI.as_view(), name='friends'),
+  
 
+    # groups
     path('api/groups/', GroupAPI.as_view(), name='groups'),
     path('api/groups/create/', GroupAPI.as_view(), name='group_create'),
 

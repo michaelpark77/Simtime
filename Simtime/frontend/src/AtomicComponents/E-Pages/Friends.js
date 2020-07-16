@@ -1,24 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import styled from "styled-components";
-import { ST_WHITE, ST_GRAY } from "../Colors";
-
 import { connect } from "react-redux";
+//context
+import { ModalContext } from "../../contexts/modalContext";
+//redux-actions
 import { getGroups } from "../../actions/groups";
-
+import { getFriends } from "../../actions/friends";
+// import { getHosts } from "../../actions/invitations"
+//components
+import { ST_WHITE, ST_GRAY } from "../Colors";
 import Table from "../B-Molecules/Table/Table";
 import Header from "../A-Atomics/Font/Header";
 import Search from "../B-Molecules/Filter/Search";
-
-import MyFriends from "../C-Organisms/Friends/Table/MyFriends";
-import Groups from "../C-Organisms/Friends/Table/Groups";
-
-
-import Modal from "../A-Atomics/Modal/Modal";
-import ModalPortal from "../A-Atomics/Modal/ModalPortal";
+import FriendList from "../C-Organisms/Friends/Table/FriendList";
+import GroupList from "../C-Organisms/Friends/Table/GroupList";
 import AddFriend from "../D-Templates/Friends/Friends/AddFriend";
 import AddGroup from "../D-Templates/Friends/Groups/AddGroup";
-
-import { ModalContext } from "../../contexts/modalContext";
 
 const Wrap = styled.div`
   overflow: hidden;
@@ -48,60 +45,14 @@ const ContentWrap = styled.div`
 `;
 
 function Friends(props) {
-  const { handleModal, closeModal } = React.useContext(ModalContext);
-
+  const { handleModal, closeModal } = useContext(ModalContext);
   useEffect( () => {
     props.getGroups();
+    props.getFriends();
+    // props.getHosts();
   },[])
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  const datas = [
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "arara",
-      subscribe: true,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "arara90",
-      subscribe: true,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
-      username: "hello",
-      subscribe: false,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down.png",
-      username: "hey",
-      subscribe: true,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "parkh",
-      subscribe: true,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check-valid.png",
-      username: "admin",
-      subscribe: true,
-      dispatch: false,
-    },
-  ];
+  const datas=[]
 
   return (
     <Wrap>
@@ -111,6 +62,7 @@ function Friends(props) {
           <StyledSearch width="125px" desc="Find a friend" height="25px" />
         </SectionTitle>
         <ContentWrap>
+          
           <Table
             title="My Friends"
             addButton={true}
@@ -119,13 +71,15 @@ function Friends(props) {
             rowHeight="45px"
             rowNum={6}
           >
-            <MyFriends datas={datas} />
+            <FriendList datas={props.friends} />
           </Table>
+
           <Table title="The Hosts" width="48%" rowHeight="45px" rowNum={6}>
-            <MyFriends datas={datas} />
+            <FriendList datas={props.friends} />
           </Table>
         </ContentWrap>
       </Section>
+
       <Section bottom="0px">
         <Header type="h3" color="MAIN_COLOR">Group</Header>
         <ContentWrap>
@@ -137,7 +91,7 @@ function Friends(props) {
             rowHeight="45px"
             rowNum={5}
           >
-            <Groups datas={props.groups} />
+            <GroupList datas={props.groups} />
           </Table>
         </ContentWrap>
       </Section>
@@ -147,12 +101,15 @@ function Friends(props) {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  groups: state.groups.groups
+  groups: state.groups.groups,
+  friends: state.friends.friends
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getGroups: () => dispatch(getGroups()),
+    getFriends: () => dispatch(getFriends()),
+    // getHosts: () => dispatch(getHost())    
   }
 }
 // export default AddGroup;

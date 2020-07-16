@@ -39,29 +39,6 @@ const HeaderWrap = styled.div`
   position: relative;
 `;
 
-// const BarWrap = styled.div`
-//   position: relative;
-//   width: 92%;
-//   height: 10%;
-//   // min-height: 50px;
-//   min-height: 18px;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-// `;
-
-// const ContentWrap = styled.form`
-//   position: relative;
-//   width: 90%;
-//   height: auto;
-
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   align-items: center;
-// `;
-
 const ContentWrap = styled.div`
   width: 90%;
   height: auto;
@@ -84,7 +61,6 @@ const PageWrap = styled.div`
       : `display:none;`}
 `;
 
-
 const ButtonWrap = styled.div`
   position: absolute;
   bottom: 0px;
@@ -97,7 +73,6 @@ const ButtonWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   cursor: pointer;
 `;
 
@@ -107,7 +82,7 @@ const Button = styled(DashedButton)`
 `;
 
 const ButtonSpace = styled.div`
-height: 60px;
+  height: 60px;
 `
 
 function DefaultModal(props) {
