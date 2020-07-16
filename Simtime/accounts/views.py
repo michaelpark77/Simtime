@@ -7,7 +7,7 @@ from rest_framework_simplejwt.models import TokenUser
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenVerifyView
 
 from .tokenSerializers import MyTokenObtainPairSerializer, MyTokenVerifySerializer
-from .serializers import AccountSerializer, UserSerializer, RelationshipSerializer, GroupSerializer, RGMapSerializer
+from .serializers import AccountSerializer, UserSerializer, RelationshipSerializer, GroupSerializer,FriendSerializer, RGMapSerializer
 from .models import Account, Relationship, FriendGroup, Relationship_FriendGroup_MAP
 
 
@@ -117,7 +117,8 @@ class RelationshipAPI(APIView):
         friends = []
         for i in res:
             friends.append(i.friend)
-        serializer = UserSerializer(friends, many=True)
+        # serializer = UserSerializer(friends, many=True)
+        serializer = FriendSerializer(res, many=True)
         return Response(serializer.data)
 
     # def put(self, request, pk):

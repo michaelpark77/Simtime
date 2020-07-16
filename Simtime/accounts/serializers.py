@@ -48,10 +48,11 @@ class RelationshipSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class FriendSerializer(serializers.ModelSerializer):
-    
+    friend = UserSerializer()
+
     class Meta:
-        model = Account
-        fields = ('id', 'username', 'email', 'profile_image')
+        model = Relationship
+        fields = ('id', 'friend', 'subscribe', 'dispatch')
 
 
 class GroupSerializer(serializers.ModelSerializer):

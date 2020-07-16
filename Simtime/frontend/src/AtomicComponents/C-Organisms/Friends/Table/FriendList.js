@@ -41,15 +41,7 @@ const StyledButtonWithImage = styled(ButtonWithImage)`
 function FriendList(props) {
   const renderButton = useCallback(
     (status, content = "차단", color = "TEXT_LINK") => {
-      if (status) {
-        return (
-          <ButtonWrap>
-            <TextButton color={color} type="button">
-              {content}
-            </TextButton>
-          </ButtonWrap>
-        );
-      } else {
+      if (!status) {
         return (
           <ButtonWrap width={buttonDefaultSize + buttonMargin + 2 + "px"}>
             <StyledButtonWithImage
@@ -61,23 +53,32 @@ function FriendList(props) {
             </StyledButtonWithImage>
           </ButtonWrap>
         );
+      } else {
+        return (
+              <ButtonWrap>
+                <TextButton color={color} type="button">
+                  {content}
+                </TextButton>
+              </ButtonWrap>
+            );
       }
+
     },
     []
   );
 
   const renderRows = (friends = []) => {
-    return friends.map((friend, index) => {
+    return friends.map((data, index) => {
       return (
-        <TableRow rowNum={index} key={friend.username}>
+        <TableRow rowNum={index} key={data.friend.username}>
           <UserCard
-            username={friend.username}
+            username={data.friend.username}
             imageSize="32px"
-            url={friend.profile_image}
+            url={data.friend.profile_image}
           ></UserCard>
           <Buttons>
-            {renderButton(friend.subscribe, "수신차단")}
-            {renderButton(friend.dispatch, "발신차단")}
+            {renderButton(!data.friend.subscribe, "수신차단")}
+            {renderButton(!data.friend.dispatch, "발신차단")}
             {renderButton(1, "삭제", "TEXT_WARNING")}
           </Buttons>
         </TableRow>
@@ -99,49 +100,6 @@ FriendList.propTypes = {
 FriendList.defaultProps = {
   title: "Table Title",
   headers: null,
-  // datas: null,
-  datas: [
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "arara",
-      subscribe: true,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "arara90",
-      subscribe: true,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
-      username: "hello",
-      subscribe: false,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down.png",
-      username: "hey",
-      subscribe: true,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "parkh",
-      subscribe: true,
-      dispatch: true,
-    },
-    {
-      profile_image:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check-valid.png",
-      username: "admin",
-      subscribe: true,
-      dispatch: false,
-    },
-  ],
+  datas: [],
+ 
 };
