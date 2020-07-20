@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 import 'babel-polyfill';
 import { connect } from "react-redux";
 import { MAIN_COLOR } from "../../../Colors";
-import { createGroup } from "../../../../actions/groups";
+import { editGroup } from "../../../../actions/groups";
 
 import InputWrap from "../../../A-Atomics/Form/InputWrap"
 import Paragraph from "../../../A-Atomics/Font/Paragraph"
 import DefaultModal from "../../../B-Molecules/Modal/DefaultModal";
-import ResultTable from "../../../C-Organisms/Friends/SearchFriend/ResultTable";
-import SearchBar from "../../../C-Organisms/Friends/SearchFriend/SearchBar"
+import ResultTable from "../../../C-Organisms/Friends/AddFriend/ResultTable";
+import SearchFriend from "../SearchFriend"
 
 const StyledInput = styled(InputWrap)`
   padding-bottom: 15px;
@@ -20,7 +20,7 @@ const ResultWrap = styled.div`
   width: 100%;
 `;
 
-const StyledSearchBar = styled(SearchBar)`
+const StyledSearchFriend = styled(SearchFriend)`
 `
 const ArrowParagraph = styled(Paragraph)`
   cursor: pointer;
@@ -30,42 +30,21 @@ const ArrowParagraph = styled(Paragraph)`
 const Result = styled(ResultTable)``;
 const Groups = styled(ResultTable)``;
 
-function AddGroup(props) {
-  const [groupname, setGroupName] = useState("");
-  const [addMembers, setAddMembers] = useState(false);
-  const [friends, setFriends] = useState([]);
+function EditGroup(props) {
+  const [groupname, setGroupName] = useState(null);
 
   const handleChange = useCallback((e) => {
     setGroupName(e.target.value);
   });
 
-
   const handleSubmit = async () => {
     try {
-      const group = await props.createGroup({account: props.user.id, groupname: groupname})
+      const group = await props.editGroup({account: props.user.id, groupname: groupname})
       props.onClose();
     }catch (err) {
-      console.log("relationshipError" , err);
+      console.log("err" , err);
     }
   };
-
-  const renderAddMember = () =>{
-    return (
-      <Fragment>
-        <StyledSearchBar search={(friends)=> setFriends(friends)}/>
-        <ResultWrap>
-          <Result
-            datas={props.resultData}
-            titleColor="MAIN_COLOR"
-            width="100%"
-            rowNum={6}
-            onSelect={(res) => {}}
-            multiple
-          ></Result>
-        </ResultWrap>
-    </Fragment>
-    );
-  }
 
   const renderChild = () => {
     return (
@@ -77,12 +56,8 @@ function AddGroup(props) {
           desc="Group Name"
           value={groupname}
           onChange={handleChange}
+          defaultValue={props.selectedGroup.groupname}
           />
-        {addMembers ? 
-          <ArrowParagraph fontSize="14px" color="MAIN_COLOR" onClick={()=>setAddMembers(false)}> ▲ Hide </ArrowParagraph> 
-          : <ArrowParagraph fontSize="14px" color="MAIN_COLOR" onClick={()=>setAddMembers(true)} > ▼ Add Members? </ArrowParagraph>
-        }
-        {addMembers ? renderAddMember(): null}
       </Fragment>
     );
   };
@@ -100,17 +75,18 @@ function AddGroup(props) {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  group: state.groups.selectedGroup
 });
+// export default EditGroup;
+export default connect(mapStateToProps, { editGroup })(EditGroup);
 
-
-export default connect(mapStateToProps, { createGroup })(AddGroup);
-
-AddGroup.propTypes = {
+EditGroup.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
 };
 
-AddGroup.defaultProps = {
+EditGroup.defaultProps = {
   height: "520px",
   width: "320px",
+
 };

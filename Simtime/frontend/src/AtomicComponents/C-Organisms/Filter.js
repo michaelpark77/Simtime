@@ -5,7 +5,8 @@ import { BG_INACTIVE_LIGHT} from "../Colors";
 
 import SelectArrow from "../A-Atomics/Filter/SelectArrow"
 import RadioText from "../A-Atomics/Filter/RadioText"
-import Search from "../A-Atomics/Filter/Search"
+// import Search from "../A-Atomics/Filter/Search"
+import Search from "../B-Molecules/Filter/Search";
 import DisplaySelections from "../B-Molecules/Filter/DisplaySelections"
 
 const Wrap = styled.div`
@@ -33,22 +34,18 @@ const ContentWrap = styled.div`
 `;
 
 const StyledRadioText = styled(RadioText)`
-  
 `;
 
 const StyledSelectArrow = styled(SelectArrow)`
-  
 `;
 
 const StyledDisplaySelections= styled(DisplaySelections)`
   @media (max-width: 620px) {
     display: none;
   }
-
 `;
 
 const StyledSearch = styled(Search)`
-
 `;
 
 

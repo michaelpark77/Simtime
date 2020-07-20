@@ -1,15 +1,15 @@
+import "babel-polyfill";
 import React, { Fragment, useState, createRef, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import "babel-polyfill";
+// redux
 import { connect } from "react-redux";
-
-import SelectBoxRef from "../../A-Atomics/Filter/SelectBoxRef";
-
-import Search from "../../B-Molecules/Filter/Search";
-import ResultTable from "../../C-Organisms/Friends/AddFriend/ResultTable";
-import { MAIN_COLOR } from "../../Colors";
-import { searchUsers } from "../../../actions/account";
+import { searchUsers } from "../../../../actions/account";
+// component
+import { MAIN_COLOR } from "../../../Colors";
+import SelectBoxRef from "../../../A-Atomics/Filter/SelectBoxRef";
+import Search from "../../../B-Molecules/Filter/Search";
+import ResultTable from "./ResultTable";
 
 const SearchWrap = styled.div`
   width: 100%;
@@ -32,7 +32,7 @@ const ResultWrap = styled.div`
 const Result = styled(ResultTable)``;
 const Groups = styled(ResultTable)``;
 
-function SearchFriend(props) {
+function SearchBar(props) {
   const selectRef = createRef();
   const searchRef = createRef();
 
@@ -76,15 +76,15 @@ function SearchFriend(props) {
 const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
-// export default SearchFriends;
-export default connect(mapStateToProps, { searchUsers })(SearchFriend);
+// export default SearchBars;
+export default connect(mapStateToProps, { searchUsers })(SearchBar);
 
-SearchFriend.propTypes = {
+SearchBar.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
 };
 
-SearchFriend.defaultProps = {
+SearchBar.defaultProps = {
   height: "40px",
   width: "320px",
 };

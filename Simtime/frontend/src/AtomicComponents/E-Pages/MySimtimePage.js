@@ -1,7 +1,7 @@
 import React from "react";
 
-function MySimtime() {
+function MySimtimePage() {
   return <div>MySimtime</div>;
 }
 
-export default MySimtime;
+export default MySimtimePage;

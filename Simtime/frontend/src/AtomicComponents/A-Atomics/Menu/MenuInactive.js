@@ -2,11 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 
-import { ST_BLUE, TEXT_ACTIVE } from "../../Colors";
-import StyledText from "../Font/Header";
+import { ST_BLUE, ST_WHITE, TEXT_ACTIVE, TEXT_INACTIVE } from "../../Colors";
+import Header from "../Font/Header";
 
 const Wrap = styled.div`
-  display: inline-block;
+  // border: solid 1px red;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 `;
 
 const ContentWrap = styled.div`
@@ -18,20 +23,25 @@ const ContentWrap = styled.div`
 `;
 
 const Bottom = styled.div`
-  background-color: ${ST_BLUE};
+  background-color: ${ST_WHITE};
   border-radius: 80px 80px 20px 20px;
   height: 5px;
   width: 64px;
 `;
-const StyledContent = styled(StyledText)`
-  font-weight: 600;
+
+const StyledContent = styled(Header)`
+  color: ${TEXT_INACTIVE};
+  font-weight: bold;
+  &:hover {
+    color: ${TEXT_ACTIVE};
+  }
 `;
 
-function MenuActive(props) {
+function MenuInActive(props) {
   return (
     <Wrap>
       <ContentWrap>
-        <StyledContent type="h4" color="TEXT_ACTIVE">
+        <StyledContent type="h4" color={TEXT_INACTIVE}>
           {props.children}
         </StyledContent>
         <Bottom />
@@ -40,4 +50,4 @@ function MenuActive(props) {
   );
 }
 
-export default MenuActive;
+export default MenuInActive;

@@ -88,11 +88,11 @@ export const getGroup = (id) => (dispatch) => {
   axiosInstance
     .get(`/api/group/${id}`)
     .then((res) => {
-      dispatch(createMessage({ getGroup: res.data.groupname }));
       dispatch({
         type: GET_GROUP,
         payload: res.data.id,
       });
+      dispatch(createMessage({ getGroup: res.data.groupname }));
     })
     .catch((err) => console.log(err));
 };

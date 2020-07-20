@@ -5,13 +5,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 //Components
-import { MAIN_COLOR } from "../../../Colors";
-import SearchBar from "../../../C-Organisms/Friends/SearchFriend/SearchBar";
-import DefaultModal from "../../../B-Molecules/Modal/DefaultModal";
-import ResultTable from "../../../C-Organisms/Friends/SearchFriend/ResultTable";
+import { MAIN_COLOR } from "../../../../Colors";
+import SearchBar from "../../../../C-Organisms/Friends/SearchFriend/SearchBar";
+import DefaultModal from "../../../../B-Molecules/Modal/DefaultModal";
+import ResultTable from "../../../../C-Organisms/Friends/SearchFriend/ResultTable";
 
 //redux-actions
-import { addfriend, addToGroup } from "../../../../actions/friends";
+import { addfriend, addToGroup } from "../../../../../actions/friends";
 
 const SearchWrap = styled.div`
   widht: 100%;

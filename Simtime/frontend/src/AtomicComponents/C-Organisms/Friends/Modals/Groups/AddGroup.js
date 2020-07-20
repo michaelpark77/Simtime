@@ -3,14 +3,14 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import 'babel-polyfill';
 import { connect } from "react-redux";
-import { MAIN_COLOR } from "../../../Colors";
-import { createGroup } from "../../../../actions/groups";
+import { MAIN_COLOR } from "../../../../Colors";
+import { createGroup } from "../../../../../actions/groups";
 
-import InputWrap from "../../../A-Atomics/Form/InputWrap"
-import Paragraph from "../../../A-Atomics/Font/Paragraph"
-import DefaultModal from "../../../B-Molecules/Modal/DefaultModal";
-import ResultTable from "../../../C-Organisms/Friends/SearchFriend/ResultTable";
-import SearchBar from "../../../C-Organisms/Friends/SearchFriend/SearchBar"
+import InputWrap from "../../../../A-Atomics/Form/InputWrap"
+import Paragraph from "../../../../A-Atomics/Font/Paragraph"
+import DefaultModal from "../../../../B-Molecules/Modal/DefaultModal";
+import ResultTable from "../../../../C-Organisms/Friends/SearchFriend/ResultTable";
+import SearchBar from "../../../../C-Organisms/Friends/SearchFriend/SearchBar"
 
 const StyledInput = styled(InputWrap)`
   padding-bottom: 15px;
@@ -31,7 +31,7 @@ const Result = styled(ResultTable)``;
 const Groups = styled(ResultTable)``;
 
 function AddGroup(props) {
-  const [groupname, setGroupName] = useState("");
+  const [groupname, setGroupName] = useState(null);
   const [addMembers, setAddMembers] = useState(false);
   const [friends, setFriends] = useState([]);
 
@@ -52,7 +52,7 @@ function AddGroup(props) {
   const renderAddMember = () =>{
     return (
       <Fragment>
-        <StyledSearchBar search={(friends)=> setFriends(friends)}/>
+        <StyledSearchBar onSearch={(friends)=> setFriends(friends)}/>
         <ResultWrap>
           <Result
             datas={props.resultData}
@@ -101,8 +101,7 @@ function AddGroup(props) {
 const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
-
-
+// export default AddGroup;
 export default connect(mapStateToProps, { createGroup })(AddGroup);
 
 AddGroup.propTypes = {
@@ -113,4 +112,36 @@ AddGroup.propTypes = {
 AddGroup.defaultProps = {
   height: "520px",
   width: "320px",
+  resultData: [
+    {
+      id: 3,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
+      username: "ara",
+    },
+    {
+      id: 4,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
+        username: "arara",
+    },
+    {
+      id: 19,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down.png",
+        username: "aasa",
+    },
+    {
+      id: 7,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
+        username: "ara2",
+    },
+    {
+      id: 5,
+      image_url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check-valid.png",
+        username: "admin",
+    },
+  ],
 };

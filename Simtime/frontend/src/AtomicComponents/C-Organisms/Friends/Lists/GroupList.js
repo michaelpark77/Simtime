@@ -1,29 +1,31 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState,useContext  } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+//context
+import { ModalContext } from "../../../../contexts/modalContext";
+
+//redux
 import { connect } from "react-redux";
+
+//components
 import { deleteGroup, getGroup } from "../../../../actions/groups";
-
-
 import TableRow from "../../../A-Atomics/Table/TableRow";
 import Paragraph from "../../../A-Atomics/Font/Paragraph";
 import UserCardForList from "../../../B-Molecules/User/UserCardForList";
 import ButtonWithImage from "../../../B-Molecules/Button/ButtonWithImage";
 
-import Modal from "../../../A-Atomics/Modal/Modal";
-import ModalPortal from "../../../A-Atomics/Modal/ModalPortal";
 
+//size
 const buttonMargin = 10;
 const buttonsWidth = 160 + 8; //"삭제"-26px, "수신차단" or 차단-52 , bittonMargin * 버튼수 => 26 +104 + 30
 const buttonDefaultSize = 13 * 4 + 2; //4글자기준
 
+//components
 const Wrap = styled.div``
-
 const UserCard = styled(UserCardForList)`
   cursor: pointer;
 `;
-
 const Buttons = styled.div`
   width: ${buttonsWidth}px;
   display: flex;
@@ -31,27 +33,20 @@ const Buttons = styled.div`
   justify-content: space-between;
   align-items: flex-end;
 `;
-
 const ButtonWrap = styled.div`
   ${(props) => (props.width ? "width: " + props.width : "")};
 `;
-
 const TextButton = styled(Paragraph)`
-  // border: solid 1px red;
   margin-left: ${buttonMargin}px;
   cursor: pointer;
 `;
-
 const StyledButtonWithImage = styled(ButtonWithImage)`
-  // border: solid 1px red;
   margin-left: ${buttonMargin}px;
 `;
 
 
 function GroupList(props) {
-
-  const [isModalOpen, setIsOpenModal] = useState(false);
-  const [targetModal, setTargetModal] = useState("group"); //group, members
+  const { handleModal, closeModal } = useContext(ModalContext);
 
   const handleOpenModal = (target) => {
     setTargetModal(target);
@@ -62,6 +57,14 @@ function GroupList(props) {
     setIsOpenModal(false);
   };
   
+  const edit = async () => {
+    var res = await props.getGroup;
+    handleModal(<EditGroup onClose={closeModal} />)
+  };
+
+  const members = () => {
+  };
+
   const clickEvent=(e, id, cb)=>{
     e.preventDefault();
     setIsOpenModal(true);
@@ -98,37 +101,27 @@ function GroupList(props) {
   };
 
   return (<Wrap>
-    {renderRows(props.datas)}
-    {isModalOpen && (
-          <ModalPortal
-            children={
-              <Modal onClose={handleCloseModal}>
-                {targetModal == "group" ? <div>group</div> : <div>member</div>}
-              </Modal>
-            }
-          ></ModalPortal>
-      )}
+    {renderRows(props.groups)}
   </Wrap>);
 }
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   groups: state.groups.groups
-
 });
-// export default AddGroup;
+
+
 export default connect(mapStateToProps, { deleteGroup, getGroup })(GroupList);
 
 GroupList.propTypes = {
   title: PropTypes.string,
   headers: PropTypes.array,
-  datas: PropTypes.array,
+  groups: PropTypes.array,
 };
 
 GroupList.defaultProps = {
   title: "Table Title",
   headers: null,
-  // datas: null,
-  datas: null
+  groups: null
 };
 
 

@@ -23,11 +23,13 @@ import Header from "../AtomicComponents/D-Templates/Header";
 
 //Page
 import CalendarPage from "../AtomicComponents/E-Pages/CalendarPage";
-import Friends from "../AtomicComponents/E-Pages/Friends";
-import MySimtime from "../AtomicComponents/E-Pages/MySimtime";
+import FriendsPage from "../AtomicComponents/E-Pages/FriendsPage";
+import MySimtimePage from "../AtomicComponents/E-Pages/MySimtimePage";
 
 import styled from "styled-components";
 import { ModalProvider } from "../contexts/modalContext";
+import { MenuProvider } from "../contexts/menuContext";
+
 const alertOptions = {
   timeout: 3000,
   position: "top center",
@@ -47,13 +49,13 @@ const AppContents = styled.div`
   }
 `;
 class App extends Component {
-  // componentWillMount() {
-  //   store.dispatch(loadUser());
-  // }
-
-  componentDidMount() {
+  componentWillMount() {
     store.dispatch(loadUser());
   }
+
+  // componentDidMount() {
+  //   store.dispatch(loadUser());
+  // }
 
   render() {
     // return (
@@ -88,24 +90,26 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ModalProvider>
+        <MenuProvider>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <HashRouter>
             <Fragment>
               <GlobalStyle />
               <AppContents>
-                <Header />
+                <Header /> 
                 <Alerts />
                 <Switch>
                   <PrivateRoute exact path="/" component={CalendarPage} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
-                  <Route exact path="/friends" component={Friends} />
-                  <Route exact path="/mysimtime" component={MySimtime} />
+                  <Route exact path="/friends" component={FriendsPage} />
+                  <Route exact path="/mysimtime" component={MySimtimePage} />
                 </Switch>
               </AppContents>
             </Fragment>
           </HashRouter>
         </AlertProvider>
+        </MenuProvider>
         </ModalProvider>
       </Provider>
     );

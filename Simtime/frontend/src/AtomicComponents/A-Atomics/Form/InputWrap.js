@@ -64,7 +64,7 @@ function InputWrap(props) {
         placeholder={desc}
         readOnly={readOnly}
         value={readOnly ? value : myValue}
-        onChange={handleChange}
+        onChange={e=>handleChange(e)}
         cursor={cursor}
       ></MyInput>
     );

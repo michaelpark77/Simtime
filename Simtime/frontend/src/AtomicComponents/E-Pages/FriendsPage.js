@@ -9,13 +9,17 @@ import { getFriends, deleteFriend } from "../../actions/friends";
 // import { getHosts } from "../../actions/invitations"
 //components
 import { ST_WHITE, ST_GRAY } from "../Colors";
-import Table from "../B-Molecules/Table/Table";
+
 import Header from "../A-Atomics/Font/Header";
+import Table from "../B-Molecules/Table/Table";
 import Search from "../B-Molecules/Filter/Search";
-import FriendList from "../C-Organisms/Friends/Table/FriendList";
-import GroupList from "../C-Organisms/Friends/Table/GroupList";
-import AddFriend from "../D-Templates/Friends/Friends/AddFriend";
-import AddGroup from "../D-Templates/Friends/Groups/AddGroup";
+import Friends from "../D-Templates/Friends/Friends"
+import Groups from "../D-Templates/Friends/Groups"
+// import FriendList from "../C-Organisms/Friends/Lists/FriendList";
+// import GroupList from "../C-Organisms/Friends/Lists/GroupList";
+// import AddFriend from "../D-Templates/Friends/Friends/AddFriend";
+// import AddGroup from "../D-Templates/Friends/Groups/AddGroup";
+
 
 const Wrap = styled.div`
   overflow: hidden;
@@ -44,7 +48,7 @@ const ContentWrap = styled.div`
   justify-content: space-between;
 `;
 
-function Friends(props) {
+function FriendsPage(props) {
   const { handleModal, closeModal } = useContext(ModalContext);
   useEffect(() => {
     props.getGroups();
@@ -52,56 +56,28 @@ function Friends(props) {
     // props.getHosts();
   }, []);
 
-  const datas = [];
 
   return (
     <Wrap>
       <Section bottom="30px">
         <SectionTitle>
-          <Header type="h3" color="MAIN_COLOR">
-            Friends
-          </Header>
+          <Header type="h3" color="MAIN_COLOR">Friends</Header>
           <StyledSearch width="125px" desc="Find a friend" height="25px" />
         </SectionTitle>
         <ContentWrap>
-          <Table
-            title="My Friends"
-            addButton={true}
-            handleButtonClick={() =>
-              handleModal(<AddFriend onClose={closeModal} />)
-            }
-            width="48%"
-            rowHeight="45px"
-            rowNum={6}
-          >
-            <FriendList datas={props.friends} />
-          </Table>
-
-          <Table title="The Hosts" width="48%" rowHeight="45px" rowNum={6}>
-            <FriendList datas={props.friends} />
-          </Table>
+          <Friends friends={props.friends} rowNum={6} rowHeight="45px" width="48%" />
+          <Friends friends={props.friends} rowNum={6} rowHeight="45px" width="48%" />
         </ContentWrap>
-      </Section>
-
+      </Section> 
+      
       <Section bottom="0px">
         <Header type="h3" color="MAIN_COLOR">
           Group
         </Header>
         <ContentWrap>
-          <Table
-            title="My Groups"
-            addButton={true}
-            handleButtonClick={() =>
-              handleModal(<AddGroup onClose={closeModal} />)
-            }
-            width="100%"
-            rowHeight="45px"
-            rowNum={5}
-          >
-            <GroupList datas={props.groups} />
-          </Table>
+          <Groups groups={props.groups} rowNum={5} rowHeight="45px" width="100%" />
         </ContentWrap>
-      </Section>
+      </Section> 
     </Wrap>
   );
 }
@@ -119,5 +95,5 @@ const mapDispatchToProps = (dispatch) => {
     // getHosts: () => dispatch(getHost())
   };
 };
-// export default AddGroup;
-export default connect(mapStateToProps, mapDispatchToProps)(Friends);
+
+export default connect(mapStateToProps, mapDispatchToProps)(FriendsPage);
