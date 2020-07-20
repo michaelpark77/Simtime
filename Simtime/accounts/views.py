@@ -7,19 +7,21 @@ from rest_framework_simplejwt.models import TokenUser
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenVerifyView
 
 from .tokenSerializers import MyTokenObtainPairSerializer, MyTokenVerifySerializer
-from .serializers import AccountSerializer, UserSerializer, RelationshipSerializer, GroupSerializer,FriendSerializer, RGMapSerializer
+from .serializers import AccountSerializer, UserSerializer, RelationshipSerializer, GroupSerializer, FriendSerializer, RGMapSerializer
 from .models import Account, Relationship, FriendGroup, Relationship_FriendGroup_MAP
 
 
-
-#tokens
+# tokens
 class ObtainTokenPair(TokenObtainPairView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = MyTokenObtainPairSerializer
 
 # Create
+
+
 class AccountCreateAPI(APIView):
     permission_classes = (permissions.AllowAny,)
+
     def post(self, request, format='json'):
         serializer = AccountSerializer(data=request.data)
         if serializer.is_valid():
@@ -28,14 +30,15 @@ class AccountCreateAPI(APIView):
                 json = serializer.data
                 response = Response(json, status=status.HTTP_201_CREATED)
                 # username = serializer.data['username']
-                # response.set_cookie('username', username, httponly=True, max_age=3600)    
+                # response.set_cookie('username', username, httponly=True, max_age=3600)
                 return response
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-#Account
+# Account
 class AccountDetailAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
+
     def get_object(self, pk):
         try:
             return Account.objects.get(pk=pk)
@@ -60,17 +63,17 @@ class AccountDetailAPI(APIView):
         account.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class AccountSearchAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, field, keyword):
-        query = {"%s__contains" % field: keyword }
+        query = {"%s__contains" % field: keyword}
         results = Account.objects.filter(**query).order_by('username')
         data = []
         for item in results:
-             serializer = UserSerializer(item)
-             data.append(serializer.data)
-
+            serializer = UserSerializer(item)
+            data.append(serializer.data)
         return Response(data)
 
 
@@ -101,27 +104,44 @@ class TokenVerify(TokenVerifyView):
         print(serializer.data)
         return Response(serializer.data)
 
-#Relationship
+# Relationship
+
+
 class RelationshipAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request):
         serializer = RelationshipSerializer(data=request.data)
-        if(serializer.is_valid()):
-            serializer.save(account=self.request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if serializer.is_valid():
+            relationship = serializer.save(account=self.request.user)
+            if relationship:
+                # res = self.request.user.friends.get(
+                #     pk=relationship.id).select_related('friend')
+                res_serializer = FriendSerializer(relationship)
+                return Response(res_serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def get(self, request):     
+
+    def get(self, request):
         res = self.request.user.friends.select_related('friend')
-        friends = []
-        for i in res:
-            friends.append(i.friend)
+        print(res[0])
+        # friends = []
+        # for i in res:
+        #     friends.append(i.friend)
         # serializer = UserSerializer(friends, many=True)
         serializer = FriendSerializer(res, many=True)
         return Response(serializer.data)
 
-    # def put(self, request, pk):
+
+class RelationshipDetailAPI(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_object(self, pk):
+        try:
+            return Relationship.objects.get(pk=pk)
+        except Relationship.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    # def get(self, request, pk):
     #     relationship = self.get_object(pk)
     #     serializer = RelationshipSerializer(relationship, data=request.data)
     #     if serializer.is_valid():
@@ -129,14 +149,23 @@ class RelationshipAPI(APIView):
     #         return Response(serializer.data)
     #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # def delete(self, request, pk):
-    #     relationship = self.get_object(pk)
-    #     relationship.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
+    def put(self, request, pk):
+        relationship = self.get_object(pk)
+        serializer = FriendSerializer(
+            relationship, data=request.data, partial=True)
+        # {"dispatch": false}
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        relationship = self.get_object(pk)
+        relationship.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
-#Relationship-Group
+# Relationship-Group
 class RGMapAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -148,7 +177,9 @@ class RGMapAPI(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#add,get group
+# add,get group
+
+
 class GroupAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -170,7 +201,9 @@ class GroupAPI(APIView):
         serializer = GroupSerializer(groups, many=True)
         return Response(serializer.data)
 
-#groupDetail
+# groupDetail
+
+
 class GroupDetailAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -189,4 +222,3 @@ class GroupDetailAPI(APIView):
         group = self.get_object(pk)
         group.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-

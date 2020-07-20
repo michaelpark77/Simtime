@@ -1,7 +1,7 @@
-import React, { Fragment, useState, createRef,useEffect } from "react";
+import React, { Fragment, useState, createRef, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import 'babel-polyfill';
+import "babel-polyfill";
 import { connect } from "react-redux";
 
 import SelectBoxRef from "../../A-Atomics/Filter/SelectBoxRef";
@@ -9,7 +9,7 @@ import SelectBoxRef from "../../A-Atomics/Filter/SelectBoxRef";
 import Search from "../../B-Molecules/Filter/Search";
 import ResultTable from "../../C-Organisms/Friends/AddFriend/ResultTable";
 import { MAIN_COLOR } from "../../Colors";
-import { searchUsers } from "../../../actions/account"
+import { searchUsers } from "../../../actions/account";
 
 const SearchWrap = styled.div`
   width: 100%;
@@ -18,7 +18,6 @@ const SearchWrap = styled.div`
   justify-content: flex-start;
   align-items: center;
   border-bottom: solid 1px ${MAIN_COLOR};
-
 `;
 
 const StyledSelectBox = styled(SelectBoxRef)``;
@@ -38,15 +37,15 @@ function SearchFriend(props) {
   const searchRef = createRef();
 
   const handleOptionChange = () => {
-    searchRef.current.focus()
-  }
+    searchRef.current.focus();
+  };
 
-  const searchHandler = async ()=> {
+  const searchHandler = async () => {
     var field = await selectRef.current.innerText;
     var keyword = await searchRef.current.value;
     var res = await props.searchUsers(field, keyword);
-    props.onSearch(res);
-  }
+    props.search(res);
+  };
 
   return (
     <Fragment>
@@ -56,17 +55,21 @@ function SearchFriend(props) {
           defaultOption="Username"
           width="102px"
           ref={selectRef}
-          handleOptionChange={()=>{handleOptionChange()}}
+          handleOptionChange={() => {
+            handleOptionChange();
+          }}
         />
-        <StyledSearch 
-          width="auto" 
-          desc="Find a friend" 
-          height="25px" 
+        <StyledSearch
+          width="auto"
+          desc="Find a friend"
+          height="25px"
           ref={searchRef}
-          searchHandler={()=>{searchHandler()}}
-          />
+          searchHandler={() => {
+            searchHandler();
+          }}
+        />
       </SearchWrap>
-  </Fragment>
+    </Fragment>
   );
 }
 

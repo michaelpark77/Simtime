@@ -1,11 +1,11 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 //context
 import { ModalContext } from "../../contexts/modalContext";
 //redux-actions
 import { getGroups } from "../../actions/groups";
-import { getFriends } from "../../actions/friends";
+import { getFriends, deleteFriend } from "../../actions/friends";
 // import { getHosts } from "../../actions/invitations"
 //components
 import { ST_WHITE, ST_GRAY } from "../Colors";
@@ -46,27 +46,30 @@ const ContentWrap = styled.div`
 
 function Friends(props) {
   const { handleModal, closeModal } = useContext(ModalContext);
-  useEffect( () => {
+  useEffect(() => {
     props.getGroups();
     props.getFriends();
     // props.getHosts();
-  },[])
+  }, []);
 
-  const datas=[]
+  const datas = [];
 
   return (
     <Wrap>
       <Section bottom="30px">
         <SectionTitle>
-          <Header type="h3" color="MAIN_COLOR">Friends</Header>
+          <Header type="h3" color="MAIN_COLOR">
+            Friends
+          </Header>
           <StyledSearch width="125px" desc="Find a friend" height="25px" />
         </SectionTitle>
         <ContentWrap>
-          
           <Table
             title="My Friends"
             addButton={true}
-            handleButtonClick={() => handleModal(<AddFriend onClose={closeModal}/>)}
+            handleButtonClick={() =>
+              handleModal(<AddFriend onClose={closeModal} />)
+            }
             width="48%"
             rowHeight="45px"
             rowNum={6}
@@ -81,12 +84,16 @@ function Friends(props) {
       </Section>
 
       <Section bottom="0px">
-        <Header type="h3" color="MAIN_COLOR">Group</Header>
+        <Header type="h3" color="MAIN_COLOR">
+          Group
+        </Header>
         <ContentWrap>
           <Table
             title="My Groups"
             addButton={true}
-            handleButtonClick={() => handleModal(<AddGroup onClose={closeModal}/>)}
+            handleButtonClick={() =>
+              handleModal(<AddGroup onClose={closeModal} />)
+            }
             width="100%"
             rowHeight="45px"
             rowNum={5}
@@ -102,15 +109,15 @@ function Friends(props) {
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   groups: state.groups.groups,
-  friends: state.friends.friends
+  friends: state.friends.friends,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getGroups: () => dispatch(getGroups()),
     getFriends: () => dispatch(getFriends()),
-    // getHosts: () => dispatch(getHost())    
-  }
-}
+    // getHosts: () => dispatch(getHost())
+  };
+};
 // export default AddGroup;
 export default connect(mapStateToProps, mapDispatchToProps)(Friends);

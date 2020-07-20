@@ -16,12 +16,13 @@ class AccountSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # password = validated_data.pop('password', None)
         password = validated_data['password']
-        account = self.Meta.model(**validated_data)  
+        account = self.Meta.model(**validated_data)
         # as long as the fields are the same, we can just use this
         # or Use : instance = Account(email=validated_data['email'],username=validated_data['username'])
         if password is not None:
             account.set_password(password)
-        account.save() #deserialized : json -> object(Account 모델 타입)으로 변환된 객체를 불러온다.
+        # deserialized : json -> object(Account 모델 타입)으로 변환된 객체를 불러온다.
+        account.save()
         return account
 
 
@@ -47,6 +48,9 @@ class RelationshipSerializer(serializers.ModelSerializer):
         model = Relationship
         fields = '__all__'
 
+    
+
+
 class FriendSerializer(serializers.ModelSerializer):
     friend = UserSerializer()
 
@@ -58,10 +62,10 @@ class FriendSerializer(serializers.ModelSerializer):
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = FriendGroup
-        fields = ('id', 'groupname','account')
+        fields = ('id', 'groupname', 'account')
         validators = [
             serializers.UniqueTogetherValidator(
-                queryset=FriendGroup.objects.all(),fields=['account', 'groupname'],message=("already exists"))
+                queryset=FriendGroup.objects.all(), fields=['account', 'groupname'], message=("already exists"))
         ]
 
 

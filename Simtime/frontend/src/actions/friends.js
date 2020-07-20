@@ -9,22 +9,57 @@ import {
   DELETE_FRIEND,
 } from "./types";
 
-
 export const addfriend = (friend) => (dispatch) => {
   console.log("addfriend", friend);
 
   return axiosInstance
     .post("/api/friend/create/", {
       account: friend.account,
-      friend: friend.friend }
-      )
+      friend: friend.friend,
+    })
     .then((res) => {
       dispatch(createMessage({ addFriend: "Friend Added" }));
-      return res
+      console.log("friends", res);
+      dispatch({ type: ADD_FRIEND, payload: res.data });
+      return res;
     })
     .catch((err) => {
       dispatch(returnErrors(err.response, err.response.status));
-      return err
+      return err;
+    });
+};
+
+export const deleteFriend = (id) => (dispatch) => {
+  console.log("deleteFriend", id);
+  return axiosInstance
+    .delete(`/api/friend/${id}`)
+    .then((res) => {
+      dispatch(createMessage({ deleteFriend: "Friend Deleted" }));
+      console.log("deleted", res);
+      dispatch({ type: DELETE_FRIEND, payload: id });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response, err.response.status));
+      return err;
+    });
+};
+
+export const editFriend = (data) => (dispatch) => {
+  // subscribe:true
+  // dispatch:true
+  console.log("editFriend", data);
+  return axiosInstance
+    .put(`/api/friend/${data.id}/`, data)
+    .then((res) => {
+      dispatch({
+        type: EDIT_FRIEND,
+        payload: res.data,
+      });
+      dispatch(createMessage({ editFriend: "Edited" }));
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response, err.response.status));
+      return err;
     });
 };
 
@@ -35,11 +70,11 @@ export const addToGroup = (datas) => (dispatch) => {
     .post("/api/friend/add-to-group/", datas)
     .then((res) => {
       dispatch(createMessage({ addToGroup: "Added to Group" }));
-      return res
+      return res;
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
-      return err
+      return err;
     });
 };
 
@@ -48,7 +83,7 @@ export const getFriends = () => (dispatch) => {
   axiosInstance
     .get("/api/friends/")
     .then((res) => {
-      console.log("friends", res)
+      console.log("friends", res);
       dispatch({
         type: GET_FRIENDS,
         payload: res.data,

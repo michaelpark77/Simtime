@@ -1,11 +1,15 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import TableRow from "../../../A-Atomics/Table/TableRow";
 import Paragraph from "../../../A-Atomics/Font/Paragraph";
 import UserCardForList from "../../../B-Molecules/User/UserCardForList";
 import ButtonWithImage from "../../../B-Molecules/Button/ButtonWithImage";
+
+// import { deleteFriend } from "../../../../actions/friends";
+import { deleteFriend, editFriend } from "../../../../actions/friends";
 
 const buttonMargin = 10;
 const buttonsWidth = 160 + 8; //"삭제"-26px, "수신차단" or 차단-52 , bittonMargin * 버튼수 => 26 +104 + 30
@@ -40,29 +44,39 @@ const StyledButtonWithImage = styled(ButtonWithImage)`
 
 function FriendList(props) {
   const renderButton = useCallback(
-    (status, content = "차단", color = "TEXT_LINK") => {
-      if (!status) {
+    (fn, status, content = "차단", color = "TEXT_LINK") => {
+      if (status) {
+        return (
+          <ButtonWrap>
+            <TextButton
+              color={color}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                fn();
+              }}
+            >
+              {content}
+            </TextButton>
+          </ButtonWrap>
+        );
+      } else {
         return (
           <ButtonWrap width={buttonDefaultSize + buttonMargin + 2 + "px"}>
             <StyledButtonWithImage
               width="auto"
               imgurl="https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check.png"
               imgLocation="right"
+              onClick={(e) => {
+                e.preventDefault();
+                fn();
+              }}
             >
               차단
             </StyledButtonWithImage>
           </ButtonWrap>
         );
-      } else {
-        return (
-              <ButtonWrap>
-                <TextButton color={color} type="button">
-                  {content}
-                </TextButton>
-              </ButtonWrap>
-            );
       }
-
     },
     []
   );
@@ -77,9 +91,35 @@ function FriendList(props) {
             url={data.friend.profile_image}
           ></UserCard>
           <Buttons>
-            {renderButton(!data.friend.subscribe, "수신차단")}
-            {renderButton(!data.friend.dispatch, "발신차단")}
-            {renderButton(1, "삭제", "TEXT_WARNING")}
+            {renderButton(
+              () => {
+                props.editFriend({
+                  id: data.id,
+                  subscribe: !data.subscribe,
+                });
+              },
+              data.subscribe,
+              "수신차단"
+            )}
+            {renderButton(
+              () => {
+                props.editFriend({
+                  id: data.id,
+                  dispatch: !data.dispatch,
+                });
+              },
+              data.dispatch,
+
+              "발신차단"
+            )}
+            {renderButton(
+              () => {
+                props.deleteFriend(data.id);
+              },
+              1,
+              "삭제",
+              "TEXT_WARNING"
+            )}
           </Buttons>
         </TableRow>
       );
@@ -89,17 +129,21 @@ function FriendList(props) {
   return <div>{renderRows(props.datas)}</div>;
 }
 
-export default FriendList;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteFriend: (id) => dispatch(deleteFriend(id)),
+    editFriend: (data) => dispatch(editFriend(data)),
+  };
+};
+// export default AddGroup;
+export default connect(null, mapDispatchToProps)(FriendList);
 
 FriendList.propTypes = {
   title: PropTypes.string,
   headers: PropTypes.array,
-  datas: PropTypes.array,
 };
 
 FriendList.defaultProps = {
   title: "Table Title",
   headers: null,
-  datas: [],
- 
 };

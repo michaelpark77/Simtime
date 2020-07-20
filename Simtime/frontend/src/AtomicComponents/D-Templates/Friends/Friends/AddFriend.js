@@ -1,11 +1,11 @@
-import 'babel-polyfill';
+import "babel-polyfill";
 import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 //Components
-import SearchFriend from "../SearchFriend"
+import SearchFriend from "../SearchFriend";
 import DefaultModal from "../../../B-Molecules/Modal/DefaultModal";
 import ResultTable from "../../../C-Organisms/Friends/AddFriend/ResultTable";
 import { MAIN_COLOR } from "../../../Colors";
@@ -14,8 +14,8 @@ import { addfriend, addToGroup } from "../../../../actions/friends";
 
 const SearchWrap = styled.div`
   widht: 100%;
-  padding-bottom : 15px;
-`
+  padding-bottom: 15px;
+`;
 const ResultWrap = styled.div`
   width: 100%;
 `;
@@ -29,18 +29,23 @@ function AddFriend(props) {
 
   const handleSubmit = async () => {
     try {
-      const relationship = await props.addfriend({account: props.user.id, friend: friend[0]})
-      const group = await props.addToGroup({relationship: relationship.data.id, group: 1 })
+      const relationship = await props.addfriend({
+        account: props.user.id,
+        friend: friend[0],
+      });
+      // const group = await props.addToGroup({relationship: relationship.data.id, group: 1 })
       props.onClose();
-    }catch (err) {
-      console.log("relationshipError" , err);
+    } catch (err) {
+      console.log("relationshipError", err);
     }
   };
 
   const renderChild = () => {
     return (
       <Fragment>
-        <SearchWrap><SearchFriend onSearch={(users)=> setUsers(users)}/></SearchWrap>
+        <SearchWrap>
+          <SearchFriend search={(users) => setUsers(users)} />
+        </SearchWrap>
         <ResultWrap>
           <Result
             datas={users}
@@ -52,9 +57,9 @@ function AddFriend(props) {
               setFriend(res);
             }}
           />
-      </ResultWrap>
+        </ResultWrap>
         <ResultWrap>
-          {friend.length>0 &&  
+          {friend.length > 0 && (
             <Groups
               datas={props.groups}
               title="Group"
@@ -65,7 +70,8 @@ function AddFriend(props) {
                 setGroups(res);
               }}
               multiple
-           /> }
+            />
+          )}
         </ResultWrap>
       </Fragment>
     );
@@ -84,10 +90,10 @@ function AddFriend(props) {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  groups : state.groups.groups
+  groups: state.groups.groups,
 });
 // export default AddFriend;
-export default connect(mapStateToProps, { addfriend,addToGroup })(AddFriend);
+export default connect(mapStateToProps, { addfriend, addToGroup })(AddFriend);
 
 AddFriend.propTypes = {
   height: PropTypes.string,
