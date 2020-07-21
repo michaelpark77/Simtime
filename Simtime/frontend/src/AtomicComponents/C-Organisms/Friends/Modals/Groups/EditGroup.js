@@ -3,35 +3,19 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import 'babel-polyfill';
 import { connect } from "react-redux";
-import { MAIN_COLOR } from "../../../Colors";
-import { editGroup } from "../../../../actions/groups";
+import { MAIN_COLOR } from "../../../../Colors";
+import { editGroup } from "../../../../../actions/groups";
 
-import InputWrap from "../../../A-Atomics/Form/InputWrap"
-import Paragraph from "../../../A-Atomics/Font/Paragraph"
-import DefaultModal from "../../../B-Molecules/Modal/DefaultModal";
-import ResultTable from "../../../C-Organisms/Friends/AddFriend/ResultTable";
-import SearchFriend from "../SearchFriend"
+import InputWrap from "../../../../A-Atomics/Form/InputWrap"
+import DefaultModal from "../../../../B-Molecules/Modal/DefaultModal";
+
 
 const StyledInput = styled(InputWrap)`
   padding-bottom: 15px;
 `
-
-const ResultWrap = styled.div`
-  width: 100%;
-`;
-
-const StyledSearchFriend = styled(SearchFriend)`
-`
-const ArrowParagraph = styled(Paragraph)`
-  cursor: pointer;
-  padding-bottom: 10px;
-`
-
-const Result = styled(ResultTable)``;
-const Groups = styled(ResultTable)``;
-
 function EditGroup(props) {
-  const [groupname, setGroupName] = useState(null);
+  const {group} = props
+  const [groupname, setGroupName] = useState(group.groupname);
 
   const handleChange = useCallback((e) => {
     setGroupName(e.target.value);
@@ -39,7 +23,7 @@ function EditGroup(props) {
 
   const handleSubmit = async () => {
     try {
-      const group = await props.editGroup({account: props.user.id, groupname: groupname})
+      const res = await props.editGroup({...group, groupname: groupname})
       props.onClose();
     }catch (err) {
       console.log("err" , err);
@@ -56,7 +40,6 @@ function EditGroup(props) {
           desc="Group Name"
           value={groupname}
           onChange={handleChange}
-          defaultValue={props.selectedGroup.groupname}
           />
       </Fragment>
     );
@@ -73,20 +56,22 @@ function EditGroup(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  group: state.groups.selectedGroup
-});
-// export default EditGroup;
-export default connect(mapStateToProps, { editGroup })(EditGroup);
+// const mapStateToProps = (state) => ({
+//   user: state.auth.user,
+//   group: state.groups.selectedGroup
+// });
+//export default EditGroup;
+export default connect(null, { editGroup })(EditGroup);
 
 EditGroup.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
+  group: PropTypes.object
 };
 
 EditGroup.defaultProps = {
   height: "520px",
   width: "320px",
+  group: {}
 
 };

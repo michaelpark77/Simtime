@@ -35,13 +35,10 @@ urlpatterns = [
     path('api/friend/<int:pk>/',
          RelationshipDetailAPI.as_view(), name="friend_detail"),
 
-
     # groups
     path('api/groups/', GroupAPI.as_view(), name='groups'),
     path('api/groups/create/', GroupAPI.as_view(), name='group_create'),
-
-    path('api/group/<int:pk>', GroupDetailAPI.as_view(), name='group_delete'),
-    path('api/group/<int:pk>/', GroupDetailAPI.as_view(), name="group_edit"),
     path('api/group/<int:pk>/', GroupDetailAPI.as_view(), name="group_detail"),
+
 
 ]

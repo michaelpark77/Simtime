@@ -18,9 +18,8 @@ function Logo(props) {
   return (
     <LogoWrap>
       <MenuLink
-        src="/"
         handleClick={() => {
-          handleMenu(0);
+          handleMenu("/");
         }}
       >
         <LOGO />

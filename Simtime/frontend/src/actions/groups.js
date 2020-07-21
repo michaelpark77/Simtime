@@ -97,9 +97,9 @@ export const getGroup = (id) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const editGroup = (id) => (dispatch) => {
+export const editGroup = (group) => (dispatch) => {
   axiosInstance
-    .put(`/api/group/${id}`)
+    .put(`/api/group/${group.id}/`, group)
     .then((res) => {
       dispatch(createMessage({ editGroup: "Group Edited" }));
       dispatch({

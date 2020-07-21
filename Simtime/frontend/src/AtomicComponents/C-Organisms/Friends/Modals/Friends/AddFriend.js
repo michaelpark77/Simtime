@@ -34,7 +34,10 @@ function AddFriend(props) {
         account: props.user.id,
         friend: friend[0],
       });
-      // const group = await props.addToGroup({relationship: relationship.data.id, group: 1 })
+      var groupData = await groups.map((group) => {
+        return( {relationship:relationship.data.id, group:group } ) 
+      });
+      const group = await props.addToGroup(groupData);
       props.onClose();
     } catch (err) {
       console.log("relationshipError", err);
@@ -45,7 +48,7 @@ function AddFriend(props) {
     return (
       <Fragment>
         <SearchWrap>
-          <SearchBar search={(users) => setUsers(users)} />
+          <SearchBar newFriends search={(users) => setUsers(users)} />
         </SearchWrap>
         <ResultWrap>
           <Result

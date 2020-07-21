@@ -70,7 +70,7 @@ function InputWrap(props) {
     // e.preventDefault();
     e.stopPropagation();
     if(e.key==="Enter"){
-      enterHandler();
+      enterHandler(e.target.value);
     }
   })
 
@@ -83,7 +83,7 @@ function InputWrap(props) {
         readOnly={readOnly}
         value={readOnly ? value : myValue}
         onChange={(e)=>handleChange(e)}
-        onKeyUp={handleKeyUp}
+        onKeyUp={(e)=>handleKeyUp(e)}
         cursor={cursor}
         ref={innerRef}
       ></MyInput>

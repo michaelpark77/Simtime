@@ -33,6 +33,8 @@ const Result = styled(ResultTable)``;
 const Groups = styled(ResultTable)``;
 
 function SearchBar(props) {
+  const {search, searchUsers,height, width, newFriends } = props;
+
   const selectRef = createRef();
   const searchRef = createRef();
 
@@ -43,8 +45,15 @@ function SearchBar(props) {
   const searchHandler = async () => {
     var field = await selectRef.current.innerText;
     var keyword = await searchRef.current.value;
-    var res = await props.searchUsers(field, keyword);
-    props.search(res);
+    if(newFriends) {
+      var res = await searchUsers(field, keyword);
+      search(res);
+    }
+    else{
+      let map_field = {"Username": "username", "E-mail":"email", "Phone":"phone"}
+      search(map_field[field], keyword);
+    } 
+    
   };
 
   return (
@@ -75,6 +84,7 @@ function SearchBar(props) {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  friends: state.friends.friends
 });
 // export default SearchBars;
 export default connect(mapStateToProps, { searchUsers })(SearchBar);

@@ -72,4 +72,4 @@ class GroupSerializer(serializers.ModelSerializer):
 class RGMapSerializer(serializers.ModelSerializer):
     class Meta:
         model = Relationship_FriendGroup_MAP
-        fields = '__all__'
+        fields = ('relationship', 'group')

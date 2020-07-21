@@ -1,4 +1,4 @@
-import React, { useCallback,useContext  } from "react";
+import React, { useCallback,useContext, Fragment  } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -126,7 +126,7 @@ function FriendList(props) {
     });
   };
 
-  return <div>{renderRows(props.datas)}</div>;
+  return <Fragment>{renderRows(props.datas)}</Fragment>;
 }
 
 const mapDispatchToProps = (dispatch) => {

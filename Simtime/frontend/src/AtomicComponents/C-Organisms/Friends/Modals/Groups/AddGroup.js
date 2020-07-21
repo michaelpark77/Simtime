@@ -1,9 +1,9 @@
-import React, { Fragment, useState, useCallback } from "react";
+import 'babel-polyfill';
+import React, { Fragment, useState, useCallback, createRef } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import 'babel-polyfill';
 import { connect } from "react-redux";
-import { MAIN_COLOR } from "../../../../Colors";
+import { MAIN_COLOR, ST_GREEN, ST_RED } from "../../../../Colors";
 import { createGroup } from "../../../../../actions/groups";
 
 import InputWrap from "../../../../A-Atomics/Form/InputWrap"
@@ -28,34 +28,58 @@ const ArrowParagraph = styled(Paragraph)`
 `
 
 const Result = styled(ResultTable)``;
-const Groups = styled(ResultTable)``;
 
 function AddGroup(props) {
   const [groupname, setGroupName] = useState(null);
   const [addMembers, setAddMembers] = useState(false);
-  const [friends, setFriends] = useState([]);
+  const [friendDatas, setFriendDatas]=  useState([...new Set(props.friends.map(it => it.friend))]);
+  const [isValid, setIsValid] = useState(null);
+  const inputRef = createRef(null);
+  
+  const checkValidation = (groupname) => {
+    inputRef.current.classList.remove("valid-value", "invalid-value");
+    if(groupname !=""){
+      let res = !props.groups.some(group => group.groupname === groupname);
+      //valid state 저장
+      setIsValid(res);
+      //css 적용
+      if( res ) inputRef.current.classList.add("valid-value");
+      else inputRef.current.classList.add("invalid-value");
+      // inputRef.current.style.backgroundColor = "red";
+    } 
+  };
 
   const handleChange = useCallback((e) => {
-    setGroupName(e.target.value);
+    let value = e.target.value;
+    checkValidation(value);
+    setGroupName(value);
   });
 
-
   const handleSubmit = async () => {
-    try {
-      const group = await props.createGroup({account: props.user.id, groupname: groupname})
-      props.onClose();
-    }catch (err) {
-      console.log("relationshipError" , err);
+    if(isValid){
+      try {
+        const group = await props.createGroup({account: props.user.id, groupname: groupname})
+        props.onClose();
+      }catch (err) {
+        console.log("relationshipError" , err);
+      }
+    }else{
+      inputRef.current.focus();
     }
   };
+
+  const filterFriend = (field, keyword) => {
+    var res = props.friends.filter(item => item.friend[field].includes(keyword))
+    setFriendDatas([...new Set(res.map(item => item.friend))]);
+  }
 
   const renderAddMember = () =>{
     return (
       <Fragment>
-        <StyledSearchBar onSearch={(friends)=> setFriends(friends)}/>
+        <StyledSearchBar search={(field, keyword)=> filterFriend(field, keyword)}/>
         <ResultWrap>
           <Result
-            datas={props.resultData}
+            datas={friendDatas}
             titleColor="MAIN_COLOR"
             width="100%"
             rowNum={6}
@@ -75,8 +99,9 @@ function AddGroup(props) {
           label="Name"
           name="GroupName"
           desc="Group Name"
-          value={groupname}
           onChange={handleChange}
+          enterHandler={handleSubmit}
+          ref={inputRef}
           />
         {addMembers ? 
           <ArrowParagraph fontSize="14px" color="MAIN_COLOR" onClick={()=>setAddMembers(false)}> ▲ Hide </ArrowParagraph> 
@@ -100,6 +125,8 @@ function AddGroup(props) {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  groups: state.groups.groups,
+  friends: state.friends.friends
 });
 // export default AddGroup;
 export default connect(mapStateToProps, { createGroup })(AddGroup);
@@ -112,36 +139,5 @@ AddGroup.propTypes = {
 AddGroup.defaultProps = {
   height: "520px",
   width: "320px",
-  resultData: [
-    {
-      id: 3,
-      image_url:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-      username: "ara",
-    },
-    {
-      id: 4,
-      image_url:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
-        username: "arara",
-    },
-    {
-      id: 19,
-      image_url:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/arrow-down.png",
-        username: "aasa",
-    },
-    {
-      id: 7,
-      image_url:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/user-basic.png",
-        username: "ara2",
-    },
-    {
-      id: 5,
-      image_url:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check-valid.png",
-        username: "admin",
-    },
-  ],
+ 
 };

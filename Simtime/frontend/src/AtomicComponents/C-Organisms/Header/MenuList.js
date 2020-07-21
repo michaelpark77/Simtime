@@ -35,7 +35,7 @@ function MenuList(props) {
     return menus.map((menu) => {
       var { src, name } = menu;
       return (
-        <MenuLink src={src} key={src} handleClick={() => handleMenu(src)}>
+        <MenuLink key={src} src={src} handleClick={() => handleMenu(src)}>
           {activeMenu == src
             ? ActiveMenuRender(name)
             : InActiveMenuRender(name)}

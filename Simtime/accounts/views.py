@@ -171,7 +171,7 @@ class RGMapAPI(APIView):
 
     def post(self, request):
         print("RGMap", request.data)
-        serializer = RGMapSerializer(data=request.data)
+        serializer = RGMapSerializer(data=request.data,  many=True)
         if(serializer.is_valid()):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -222,3 +222,12 @@ class GroupDetailAPI(APIView):
         group = self.get_object(pk)
         group.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, pk):
+        group = self.get_object(pk)
+        serializer = GroupSerializer(group, data=request.data)
+        # {"dispatch": false}
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -4,17 +4,15 @@ import PropTypes from "prop-types";
 
 //context
 import { ModalContext } from "../../../../contexts/modalContext";
-
 //redux
 import { connect } from "react-redux";
-
 //components
 import { deleteGroup, getGroup } from "../../../../actions/groups";
 import TableRow from "../../../A-Atomics/Table/TableRow";
 import Paragraph from "../../../A-Atomics/Font/Paragraph";
 import UserCardForList from "../../../B-Molecules/User/UserCardForList";
 import ButtonWithImage from "../../../B-Molecules/Button/ButtonWithImage";
-
+import EditGroup from "../Modals/Groups/EditGroup"
 
 //size
 const buttonMargin = 10;
@@ -48,33 +46,15 @@ const StyledButtonWithImage = styled(ButtonWithImage)`
 function GroupList(props) {
   const { handleModal, closeModal } = useContext(ModalContext);
 
-  const handleOpenModal = (target) => {
-    setTargetModal(target);
-    setIsOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsOpenModal(false);
-  };
-  
-  const edit = async () => {
-    var res = await props.getGroup;
-    handleModal(<EditGroup onClose={closeModal} />)
-  };
-
-  const members = () => {
-  };
-
-  const clickEvent=(e, id, cb)=>{
+  const clickEvent=(e, cb)=>{
     e.preventDefault();
-    setIsOpenModal(true);
-    cb(id)
+    cb();
   }
 
-  const renderButton = useCallback((content = "삭제", id, fn, color="TEXT_LINK") => {
+  const renderButton = useCallback((content = "삭제", fn, color="TEXT_LINK") => {
     return (
       <ButtonWrap>
-        <TextButton color={color} type="button" onClick={e=>clickEvent(e, id, fn)}>
+        <TextButton color={color} type="button" onClick={e=>clickEvent(e, fn)}>
           {content}
         </TextButton>
       </ButtonWrap>
@@ -91,16 +71,17 @@ function GroupList(props) {
             url="https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/group_basic.png"
           ></UserCard>
           <Buttons>
-            {renderButton("이름변경", group.id, props.getGroup)}
+            {renderButton("이름변경", ()=>handleModal(<EditGroup group={group} onClose={closeModal} />) )}
             {renderButton("멤버관리")}
-            {renderButton("삭제",group.id, props.deleteGroup, "TEXT_WARNING")}
+            {renderButton("삭제", ()=>props.deleteGroup(group.id), "TEXT_WARNING")}
           </Buttons>
         </TableRow>
       );
     });
   };
 
-  return (<Wrap>
+  return (
+  <Wrap>
     {renderRows(props.groups)}
   </Wrap>);
 }

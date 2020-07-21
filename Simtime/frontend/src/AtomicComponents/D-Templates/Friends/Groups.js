@@ -19,9 +19,7 @@ function Groups(props) {
   const { handleModal, closeModal } = useContext(ModalContext);
 
   return (
-       <Table
-    title="My Groups"
-    addButton={true}
+    <Table title="My Groups" addButton={true}
     handleButtonClick={() =>
       handleModal(<AddGroup onClose={closeModal} />)
     }

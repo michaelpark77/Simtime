@@ -46,10 +46,10 @@ const MyInput = styled(InputWrap)`
 `;
 
 function Search(props) {
-  const { width, height, value, desc, Inputref,searchHandler } = props;
+  const { width, height, value, desc, Inputref,searchHandler,changeHandler } = props;
   return (
     <Wrap {...props}>
-      <MyInput ref={Inputref} desc={desc} height="24px" enterHandler={searchHandler}></MyInput>
+      <MyInput value={value} ref={Inputref} desc={desc} height="24px" enterHandler={searchHandler}></MyInput>
       <Icon size={height} />
     </Wrap>
   );
@@ -68,7 +68,7 @@ Search.propTypes = {
 Search.defaultProps = {
   width: "120px",
   height: "30px",
-  value: "Search",
+  value: "",
   desc: "Search",
   enterHandler: null
 };
