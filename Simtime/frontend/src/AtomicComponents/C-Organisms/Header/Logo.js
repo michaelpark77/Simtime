@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { MenuContext } from "../../../contexts/menuContext";
 
-import { MAIN_COLOR, ST_GRAY } from "../../Colors";
 import LOGO from "../../A-Atomics/Logo";
-import MenuLink from "../../B-Molecules/Header/MenuLink"
+import MenuLink from "../../A-Atomics/Menu/MenuLink";
 
 const LogoWrap = styled.div`
   @media only screen and (max-width: 680px) {
@@ -14,12 +14,19 @@ const LogoWrap = styled.div`
 `;
 
 function Logo(props) {
-  return (<LogoWrap>
-            <MenuLink src="/" handleClick={e=>handleClick(e, 0)}>
-                <LOGO />
-            </MenuLink>
-        </LogoWrap>)
+  const { handleMenu } = useContext(MenuContext);
+  return (
+    <LogoWrap>
+      <MenuLink
+        src="/"
+        handleClick={() => {
+          handleMenu(0);
+        }}
+      >
+        <LOGO />
+      </MenuLink>
+    </LogoWrap>
+  );
 }
 
 export default Logo;
-

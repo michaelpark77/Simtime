@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
-import Calendar from "../D-Templates/Calendar/Calendar";
 import DashedButton from "../A-Atomics/Button/DashedButton";
+import Filter from "../C-Organisms/Filter";
+import Calendar from "../D-Templates/Calendar/Calendar";
 import Detail from "../D-Templates/Event/EventDetail";
 import EventMaker from "../D-Templates/Event/EventMaker";
-import Filter from "../C-Organisms/Filter";
 
 import { ModalContext } from "../../contexts/modalContext";
 
@@ -73,11 +73,12 @@ function CalendarPage() {
         <StyledFilter />
         <StyledCalendar height="98%" />
       </LeftWrap>
+
       <RightWrap>
         <StyledDashedButton
           hasIcon={true}
           src="static/img/icons/edit2.png"
-          onClick={() => handleModal(<EventMaker onClose={closeModal}/>)}
+          onClick={() => handleModal(<EventMaker onClose={closeModal} />)}
         >
           Add a new event
         </StyledDashedButton>

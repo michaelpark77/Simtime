@@ -7,12 +7,22 @@ const GlobalStyle = createGlobalStyle`
   font-family: 'Roboto', sans-serif;
 }
 
-
-
 #app{
     display: flex;
     flex-direction: row;
     justify-content : center;
+}
+
+.app-contents{
+  float: left;
+  width: 920px;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  border-top: solid 8px ${Color["MAIN_COLOR"]};
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    padding: 0 0 0 0;
+  }
 }
 
 &::-webkit-scrollbar {
@@ -39,4 +49,5 @@ const GlobalStyle = createGlobalStyle`
   box-shadow: inset 0px 0px 3x white;
 }
 `;
+
 export default GlobalStyle;

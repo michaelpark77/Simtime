@@ -3,75 +3,61 @@ import React from "react";
 import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 
-// const StyledContent = (props) => {
-//   const commonStyle = css`
-//     color: ${(props) => Colors[props.color]};
-//     font-size: ${(props) => props.fontSize};
-//   `;
+const A = styled.a`
+  font-size: ${(props) => props.fontSize};
+  color: ${Colors.TEXT_LINK};
+  &:link {
+    color: ${Colors.TEXT_LINK};
+  }
+  &:hover {
+    color: ${Colors.TEXT_ACTIVE};
+  }
+  &:visited {
+    color: ${Colors.TEXT_VISITED};
+  }
+`;
 
-//   switch (props.type) {
-//     case "a":
-//       return styled.a`
-//         ${commonStyle}
-//         color: ${Colors.TEXT_LINK};
-//         &:link {
-//           color: ${Colors.TEXT_LINK};
-//         }
-//         &:hover {
-//           color: ${Colors.TEXT_ACTIVE};
-//         }
-//         &:visited {
-//           color: ${Colors.TEXT_VISITED};
-//         }
-//       `;
+const Span = styled.span`
+  color: ${(props) => Colors[props.color]};
+  font-size: ${(props) => props.fontSize};
+`;
 
-//     case "span":
-//       return styled.span`
-//         ${commonStyle}
-//       `;
+const Button = styled.span`
+  color: ${(props) => Colors[props.color]};
+  font-size: ${(props) => props.fontSize};
+  text-decoration: underline;
+`;
 
-//     case "tag":
-//       return styled.span`
-//         color: ${Colors.ST_GRAY};
-//         font-size: ${(props) => (props.fontSize ? props.fontSize : "12px")};
-//         text-decoration: underline;
-//       `;
+const Tag = styled.span`
+  color: ${Colors.ST_GRAY};
+  font-size: ${(props) => (props.fontSize ? props.fontSize : "12px")};
+  text-decoration: underline;
+`;
 
-//     case "button":
-//       return styled.span`
-//         ${commonStyle}
-//         text-decoration: underline;
-//       `;
+const Default = styled.span`
+  color: ${(props) => Colors[props.color]};
+  font-size: ${(props) => props.fontSize};
+`;
 
-//     default:
-//       return styled.span`
-//         ${commonStyle}
-//       `;
-//   }
-// };
+export const Paragaph = (props) => {
+  const { type, src } = props;
 
-// const StyledText = (props) => {
-//   const { type, src } = props;
-//   const Content = StyledContent(props);
+  const renderParagaph = () => {
+    switch (type) {
+      case "a":
+        return <A href={src} {...props}></A>;
+      case "button":
+        return <Button {...props}></Button>;
+      case "tag":
+        return <Tag {...props}></Tag>;
+      case "span":
+      default:
+        return <Span {...props}></Span>;
+    }
+  };
 
-//   const renderText = () => {
-//     switch (type) {
-//       case "a":
-//         return <Content href={src} {...props}></Content>;
-//       default:
-//         return <Content {...props}></Content>;
-//     }
-//   };
-
-//   return renderText();
-// };
-
-const SP = styled.span``
-
-
-const Paragaph = (props) => {
-  return <SP {...props}></SP>
-}
+  return renderParagaph();
+};
 
 export default React.memo(Paragaph);
 
