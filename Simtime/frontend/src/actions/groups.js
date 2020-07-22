@@ -100,7 +100,11 @@ export const getMemebers = (id) => (dispatch) => {
         payload: { id: id, members: res.data },
       });
     })
-    .catch((err) =>
+    .catch((err) =>{
+    dispatch({
+      type: GET_GROUPMEMBERS,
+      payload: { id: id , members: [] },
+    })
       dispatch(returnErrors(err.response.data, err.response.status))
-    );
+  });
 };

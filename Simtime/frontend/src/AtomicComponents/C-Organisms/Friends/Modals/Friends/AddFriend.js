@@ -14,7 +14,7 @@ import ResultTable from "../../../../C-Organisms/Friends/ResultTable";
 import { addfriend, addToGroup } from "../../../../../actions/friends";
 
 const SearchWrap = styled.div`
-  widht: 100%;
+  width: 100%;
   padding-bottom: 15px;
 `;
 const ResultWrap = styled.div`

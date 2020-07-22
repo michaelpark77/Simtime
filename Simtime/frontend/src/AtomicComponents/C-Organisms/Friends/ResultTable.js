@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -55,7 +55,7 @@ function ResultTable(props) {
   };
 
   const renderDefaultRow = () => {
-    return <Row> 검색결과가 없습니다. </Row>;
+    return <Row>No results found :(</Row>;
   };
 
   return (
@@ -64,6 +64,8 @@ function ResultTable(props) {
       titleColor={props.titleColor}
       width="100%"
       rowNum={props.rowNum}
+      handleButtonClick ={props.handleButtonClick}
+      addButton={props.addButton}      
     >
       {props.datas.length == 0 ? renderDefaultRow() : renderRows(props.datas)}
     </Table>
@@ -73,16 +75,20 @@ function ResultTable(props) {
 export default React.memo(ResultTable);
 
 ResultTable.propTypes = {
+  addButton: PropTypes.bool,
   title: PropTypes.string,
   titleColor: PropTypes.string,
   rowNum: PropTypes.number,
   datas: PropTypes.array,
   selectHandler: PropTypes.func,
+  handleButtonClick: PropTypes.func,
 };
 
 ResultTable.defaultProps = {
+  addButton: false,
   titleColor: "MAIN_COLOR",
   rowNum: 3,
   datas: [{ id: 0 }],
   selectHandler: () => {},
+  handleButtonClick: () => {},
 };

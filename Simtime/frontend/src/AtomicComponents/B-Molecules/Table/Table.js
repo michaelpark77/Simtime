@@ -54,9 +54,7 @@ function Table(props) {
       
       {props.headers ? <TableHeader>hello?</TableHeader> : null}
 
-      <TableContent
-        height={parseInt(props.rowHeight.replace(/[^0-9]/g, "")) * props.rowNum}
-      >
+      <TableContent height={parseInt(props.rowHeight.replace(/[^0-9]/g, "")) * props.rowNum}>
         {props.children}
       </TableContent>
     </TableWrap>

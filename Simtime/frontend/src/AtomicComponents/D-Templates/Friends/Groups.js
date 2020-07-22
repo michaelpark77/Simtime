@@ -32,8 +32,8 @@ function Groups(props) {
   );
 }
 
-
 export default React.memo(Groups);
+// export default Groups;
 
 Groups.propTypes = {
     rowNum: PropTypes.number,

@@ -48,7 +48,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         selectedGroup: {
-          group: state.groups.filter((group) => group.id == action.payload.id),
+          group: state.groups.filter((group) => group.id == action.payload.id)[0],
           members: action.payload.members,
         },
       };
