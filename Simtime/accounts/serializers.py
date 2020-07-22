@@ -48,8 +48,6 @@ class RelationshipSerializer(serializers.ModelSerializer):
         model = Relationship
         fields = '__all__'
 
-    
-
 
 class FriendSerializer(serializers.ModelSerializer):
     friend = UserSerializer()
@@ -70,6 +68,8 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class RGMapSerializer(serializers.ModelSerializer):
+    friend = FriendSerializer(many=True)
+
     class Meta:
-        model = Relationship_FriendGroup_MAP
-        fields = ('relationship', 'group')
+        model = Relationship
+        fields = ('relationship', 'friend')

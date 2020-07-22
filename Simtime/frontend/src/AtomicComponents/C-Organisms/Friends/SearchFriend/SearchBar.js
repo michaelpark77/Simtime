@@ -9,7 +9,7 @@ import { searchUsers } from "../../../../actions/account";
 import { MAIN_COLOR } from "../../../Colors";
 import SelectBoxRef from "../../../A-Atomics/Filter/SelectBoxRef";
 import Search from "../../../B-Molecules/Filter/Search";
-import ResultTable from "./ResultTable";
+import ResultTable from "../ResultTable";
 
 const SearchWrap = styled.div`
   width: 100%;
@@ -33,7 +33,7 @@ const Result = styled(ResultTable)``;
 const Groups = styled(ResultTable)``;
 
 function SearchBar(props) {
-  const {search, searchUsers,height, width, newFriends } = props;
+  const { search, searchUsers, height, width, newFriends } = props;
 
   const selectRef = createRef();
   const searchRef = createRef();
@@ -45,15 +45,17 @@ function SearchBar(props) {
   const searchHandler = async () => {
     var field = await selectRef.current.innerText;
     var keyword = await searchRef.current.value;
-    if(newFriends) {
+    if (newFriends) {
       var res = await searchUsers(field, keyword);
       search(res);
-    }
-    else{
-      let map_field = {"Username": "username", "E-mail":"email", "Phone":"phone"}
+    } else {
+      let map_field = {
+        Username: "username",
+        "E-mail": "email",
+        Phone: "phone",
+      };
       search(map_field[field], keyword);
-    } 
-    
+    }
   };
 
   return (
@@ -84,7 +86,7 @@ function SearchBar(props) {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  friends: state.friends.friends
+  friends: state.friends.friends,
 });
 // export default SearchBars;
 export default connect(mapStateToProps, { searchUsers })(SearchBar);

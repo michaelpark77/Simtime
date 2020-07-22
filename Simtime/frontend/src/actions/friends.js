@@ -65,6 +65,7 @@ export const editFriend = (data) => (dispatch) => {
 
 // 친구가 속한 그룹 관리
 export const addToGroup = (datas) => (dispatch) => {
+  //{relationship:0, group:0}
   console.log("addToGroup", datas);
   return axiosInstance
     .post("/api/friend/add-to-group/", datas)

@@ -8,34 +8,15 @@ import {
   GET_GROUPS,
   GET_GROUP,
   EDIT_GROUP,
-  GET_MEMBERS,
+  GET_GROUPMEMBERS,
   DELETE_GROUP,
 } from "./types";
-
-
 
 export const getGroups = () => (dispatch) => {
   axiosFormInstance
     .get("/api/groups/")
     .then((res) => {
-      console.log("groups", res)
-      dispatch({
-        type: GET_GROUPS,
-        payload: res.data,
-      });
-    })
-    .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
-};
-
-
-
-export const getMemebers = () => (dispatch) => {
-  axiosFormInstance
-    .get("/api/groups/")
-    .then((res) => {
-      console.log("groups", res)
+      console.log("groups", res);
       dispatch({
         type: GET_GROUPS,
         payload: res.data,
@@ -52,28 +33,27 @@ export const createGroup = (data) => (dispatch) => {
   return axiosInstance
     .post("/api/groups/create/", {
       account: data.account,
-      groupname: data.groupname }
-      )
+      groupname: data.groupname,
+    })
     .then((res) => {
       dispatch({
         type: ADD_GROUP,
         payload: res.data,
       });
       dispatch(createMessage({ addGroup: "Group Added" }));
-      return true;
+      return res.data;
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
-      return false;
+      return err.response.data;
     });
 };
-
 
 export const deleteGroup = (id) => (dispatch) => {
   axiosInstance
     .delete(`/api/group/${id}`)
     .then((res) => {
-      console.log(res)
+      console.log(res);
       dispatch(createMessage({ deleteGroup: "Group Deleted" }));
       dispatch({
         type: DELETE_GROUP,
@@ -82,7 +62,6 @@ export const deleteGroup = (id) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
-
 
 export const getGroup = (id) => (dispatch) => {
   axiosInstance
@@ -108,4 +87,20 @@ export const editGroup = (group) => (dispatch) => {
       });
     })
     .catch((err) => console.log(err));
+};
+
+export const getMemebers = (id) => (dispatch) => {
+  console.log("getMemebers id", id);
+  return axiosInstance
+    .get(`/api/groupmember/${id}`)
+    .then((res) => {
+      console.log("groupMemebers res", res.data);
+      dispatch({
+        type: GET_GROUPMEMBERS,
+        payload: { id: id, members: res.data },
+      });
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };

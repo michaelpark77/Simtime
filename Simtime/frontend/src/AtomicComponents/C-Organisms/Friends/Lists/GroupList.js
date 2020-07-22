@@ -1,4 +1,4 @@
-import React, { useCallback, useState,useContext  } from "react";
+import React, { useCallback, useState, useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -7,12 +7,13 @@ import { ModalContext } from "../../../../contexts/modalContext";
 //redux
 import { connect } from "react-redux";
 //components
-import { deleteGroup, getGroup } from "../../../../actions/groups";
+import { deleteGroup, getGroup, getMemebers } from "../../../../actions/groups";
 import TableRow from "../../../A-Atomics/Table/TableRow";
 import Paragraph from "../../../A-Atomics/Font/Paragraph";
 import UserCardForList from "../../../B-Molecules/User/UserCardForList";
 import ButtonWithImage from "../../../B-Molecules/Button/ButtonWithImage";
-import EditGroup from "../Modals/Groups/EditGroup"
+import EditGroup from "../Modals/Groups/EditGroup";
+import EditMembers from "../Modals/Groups/EditMembers";
 
 //size
 const buttonMargin = 10;
@@ -20,7 +21,7 @@ const buttonsWidth = 160 + 8; //"삭제"-26px, "수신차단" or 차단-52 , bit
 const buttonDefaultSize = 13 * 4 + 2; //4글자기준
 
 //components
-const Wrap = styled.div``
+const Wrap = styled.div``;
 const UserCard = styled(UserCardForList)`
   cursor: pointer;
 `;
@@ -42,23 +43,35 @@ const StyledButtonWithImage = styled(ButtonWithImage)`
   margin-left: ${buttonMargin}px;
 `;
 
-
 function GroupList(props) {
   const { handleModal, closeModal } = useContext(ModalContext);
 
-  const clickEvent=(e, cb)=>{
+  const clickEvent = (e, cb) => {
     e.preventDefault();
     cb();
-  }
+  };
 
-  const renderButton = useCallback((content = "삭제", fn, color="TEXT_LINK") => {
-    return (
-      <ButtonWrap>
-        <TextButton color={color} type="button" onClick={e=>clickEvent(e, fn)}>
-          {content}
-        </TextButton>
-      </ButtonWrap>
-    );},[]);
+  const mngMembers = async (id) => {
+    const friends = await props.getMemebers(id);
+    handleModal(<EditMembers datas={friends} onClose={closeModal} />);
+  };
+
+  const renderButton = useCallback(
+    (content = "삭제", fn, color = "TEXT_LINK") => {
+      return (
+        <ButtonWrap>
+          <TextButton
+            color={color}
+            type="button"
+            onClick={(e) => clickEvent(e, fn)}
+          >
+            {content}
+          </TextButton>
+        </ButtonWrap>
+      );
+    },
+    []
+  );
 
   const renderRows = (groups) => {
     return groups.map((group, index) => {
@@ -71,27 +84,31 @@ function GroupList(props) {
             url="https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/group_basic.png"
           ></UserCard>
           <Buttons>
-            {renderButton("이름변경", ()=>handleModal(<EditGroup group={group} onClose={closeModal} />) )}
-            {renderButton("멤버관리")}
-            {renderButton("삭제", ()=>props.deleteGroup(group.id), "TEXT_WARNING")}
+            {renderButton("이름변경", () =>
+              handleModal(<EditGroup group={group} onClose={closeModal} />)
+            )}
+            {renderButton("멤버관리", () => mngMembers(group.id))}
+            {renderButton(
+              "삭제",
+              () => props.deleteGroup(group.id),
+              "TEXT_WARNING"
+            )}
           </Buttons>
         </TableRow>
       );
     });
   };
 
-  return (
-  <Wrap>
-    {renderRows(props.groups)}
-  </Wrap>);
+  return <Wrap>{renderRows(props.groups)}</Wrap>;
 }
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  groups: state.groups.groups
+  groups: state.groups.groups,
 });
 
-
-export default connect(mapStateToProps, { deleteGroup, getGroup })(GroupList);
+export default connect(mapStateToProps, { deleteGroup, getGroup, getMemebers })(
+  GroupList
+);
 
 GroupList.propTypes = {
   title: PropTypes.string,
@@ -102,7 +119,5 @@ GroupList.propTypes = {
 GroupList.defaultProps = {
   title: "Table Title",
   headers: null,
-  groups: null
+  groups: null,
 };
-
-

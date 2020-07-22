@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { MAIN_COLOR } from "../../../../Colors";
 import SearchBar from "../../../../C-Organisms/Friends/SearchFriend/SearchBar";
 import DefaultModal from "../../../../B-Molecules/Modal/DefaultModal";
-import ResultTable from "../../../../C-Organisms/Friends/SearchFriend/ResultTable";
+import ResultTable from "../../../../C-Organisms/Friends/ResultTable";
 
 //redux-actions
 import { addfriend, addToGroup } from "../../../../../actions/friends";
@@ -35,7 +35,7 @@ function AddFriend(props) {
         friend: friend[0],
       });
       var groupData = await groups.map((group) => {
-        return( {relationship:relationship.data.id, group:group } ) 
+        return { relationship: relationship.data.id, group: group };
       });
       const group = await props.addToGroup(groupData);
       props.onClose();
@@ -57,7 +57,7 @@ function AddFriend(props) {
             titleColor="MAIN_COLOR"
             width="100%"
             rowNum={3}
-            onSelect={(res) => {
+            selectHandler={(res) => {
               setFriend(res);
             }}
           />
@@ -70,7 +70,7 @@ function AddFriend(props) {
               titleColor="MAIN_COLOR"
               width="100%"
               rowNum={3}
-              onSelect={(res) => {
+              selectHandler={(res) => {
                 setGroups(res);
               }}
               multiple
