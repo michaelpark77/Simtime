@@ -110,9 +110,10 @@ export const getMemebers = (id) => (dispatch) => {
 };
 
 
-export const deleteMemebers = (id) => (dispatch) => {
+export const deleteMemebers = (data) => (dispatch) => {
+   ids = data.join(" ")
    return axiosInstance
-     .delete("/api/groupmember/", id)
+     .delete(`/api/groupmember/${ids}`)
      .then((res) => {
        dispatch(createMessage({ deleteMember: "Deleted" }));
      })

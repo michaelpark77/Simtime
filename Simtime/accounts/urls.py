@@ -40,5 +40,8 @@ urlpatterns = [
     path('api/groups/create/', GroupAPI.as_view(), name='group_create'),
     path('api/group/<int:pk>/', GroupDetailAPI.as_view(), name="group_detail"),
     path('api/groupmember/<int:pk>/', GroupMemberAPI.as_view(), name="group_member"),
+    
+    #bulk delete
+    path('api/groupmember/<str:ids>/', RGMapAPI.as_view(), name="group_member"),
 
 ]

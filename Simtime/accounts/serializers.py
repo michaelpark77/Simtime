@@ -43,6 +43,8 @@ class LoginSerializer(serializers.Serializer):
         raise serializers.ValidationError("Incorrect Credentials")
 
 
+
+
 class RelationshipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Relationship
@@ -67,9 +69,24 @@ class GroupSerializer(serializers.ModelSerializer):
         ]
 
 
-class RGMapSerializer(serializers.ModelSerializer):
+class RGMapSerializer(serializers.ModelSerializer): 
     friend = FriendSerializer(many=True)
 
     class Meta:
         model = Relationship
         fields = ('relationship', 'friend')
+
+# class GroupMemberSerializer(serializers.ModelSerializer): 
+#     relationship = FriendSerializer(many=True)
+
+#     class Meta:
+#         model = Relationship_FriendGroup_MAP
+#         fields = ('id','relationship')
+
+
+class GroupMemberSerializer(serializers.ModelSerializer): 
+    RGmapId = serializers.IntegerField(source='id')
+    relationship = FriendSerializer()
+    class Meta:
+        model = Relationship_FriendGroup_MAP
+        fields = ('RGmapId','relationship')

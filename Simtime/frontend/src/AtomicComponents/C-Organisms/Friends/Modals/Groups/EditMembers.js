@@ -31,34 +31,34 @@ const TextButton = styled(Paragraph)`
 function EditMembers(props) {
   const [users, setUsers] = useState([]);
   const [addPage, setAddPage] = useState(false);
-    //   const filtered = props.selectedGroup.members.reduce(
-  //     (acc, friend) => ({ ...acc, [friend.friend.id]: friend }),
-  //     {}
-  //   );
+  const [selectedMembers, setselectedMembers] = useState([]);
 
-  const friends = [
-    ...new Set(
-      props.selectedGroup.members.map((item) => {
-        return { relationshipId: item.id, ...item.friend };
-      })
-    ),
-  ];
+const friends = props.selectedGroup.members.reduce(
+      (acc, item) => ([ ...acc,   
+        { id: item.RGmapId, 
+          relationshipId: item.relationship.id,  //relationshipid
+          friendId: item.relationship.friend.id, 
+          username: item.relationship.friend.username,
+          profile_image: item.relationship.friend.profile_image
+        }]),
+      []
+    );
 
   console.log(friends)
-
   const renderChild = () => {
     return(
       <Fragment>
         <Wrap addPage={!addPage}>
           <Result 
+            datas={friends}
             addButton={true}
             title="Members" 
             titleColor="MAIN_COLOR" 
             width="100%"
             rowNum={7}
             handleAddBtnClick ={()=>{setAddPage(!addPage)}}
-            selectHandler={(res) => {console.log(res)}}
-            datas={friends}
+            selectHandler={(res) => {
+              setselectedMembers(res)}}
             multiple 
             />
             <TextButton 
@@ -66,7 +66,9 @@ function EditMembers(props) {
               color="ST_RED" 
               onClick={(e) => {
                   e.preventDefault();
-                  fn();}}
+                  console.log(selectedMembers);
+                  props.deleteMemebers(selectedMembers);
+                }}
             >그룹에서 제거</TextButton>
         </Wrap>
         <Wrap addPage={addPage}>

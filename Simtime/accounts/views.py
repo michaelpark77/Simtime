@@ -7,7 +7,7 @@ from rest_framework_simplejwt.models import TokenUser
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenVerifyView
 
 from .tokenSerializers import MyTokenObtainPairSerializer, MyTokenVerifySerializer
-from .serializers import AccountSerializer, UserSerializer, RelationshipSerializer, GroupSerializer, FriendSerializer, RGMapSerializer
+from .serializers import AccountSerializer, UserSerializer, RelationshipSerializer, GroupSerializer, FriendSerializer, RGMapSerializer,GroupMemberSerializer
 from .models import Account, Relationship, FriendGroup, Relationship_FriendGroup_MAP
 
 
@@ -135,7 +135,7 @@ class RelationshipDetailAPI(APIView):
             return Relationship.objects.get(pk=pk)
         except Relationship.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-            
+
     def put(self, request, pk):
         relationship = self.get_object(pk)
         serializer = FriendSerializer(
@@ -157,12 +157,19 @@ class RGMapAPI(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request):
-        print("RGMap", request.data)
         serializer = RGMapSerializer(data=request.data,  many=True)
         if(serializer.is_valid()):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, ids):
+        #ids = "1 2 3"
+        Relationship_FriendGroup_MAP.filter()
+
+        group.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
 
 
 class GroupAPI(APIView):
@@ -227,11 +234,14 @@ class GroupMemberAPI(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk):
-        mapObj = FriendGroup.objects.get(pk=pk).relationships.all()
-        # mapObjects = Relationship_FriendGroup_MAP.objects.filter(group=pk)
-        relationships = [rgm.relationship for rgm in mapObj]
-        if relationships:
-            serializer = FriendSerializer(relationships, many=True)
+        # mapObj = FriendGroup.objects.get(pk=pk).relationships.all()
+        mapObjects = Relationship_FriendGroup_MAP.objects.filter(group=pk)
+        # relationships = [rgm.relationship for rgm in mapObj]
+        # if relationships:
+        #     serializer = FriendSerializer(relationships, many=True)
+        if mapObjects:
+            serializer = GroupMemberSerializer(mapObjects, many=True)
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
