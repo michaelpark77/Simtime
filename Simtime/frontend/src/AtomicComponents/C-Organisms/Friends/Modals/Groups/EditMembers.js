@@ -6,6 +6,8 @@ import ResultTable from "../../ResultTable";
 import DefaultModal from "../../../../B-Molecules/Modal/DefaultModal";
 import Paragraph from "../../../../A-Atomics/Font/Paragraph"
 
+import { deleteMemebers } from "../../../../../actions/groups";
+
 const Wrap = styled.div`
   width: 100%;
   ${props=>props.addPage? "" : "display: none"}
@@ -23,6 +25,7 @@ const Result = styled(ResultTable)`
 
 const TextButton = styled(Paragraph)`
   cursor: pointer;
+  text-align: right;
 `;
 
 function EditMembers(props) {
@@ -53,7 +56,7 @@ function EditMembers(props) {
             titleColor="MAIN_COLOR" 
             width="100%"
             rowNum={7}
-            handleButtonClick ={()=>{setAddPage(!addPage)}}
+            handleAddBtnClick ={()=>{setAddPage(!addPage)}}
             selectHandler={(res) => {console.log(res)}}
             datas={friends}
             multiple 
@@ -102,4 +105,4 @@ const mapStateToProps = (state) => ({
   selectedGroup: state.groups.selectedGroup,
 });
 // export default AddGroup;
-export default connect(mapStateToProps, {})(EditMembers);
+export default connect(mapStateToProps, {deleteMemebers})(EditMembers);

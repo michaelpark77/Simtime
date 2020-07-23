@@ -5,6 +5,7 @@ import {
   EDIT_GROUP,
   GET_GROUP,
   GET_GROUPMEMBERS,
+  DELETE_GROUPMEMBERS,
 } from "../actions/types";
 
 const initialState = {
@@ -45,6 +46,15 @@ export default function (state = initialState, action) {
         ),
       };
     case GET_GROUPMEMBERS:
+      return {
+        ...state,
+        selectedGroup: {
+          group: state.groups.filter((group) => group.id == action.payload.id)[0],
+          members: action.payload.members,
+        },
+      };
+
+    case DELETE_GROUPMEMBERS:
       return {
         ...state,
         selectedGroup: {

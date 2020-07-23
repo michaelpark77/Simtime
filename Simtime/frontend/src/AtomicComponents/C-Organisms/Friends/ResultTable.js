@@ -64,7 +64,7 @@ function ResultTable(props) {
       titleColor={props.titleColor}
       width="100%"
       rowNum={props.rowNum}
-      handleButtonClick ={props.handleButtonClick}
+      handleAddBtnClick ={props.handleAddBtnClick}
       addButton={props.addButton}      
     >
       {props.datas.length == 0 ? renderDefaultRow() : renderRows(props.datas)}
@@ -81,7 +81,7 @@ ResultTable.propTypes = {
   rowNum: PropTypes.number,
   datas: PropTypes.array,
   selectHandler: PropTypes.func,
-  handleButtonClick: PropTypes.func,
+  handleAddBtnClick: PropTypes.func,
 };
 
 ResultTable.defaultProps = {
@@ -90,5 +90,5 @@ ResultTable.defaultProps = {
   rowNum: 3,
   datas: [{ id: 0 }],
   selectHandler: () => {},
-  handleButtonClick: () => {},
+  handleAddBtnClick: () => {},
 };

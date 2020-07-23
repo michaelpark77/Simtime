@@ -22,7 +22,7 @@ function Friends(props) {
   return ( <Table
             title="My Friends"
             addButton={true}
-            handleButtonClick={() =>handleModal(<AddFriend onClose={closeModal} />)}
+            handleAddBtnClick={() =>handleModal(<AddFriend onClose={closeModal} />)}
             width={props.width}
             rowHeight={props.width}
             rowNum={props.rowNum}

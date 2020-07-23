@@ -20,7 +20,7 @@ function Groups(props) {
 
   return (
     <Table title="My Groups" addButton={true}
-    handleButtonClick={() =>
+    handleAddBtnClick={() =>
       handleModal(<AddGroup onClose={closeModal} />)
     }
     width={props.width}

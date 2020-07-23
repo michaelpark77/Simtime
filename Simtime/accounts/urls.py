@@ -39,6 +39,6 @@ urlpatterns = [
     path('api/groups/', GroupAPI.as_view(), name='groups'),
     path('api/groups/create/', GroupAPI.as_view(), name='group_create'),
     path('api/group/<int:pk>/', GroupDetailAPI.as_view(), name="group_detail"),
-    path('api/groupmember/<int:pk>/',
-         GroupMemberAPI.as_view(), name="group_member"),
+    path('api/groupmember/<int:pk>/', GroupMemberAPI.as_view(), name="group_member"),
+
 ]

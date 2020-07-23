@@ -135,15 +135,7 @@ class RelationshipDetailAPI(APIView):
             return Relationship.objects.get(pk=pk)
         except Relationship.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
-    # def get(self, request, pk):
-    #     relationship = self.get_object(pk)
-    #     serializer = RelationshipSerializer(relationship, data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+            
     def put(self, request, pk):
         relationship = self.get_object(pk)
         serializer = FriendSerializer(
@@ -230,15 +222,21 @@ class GroupMemberAPI(APIView):
 
     def get_object(self, pk):
         try:
-            return FriendGroup.objects.get(pk=pk)
-        except FriendGroup.DoesNotExist:
+            return Relationship_FriendGroup_MAP.objects.get(pk=pk)
+        except Relationship_FriendGroup_MAP.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk):
-        mapObj = self.get_object(pk).relationships.all()
+        mapObj = FriendGroup.objects.get(pk=pk).relationships.all()
         # mapObjects = Relationship_FriendGroup_MAP.objects.filter(group=pk)
         relationships = [rgm.relationship for rgm in mapObj]
         if relationships:
             serializer = FriendSerializer(relationships, many=True)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk):
+        mapObj = self.get_object(pk)
+        mapObj.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        

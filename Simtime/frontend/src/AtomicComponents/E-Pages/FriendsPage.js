@@ -11,15 +11,9 @@ import { getFriends, deleteFriend } from "../../actions/friends";
 import { ST_WHITE, ST_GRAY } from "../Colors";
 
 import Header from "../A-Atomics/Font/Header";
-import Table from "../B-Molecules/Table/Table";
-import Search from "../B-Molecules/Filter/Search";
+// import Search from "../B-Molecules/Filter/Search";
 import Friends from "../D-Templates/Friends/Friends"
 import Groups from "../D-Templates/Friends/Groups"
-// import FriendList from "../C-Organisms/Friends/Lists/FriendList";
-// import GroupList from "../C-Organisms/Friends/Lists/GroupList";
-// import AddFriend from "../D-Templates/Friends/Friends/AddFriend";
-// import AddGroup from "../D-Templates/Friends/Groups/AddGroup";
-
 
 const Wrap = styled.div`
   overflow: hidden;
@@ -37,9 +31,9 @@ const SectionTitle = styled.div`
   aling-items: flex-end;
 `;
 
-const StyledSearch = styled(Search)`
-  border-bottom: solid 1px ${ST_GRAY};
-`;
+// const StyledSearch = styled(Search)`
+//   border-bottom: solid 1px ${ST_GRAY};
+// `;
 
 const ContentWrap = styled.div`
   margin-top: 10px;
@@ -62,7 +56,7 @@ function FriendsPage(props) {
       <Section bottom="30px">
         <SectionTitle>
           <Header type="h3" color="MAIN_COLOR">Friends</Header>
-          <StyledSearch width="125px" desc="Find a friend" height="25px" />
+          {/* <StyledSearch width="125px" desc="Find a friend" height="25px" /> */}
         </SectionTitle>
         <ContentWrap>
           <Friends friends={props.friends} rowNum={6} rowHeight="45px" width="48%" />
