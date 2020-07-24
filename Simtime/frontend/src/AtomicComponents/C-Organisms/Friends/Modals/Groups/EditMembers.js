@@ -3,14 +3,17 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import SearchBar from "../../../../C-Organisms/Friends/SearchFriend/SearchBar";
 import ResultTable from "../../ResultTable";
+
+import Table from "../../../../B-Molecules/Table/Table";
+import MemberList from "../../Lists/MemberList";
 import DefaultModal from "../../../../B-Molecules/Modal/DefaultModal";
-import Paragraph from "../../../../A-Atomics/Font/Paragraph"
+import Paragraph from "../../../../A-Atomics/Font/Paragraph";
 
 import { deleteMemebers } from "../../../../../actions/groups";
 
 const Wrap = styled.div`
   width: 100%;
-  ${props=>props.addPage? "" : "display: none"}
+  ${(props) => (props.addPage ? "" : "display: none")}
 `;
 
 const SearchWrap = styled.div`
@@ -20,8 +23,7 @@ const SearchWrap = styled.div`
 const ResultWrap = styled.div`
   width: 100%;
 `;
-const Result = styled(ResultTable)`
-`;
+const Result = styled(ResultTable)``;
 
 const TextButton = styled(Paragraph)`
   cursor: pointer;
@@ -33,43 +35,63 @@ function EditMembers(props) {
   const [addPage, setAddPage] = useState(false);
   const [selectedMembers, setselectedMembers] = useState([]);
 
-const friends = props.selectedGroup.members.reduce(
-      (acc, item) => ([ ...acc,   
-        { id: item.RGmapId, 
-          relationshipId: item.relationship.id,  //relationshipid
-          friendId: item.relationship.friend.id, 
-          username: item.relationship.friend.username,
-          profile_image: item.relationship.friend.profile_image
-        }]),
-      []
-    );
+  const friends = props.selectedGroup.members.reduce(
+    (acc, item) => [
+      ...acc,
+      {
+        id: item.RGmapId,
+        relationshipId: item.relationship.id, //relationshipid
+        friendId: item.relationship.friend.id,
+        username: item.relationship.friend.username,
+        profile_image: item.relationship.friend.profile_image,
+      },
+    ],
+    []
+  );
 
-  console.log(friends)
+  console.log(friends);
   const renderChild = () => {
-    return(
+    return (
       <Fragment>
         <Wrap addPage={!addPage}>
-          <Result 
+          {/* <Result
             datas={friends}
             addButton={true}
-            title="Members" 
-            titleColor="MAIN_COLOR" 
+            title="Members"
+            titleColor="MAIN_COLOR"
             width="100%"
             rowNum={7}
-            handleAddBtnClick ={()=>{setAddPage(!addPage)}}
+            handleAddBtnClick={() => {
+              setAddPage(!addPage);
+            }}
             selectHandler={(res) => {
-              setselectedMembers(res)}}
-            multiple 
-            />
-            <TextButton 
-              type='button' 
-              color="ST_RED" 
-              onClick={(e) => {
-                  e.preventDefault();
-                  console.log(selectedMembers);
-                  props.deleteMemebers(selectedMembers);
-                }}
-            >그룹에서 제거</TextButton>
+              setselectedMembers(res);
+            }}
+            multiple
+          />
+          <TextButton
+            type="button"
+            color="ST_RED"
+            onClick={(e) => {
+              e.preventDefault();
+              console.log(selectedMembers);
+              props.deleteMemebers(selectedMembers);
+            }}
+          >
+            그룹에서 제거
+          </TextButton> */}
+          <Table
+            title="Members"
+            titleColor="MAIN_COLOR"
+            width="100%"
+            rowNum={6}
+            handleAddBtnClick={() => {
+              setAddPage(!addPage);
+            }}
+            addButton
+          >
+            <MemberList datas={friends}></MemberList>
+          </Table>
         </Wrap>
         <Wrap addPage={addPage}>
           <SearchWrap>
@@ -88,9 +110,9 @@ const friends = props.selectedGroup.members.reduce(
             />
           </ResultWrap>
         </Wrap>
-       </Fragment>
+      </Fragment>
     );
-  }
+  };
 
   return (
     <DefaultModal
@@ -98,7 +120,9 @@ const friends = props.selectedGroup.members.reduce(
       totalPage={0}
       handleSubmit={() => handleSubmit()}
       height="500px"
-    >{renderChild()}</DefaultModal>
+    >
+      {renderChild()}
+    </DefaultModal>
   );
 }
 
@@ -107,4 +131,4 @@ const mapStateToProps = (state) => ({
   selectedGroup: state.groups.selectedGroup,
 });
 // export default AddGroup;
-export default connect(mapStateToProps, {deleteMemebers})(EditMembers);
+export default connect(mapStateToProps, { deleteMemebers })(EditMembers);

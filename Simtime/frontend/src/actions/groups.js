@@ -10,6 +10,8 @@ import {
   EDIT_GROUP,
   GET_GROUPMEMBERS,
   DELETE_GROUP,
+  DELETE_GROUPMEMBER,
+  DELETE_GROUPMEMBERS,
 } from "./types";
 
 export const getGroups = () => (dispatch) => {
@@ -89,6 +91,26 @@ export const editGroup = (group) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
+// export const getMemebers = (id) => (dispatch) => {
+//   console.log("getMemebers id", id);
+//   return axiosInstance
+//     .get(`/api/groupmember/${id}`)
+//     .then((res) => {
+//       console.log("groupMemebers res", res.data);
+//       dispatch({
+//         type: GET_GROUPMEMBERS,
+//         payload: { id: id, members: res.data },
+//       });
+//     })
+//     .catch((err) => {
+//       dispatch({
+//         type: GET_GROUPMEMBERS,
+//         payload: { id: id, members: [] },
+//       });
+//       dispatch(returnErrors(err.response.data, err.response.status));
+//     });
+// };
+
 export const getMemebers = (id) => (dispatch) => {
   console.log("getMemebers id", id);
   return axiosInstance
@@ -100,26 +122,35 @@ export const getMemebers = (id) => (dispatch) => {
         payload: { id: id, members: res.data },
       });
     })
-    .catch((err) =>{
-    dispatch({
-      type: GET_GROUPMEMBERS,
-      payload: { id: id , members: [] },
-    })
-      dispatch(returnErrors(err.response.data, err.response.status))
-  });
+    .catch((err) => {
+      dispatch({
+        type: GET_GROUPMEMBERS,
+        payload: { id: id, members: [] },
+      });
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
 };
 
-
 export const deleteMemebers = (data) => (dispatch) => {
-   ids = data.join(" ")
-   return axiosInstance
-     .delete(`/api/groupmember/${ids}`)
-     .then((res) => {
-       dispatch(createMessage({ deleteMember: "Deleted" }));
-     })
-     .catch((err) => {
-       dispatch(returnErrors(err.response.data, err.response.status));
-     });
+  var ids = data.join(" ");
+  return axiosInstance
+    .delete(`/api/groupmember/${ids}`)
+    .then((res) => {
+      dispatch(createMessage({ deleteMember: "Deleted" }));
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
+export const deleteMemeber = (id) => (dispatch) => {
+  return axiosInstance
+    .delete(`/api/groupmember/${id}`)
+    .then((res) => {
+      dispatch(createMessage({ deleteMember: "Deleted" }));
+      dispatch({ type: DELETE_GROUPMEMBER, payload: id });
+    })
+    .catch((err) => console.log(err));
 };
 
 // 친구가 속한 그룹 관리

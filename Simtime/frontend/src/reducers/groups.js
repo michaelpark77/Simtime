@@ -5,6 +5,7 @@ import {
   EDIT_GROUP,
   GET_GROUP,
   GET_GROUPMEMBERS,
+  DELETE_GROUPMEMBER,
   DELETE_GROUPMEMBERS,
 } from "../actions/types";
 
@@ -49,8 +50,21 @@ export default function (state = initialState, action) {
       return {
         ...state,
         selectedGroup: {
-          group: state.groups.filter((group) => group.id == action.payload.id)[0],
+          group: state.groups.filter(
+            (group) => group.id == action.payload.id
+          )[0],
           members: action.payload.members,
+        },
+      };
+
+    case DELETE_GROUPMEMBER:
+      return {
+        ...state,
+        selectedGroup: {
+          ...state.selectedGroup,
+          members: state.selectedGroup.members.filter(
+            (member) => member.RGmapId != action.payload
+          ),
         },
       };
 
@@ -58,7 +72,9 @@ export default function (state = initialState, action) {
       return {
         ...state,
         selectedGroup: {
-          group: state.groups.filter((group) => group.id == action.payload.id)[0],
+          group: state.groups.filter(
+            (group) => group.id == action.payload.id
+          )[0],
           members: action.payload.members,
         },
       };

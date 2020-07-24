@@ -53,6 +53,7 @@ function GroupList(props) {
 
   const mngMembers = async (id) => {
     const friends = await props.getMemebers(id);
+    console.log("friends", friends);
     handleModal(<EditMembers datas={friends} onClose={closeModal} />);
   };
 

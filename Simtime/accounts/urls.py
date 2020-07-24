@@ -32,16 +32,17 @@ urlpatterns = [
     path('api/friend/create/', RelationshipAPI.as_view(), name='friend_create'),
     path('api/friend/add-to-group/', RGMapAPI.as_view(), name='group_add_to'),
     path('api/friends/', RelationshipAPI.as_view(), name='friends'),
-    path('api/friend/<int:pk>/',
+    path('api/friend/<int:pk>',
          RelationshipDetailAPI.as_view(), name="friend_detail"),
 
     # groups
     path('api/groups/', GroupAPI.as_view(), name='groups'),
     path('api/groups/create/', GroupAPI.as_view(), name='group_create'),
     path('api/group/<int:pk>/', GroupDetailAPI.as_view(), name="group_detail"),
-    path('api/groupmember/<int:pk>/', GroupMemberAPI.as_view(), name="group_member"),
-    
-    #bulk delete
+    path('api/groupmember/<int:pk>/',
+         GroupMemberAPI.as_view(), name="group_member"),
+
+    # bulk delete
     path('api/groupmember/<str:ids>/', RGMapAPI.as_view(), name="group_member"),
 
 ]

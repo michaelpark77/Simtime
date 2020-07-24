@@ -25,7 +25,7 @@ const Span = styled.span`
 const Button = styled.span`
   color: ${(props) => Colors[props.color]};
   font-size: ${(props) => props.fontSize};
-  text-decoration: underline;
+  // text-decoration: underline;
 `;
 
 const Tag = styled.span`

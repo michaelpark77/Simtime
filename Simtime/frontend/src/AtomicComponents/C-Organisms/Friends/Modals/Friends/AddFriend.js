@@ -34,7 +34,7 @@ function AddFriend(props) {
         account: props.user.id,
         friend: friend[0],
       });
-      var groupData = await groups.map((group) => {
+      var groupData = groups.map((group) => {
         return { relationship: relationship.data.id, group: group };
       });
       const group = await props.addToGroup(groupData);
