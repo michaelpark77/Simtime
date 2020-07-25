@@ -23,7 +23,7 @@ const AddButton = styled(ButtonWithImage)`
 `;
 
 const AddMemberWrap = styled.div`
-  width: 100%
+  width: 100%;
   height: auto;
   box-shadow: 1px 1px 4px 0px #9d9d9d;
   border: solid 1px ${MAIN_COLOR};

@@ -31,7 +31,7 @@ const Icon = styled.img`
 function ButtonWithImage(props) {
   if (props.imgLocation == "right" || props.imgLocation == "bottom") {
     return (
-      <Wrap {...props}>
+      <Wrap {...props} className="btn-with-image">
         <Content
           height={props.height}
           color="TEXT"
@@ -41,7 +41,7 @@ function ButtonWithImage(props) {
           {props.children}
         </Content>
         <Icon
-          className="btn-with-image"
+          className="btn-icon"
           src={props.imgurl}
           imgHeight={props.imgHeight}
           imgWidth={props.imgWidth}
