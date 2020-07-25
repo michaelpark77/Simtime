@@ -39,15 +39,15 @@ class CustomizedModel(models.Model, metaclass=CustomizedModelBase):
 
 # Create your models here.
 class EventStatus(models.TextChoices):
-    CLOSED = 'CLOSED'
-    OPEN = 'OPEN'
-    PENDING = 'PENDING'
+    CLOSED = 'CLOSED'  # 0
+    OPEN = 'OPEN'  # 1
+    PENDING = 'PENDING'  # 2
 
 
 class Attendance(models.TextChoices):
-    Yes = 'Y'
-    No = 'N'
-    Unknown = "Waiting for a response"
+    No = 'N'  # 0
+    Yes = 'Y'  # 1
+    Unknown = "Waiting for a response"  # 2
 
 
 class Event(CustomizedModel):

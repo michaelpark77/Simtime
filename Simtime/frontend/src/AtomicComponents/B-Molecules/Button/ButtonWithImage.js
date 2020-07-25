@@ -11,7 +11,7 @@ const Wrap = styled.div`
 
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 
   cursor: pointer;
@@ -22,14 +22,10 @@ const Content = styled(Paragraph)`
   margin-${(props) => props.imgLocation}: 3px;
 `;
 
-const Icon = styled.div`
-  // border : solid 1px green;
-    background-size: cover;
-    background-image: url("${(props) => props.url}");
-    background-position: center center;
-    width: ${(props) => props.imgWidth};
-    height: ${(props) => props.imgHeight};
-    margin-bottom: 1px;
+const Icon = styled.img`
+  width: ${(props) => props.imgWidth};
+  height: ${(props) => props.imgHeight};
+  margin-bottom: 1px;
 `;
 
 function ButtonWithImage(props) {
@@ -45,7 +41,8 @@ function ButtonWithImage(props) {
           {props.children}
         </Content>
         <Icon
-          url={props.imgurl}
+          className="btn-with-image"
+          src={props.imgurl}
           imgHeight={props.imgHeight}
           imgWidth={props.imgWidth}
         />
@@ -88,7 +85,8 @@ ButtonWithImage.defaultProps = {
   height: "20px",
   width: "auto",
   fontSize: "13px",
-  imgurl: "static/img/icons/edit2.png",
+  imgurl:
+    "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
   imgHeight: "13px",
   imgWidth: "13px",
   imgLocation: "right",
