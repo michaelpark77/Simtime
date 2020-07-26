@@ -23,28 +23,26 @@ const Wrap = styled.div`
 
 const GroupImage = styled.div`
   height: 150px;
-`
-
+`;
 
 const StyledTable = styled(Table)`
-
-  & .btn-with-image{
+  & .btn-with-image {
     border: solid 1px ${MAIN_COLOR};
-    padding : 0px 5px 0px 5px;
+    padding: 0px 5px 0px 5px;
     box-shadow: 1px 1px 4px 0px #9d9d9d;
   }
 
   @keyframes addToclose {
     0% {
-      transform: rotateZ(0deg) scale(1); 
+      transform: rotateZ(0deg) scale(1);
     }
 
-    50%{
-      transform: rotateZ(0deg) scale(1.2);       
-     }
+    50% {
+      transform: rotateZ(0deg) scale(1.2);
+    }
 
     100% {
-      transform: rotateZ(45deg) scale(1);  
+      transform: rotateZ(45deg) scale(1);
     }
   }
 
@@ -68,11 +66,23 @@ function EditMembers(props) {
   const [users, setUsers] = useState([]);
   const [addPage, setAddPage] = useState(false);
   const [selectedMembers, setselectedMembers] = useState([]);
-  const [button, setbutton] = useState({
-    content: "Add",
-    url:
-      "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
-  });
+  // const [button, setbutton] = useState({
+  //   content: "Add",
+  //   url:
+  //     "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
+  // });
+
+  const buttons = [
+    {
+      content: "Members",
+      url: null,
+    },
+    {
+      content: "Add",
+      url:
+        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
+    },
+  ];
 
   const friends = props.selectedGroup.members.reduce(
     (acc, item) => [
@@ -90,25 +100,21 @@ function EditMembers(props) {
 
   console.log(friends);
 
+  // handleAddBtnClick={() => {
+  //   setbutton({ ...button, content: addPage ? "Add" : "Back" });
+  //   setAddPage(!addPage);
+  // }}
   const renderChild = () => {
     return (
       <Fragment>
         <Wrap>
-          <GroupImage>
-
-          </GroupImage>
+          <GroupImage></GroupImage>
 
           <TabTable
-            title="Members"
-            titleColor="MAIN_COLOR"
             width="100%"
-            rowNum={6}
-            handleAddBtnClick={() => {
-              setbutton({ ...button, content: addPage ? "Add" : "Back" });
-              setAddPage(!addPage);
-            }}
+            rowNum={5}
             addButton
-            button={button}
+            buttons={buttons}
             addPage={addPage}
           >
             {addPage ? (
@@ -116,7 +122,7 @@ function EditMembers(props) {
             ) : (
               <MemberList datas={friends}></MemberList>
             )}
-            </TabTable>
+          </TabTable>
         </Wrap>
       </Fragment>
     );

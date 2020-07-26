@@ -5,9 +5,13 @@ import PropTypes from "prop-types";
 import { MAIN_COLOR } from "../../Colors";
 import Paragraph from "../../A-Atomics/Font/Paragraph";
 
-const Wrap = styled.div`
+const Wrap = styled.button`
   // width: ${(props) => props.width};
   // height: ${(props) => props.height};
+
+  outline: none;
+  border: none;
+  background-color: white;
 
   display: flex;
   flex-direction: row;
@@ -15,6 +19,10 @@ const Wrap = styled.div`
   align-items: center;
 
   cursor: pointer;
+
+  &:focus{
+    outline:none;
+  }
 `;
 
 const Content = styled(Paragraph)`
@@ -29,44 +37,74 @@ const Icon = styled.img`
 `;
 
 function ButtonWithImage(props) {
-  if (props.imgLocation == "right" || props.imgLocation == "bottom") {
-    return (
-      <Wrap {...props} className="btn-with-image">
-        <Content
-          height={props.height}
-          color="TEXT"
-          fontSize={props.fontSize}
-          imgLocation={props.imgLocation}
-        >
-          {props.children}
-        </Content>
-        <Icon
-          className="btn-icon"
-          src={props.imgurl}
-          imgHeight={props.imgHeight}
-          imgWidth={props.imgWidth}
-        />
-      </Wrap>
-    );
-  } else {
-    return (
-      <Wrap {...props}>
-        <Icon
-          url={props.imgurl}
-          imgHeight={props.imgHeight}
-          imgWidth={props.imgWidth}
-        />
-        <Content
-          height={props.height}
-          color="TEXT"
-          fontSize={props.fontSize}
-          imgLocation={props.imgLocation}
-        >
-          {props.children}
-        </Content>
-      </Wrap>
-    );
-  }
+  const {
+    height,
+    width,
+    fontSize,
+    button,
+    imgurl,
+    imgHeight,
+    imgWidth,
+    imgLocation,
+  } = props;
+
+  const renderButton = () => {
+    if (button.url) {
+      if (props.imgLocation == "right" || props.imgLocation == "bottom") {
+        return (
+          <Fragment>
+            <Content
+              height={props.height}
+              color="TEXT"
+              fontSize={props.fontSize}
+              imgLocation={props.imgLocation}
+            >
+              {button.content}
+            </Content>
+            <Icon
+              className="btn-icon"
+              src={button.url}
+              imgHeight={props.imgHeight}
+              imgWidth={props.imgWidth}
+            />
+          </Fragment>
+        );
+      } else {
+        return (
+          <Fragment>
+            <Icon
+              url={button.url}
+              imgHeight={props.imgHeight}
+              imgWidth={props.imgWidth}
+            />
+            <Content
+              height={props.height}
+              color="TEXT"
+              fontSize={props.fontSize}
+              imgLocation={props.imgLocation}
+            >
+              {button.content}
+            </Content>
+          </Fragment>
+        );
+      }
+    } else {
+      return (
+        <Fragment>
+          <Content
+            height={props.height}
+            color="TEXT"
+            fontSize={props.fontSize}
+            imgLocation={props.imgLocation}
+          >
+            {button.content}
+          </Content>
+        </Fragment>
+      );
+    }
+  };
+
+  return <Wrap {...props}>{renderButton()}</Wrap>;
 }
 
 export default ButtonWithImage;
@@ -75,6 +113,7 @@ ButtonWithImage.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
   fontSize: PropTypes.string,
+  button: PropTypes.object,
   imgurl: PropTypes.string,
   imgHeight: PropTypes.string,
   imgWidth: PropTypes.string,
@@ -85,8 +124,11 @@ ButtonWithImage.defaultProps = {
   height: "20px",
   width: "auto",
   fontSize: "13px",
-  imgurl:
-    "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
+  button: {
+    content: "add",
+    url: null,
+    // "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
+  },
   imgHeight: "13px",
   imgWidth: "13px",
   imgLocation: "right",

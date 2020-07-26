@@ -1,12 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-
+import { MAIN_COLOR, ST_YELLOW_LIGHT, ST_BLUE } from "../../Colors";
 import TableHeader from "../../A-Atomics/Table/TableHeader";
 import TableTitle from "../../A-Atomics/Table/TableTitle";
 import Header from "../../A-Atomics/Font/Header";
+import MenuActive from "../../A-Atomics/Menu/MenuActive";
 import ButtonWithImage from "../../B-Molecules/Button/ButtonWithImage";
-
 
 const TableWrap = styled.div`
   height: auto;
@@ -21,64 +21,95 @@ const StyledTableTitle = styled(TableTitle)`
   align-items: flex-end;
   padding-left: 10px;
   padding-right: 10px;
-  margin-bottom: 4px;
+  // margin-bottom: 4px;
+  height: 26px;
 `;
 
 const Tabs = styled.div`
-    border : solid 1px red;
-    display: flex;
-    flex-direction: row;
-    
-`
+  display: flex;
+  flex-direction: row;
+`;
 
-const Button = styled(ButtonWithImage)`
-    
-`
+const Tab = styled.div`
+  box-sizing: content-box;
+  margin-right: 4px;
+  width: auto;
+  height: auto;
+  border: 0px;
+
+  ${(props) =>
+    props.active
+      ? ` border-bottom: solid 2px ${MAIN_COLOR} ;`
+      : `
+      margin-bottom: 2px;
+      `};
+`;
+
+const Shadow = styled.div`
+  ${(props) =>
+    props.active
+      ? `
+      box-shadow: 1px 1px 4px 1px #9d9d9d;
+      border: 0px;
+      `
+      : ``}
+`;
+
+const Button = styled(ButtonWithImage)``;
 
 const TableContent = styled.div`
-  // border: solid 1px grey;
   height: ${(props) => props.height}px;
   overflow-y: auto;
+  box-shadow: 1px 1px 4px 1px #9d9d9d;
+  margin-top: 0;
 `;
 
 function TabTable(props) {
+  const [activeTab, setActiveTab] = useState(props.buttons[0]);
+  const renderTitle = () => {
+    return (
+      <Header type="h4" color={props.titleColor}>
+        {props.title}
+      </Header>
+    );
+  };
+
   const renderButtons = (buttons) => {
-      return buttons.map(button => {
-        return (
+    console.log(buttons);
+    return buttons.map((button) => {
+      return (
+        <Tab key={button.content} active={activeTab == button.content}>
+          <Shadow key={button.content} active={activeTab == button.content}>
             <Button
-              className="tab-button"
-              key="button.content"
-              height="20px"
-              width="auto"
-              imgurl={button.url}
-              onClick={() => props.handleAddBtnClick()}
-            >
-              {button.content}
-            </Button>
-          );
-      })
-   
+              button={button}
+              onClick={
+                activeTab == button.content
+                  ? () => {}
+                  : () => setActiveTab(button.content)
+              }
+            />
+            {/* <ButtonBar>{button.content} */}
+          </Shadow>
+        </Tab>
+      );
+    });
+  };
+
+  const renderTableHeader = () => {
+    return <TableHeader>hello?</TableHeader>;
   };
 
   return (
     <TableWrap {...props}>
-      {props.title || props.addButton ? (
-        <StyledTableTitle>
-          {props.title ? (
-            <Header type="h4" color={props.titleColor}>
-              {props.title}
-            </Header>
-          ) : null}
-          {props.addButton ? <Tabs>{renderButtons(props.buttons)}</Tabs>: null}
-        </StyledTableTitle>
-      ) : null}
-
-      {props.headers ? <TableHeader>hello?</TableHeader> : null}
-
+      <StyledTableTitle>
+        {props.title ? renderTitle() : null}
+        <Tabs>{renderButtons(props.buttons)}</Tabs>
+      </StyledTableTitle>
+      {props.headers ? renderTableHeader() : null}
       <TableContent
         height={parseInt(props.rowHeight.replace(/[^0-9]/g, "")) * props.rowNum}
       >
-        {props.children}
+        {props.children}{" "}
       </TableContent>
     </TableWrap>
   );
@@ -105,15 +136,12 @@ TabTable.defaultProps = {
   handleAddBtnClick: () => {
     alert("click");
   },
-  buttons: [{
-    content: "Add",
-    url:
-      "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
-  }, {
-    content: "Add2",
-    url:
-      "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
-  }],
+  buttons: [
+    {
+      content: "Tab1",
+      url: null,
+    },
+  ],
   width: "48%",
   rowNum: 5,
   rowHeight: "45px",
