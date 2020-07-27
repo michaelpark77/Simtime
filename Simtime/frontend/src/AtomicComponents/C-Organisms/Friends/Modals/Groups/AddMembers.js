@@ -1,26 +1,14 @@
 import React, { useState, Fragment } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
+
+import ColoredButton from "../../../../A-Atomics/Button/ColoredButton";
+import Paragraph from "../../../../A-Atomics/Font/Paragraph";
 import SearchBar from "../../../../C-Organisms/Friends/SearchFriend/SearchBar";
 import ResultTable from "../../ResultTable";
 
-import ButtonWithImage from "../../../../B-Molecules/Button/ButtonWithImage";
-import Table from "../../../../B-Molecules/Table/Table";
-import MemberList from "../../Lists/MemberList";
-import DefaultModal from "../../../../B-Molecules/Modal/DefaultModal";
-import Paragraph from "../../../../A-Atomics/Font/Paragraph";
 import { MAIN_COLOR } from "../../../../Colors";
-import { deleteMemebers } from "../../../../../actions/groups";
-
-const AddButtonWrap = styled.div`
-  box-shadow: 1px 1px 4px 0px #9d9d9d;
-`;
-
-const AddButton = styled(ButtonWithImage)`
-  & > img {
-    transform: rotateZ(45deg);
-  }
-`;
+import { addToGroup } from "../../../../../actions/groups";
 
 const AddMemberWrap = styled.div`
   width: 100%;
@@ -38,24 +26,7 @@ const ResultWrap = styled.div`
 `;
 const Result = styled(ResultTable)``;
 
-const TextButton = styled(Paragraph)`
-  cursor: pointer;
-  text-align: right;
-`;
-
 function AddMembers(props) {
-  const renderButton = (button) => {
-    return (
-      <AddButton
-        height="20px"
-        width="auto"
-        onClick={() => props.btnClickHandler()}
-      >
-        back
-      </AddButton>
-    );
-  };
-
   const users = [
     { id: 0, username: "test1", profile_image: "" },
     { id: 1, username: "test2", profile_image: "" },
@@ -85,7 +56,12 @@ function AddMembers(props) {
     );
   };
 
-  return <div>{renderChild()}</div>;
+  return (
+    <Wrap>
+      {renderChild()}
+      <ColoredButton />
+    </Wrap>
+  );
 }
 
 const mapStateToProps = (state) => ({
@@ -93,4 +69,4 @@ const mapStateToProps = (state) => ({
   selectedGroup: state.groups.selectedGroup,
 });
 
-export default connect(mapStateToProps, { deleteMemebers })(AddMembers);
+export default connect(mapStateToProps, { addToGroup })(AddMembers);

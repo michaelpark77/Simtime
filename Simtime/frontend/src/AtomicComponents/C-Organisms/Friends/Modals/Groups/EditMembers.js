@@ -8,69 +8,32 @@ import ButtonWithImage from "../../../../B-Molecules/Button/ButtonWithImage";
 
 import AddMembers from "./AddMembers";
 
-import Table from "../../../../B-Molecules/Table/Table";
 import TabTable from "../../../../B-Molecules/Table/TabTable";
 import MemberList from "../../Lists/MemberList";
-import DefaultModal from "../../../../B-Molecules/Modal/DefaultModal";
-import Paragraph from "../../../../A-Atomics/Font/Paragraph";
+import BasicModal from "../../../../B-Molecules/Modal/BasicModal";
 
 import { MAIN_COLOR } from "../../../../Colors";
 import { deleteMemebers } from "../../../../../actions/groups";
 
 const Wrap = styled.div`
   width: 100%;
+  height: 100%;
 `;
 
 const GroupImage = styled.div`
-  height: 150px;
+  width: 100%;
+  height: 25%;
 `;
 
-const StyledTable = styled(Table)`
-  & .btn-with-image {
-    border: solid 1px ${MAIN_COLOR};
-    padding: 0px 5px 0px 5px;
-    box-shadow: 1px 1px 4px 0px #9d9d9d;
-  }
-
-  @keyframes addToclose {
-    0% {
-      transform: rotateZ(0deg) scale(1);
-    }
-
-    50% {
-      transform: rotateZ(0deg) scale(1.2);
-    }
-
-    100% {
-      transform: rotateZ(45deg) scale(1);
-    }
-  }
-
-  & .btn-icon {
-    ${(props) =>
-      props.addPage
-        ? `
-        animation-duration: 1s;
-        animation-name: addToclose;
-        animation-fill-mode: forwards;
-      `
-        : `
-        // animation-duration: 2s;
-        // animation-name: closeToadd;
-        // animation-fill-mode: forwards;
-      `}
-  }
+const Table = styled.div`
+  width: 100%;
+  height: 75%;
 `;
 
 function EditMembers(props) {
   const [users, setUsers] = useState([]);
   const [addPage, setAddPage] = useState(false);
   const [selectedMembers, setselectedMembers] = useState([]);
-  // const [button, setbutton] = useState({
-  //   content: "Add",
-  //   url:
-  //     "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
-  // });
 
   const buttons = [
     {
@@ -98,45 +61,24 @@ function EditMembers(props) {
     []
   );
 
-  console.log(friends);
-
-  // handleAddBtnClick={() => {
-  //   setbutton({ ...button, content: addPage ? "Add" : "Back" });
-  //   setAddPage(!addPage);
-  // }}
-  const renderChild = () => {
-    return (
-      <Fragment>
-        <Wrap>
-          <GroupImage></GroupImage>
-
-          <TabTable
-            width="100%"
-            rowNum={5}
-            addButton
-            buttons={buttons}
-            addPage={addPage}
-          >
-            {addPage ? (
-              <AddMembers btnClickHandler={() => setAddPage(!addPage)} />
-            ) : (
-              <MemberList datas={friends}></MemberList>
-            )}
-          </TabTable>
-        </Wrap>
-      </Fragment>
-    );
-  };
-
   return (
-    <DefaultModal
+    <BasicModal
       title={props.selectedGroup.group.groupname}
       totalPage={0}
       handleSubmit={() => handleSubmit()}
       height="500px"
     >
-      {renderChild()}
-    </DefaultModal>
+      <Wrap className="EditMembersWrap">
+        <GroupImage></GroupImage>
+        <TabTable buttons={buttons}>
+          {addPage ? (
+            <AddMembers btnClickHandler={() => setAddPage(!addPage)} />
+          ) : (
+            <MemberList datas={friends}></MemberList>
+          )}
+        </TabTable>
+      </Wrap>
+    </BasicModal>
   );
 }
 

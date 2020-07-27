@@ -1,117 +1,121 @@
 import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { MAIN_COLOR, ST_YELLOW_LIGHT, ST_BLUE } from "../../Colors";
-import TableHeader from "../../A-Atomics/Table/TableHeader";
+import {
+  MAIN_COLOR,
+  ST_YELLOW_LIGHT,
+  ST_SEMI_YELLOW,
+  ST_BLUE,
+} from "../../Colors";
+
+import ColoredButton from "../../A-Atomics/Button/ColoredButton";
 import TableTitle from "../../A-Atomics/Table/TableTitle";
 import Header from "../../A-Atomics/Font/Header";
-import MenuActive from "../../A-Atomics/Menu/MenuActive";
 import ButtonWithImage from "../../B-Molecules/Button/ButtonWithImage";
 
-const TableWrap = styled.div`
+const Wrap = styled.div`
   height: auto;
   width: ${(props) => props.width};
-  display: inline-block;
 `;
 
 const StyledTableTitle = styled(TableTitle)`
+  height: 26px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: ${(props) => props.align};
   align-items: flex-end;
   padding-left: 10px;
-  padding-right: 10px;
-  // margin-bottom: 4px;
-  height: 26px;
 `;
 
 const Tabs = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
 `;
 
-const Tab = styled.div`
-  box-sizing: content-box;
-  margin-right: 4px;
-  width: auto;
-  height: auto;
-  border: 0px;
+const Tab = styled(ButtonWithImage)`
+  width: 72px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
-  ${(props) =>
-    props.active
-      ? ` border-bottom: solid 2px ${MAIN_COLOR} ;`
-      : `
-      margin-bottom: 2px;
-      `};
-`;
-
-const Shadow = styled.div`
   ${(props) =>
     props.active
       ? `
-      box-shadow: 1px 1px 4px 1px #9d9d9d;
-      border: 0px;
-      `
-      : ``}
+    height: 100%;
+    border: solid 1px ${MAIN_COLOR};
+    background-color: white; 
+    border-bottom: none;
+    margin-bottom: -1px;
+  `
+      : `
+      background-color: ${ST_YELLOW_LIGHT};
+      border: solid 1px ${ST_SEMI_YELLOW};
+      border-bottom: solid 1px ${ST_YELLOW_LIGHT};
+      margin-bottom: 0px;
+      height: 85%;
+      `}
+`;
+const ContentWrap = styled.div`
+  padding: 5px 5px 5px 5px;
+  border: solid 1px ${MAIN_COLOR};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
 `;
 
-const Button = styled(ButtonWithImage)``;
-
 const TableContent = styled.div`
-  height: ${(props) => props.height}px;
-  overflow-y: auto;
-  box-shadow: 1px 1px 4px 1px #9d9d9d;
-  margin-top: 0;
+  border: solid 1px red;
+  height: ${(props) => props.height};
+`;
+
+const Button = styled(ColoredButton)`
+  height: ${(props) => props.height};
 `;
 
 function TabTable(props) {
-  const [activeTab, setActiveTab] = useState(props.buttons[0]);
-  const renderTitle = () => {
-    return (
-      <Header type="h4" color={props.titleColor}>
-        {props.title}
-      </Header>
-    );
-  };
+  const [activeTab, setActiveTab] = useState(props.buttons[0].content);
 
   const renderButtons = (buttons) => {
-    console.log(buttons);
     return buttons.map((button) => {
       return (
-        <Tab key={button.content} active={activeTab == button.content}>
-          <Shadow key={button.content} active={activeTab == button.content}>
-            <Button
-              button={button}
-              onClick={
-                activeTab == button.content
-                  ? () => {}
-                  : () => setActiveTab(button.content)
-              }
-            />
-            {/* <ButtonBar>{button.content} */}
-          </Shadow>
-        </Tab>
+        <Tab
+          key={button.content}
+          active={activeTab == button.content}
+          button={button}
+          onClick={
+            activeTab == button.content
+              ? () => {}
+              : () => setActiveTab(button.content)
+          }
+        />
       );
     });
   };
 
-  const renderTableHeader = () => {
-    return <TableHeader>hello?</TableHeader>;
-  };
-
   return (
-    <TableWrap {...props}>
-      <StyledTableTitle>
-        {props.title ? renderTitle() : null}
+    <Wrap {...props} className="TableWrap">
+      <StyledTableTitle align={props.title ? "space-between" : "flex-end"}>
+        {props.title ? (
+          <Header type="h4" color={props.titleColor}>
+            {props.title}
+          </Header>
+        ) : null}
         <Tabs>{renderButtons(props.buttons)}</Tabs>
       </StyledTableTitle>
-      {props.headers ? renderTableHeader() : null}
-      <TableContent
-        height={parseInt(props.rowHeight.replace(/[^0-9]/g, "")) * props.rowNum}
-      >
-        {props.children}{" "}
-      </TableContent>
-    </TableWrap>
+      <ContentWrap height="auto">
+        <TableContent
+          height={
+            parseInt(props.rowHeight.replace(/[^0-9]/g, "")) * props.rowNum +
+            "px"
+          }
+        >
+          {props.children}
+        </TableContent>
+        <Button height={props.rowHeight} />
+      </ContentWrap>
+    </Wrap>
   );
 }
 
@@ -131,7 +135,8 @@ TabTable.propTypes = {
 };
 
 TabTable.defaultProps = {
-  titleColor: "TEXT",
+  title: "Members",
+  titleColor: "MAIN_COLOR",
   addButton: false,
   handleAddBtnClick: () => {
     alert("click");
@@ -142,7 +147,7 @@ TabTable.defaultProps = {
       url: null,
     },
   ],
-  width: "48%",
+  width: "100%",
   rowNum: 5,
   rowHeight: "45px",
   headers: null,

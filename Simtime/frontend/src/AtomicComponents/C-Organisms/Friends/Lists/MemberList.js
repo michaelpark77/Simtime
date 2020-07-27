@@ -3,15 +3,19 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import Table from "../../../B-Molecules/Table/Table";
 import TableRow from "../../../A-Atomics/Table/TableRow";
 import Paragraph from "../../../A-Atomics/Font/Paragraph";
 import UserCardForList from "../../../B-Molecules/User/UserCardForList";
-import ButtonWithImage from "../../../B-Molecules/Button/ButtonWithImage";
 import { deleteMemeber, addToGroup } from "../../../../actions/groups";
 
 const buttonMargin = 10;
 const buttonsWidth = 160 + 8; //"삭제"-26px, "수신차단" or 차단-52 , bittonMargin * 버튼수 => 26 +104 + 30
 const buttonDefaultSize = 13 * 4 + 2; //4글자기준
+
+const Wrap = styled.div`
+  height: ${(props) => props.height};
+`;
 
 const UserCard = styled(UserCardForList)`
   cursor: pointer;

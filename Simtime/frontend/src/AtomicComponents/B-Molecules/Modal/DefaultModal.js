@@ -12,8 +12,6 @@ import ProgressBar from "../../A-Atomics/Deco/ProgressBar";
 import DashedButton from "../../A-Atomics/Button/DashedButton";
 
 const Wrap = styled.div`
-  position : relative;
-  border: solid 1px ${MAIN_COLOR};
   background-color: white;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
@@ -22,6 +20,7 @@ const Wrap = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
 
   @media only screen and (max-width: 320px) {
     width: 100%;
@@ -36,12 +35,11 @@ const HeaderWrap = styled.div`
   justify-content: flex-start;
   align-items: center;
   overflow: hidden;
-  position: relative;
 `;
 
 const ContentWrap = styled.div`
   width: 90%;
-  height: auto;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
@@ -66,7 +64,7 @@ const ButtonWrap = styled.div`
   bottom: 0px;
   width: 90%;
   height: auto;
-  
+
   padding-bottom: 15px;
 
   display: flex;
@@ -76,14 +74,13 @@ const ButtonWrap = styled.div`
   cursor: pointer;
 `;
 
-
 const Button = styled(DashedButton)`
   border-radius: 6px;
 `;
 
 const ButtonSpace = styled.div`
   height: 60px;
-`
+`;
 
 function DefaultModal(props) {
   const [page, setPage] = useState(0);
@@ -154,11 +151,11 @@ function DefaultModal(props) {
   return (
     <Wrap {...props}>
       <HeaderWrap className="HeaderWrap">
-      {props.title && <ModalTitle>{props.title}</ModalTitle>}
-      {/* <BarWrap><ProgressBar /></BarWrap> */}
+        {props.title && <ModalTitle>{props.title}</ModalTitle>}
+        {/* <BarWrap><ProgressBar /></BarWrap> */}
       </HeaderWrap>
 
-      <ContentWrap encType="multipart/form-data">
+      <ContentWrap>
         {renderPages()}
         {renderButtons(page)}
       </ContentWrap>
