@@ -1,51 +1,77 @@
 import React, { useState, Fragment, createRef } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import SearchBar from "../../../../C-Organisms/Friends/SearchFriend/SearchBar";
-import ResultTable from "../../ResultTable";
 
-import ButtonWithImage from "../../../../B-Molecules/Button/ButtonWithImage";
-
-import AddMembers from "./AddMembers";
-
-import TabTable from "../../../../B-Molecules/Table/TabTable";
-import MemberList from "../../Lists/MemberList";
-import BasicModal from "../../../../B-Molecules/Modal/BasicModal";
+import { deleteMemebers } from "../../../../../actions/groups";
 
 import { MAIN_COLOR } from "../../../../Colors";
-import { deleteMemebers } from "../../../../../actions/groups";
+import BasicModal from "../../../../B-Molecules/Modal/BasicModal";
+import TabTable from "../../../../B-Molecules/Table/TabTable";
+import ImageUser from "../../../../A-Atomics/ImageUser";
+import Header from "../../../../A-Atomics/Font/Header";
+import MemberList from "../../Lists/MemberList";
+import AddMembers from "./AddMembers";
+
 
 const Wrap = styled.div`
   width: 100%;
   height: 100%;
+
 `;
 
-const GroupImage = styled.div`
+const Group= styled.div`
   width: 100%;
   height: 25%;
+  padding-bottom: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
-const Table = styled.div`
-  width: 100%;
+
+const GroupImage= styled(ImageUser)`
+  position: relative;
+  height: 60px;
+  width: 60px;
+  margin-bottom: 10px;
+  border-radius: 15px 15px 15px 15px; 
+`;
+
+const AddImage= styled.div`
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  bottom:-5px;
+  right:-5px;
+  background-color: pink;
+  border-radius: 10px 10px 10px 10px; 
+`;
+
+const GroupName = styled(Header)`
+  position: initial;
+  height: 20px;
+  width: auto;
+  text-align:center;
+`
+
+const Table = styled(TabTable)`
   height: 75%;
 `;
 
 function EditMembers(props) {
-  const [users, setUsers] = useState([]);
-  const [addPage, setAddPage] = useState(false);
-  const [selectedMembers, setselectedMembers] = useState([]);
 
   const buttons = [
-    {
-      content: "Members",
-      url: null,
-    },
-    {
-      content: "Add",
-      url:
-        "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",
-    },
+    {content: "Members",url: null},
+    {content: "Add", url: "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png",}
   ];
+
+  const [users, setUsers] = useState([]);
+  const [tab, setTab] = useState(buttons[0].content);
+  const [selectedMembers, setselectedMembers] = useState([]);
+
+ 
 
   const friends = props.selectedGroup.members.reduce(
     (acc, item) => [
@@ -62,21 +88,22 @@ function EditMembers(props) {
   );
 
   return (
-    <BasicModal
-      title={props.selectedGroup.group.groupname}
-      totalPage={0}
-      handleSubmit={() => handleSubmit()}
-      height="500px"
-    >
+    <BasicModal title="Edit Group">
       <Wrap className="EditMembersWrap">
-        <GroupImage></GroupImage>
-        <TabTable buttons={buttons}>
-          {addPage ? (
-            <AddMembers btnClickHandler={() => setAddPage(!addPage)} />
-          ) : (
-            <MemberList datas={friends}></MemberList>
-          )}
-        </TabTable>
+        <Group>
+          <GroupImage height="60px" width="60px" 
+          url={"https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/add-yellow.png"}>
+          {/* // url={props.selectedGroup.group.profile_image}> */}
+            <AddImage/>
+          </GroupImage>
+          <GroupName type="h3">{props.selectedGroup.group.groupname}</GroupName>
+        </Group>
+        <Table 
+          button={tab != "Members"} 
+          buttons={buttons} 
+          changeHandler={(tab)=>setTab(tab)}>
+          { tab=="Members" ? <MemberList datas={friends} /> : <AddMembers /> }
+        </Table>
       </Wrap>
     </BasicModal>
   );
@@ -86,5 +113,5 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
   selectedGroup: state.groups.selectedGroup,
 });
-// export default AddGroup;
+
 export default connect(mapStateToProps, { deleteMemebers })(EditMembers);

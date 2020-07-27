@@ -5,6 +5,7 @@ import {
   MAIN_COLOR,
   ST_YELLOW_LIGHT,
   ST_SEMI_YELLOW,
+  ST_GRAY_LIGHT,
   ST_BLUE,
 } from "../../Colors";
 
@@ -14,7 +15,7 @@ import Header from "../../A-Atomics/Font/Header";
 import ButtonWithImage from "../../B-Molecules/Button/ButtonWithImage";
 
 const Wrap = styled.div`
-  height: auto;
+  height: ${(props) => props.height};
   width: ${(props) => props.width};
 `;
 
@@ -51,9 +52,9 @@ const Tab = styled(ButtonWithImage)`
     margin-bottom: -1px;
   `
       : `
-      background-color: ${ST_YELLOW_LIGHT};
+      background-color: ${ST_GRAY_LIGHT};
       border: solid 1px ${ST_SEMI_YELLOW};
-      border-bottom: solid 1px ${ST_YELLOW_LIGHT};
+      border-bottom: solid 1px ${ST_GRAY_LIGHT};
       margin-bottom: 0px;
       height: 85%;
       `}
@@ -63,19 +64,28 @@ const ContentWrap = styled.div`
   border: solid 1px ${MAIN_COLOR};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
+
+  display: flex;
+  flex-direction: column;
+  align-items : center;
 `;
 
 const TableContent = styled.div`
-  border: solid 1px red;
   height: ${(props) => props.height};
+  width: 100%;
 `;
 
-const Button = styled(ColoredButton)`
-  height: ${(props) => props.height};
-`;
+
 
 function TabTable(props) {
   const [activeTab, setActiveTab] = useState(props.buttons[0].content);
+
+    
+  const clickHandler = (e, tab) => {
+    e.preventDefault();
+    setActiveTab(tab)
+    props.changeHandler(tab);
+  }
 
   const renderButtons = (buttons) => {
     return buttons.map((button) => {
@@ -84,18 +94,14 @@ function TabTable(props) {
           key={button.content}
           active={activeTab == button.content}
           button={button}
-          onClick={
-            activeTab == button.content
-              ? () => {}
-              : () => setActiveTab(button.content)
-          }
+          onClick={ activeTab == button.content ?  undefined : (e) => clickHandler(e, button.content)}
         />
       );
     });
   };
 
   return (
-    <Wrap {...props} className="TableWrap">
+    <Wrap {...props}>
       <StyledTableTitle align={props.title ? "space-between" : "flex-end"}>
         {props.title ? (
           <Header type="h4" color={props.titleColor}>
@@ -105,15 +111,7 @@ function TabTable(props) {
         <Tabs>{renderButtons(props.buttons)}</Tabs>
       </StyledTableTitle>
       <ContentWrap height="auto">
-        <TableContent
-          height={
-            parseInt(props.rowHeight.replace(/[^0-9]/g, "")) * props.rowNum +
-            "px"
-          }
-        >
-          {props.children}
-        </TableContent>
-        <Button height={props.rowHeight} />
+        <TableContent height="auto"> {props.children}</TableContent>
       </ContentWrap>
     </Wrap>
   );
@@ -128,6 +126,7 @@ TabTable.propTypes = {
   handleAddBtnClick: PropTypes.func,
   buttons: PropTypes.array,
   width: PropTypes.string,
+  height: PropTypes.string,
   rowNum: PropTypes.number,
   rowHeight: PropTypes.string,
   headers: PropTypes.array,
@@ -148,8 +147,9 @@ TabTable.defaultProps = {
     },
   ],
   width: "100%",
-  rowNum: 5,
+  height:"auto",
   rowHeight: "45px",
   headers: null,
   datas: null,
+  rowNum: 1,
 };

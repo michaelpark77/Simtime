@@ -15,6 +15,7 @@ const buttonDefaultSize = 13 * 4 + 2; //4글자기준
 
 const Wrap = styled.div`
   height: ${(props) => props.height};
+  width: 100%;
 `;
 
 const UserCard = styled(UserCardForList)`
@@ -34,7 +35,6 @@ const ButtonWrap = styled.div`
 `;
 
 const TextButton = styled(Paragraph)`
-  // border: solid 1px red;
   margin-left: ${buttonMargin}px;
   cursor: pointer;
 `;

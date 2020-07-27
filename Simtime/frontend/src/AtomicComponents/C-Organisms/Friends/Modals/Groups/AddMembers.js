@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import ColoredButton from "../../../../A-Atomics/Button/ColoredButton";
+import SelectedItem from "../../../../A-Atomics/Filter/SelectedItem";
 import Paragraph from "../../../../A-Atomics/Font/Paragraph";
 import SearchBar from "../../../../C-Organisms/Friends/SearchFriend/SearchBar";
 import ResultTable from "../../ResultTable";
@@ -10,56 +11,80 @@ import ResultTable from "../../ResultTable";
 import { MAIN_COLOR } from "../../../../Colors";
 import { addToGroup } from "../../../../../actions/groups";
 
-const AddMemberWrap = styled.div`
-  width: 100%;
-  height: auto;
-  box-shadow: 1px 1px 4px 0px #9d9d9d;
-  border: solid 1px ${MAIN_COLOR};
-`;
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+`
 
 const SearchWrap = styled.div`
   width: 100%;
-  padding-bottom: 15px;
 `;
+
 const ResultWrap = styled.div`
   width: 100%;
+  margin-bottom: 5px;
+
 `;
-const Result = styled(ResultTable)``;
+const Result = styled(ResultTable)`
+
+`
+
+const Button = styled(ColoredButton)`
+  margin-bottom: 5px;
+  `
+
+
+const MyItem = styled(SelectedItem)`
+  height: 20px;
+  white-space: nowrap;
+`;
+
 
 function AddMembers(props) {
+  const [friends, setFriends] = useState([]);
   const users = [
-    { id: 0, username: "test1", profile_image: "" },
-    { id: 1, username: "test2", profile_image: "" },
-    { id: 2, username: "test3", profile_image: "" },
+    { id: 92, username: "ara", profile_image: "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/group_basic.png"},
+    { id: 93, username: "arara", profile_image: "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/group_basic.png" },
+    { id: 94, username: "aa", profile_image: "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/group_basic.png" },
+    { id: 95, username: "ara2", profile_image: "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/group_basic.png" },
+    { id: 96, username: "admin", profile_image: "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/group_basic.png" },
+
   ];
 
-  const renderChild = () => {
-    return (
-      <AddMemberWrap>
-        {/* <AddButtonWrap>{renderButton()}</AddButtonWrap> */}
-        <SearchWrap>
-          <SearchBar newFriends search={(users) => setUsers(users)} />
-        </SearchWrap>
-        <ResultWrap>
-          <Result
-            datas={users}
-            title="Result"
-            titleColor="MAIN_COLOR"
-            width="100%"
-            rowNum={3}
-            selectHandler={(res) => {
-              setFriend(res);
-            }}
-          />
-        </ResultWrap>
-      </AddMemberWrap>
-    );
+  const clickEvent = async (e) => {
+    e.preventDefault();
+    var group = props.selectedGroup.group.id
+    try {
+      console.log(friends)
+      var data = friends.map((friend) => {
+        return { relationship: friend, group: group };
+      });
+      props.addToGroup(data);
+      console.log(data)
+    } catch (err) {
+      console.log("addToGroupError", err);
+      }
   };
+
+
 
   return (
     <Wrap>
-      {renderChild()}
-      <ColoredButton />
+      <SearchWrap>
+          <SearchBar newFriends search={(users) => setUsers(users)} />
+      </SearchWrap>
+      <ResultWrap>
+        <Result
+          multiple
+          datas={users}
+          width="100%"
+          rowNum={5}
+          selectHandler={(res) => {setFriends(res);}}
+          />
+      </ResultWrap>
+      
+      <Button onClick={(e)=>clickEvent(e)}>Done</Button>
     </Wrap>
   );
 }

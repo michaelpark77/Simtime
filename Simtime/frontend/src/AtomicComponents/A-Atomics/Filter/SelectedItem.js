@@ -17,7 +17,7 @@ const ContentWrap = styled.div`
   padding-left: 6px;
   padding-right: 6px;
 
-  margin-right: 2px;
+  margin-right: 3px;
 `;
 
 const Content = styled(Paragraph)`
