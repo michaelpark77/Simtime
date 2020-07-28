@@ -38,6 +38,11 @@ export class Alerts extends Component {
       if (message.addGroup) alert.success(message.addGroup);
       if (message.editGroup) alert.success(message.editGroup);
       if (message.deleteGroup) alert.success(message.deleteGroup);
+
+      //members
+      if (message.addToGroup) alert.success(message.addToGroup);
+
+      //else
       if (message.emptyField) alert.error(message.emptyField);
     }
   }

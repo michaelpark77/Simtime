@@ -46,23 +46,39 @@ const MyInput = styled(InputWrap)`
 `;
 
 function Search(props) {
-  const { width, height, value, desc, Inputref,searchHandler,changeHandler } = props;
+  const {
+    width,
+    height,
+    value,
+    desc,
+    Inputref,
+    searchHandler,
+    changeHandler,
+  } = props;
   return (
     <Wrap {...props}>
-      <MyInput value={value} ref={Inputref} desc={desc} height="24px" enterHandler={searchHandler}></MyInput>
+      <MyInput
+        value={value}
+        ref={Inputref}
+        desc={desc}
+        height="24px"
+        enterHandler={searchHandler}
+        changeHandler={searchHandler}
+      ></MyInput>
       <Icon size={height} />
     </Wrap>
   );
 }
 
-export default React.forwardRef((props, ref) => (<Search {...props} Inputref={ref}/>));
-
+export default React.forwardRef((props, ref) => (
+  <Search {...props} Inputref={ref} />
+));
 
 Search.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   value: PropTypes.string,
-  searchHandler: PropTypes.func
+  searchHandler: PropTypes.func,
 };
 
 Search.defaultProps = {
@@ -70,5 +86,5 @@ Search.defaultProps = {
   height: "30px",
   value: "",
   desc: "Search",
-  enterHandler: null
+  enterHandler: null,
 };

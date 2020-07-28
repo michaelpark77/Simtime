@@ -33,29 +33,50 @@ const Result = styled(ResultTable)``;
 const Groups = styled(ResultTable)``;
 
 function SearchBar(props) {
-  const { search, searchUsers, height, width, newFriends } = props;
+  const {
+    search,
+    searchUsers,
+    height,
+    width,
+    newFriends,
+    friends,
+    candidates,
+  } = props;
+
+  const [resData, setResData] = useState(
+    candidates.length == 0 ? friends : candidates
+  );
+
+  const [field, setField] = useState("Username");
 
   const selectRef = createRef();
   const searchRef = createRef();
 
-  const handleOptionChange = () => {
+  const handleOptionChange = (option) => {
+    setField(option);
     searchRef.current.focus();
   };
 
-  const searchHandler = async () => {
-    var field = await selectRef.current.innerText;
-    var keyword = await searchRef.current.value;
+  const searchHandler = async (keyword) => {
     if (newFriends) {
       var res = await searchUsers(field, keyword);
-      search(res);
     } else {
-      let map_field = {
+      var map_field = {
         Username: "username",
         "E-mail": "email",
         Phone: "phone",
       };
-      search(map_field[field], keyword);
+
+      var indexField = map_field[field];
+      var res = candidates.reduce((acc, candidate) => {
+        if (candidate.friend[indexField].includes(keyword)) {
+          acc.push({ ...candidate.friend, id: candidate.id });
+        }
+        return acc;
+      }, []);
+      console.log(res);
     }
+    search(res);
   };
 
   return (
@@ -66,8 +87,8 @@ function SearchBar(props) {
           defaultOption="Username"
           width="102px"
           ref={selectRef}
-          handleOptionChange={() => {
-            handleOptionChange();
+          handleOptionChange={(option) => {
+            handleOptionChange(option);
           }}
         />
         <StyledSearch
@@ -75,8 +96,8 @@ function SearchBar(props) {
           desc="Find a friend"
           height="25px"
           ref={searchRef}
-          searchHandler={() => {
-            searchHandler();
+          searchHandler={(keyword) => {
+            searchHandler(keyword);
           }}
         />
       </SearchWrap>
@@ -94,9 +115,15 @@ export default connect(mapStateToProps, { searchUsers })(SearchBar);
 SearchBar.propTypes = {
   height: PropTypes.string,
   width: PropTypes.string,
+  setResult: PropTypes.func,
+  candidates: PropTypes.array,
 };
 
 SearchBar.defaultProps = {
   height: "40px",
   width: "320px",
+  setResult: (res) => {
+    console.log("SearchBar - Default setResult : ", res);
+  },
+  candidates: [],
 };

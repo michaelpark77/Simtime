@@ -152,11 +152,10 @@ export class SelectBoxRef extends Component {
       selectedOption: option,
     }));
 
-    //이거 정리필요
-    if (this.props.handleOptionChange){
-      console.log("handleOptionChange")
+    if (this.props.handleOptionChange) {
+      console.log("handleOptionChange");
       this.props.handleOptionChange(option);
-    } 
+    }
   }
 
   renderOptions = (options) => {
@@ -188,8 +187,7 @@ export class SelectBoxRef extends Component {
   };
 
   render() {
-  
-    const {selectRef} = this.props;
+    const { selectRef } = this.props;
     return (
       <Wrap {...this.props}>
         <MySelect
@@ -210,7 +208,9 @@ export class SelectBoxRef extends Component {
   }
 }
 
-export default React.forwardRef((props, ref) => <SelectBoxRef selectRef={ref} {...props}/>);
+export default React.forwardRef((props, ref) => (
+  <SelectBoxRef selectRef={ref} {...props} />
+));
 
 SelectBoxRef.propTypes = {
   width: PropTypes.string,

@@ -7,6 +7,7 @@ import {
   GET_GROUPMEMBERS,
   DELETE_GROUPMEMBER,
   DELETE_GROUPMEMBERS,
+  ADD_TO_GROUP,
 } from "../actions/types";
 
 const initialState = {
@@ -76,6 +77,15 @@ export default function (state = initialState, action) {
             (group) => group.id == action.payload.id
           )[0],
           members: action.payload.members,
+        },
+      };
+
+    case ADD_TO_GROUP:
+      return {
+        ...state,
+        selectedGroup: {
+          ...state.selectedGroup,
+          members: action.payload.concat(state.selectedGroup.members),
         },
       };
     // case REGISTER_FAIL:

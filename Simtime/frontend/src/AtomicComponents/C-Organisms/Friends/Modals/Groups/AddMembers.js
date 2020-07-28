@@ -14,8 +14,8 @@ import { addToGroup } from "../../../../../actions/groups";
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;  
-`
+  align-items: center;
+`;
 
 const SearchWrap = styled.div`
   width: 100%;
@@ -24,67 +24,104 @@ const SearchWrap = styled.div`
 const ResultWrap = styled.div`
   width: 100%;
   margin-bottom: 5px;
-
 `;
-const Result = styled(ResultTable)`
-
-`
+const Result = styled(ResultTable)``;
 
 const Button = styled(ColoredButton)`
   margin-bottom: 5px;
-  `
-
+`;
 
 const MyItem = styled(SelectedItem)`
   height: 20px;
   white-space: nowrap;
 `;
 
-
 function AddMembers(props) {
-  const [friends, setFriends] = useState([]);
-  const users = [
-    { id: 92, username: "ara", profile_image: "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/group_basic.png"},
-    { id: 93, username: "arara", profile_image: "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/group_basic.png" },
-    { id: 94, username: "aa", profile_image: "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/group_basic.png" },
-    { id: 95, username: "ara2", profile_image: "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/group_basic.png" },
-    { id: 96, username: "admin", profile_image: "https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/group_basic.png" },
+  const { friends, selectedGroup } = props;
 
-  ];
+  // const setStateAsync = (state) => {
+  //   return new Promise((resolve) => {
+  //     this.setState(state, resolve)
+  //   });
+  // }
+
+  // handleChange = (e) => {
+  //   return this.setStateAsync({[e.target.name]: e.target.value})
+  // }
+
+  const flatGroupMembers = (members) => {
+    return members.reduce(
+      (acc, member) => ({
+        ...acc,
+        [member.relationship.id]: member.relationship.id,
+      }),
+      {}
+    );
+  };
+  const [groupMembers, setGroupMembers] = useState(
+    flatGroupMembers(selectedGroup.members)
+  );
+  const [nonMembers, setNonMembers] = useState(
+    friends.filter((friend) => !groupMembers[friend.id])
+  );
+
+  const [candidates, setCandidates] = useState([
+    ...new Set(
+      nonMembers.map((friend) => {
+        return { ...friend.friend, id: friend.id };
+      })
+    ),
+  ]);
+  const [selectedFriends, setSelectedFriends] = useState([]);
 
   const clickEvent = async (e) => {
     e.preventDefault();
-    var group = props.selectedGroup.group.id
+    var groupId = props.selectedGroup.group.id;
     try {
-      console.log(friends)
-      var data = friends.map((friend) => {
-        return { relationship: friend, group: group };
+      var data = selectedFriends.map((friend) => {
+        return { relationship: friend, group: groupId };
       });
-      props.addToGroup(data);
-      console.log(data)
+
+      var res = await props.addToGroup(data);
+      console.log("res", res);
+
+      setGroupMembers(flatGroupMembers(selectedGroup.members));
+      setNonMembers(friends.filter((friend) => !groupMembers[friend.id]));
+      setCandidates([
+        ...new Set(
+          nonMembers.map((friend) => {
+            return { ...friend.friend, id: friend.id };
+          })
+        ),
+      ]);
+
+      console.log("dd");
     } catch (err) {
       console.log("addToGroupError", err);
-      }
+    }
   };
-
-
 
   return (
     <Wrap>
       <SearchWrap>
-          <SearchBar newFriends search={(users) => setUsers(users)} />
+        <SearchBar
+          search={(res) => setCandidates(res)}
+          candidates={nonMembers}
+        />
       </SearchWrap>
       <ResultWrap>
         <Result
           multiple
-          datas={users}
+          datas={candidates}
           width="100%"
           rowNum={5}
-          selectHandler={(res) => {setFriends(res);}}
-          />
+          selectHandler={(res) => {
+            setSelectedFriends(res);
+          }}
+        />
       </ResultWrap>
-      
-      <Button onClick={(e)=>clickEvent(e)}>Done</Button>
+
+      <Button onClick={(e) => clickEvent(e)}>Done</Button>
     </Wrap>
   );
 }
@@ -92,6 +129,7 @@ function AddMembers(props) {
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   selectedGroup: state.groups.selectedGroup,
+  friends: state.friends.friends,
 });
 
 export default connect(mapStateToProps, { addToGroup })(AddMembers);

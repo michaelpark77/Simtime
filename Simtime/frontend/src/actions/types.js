@@ -39,6 +39,7 @@ export const EDIT_GROUP = "EDIT_GROUP";
 export const GET_GROUPMEMBERS = "GET_GROUPMEMBERS";
 export const DELETE_GROUPMEMBERS = "DELETE_GROUPMEMBERS";
 export const DELETE_GROUPMEMBER = "DELETE_GROUPMEMBER";
+export const ADD_TO_GROUP = "ADD_TO_GROUP";
 //Friend(relationship)
 export const GET_FRIENDS = "GET_FRIENDS";
 export const GET_FRIEND = "GET_FRIEND";
