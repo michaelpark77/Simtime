@@ -130,7 +130,7 @@ DATABASES = {
         'NAME': 'simtime',
         'USER': get_secret("DB_DEV").get("USER"),
         'PASSWORD': get_secret("DB_DEV").get("PASSWORD"),
-        'HOST': 'simtime-dev.c4kogceiqedh.us-east-2.rds.amazonaws.com'
+        'HOST': 'db-simtime.ck9ayn5ohacg.ap-northeast-2.rds.amazonaws.com'
     },
 
     'PROD': {
@@ -138,7 +138,7 @@ DATABASES = {
         'NAME': 'simtime',
         'USER': get_secret("DB_PROD").get("USER"),
         'PASSWORD': get_secret("DB_PROD").get("PASSWORD"),
-        'HOST': 'simtime.c4kogceiqedh.us-east-2.rds.amazonaws.com'
+        'HOST': 'db-simtime.ck9ayn5ohacg.ap-northeast-2.rds.amazonaws.com'
     }
 }
 
@@ -173,7 +173,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # S3
@@ -186,6 +186,7 @@ S3 = {
     "AWS_UPLOAD_SECRET_KEY": get_secret("AWS_UPLOAD_SECRET_KEY"),
     "AWS_S3_SIGNATURE_VERSION": get_secret('AWS_S3_SIGNATURE_VERSION'),
 }
+
 AWS_DEFAULT_ACL = 'public-read'
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_HOST = 's3.%s.amazonaws.com' % S3["AWS_UPLOAD_REGION"]
@@ -197,7 +198,7 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (
 # AWS Access
 AWS_ACCESS_KEY_ID = get_secret("AWS_UPLOAD_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = get_secret("AWS_UPLOAD_SECRET_KEY")
-AWS_STORAGE_BUCKET_NAME = 'simtime-bucket'
+AWS_STORAGE_BUCKET_NAME = get_secret("AWS_UPLOAD_BUCKET")
 AWS_LOCATION = "simtime"
 
 # Static files (CSS, JavaScript, Images)
@@ -210,7 +211,7 @@ STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 STATICFILES_STORAGE = 'Simtime.storages.StaticStorage'
 STATICFILES_LOCATION = 'static'
 
-# STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'Simtime', 'assets')
 # ]
@@ -221,5 +222,5 @@ STATICFILES_LOCATION = 'static'
 DEFAULT_FILE_STORAGE = 'Simtime.storages.MediaStorage'
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 MEDIAFILES_LOCATION = 'media'
-# MEDIA_URL = '/media/'
+MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

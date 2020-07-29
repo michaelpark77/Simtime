@@ -20,7 +20,7 @@ urlpatterns = [
     path('api/token/verify/', TokenVerify.as_view(), name='token_verify'),
 
     path('api/auth/account/', AccountLoadAPI.as_view(), name='account_load'),
-    path('api/auth/register/', AccountCreateAPI.as_view(), name="account_create"),
+    path('api/auth/register', AccountCreateAPI.as_view(), name="account_create"),
     path('api/auth/<int:pk>/', AccountDetailAPI.as_view(), name="account_detail"),
     path('api/account/<str:field>/<str:keyword>',
          AccountSearchAPI.as_view(), name="account_search"),
