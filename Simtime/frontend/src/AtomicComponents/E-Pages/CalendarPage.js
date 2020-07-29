@@ -77,7 +77,8 @@ function CalendarPage() {
       <RightWrap>
         <StyledDashedButton
           hasIcon={true}
-          src="static/img/icons/edit2.png"
+          // src="/static/assets/img/icons/edit2.png"
+          src="{% static 'assets/img/icons/edit2.png' %}"
           onClick={() => handleModal(<EventMaker onClose={closeModal} />)}
         >
           Add a new event

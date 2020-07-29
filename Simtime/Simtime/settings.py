@@ -190,7 +190,6 @@ S3 = {
 AWS_DEFAULT_ACL = 'public-read'
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_HOST = 's3.%s.amazonaws.com' % S3["AWS_UPLOAD_REGION"]
-# AWS_S3_CUSTOM_DOMAIN = f'{S3["AWS_UPLOAD_BUCKET"]}.s3.amazonaws.com'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (
     S3["AWS_UPLOAD_BUCKET"], S3["AWS_UPLOAD_REGION"])
 
@@ -201,26 +200,19 @@ AWS_SECRET_ACCESS_KEY = get_secret("AWS_UPLOAD_SECRET_KEY")
 AWS_STORAGE_BUCKET_NAME = get_secret("AWS_UPLOAD_BUCKET")
 AWS_LOCATION = "simtime"
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
+STATIC_URL = '/static/'
+STATIC_ROOT = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 
-# STATICFILES_STORAGE = 'Simtime.storages.StaticStorage' #'storages.backends.s3boto3.S3Boto3Storage'
-
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-# 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'Simtime.storages.StaticStorage'
 STATICFILES_LOCATION = 'static'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'Simtime', 'assets'),
+]
 
-STATIC_URL = '/static/'
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'Simtime', 'assets')
-# ]
-
-
-# Media Setting
-# 'storages.backends.s3boto3.S3Boto3Storage'
-DEFAULT_FILE_STORAGE = 'Simtime.storages.MediaStorage'
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+MEDIA_ROOT = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+DEFAULT_FILE_STORAGE = 'Simtime.storages.MediaStorage'
 MEDIAFILES_LOCATION = 'media'
-MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+DEBUG=False
+ALLOWED_HOSTS='*'

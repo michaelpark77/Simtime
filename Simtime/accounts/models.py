@@ -42,7 +42,7 @@ class Account(AbstractUser):
     phone_number = models.CharField(max_length=16, null=True)
     nickname = models.CharField(max_length=16, null=True)
     profile_image = models.ImageField(
-        upload_to=user_path, default='user_basic.png')
+        upload_to=user_path, default='user-basic.png')
     thumbnail_image = ImageSpecField(  # CACHE에 저장된다. (object_create시가 아니라 필요할 때)
         source='profile_image',
         processors=[Thumbnail(100, 100)],  # 처리할 작업 목룍
@@ -58,7 +58,7 @@ class FriendGroup(models.Model):
     is_default = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     profile_image = models.ImageField(
-        upload_to=user_group_path, default='group_basic.png')
+        upload_to=user_group_path, default='group-basic.png')
     thumbnail_image = ImageSpecField(  # CACHE에 저장된다. (object_create시가 아니라 필요할 때)
         source='profile_image',
         processors=[Thumbnail(100, 100)],  # 처리할 작업 목룍

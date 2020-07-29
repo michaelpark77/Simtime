@@ -65,5 +65,5 @@ DashedButton.defaultProps = {
   height: "46px",
   width: "100%",
   hasIcon: false,
-  src: "static/img/icons/edit2.png",
+  src: "/static/assets/img/icons/edit2.png",
 };
