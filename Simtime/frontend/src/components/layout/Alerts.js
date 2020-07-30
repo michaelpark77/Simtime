@@ -26,6 +26,11 @@ export class Alerts extends Component {
     }
 
     if (message !== prevProps.message) {
+
+      //auth
+      if (message.logout) alert.success(message.logout);
+
+      //invitation
       if (message.deleteInvitation) alert.success(message.deleteInvitation);
       if (message.addInvitation) alert.success(message.addInvitation);
       if (message.passwordsNotMatch) alert.error(message.passwordsNotMatch);

@@ -9,6 +9,7 @@ import { MAIN_COLOR, BG_INACTIVE, BG_WHITE } from "../../Colors";
 const Wrap = styled.div`
   width: 13.5%;
   height: 100%;
+  border: solid 1px red;
 
   background-color: ${(props) => (props.isActive ? BG_WHITE : BG_INACTIVE)}95;
   ${(props) => (props.isToday ? `background-color: ${MAIN_COLOR}95` : "")};
@@ -36,6 +37,15 @@ const MyCalDate = styled(CalDate)`
   ${(props) => (props.date == "1" ? `text-decoration: underline;` : "")}
 `;
 
+const Event = styled.div`
+  width: 100%;
+  height: auto;
+  min-height: 16px;
+  background-color: pink;
+  border: solid 1px blue;
+
+`
+
 function Day(props) {
   const { year, month, day, date } = props;
   const contentHeight = (
@@ -49,25 +59,13 @@ function Day(props) {
           {date == "1" ? `${month}/1` : date}
         </MyCalDate>
       </DateWrap>
+      <Event className="here"/>
+      <Event className="here"/>
+      <Event className="here"/>
+      <Event className="here"/>
+      <Event className="here"/>
+      <Event className="here"/>
 
-      {/* <CalContent contentHeight={contentHeight} >
-        1
-      </CalContent>
-      <CalContent contentHeight={contentHeight} >
-        2
-      </CalContent>
-      <CalContent contentHeight={contentHeight} >
-        3
-      </CalContent>
-      <CalContent contentHeight={contentHeight}>
-        4
-      </CalContent>
-      <CalContent contentHeight={contentHeight} >
-        5
-      </CalContent>
-      <CalContent contentHeight={contentHeight} >
-        6
-      </CalContent> */}
     </Wrap>
   );
 }

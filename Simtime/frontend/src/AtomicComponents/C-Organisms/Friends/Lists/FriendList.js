@@ -65,7 +65,7 @@ function FriendList(props) {
           <ButtonWrap width={buttonDefaultSize + buttonMargin + 2 + "px"}>
             <StyledButtonWithImage
               width="auto"
-              imgurl="https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/check.png"
+              imgurl="static/assets/img/icons/check.png"
               imgLocation="right"
               onClick={(e) => {
                 e.preventDefault();

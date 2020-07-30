@@ -36,5 +36,5 @@ CloseButton.propTypes = {
 CloseButton.defaultProps={
     width: "24px",
     height: "24px",
-    src:"https://simtime-bucket.s3.ap-northeast-2.amazonaws.com/static/img/icons/close-wh.png"
+    src:"/static/assets/img/icons/close-wh.png"
 }

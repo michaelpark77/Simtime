@@ -26,8 +26,10 @@ export default MenuLink;
 
 MenuLink.propTypes = {
   src: PropTypes.string,
+  handleClick: PropTypes.func
 };
 
 MenuLink.defaultProps = {
   src: "/",
+  handleClick: ()=>{}
 };

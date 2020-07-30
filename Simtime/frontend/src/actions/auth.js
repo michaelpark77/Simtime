@@ -1,7 +1,7 @@
 import axios from "axios";
 import { axiosInstance, axiosFormInstance } from "./axiosApi"
-import { returnErrors } from "./messages";
-import { setCookie, getCookie } from "./cookie"
+import { returnErrors, createMessage } from "./messages";
+import { setCookie, getCookie,deleteCookie } from "./cookie"
 import {
   USER_LOADED,
   USER_LOADING,
@@ -64,16 +64,12 @@ export const login = (username, password) => dispatch => {
 
 // Logout
 export const logout = () => (dispatch) => {
-  axiosInstance
-    .post("/api/auth/logout", null)
-    .then(res => {
-      dispatch({
+  setCookie('access', '', -1 );
+  setCookie('refresh', '', -1 );
+  dispatch({
         type: LOGOUT
       });
-    })
-    .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-    });
+  dispatch(createMessage({ logout : `LOGOUT` }));
 };
 
 // REGISTER

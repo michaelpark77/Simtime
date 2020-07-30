@@ -15,9 +15,11 @@ import json
 from django.core.exceptions import ImproperlyConfigured
 from datetime import timedelta
 
+DEBUG=False
+ALLOWED_HOSTS='*'
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(BASE_DIR)
 
 secret_file = os.path.join(BASE_DIR, 'secrets.json')
 
@@ -200,8 +202,9 @@ AWS_SECRET_ACCESS_KEY = get_secret("AWS_UPLOAD_SECRET_KEY")
 AWS_STORAGE_BUCKET_NAME = get_secret("AWS_UPLOAD_BUCKET")
 AWS_LOCATION = "simtime"
 
-STATIC_URL = '/static/'
 STATIC_ROOT = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+STATIC_URL = '/static/'
+
 
 STATICFILES_STORAGE = 'Simtime.storages.StaticStorage'
 STATICFILES_LOCATION = 'static'
@@ -213,6 +216,3 @@ MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 MEDIA_ROOT = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 DEFAULT_FILE_STORAGE = 'Simtime.storages.MediaStorage'
 MEDIAFILES_LOCATION = 'media'
-
-DEBUG=False
-ALLOWED_HOSTS='*'

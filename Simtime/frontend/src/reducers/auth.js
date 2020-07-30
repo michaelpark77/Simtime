@@ -51,12 +51,7 @@ export default function(state = initialState, action) {
     case LOGIN_FAIL:
     case LOGOUT:
       // localStorage.removeItem("token"); //removeCookie
-      return {
-        ...state,
-        user: null,
-        isAuthenticated: false,
-        isLoading: false
-      };
+      return initialState;
 
     default:
       return state;

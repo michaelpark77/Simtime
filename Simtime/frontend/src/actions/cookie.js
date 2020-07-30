@@ -7,7 +7,12 @@ export const setCookie = (name, value, exp) => {
 
 export const getCookie = name => {
     var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-    return value? value[2] : null;
+    return value ? value[2] : null;
     };
+
+// export const deleteCookie = name => {
+//         // document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+//         document.cookie = name + '=' + value + ';expires=-1';
+//       }
         
  
