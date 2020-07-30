@@ -59,16 +59,14 @@ class Event(CustomizedModel):
                              on_delete=models.CASCADE, related_name='events')
     event_name = models.CharField(max_length=200, blank=False)
     event_time = models.DateTimeField(blank=False, null=False)
-    event_place = JSONField(),
-    tags = JSONField(),  # 미구현
+    event_place = JSONField(default=dict)
+    tags = JSONField(default=dict) # 미구현
     status = models.CharField(max_length=10,
                               choices=EventStatus.choices,
                               default=EventStatus.OPEN)
 
     message = models.TextField(blank=True, null=True)
-    photo = models.ImageField(
-        # upload_to='photos/events/%Y%m%d', default='photos/no_image.png'
-        upload_to=user_path, default='no_image.png')
+    photo = models.ImageField(upload_to=user_path, blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
