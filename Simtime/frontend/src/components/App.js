@@ -19,7 +19,7 @@ import Header from "../AtomicComponents/D-Templates/Header";
 
 //Page
 import CalendarPage from "../AtomicComponents/E-Pages/CalendarPage";
-import FriendsPage from "../AtomicComponents/E-Pages/FriendsPage";
+import FriendsPage from "../AtomicComponents-hw/Pages/FriendsPage";
 import MySimtimePage from "../AtomicComponents/E-Pages/MySimtimePage";
 
 import { ModalProvider } from "../contexts/modalContext";

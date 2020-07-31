@@ -69,10 +69,18 @@ export const getFriends = () => (dispatch) => {
     .get("/api/friends/")
     .then((res) => {
       console.log("friends", res);
+
       dispatch({
         type: GET_FRIENDS,
-        payload: res.data,
-      });
+        payload: res.data.map(d => {
+          const friend = d.friend
+          friend.friendId = friend.id
+          delete friend.id
+          delete d.friend
+          console.log({ ...d, ...friend })
+          return { ...d, ...friend }
+        })
+      })
     })
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))

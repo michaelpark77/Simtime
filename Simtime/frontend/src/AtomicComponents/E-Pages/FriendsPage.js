@@ -28,7 +28,7 @@ const SectionTitle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  aling-items: flex-end;
+  align-items: flex-end;
 `;
 
 // const StyledSearch = styled(Search)`
@@ -71,7 +71,7 @@ function FriendsPage(props) {
         <ContentWrap>
           <Groups groups={props.groups} rowNum={5} rowHeight="45px" width="100%" />
         </ContentWrap>
-      </Section> 
+      </Section>
     </Wrap>
   );
 }

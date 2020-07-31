@@ -1,10 +1,10 @@
-import * as Colors from "../../Colors";
+import * as Colors from "../Colors";
 import React from "react";
 import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 const commonStyle = css`
   ${(props) => (props.height ? "height: " + props.height + ";" : "")}
-  color: ${(props) => Colors[props.color]};
+  color: ${(props) => props.mainColor ? Colors.MAIN_COLOR : props.color};
 `;
 
 const H1 = styled.span`
@@ -36,7 +36,7 @@ const Default = styled.span`
   font-size: "15px";
 `;
 
-export const Header = (props) => {
+export const Title = (props) => {
   const { type, src } = props;
 
   const renderHeader = () => {
@@ -57,15 +57,15 @@ export const Header = (props) => {
   return renderHeader();
 };
 
-export default React.memo(Header);
+export default React.memo(Title);
 
-Header.propTypes = {
+Title.propTypes = {
   type: PropTypes.oneOf(["h1", "h2", "h3", "h4"]),
   src: PropTypes.string,
   color: PropTypes.string,
 };
 
-Header.defaultProps = {
+Title.defaultProps = {
   type: "h1",
   src: "http://localhost:8080/",
   color: "TEXT",

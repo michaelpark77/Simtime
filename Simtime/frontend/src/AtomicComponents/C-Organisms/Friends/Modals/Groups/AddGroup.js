@@ -1,4 +1,3 @@
-import "babel-polyfill";
 import React, { Fragment, useState, useCallback, createRef } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";

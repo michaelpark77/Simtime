@@ -26,7 +26,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         selectedGroup: {
-          group: state.groups.filter((group) => group.id == action.payload),
+          ...state.groups.find((group) => group.id == action.payload),
           members: null,
         },
       };
@@ -51,9 +51,9 @@ export default function (state = initialState, action) {
       return {
         ...state,
         selectedGroup: {
-          group: state.groups.filter(
+          ...state.groups.find(
             (group) => group.id == action.payload.id
-          )[0],
+          ),
           members: action.payload.members,
         },
       };
@@ -73,9 +73,9 @@ export default function (state = initialState, action) {
       return {
         ...state,
         selectedGroup: {
-          group: state.groups.filter(
+          ...state.groups.find(
             (group) => group.id == action.payload.id
-          )[0],
+          ),
           members: action.payload.members,
         },
       };

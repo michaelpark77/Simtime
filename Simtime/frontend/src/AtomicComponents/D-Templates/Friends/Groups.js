@@ -20,15 +20,15 @@ function Groups(props) {
 
   return (
     <Table title="My Groups" addButton={true}
-    handleAddBtnClick={() =>
-      handleModal(<AddGroup onClose={closeModal} />)
-    }
-    width={props.width}
-    rowHeight={props.width}
-    rowNum={props.rowNum}
-  >
-    <GroupList datas={props.groups} />
-  </Table>
+      handleAddBtnClick={() =>
+        handleModal(<AddGroup onClose={closeModal} />)
+      }
+      width={props.width}
+      rowHeight={props.width}
+      rowNum={props.rowNum}
+    >
+      <GroupList datas={props.groups} />
+    </Table>
   );
 }
 
@@ -36,15 +36,15 @@ export default React.memo(Groups);
 // export default Groups;
 
 Groups.propTypes = {
-    rowNum: PropTypes.number,
-    rowHeight: PropTypes.string,
-    width: PropTypes.string,
-    groups: PropTypes.array,
-  };
+  rowNum: PropTypes.number,
+  rowHeight: PropTypes.string,
+  width: PropTypes.string,
+  groups: PropTypes.array,
+};
   
-  Groups.defaultProps = {
-    rowNum: 6,
-    rowHeight: "45px",
-    width: "100%",
-    groups:[]
-  };
+Groups.defaultProps = {
+  rowNum: 6,
+  rowHeight: "45px",
+  width: "100%",
+  groups:[]
+};
