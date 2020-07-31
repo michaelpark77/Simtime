@@ -24,7 +24,8 @@ Image.propTypes = {
 };
 
 Image.defaultProps = {
-  src: "static/img/icons/forbidden.png",
+  src:
+    "https://bucket-simtime.s3.ap-northeast-2.amazonaws.com/static/assets/img/icons/forbidden.png",
   width: "14px",
   height: "14px",
 };

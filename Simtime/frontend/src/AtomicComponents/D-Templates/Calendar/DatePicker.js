@@ -160,7 +160,7 @@ function DatePicker(props) {
         <Arrow
           width="10px"
           height="10px"
-          src="static/img/icons/left-arrow.png"
+          src="https://bucket-simtime.s3.ap-northeast-2.amazonaws.com/static/assets/img/icons/left-arrow.png"
           isActive={
             getStrFullDate(curr, "yyyymmdd").substr(0, 6) >
             getStrFullDate(new Date(), "yyyymmdd").substr(0, 6)
@@ -173,7 +173,7 @@ function DatePicker(props) {
         <Arrow
           width="10px"
           height="10px"
-          src="static/img/icons/right-arrow.png"
+          src="https://bucket-simtime.s3.ap-northeast-2.amazonaws.com/static/assets/img/icons/right-arrow.png"
           onClick={nextMonth}
           isActive={true}
         />

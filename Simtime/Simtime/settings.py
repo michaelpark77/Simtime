@@ -15,8 +15,8 @@ import json
 from django.core.exceptions import ImproperlyConfigured
 from datetime import timedelta
 
-DEBUG=False
-ALLOWED_HOSTS='*'
+DEBUG = False
+ALLOWED_HOSTS = '*'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -216,3 +216,6 @@ MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 MEDIA_ROOT = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 DEFAULT_FILE_STORAGE = 'Simtime.storages.MediaStorage'
 MEDIAFILES_LOCATION = 'media'
+
+DEBUG = False
+ALLOWED_HOSTS = ['*']

@@ -1,4 +1,4 @@
-import React, { useCallback,useContext, Fragment  } from "react";
+import React, { useCallback, useContext, Fragment } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -65,7 +65,7 @@ function FriendList(props) {
           <ButtonWrap width={buttonDefaultSize + buttonMargin + 2 + "px"}>
             <StyledButtonWithImage
               width="auto"
-              imgurl="static/assets/img/icons/check.png"
+              imgurl="https://bucket-simtime.s3.ap-northeast-2.amazonaws.com/static/assets//img/icons/check.png"
               imgLocation="right"
               onClick={(e) => {
                 e.preventDefault();

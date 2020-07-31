@@ -34,7 +34,7 @@ const StyledSelect = styled.div`
       ? `  
     background-size: 15px;
     background-repeat: no-repeat;
-    background-image: url("static/img/icons/arrow-down2.png");
+    background-image: url("https://bucket-simtime.s3.ap-northeast-2.amazonaws.com/static/assets/img/icons/arrow-down2.png");
     background-position: 88% center;`
       : null};
 `;
